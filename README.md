@@ -112,3 +112,12 @@ You can use the BucketManager to run queries:
 var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Sitecore.Context.Item, 
                                                            templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
 ```
+
+You can use the Extension Methods on the Item object to run queries:
+
+``` C#
+var HomeDescendantsOfTypeSampleItem = Sitecore.Context.Item.Search(templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+```
+
+
+
