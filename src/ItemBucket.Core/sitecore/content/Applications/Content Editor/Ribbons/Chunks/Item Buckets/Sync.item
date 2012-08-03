@@ -1,0 +1,297 @@
+----item----
+version: 1
+id: {265A0490-F330-4F23-ABA2-C4388923779B}
+database: core
+path: /sitecore/content/Applications/Content Editor/Ribbons/Chunks/Item Buckets/Sync
+parent: {56E1F418-FD65-4C63-B418-E44398489591}
+name: Sync
+master: {00000000-0000-0000-0000-000000000000}
+template: {97B61451-9A75-4F59-93A5-DBD8D4F44421}
+templatekey: Large Menu Combo Button
+
+----field----
+field: {F5A07916-7BCA-4FBA-857C-A5D166C332D4}
+name: Icon
+key: icon
+content-length: 25
+
+people/32x32/box_view.png
+----field----
+field: {FC6B80F1-406D-47F0-A2B3-FCD7A8EA9D74}
+name: Click
+key: click
+content-length: 15
+
+item:syncbucket
+----field----
+field: {A0B2E8B4-CD06-47F1-A721-68E108495046}
+name: KeyCode
+key: keycode
+content-length: 4
+
+sc85
+----field----
+field: {3F5BD18E-8CEE-4CD5-9EE3-77863947B312}
+name: Menu
+key: menu
+content-length: 0
+
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 25
+
+people/32x32/box_view.png
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+200
+----version----
+language: da
+version: 1
+revision: 0e6e0675-f71a-4a3e-b244-5591f8ad426d
+
+----field----
+field: {B11F9F5F-88FC-48C5-9501-2E827EF40EAD}
+name: Header
+key: header
+content-length: 11
+
+Ikke klonet
+----field----
+field: {DB8C4E34-586C-4DED-BC95-B993FC3A01A8}
+name: Tooltip
+key: tooltip
+content-length: 66
+
+Skift denne klon og tilhørende sub-elementer til reelle elementer.
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115006:634492650067319945
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+0e6e0675-f71a-4a3e-b244-5591f8ad426d
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115006:634492650067319945
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: de-DE
+version: 1
+revision: e100bd74-4347-488b-901e-7442e1247166
+
+----field----
+field: {B11F9F5F-88FC-48C5-9501-2E827EF40EAD}
+name: Header
+key: header
+content-length: 7
+
+Unclone
+----field----
+field: {DB8C4E34-586C-4DED-BC95-B993FC3A01A8}
+name: Tooltip
+key: tooltip
+content-length: 65
+
+Dieses Clone Item und seine Subitems in richtige Items umwandeln.
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115848:634492655289295205
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e100bd74-4347-488b-901e-7442e1247166
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115848:634492655289295205
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: e48efe7b-eb5d-4f13-97ff-5d69be12e13a
+
+----field----
+field: {B11F9F5F-88FC-48C5-9501-2E827EF40EAD}
+name: Header
+key: header
+content-length: 4
+
+Sync
+----field----
+field: {DB8C4E34-586C-4DED-BC95-B993FC3A01A8}
+name: Tooltip
+key: tooltip
+content-length: 16
+
+Sync this bucket
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20100804T112800
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e48efe7b-eb5d-4f13-97ff-5d69be12e13a
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120127T143123:634632714833145780
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja-JP
+version: 1
+revision: 32363f66-23e3-4979-95a0-7870d508c847
+
+----field----
+field: {B11F9F5F-88FC-48C5-9501-2E827EF40EAD}
+name: Header
+key: header
+content-length: 6
+
+クローン解除
+----field----
+field: {DB8C4E34-586C-4DED-BC95-B993FC3A01A8}
+name: Tooltip
+key: tooltip
+content-length: 27
+
+クローンとそのサブアイテムをリアル アイテムに変更する
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T120746:634492660664710911
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+32363f66-23e3-4979-95a0-7870d508c847
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T120746:634492660664710911
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

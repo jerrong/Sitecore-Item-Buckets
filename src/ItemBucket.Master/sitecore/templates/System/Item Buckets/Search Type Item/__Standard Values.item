@@ -1,0 +1,79 @@
+----item----
+version: 1
+id: {FBF1B59A-3AD6-413B-956B-CB963ACEEFBA}
+database: master
+path: /sitecore/templates/System/Item Buckets/Search Type Item/__Standard Values
+parent: {E98D93B9-1929-45B1-8044-7A54247403C7}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {E98D93B9-1929-45B1-8044-7A54247403C7}
+templatekey: Search Type Item
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 27
+
+applications/32x32/view.png
+----version----
+language: en
+version: 1
+revision: b8f42e60-8e5b-4f53-a3e2-df0619aee324
+
+----field----
+field: {15ECAA28-B6EA-486C-9D3E-097C8F0405F6}
+name: Icon
+key: icon
+content-length: 27
+
+applications/32x32/view.png
+----field----
+field: {98F98D66-C03D-4D0F-A770-673EB3FA323D}
+name: Name
+key: name
+content-length: 5
+
+$name
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T104900
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b8f42e60-8e5b-4f53-a3e2-df0619aee324
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111103T142345:634559270252883404
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

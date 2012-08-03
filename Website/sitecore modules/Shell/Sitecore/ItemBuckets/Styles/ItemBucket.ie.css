@@ -1,0 +1,299 @@
+﻿.sb_search_container
+{
+  background: #fafafa url('/images/gray_gradient.png') repeat-x top left !important;            
+}
+
+.sb_dropdown {
+    z-index: 1;
+}
+
+.sb_search_container, .sb_dropdown, .sb_dropdown .sb_filter, .side, .side .sb_filter, .side .tip
+{
+  border: 1px solid #dfdfdf; 
+}
+
+.sb_up, .sb_down
+{
+
+  border: 1px solid;
+  border-top-color: #fafafa;
+  border-left-color: #fafafa;
+  border-right-color: #dadada;
+  border-bottom-color: #dadada;
+}
+
+div.content  
+{
+  margin-left:13%;
+  margin-right:27%;
+}
+
+/** Due to ie7 z-Index bug**/
+.mainmargin
+{
+  z-index: -1;
+}
+
+ li.token-input-token-facebook span
+ {
+   zoom: 1;
+ }
+
+#views {
+    width: 150px;
+    margin-right: -132px;
+}
+
+.sb_wrapper {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.myInputbox {
+    padding-right: 54px;
+}
+
+.sb_search {
+    padding-bottom: 24px;
+}
+
+.sb_down, .sb_up {
+       padding-bottom: 26px;
+}
+.sb_search_container {
+    width: 430px;
+}
+
+INPUT.sb_clear {
+    border-left-width: 0px;
+        padding-bottom: 23px;
+}
+
+.Content {
+   padding-left: 150px;
+}
+
+.box {
+    width: 540px;
+}
+
+.pageSection {
+    width: 800px;
+}
+
+#results {
+    padding-left: 0px;
+}
+
+.myInputbox {
+    padding-right: 19px;
+}
+
+.slide-out-div
+            {
+                padding: 0 20px;
+                width: 209px;
+                z-index: 9999999;
+            }
+            
+            .slide-out-div2
+            {
+                padding: 0 20px;
+                width: 229px;
+                z-index: 9999999;
+            }
+            
+            #navBeta {
+
+                width: 180px;
+                padding-left: 26px;
+                padding-right: 0px; 
+            }
+            
+            .Left {
+                width: 66px;
+            }
+            
+            .pagination .active {
+                background: none;
+            }
+            
+            .pagination ul {
+                margin-right: auto;
+                margin-left: auto;
+            }
+            
+            .pagination
+        {
+                margin-top: 300px;
+        }
+        
+         .grid 
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+           margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/view_grid.png");
+        }
+        
+       .grid:hover, .grid .active
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/view_grid_selected.png");
+        }
+        
+        .gallery 
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/gallery.png");
+        }
+        
+       .gallery:hover, .gallery .active
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+           margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/gallery_selected.png");
+        }
+        
+        .gallery 
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/gallery.png");
+        }
+        
+       .gallery:hover, .gallery .active
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+          margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/gallery_selected.png");
+        }
+        
+        
+        .video 
+        {
+            float: right;
+            width: 33px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 8px;
+            cursor: pointer;
+            background: url("../images/video.png");
+        }
+        
+       .video:hover, .video .active
+        {
+            float: right;
+            width: 33px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 8px;
+            cursor: pointer;
+            background: url("../images/video_selected.png");
+        }
+        
+  .InfiniteScroll
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/infinitescroll.png");
+        }
+        
+       .InfiniteScroll:hover, .InfiniteScroll .active
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/infinitescroll_selected.png");
+        }
+        .list 
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/view_list.png");
+        }
+        
+        .list .active
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/view_list_selected.png");
+        }
+        
+        
+        .list:hover
+        {
+            float: right;
+            width: 32px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/view_list_selected.png");
+        }

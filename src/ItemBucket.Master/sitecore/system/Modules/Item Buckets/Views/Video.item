@@ -1,0 +1,154 @@
+----item----
+version: 1
+id: {33F67678-5E9A-4E4E-AFFA-EDF96E6233A4}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Views/Video
+parent: {3B750F26-520E-4B33-852A-9633C54706BE}
+name: Video
+master: {00000000-0000-0000-0000-000000000000}
+template: {6C534F05-6B39-4AFD-BAF1-4CCE81B29376}
+templatekey: View
+
+----version----
+language: en
+version: 1
+revision: bf839329-476b-4b8e-a1f5-e267a7eb1c17
+
+----field----
+field: {BB7FF36D-6368-4117-AB7C-01AEFF56BEA2}
+name: Name
+key: name
+content-length: 5
+
+Video
+----field----
+field: {2EDEF3FC-7264-443A-B0F4-3A2E3B602882}
+name: Header Template
+key: header template
+content-length: 1113
+
+	<style type="text/css">
+		
+		.boxgrid a{ color:#C8DCE5;}
+			.boxgrid h3{ margin: 10px 10px 0 10px; color:#FFF; font:18pt Arial, sans-serif; letter-spacing:-1px; font-weight: bold;  }
+			
+			.boxgrid{ 
+				width: 325px; 
+				height: 260px; 
+				margin:10px; 
+				float:left; 
+				background:#161613; 
+				border: solid 2px #8399AF; 
+				overflow: hidden; 
+				position: relative; 
+			}
+				.boxgrid img{ 
+					position: absolute; 
+					top: 0; 
+					left: 0; 
+					border: 0; 
+				}
+				.boxgrid p{ 
+					padding: 0 10px; 
+					color:#afafaf; 
+					font-weight:bold; 
+					font:10pt "Lucida Grande", Arial, sans-serif; 
+				}
+				
+			.boxcaption{ 
+				float: left; 
+				position: absolute; 
+				background: #000; 
+				height: 100px; 
+				width: 100%; 
+				opacity: .8; 
+				/* For IE 5-7 */
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+				/* For IE 8 */
+				-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+ 			}
+ 				.captionfull .boxcaption {
+ 					top: 260;
+ 					left: 0;
+ 				}
+ 				.caption .boxcaption {
+ 					top: 220;
+ 					left: 0;
+ 				}
+				
+			
+				
+		</style>
+
+----field----
+field: {3A13DAFA-0E96-4214-8C42-BC114CEA529B}
+name: Item Template
+key: item template
+content-length: 698
+
+<div class="boxgrid">
+<object width="352" height="260">
+  <param name="movie"
+         value="https://www.youtube.com/v/u1zgFlCw8Aw?version=3&autoplay=0"></param>
+  <param name="allowScriptAccess" value="always"></param>
+  <embed src="https://www.youtube.com/v/u1zgFlCw8Aw?version=3&autoplay=0"
+         type="application/x-shockwave-flash"
+         allowscriptaccess="always"
+         width="352" height="260"></embed>
+</object>
+			
+			
+					<h3>NamePlaceholder</h3>
+					<p>TemplatePlaceholder<br/>
+ContentPlaceholder<br/></p><p><a href="#" onclick="scForm.getParentForm().postRequest('','','','LaunchTypePlaceholder(url=ItemIdPlaceholder)'); return false;">Open in New Tab</a>
+				</p>
+			</div>
+----field----
+field: {390576A2-5452-4CAE-AB91-116A8892CFD2}
+name: Footer Template
+key: footer template
+content-length: 0
+
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120621T154100
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+bf839329-476b-4b8e-a1f5-e267a7eb1c17
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120704T051253:634769755736949463
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

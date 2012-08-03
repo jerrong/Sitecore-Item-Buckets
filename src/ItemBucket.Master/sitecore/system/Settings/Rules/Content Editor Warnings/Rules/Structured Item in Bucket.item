@@ -1,0 +1,74 @@
+----item----
+version: 1
+id: {F5D54D08-77F5-48E7-9729-D58FD7FE1037}
+database: master
+path: /sitecore/system/Settings/Rules/Content Editor Warnings/Rules/Structured Item in Bucket
+parent: {2F33CE60-C3D9-45C3-A391-3C22F2F63FB5}
+name: Structured Item in Bucket
+master: {00000000-0000-0000-0000-000000000000}
+template: {71A2C881-FBB3-4A23-A187-7FD50A20F924}
+templatekey: Content Editor Warning Rule
+
+----field----
+field: {52A38DF4-8193-4BDD-896E-FB4C9AC48F5B}
+name: Rule
+key: rule
+content-length: 701
+
+<ruleset>
+  <rule uid="{7B0E53C8-8D95-4841-8C4B-FCBEB86E5033}">
+    <conditions>
+      <condition id="{EC8F9F47-9A37-4F3C-A055-1E2E799D41C7}" uid="07EF61F8AEF84FEDB8560855DE023822" />
+    </conditions>
+    <actions>
+      <action id="{B7F73976-7586-4E9C-A5F2-1E2BC68C5BE3}" uid="C78D097DB8F64F61A158B909C6DB4C70" title="Structured Item in Unstructured Container" text="This item is contained within a Bucket but not hidden due to its template not being bucketable. This is normal operation for content tree's that need a hybrid of hidden and visible items. If you would like to hide this item inside the bucket, please make the template of this item bucketable." />
+    </actions>
+  </rule>
+</ruleset>
+----version----
+language: en
+version: 1
+revision: 6b1d4375-727d-4b91-92a4-17842081e6e2
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111026T155200
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+6b1d4375-727d-4b91-92a4-17842081e6e2
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120509T215802:634721974821487240
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

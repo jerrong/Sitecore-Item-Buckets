@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {C8AE7385-B923-452C-8FBF-5B99678F9586}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Tab Options/Close All But This
+parent: {DB14B596-67DD-4C93-BE7C-2BDBADEB64C2}
+name: Close All But This
+master: {00000000-0000-0000-0000-000000000000}
+template: {5986D8C8-3A31-4160-A816-ACAA26DFB54F}
+templatekey: Tab Option
+
+----version----
+language: en
+version: 1
+revision: 5930622b-a4bc-44a4-87fe-441c1f2f899c
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120720T090418
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+5930622b-a4bc-44a4-87fe-441c1f2f899c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120720T090418:634783718583309410
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

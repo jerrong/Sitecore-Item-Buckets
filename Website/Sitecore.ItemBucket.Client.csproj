@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5945A8DA-FB0D-4AED-95D4-68BBA5830954}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ItemBuckets</RootNamespace>
+    <AssemblyName>Sitecore.ItemBucket.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\buckets.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Sitecore\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Sitecore\Lucene.Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>ItemBucket.Kernel\bin\Debug\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Sitecore\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\FieldResults.aspx" />
+    <Content Include="ItemGenerator\CreateItems.aspx" />
+    <Content Include="ItemGenerator\ItemDuplicator.aspx" />
+    <Content Include="ItemGenerator\ScrapeData.aspx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\MiniResults.aspx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\arrows.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\author.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\date.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\default.jpg" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\down.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\file.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\css\css3-buttons.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\demo.html" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\images\google+-ui-sprite-colour.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\images\google+-ui-sprite-gray.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\images\toggle.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\jquery.tiptip.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\tile.jpg" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\google-plus-ui-buttons\tiptip.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\gray_gradient.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\grid.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\gridhover.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\icons\down.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\icons\up.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\left.gif" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\list.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\listhover.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\loading.gif" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\pin-on.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\pin.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\right.gif" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\search.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\search_home.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\site.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\sound.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\star.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\startdate.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\tag.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\template.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\up.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\version.gif" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_grid.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_grid_selected.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list_selected.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\ItemBucket.asmx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketMini.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucket.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jQDateRangeSlider.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jQRangeSlider.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery-ui.min.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.min.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.mousewheel.min.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.remember-state.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.tabSlideOut.v1.3.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\ShowResult.aspx" />
+    <Content Include="sitecore\shell\Override\BucketLink.xml" />
+    <Content Include="sitecore\shell\Override\homeloan.xml" />
+    <Content Include="sitecore\shell\Override\InsertImage.xml" />
+    <Content Include="sitecore\shell\Override\InsertLink.js" />
+    <Content Include="sitecore\shell\Override\InsertLink.xml" />
+    <Content Include="sitecore\shell\Override\ItemBucket\BucketUsage.xml" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ceebox.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ItemBucketMini.ie.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ItemBucketMini.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\core.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ie-6.0.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ItemBucket.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ItemBucket.ie.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\jquery-ui.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ListNew.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\quick-styles.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\reset.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\SiteNew.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\style.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\token-input.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Properties\" />
+    <Folder Include="sitecore\shell\Override\debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\FieldResults.aspx.cs">
+      <DependentUpon>FieldResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\FieldResults.aspx.designer.cs">
+      <DependentUpon>FieldResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemGenerator\CreateItems.aspx.cs">
+      <DependentUpon>CreateItems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemGenerator\CreateItems.aspx.designer.cs">
+      <DependentUpon>CreateItems.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemGenerator\ItemDuplicator.aspx.cs">
+      <DependentUpon>ItemDuplicator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemGenerator\ItemDuplicator.aspx.designer.cs">
+      <DependentUpon>ItemDuplicator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemGenerator\ScrapeData.aspx.cs">
+      <DependentUpon>ScrapeData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemGenerator\ScrapeData.aspx.designer.cs">
+      <DependentUpon>ScrapeData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\MiniResults.aspx.cs">
+      <DependentUpon>MiniResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\MiniResults.aspx.designer.cs">
+      <DependentUpon>MiniResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\ItemBucket.asmx.cs">
+      <DependentUpon>ItemBucket.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\Services\Search.ashx.cs">
+      <DependentUpon>Search.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\ShowResult.aspx.cs">
+      <DependentUpon>ShowResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\ShowResult.aspx.designer.cs">
+      <DependentUpon>ShowResult.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Config\Include\Sitecore.ItemBuckets.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Services\Search.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj">
+      <Project>{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}</Project>
+      <Name>Sitecore.ItemBucket.Kernel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8762</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

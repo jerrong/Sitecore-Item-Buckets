@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense" xmlns:content="http://www.sitecore.net/content">
+  <SetBaseTemplates>
+    <FormDialog Icon="Software/32x32/components.png" Header="Base Templates" Text="Select the base template for the current template.">
+      <Stylesheet Key="SetBaseTemplates">
+        .scContentControl {
+        height:100%;
+        }
+        .scContentControlMultilistBox {
+        height:100%;
+        }
+      </Stylesheet>
+
+      <CodeBeside Type="Sitecore.Shell.Applications.Templates.SetBaseTemplates.SetBaseTemplatesForm,Sitecore.Client"/>
+                <Tabstrip ID="Tabs" Width="100%" Height="100%">
+          <Tab ID="MediaLibraryTab" Header="Browse" Height="100%">
+      <content:TreeList ID="TreeList" Source="/sitecore/templates" Activation="false" Style="background:#e9e9e9;border:none" IncludeTemplatesForSelection="Template" IncludeTemplatesForDisplay="Template,Template Folder,Folder,Node"/>
+      </Tab>
+          <Tab ID="MediaTab" Header="Search" Height="100%">
+            <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+        <Scrollbox ID="SearchItems" Height="100%" Class="scScrollbox scFixSize scFixSize4" Background="white" Border="1px inset" Padding="0px" GridPanel.Height="100%">
+
+         <Frame SourceUri="/sitecore%20modules/Shell/Sitecore/ItemBuckets/FieldResults.aspx" Width="100%" Height="100%"></Frame>
+          
+        </Scrollbox>
+      </GridPanel>
+          </Tab>
+        </Tabstrip>
+    </FormDialog>
+  </SetBaseTemplates>
+</control>

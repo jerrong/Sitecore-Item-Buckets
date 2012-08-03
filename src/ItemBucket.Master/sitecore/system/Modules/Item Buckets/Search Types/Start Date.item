@@ -1,0 +1,93 @@
+----item----
+version: 1
+id: {EF83508B-5492-49D6-85CA-51E9C0AB261F}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Search Types/Start Date
+parent: {7CE9FDA0-E6C1-4495-9740-9944656E893B}
+name: Start Date
+master: {00000000-0000-0000-0000-000000000000}
+template: {087DCAF1-4778-4849-99B4-599B901DBE09}
+templatekey: Field Search Type
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 29
+
+Business/32x32/calendar_1.png
+----version----
+language: en
+version: 1
+revision: a4452faf-a5d5-4b8c-8079-64691085a537
+
+----field----
+field: {D94CDB6A-D0FD-42F2-8370-0346A17B3D5A}
+name: Name
+key: name
+content-length: 5
+
+start
+----field----
+field: {759A7BD8-C40A-475E-A650-D7C9DFD89CD0}
+name: Field
+key: field
+content-length: 38
+
+{25BED78C-4957-4165-998A-CA1B52F67497}
+----field----
+field: {9D2E8C51-5921-498A-BFF6-D6AA99D3EEEE}
+name: Control Type
+key: control type
+content-length: 38
+
+{60766FDF-D4FD-4C02-85C1-E937576E394B}
+----field----
+field: {CC084D53-FA58-4591-B7C7-20E7A60C8A4A}
+name: Display Text
+key: display text
+content-length: 28
+
+Return Results starting Date
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T105100
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+a4452faf-a5d5-4b8c-8079-64691085a537
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120625T190018:634762476187313669
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

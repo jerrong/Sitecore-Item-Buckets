@@ -1,0 +1,93 @@
+----item----
+version: 1
+id: {FBB5CAEA-9ACB-4613-8A52-AECDDA690AC3}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Settings/Search Box Dropdown/Recently Created
+parent: {00E978AE-076D-402F-B540-B1ACA5BC65A1}
+name: Recently Created
+master: {00000000-0000-0000-0000-000000000000}
+template: {9F63F3ED-BFB8-49A3-B370-1830E0A5920F}
+templatekey: Dropdown List
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 36
+
+Applications/32x32/documents_new.png
+----version----
+language: en
+version: 1
+revision: 9951b596-7a57-4e80-a9bf-fea68d225778
+
+----field----
+field: {CCD35091-1A66-4CE5-A1D3-77A2CCD29142}
+name: Type
+key: type
+content-length: 99
+
+Sitecore.ItemBucket.Kernel.Kernel.Search.SearchDropdowns.RecentlyCreated,Sitecore.ItemBucket.Kernel
+----field----
+field: {D9BDF564-FF37-4564-B943-00D4D89C19F1}
+name: List Name
+key: list name
+content-length: 16
+
+Recently Created
+----field----
+field: {37FE9542-C8E7-41D6-95B0-AE559A48EB04}
+name: Command Name
+key: command name
+content-length: 16
+
+Recently Created
+----field----
+field: {39D0A502-8AEC-4EE6-8B9E-3C31CCB579C8}
+name: Display Text
+key: display text
+content-length: 30
+
+List of recently created items
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T122200
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+9951b596-7a57-4e80-a9bf-fea68d225778
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120711T053608:634775817680943793
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

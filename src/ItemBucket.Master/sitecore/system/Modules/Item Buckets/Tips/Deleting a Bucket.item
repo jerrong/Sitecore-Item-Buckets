@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {638406D6-B9EB-48A6-9621-30CE24BB0B83}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Tips/Deleting a Bucket
+parent: {C34856F2-E5EE-44A4-B72B-21B7ABF9F703}
+name: Deleting a Bucket
+master: {00000000-0000-0000-0000-000000000000}
+template: {1D3553FF-20C0-486D-ADA9-B258CE6D7F12}
+templatekey: Tip
+
+----version----
+language: en
+version: 1
+revision: 50292a0f-5f61-4640-a1e0-143c1dad25fc
+
+----field----
+field: {DCABF4BD-3AD9-426F-A295-9BF2785CE151}
+name: Tip Title
+key: tip title
+content-length: 17
+
+Deleting a Bucket
+----field----
+field: {E4671EDD-3EB2-4634-A944-B5D86397D111}
+name: Tip Text
+key: tip text
+content-length: 147
+
+Deleting a bucket could potentially take a long time to do and hence if the system detects that you are trying to delete a bucket it will warn you.
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111106T155300
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+50292a0f-5f61-4640-a1e0-143c1dad25fc
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111106T155402:634561916429557984
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -1,0 +1,35 @@
+body {
+	background:none;
+	background:#eee url(images/bg-diagonal-grey.gif) repeat fixed center top;
+}
+
+a {
+	color:#c21515;
+}
+a:hover {
+	color:#c21515;
+	opacity: 0.8;
+}
+
+#top_bar {
+	background:transparent url(images/headerbg_carbon.png) repeat-x top left;
+	}
+	
+#right_links a{
+	color: white !important;
+}
+
+#footer {
+	background:black url(images/footerbg_carbon.png) repeat-x top left;
+	}
+
+#footer{color: #999;}
+#footer h2{color: white !important;}
+#footer a {color:#ffffff;}
+#footer a.url {color:#c21515;}
+#footer ul li{font-style: italic;}
+
+
+
+
+

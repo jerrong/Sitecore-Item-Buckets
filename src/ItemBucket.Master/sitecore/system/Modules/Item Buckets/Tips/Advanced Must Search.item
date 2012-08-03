@@ -1,0 +1,59 @@
+----item----
+version: 1
+id: {489F5460-30AB-428E-8574-DBB52DA49DF4}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Tips/Advanced Must Search
+parent: {C34856F2-E5EE-44A4-B72B-21B7ABF9F703}
+name: Advanced Must Search
+master: {00000000-0000-0000-0000-000000000000}
+template: {1D3553FF-20C0-486D-ADA9-B258CE6D7F12}
+templatekey: Tip
+
+----version----
+language: en
+version: 1
+revision: f6be716d-433e-4a62-aac4-b08ad0e8bd58
+
+----field----
+field: {DCABF4BD-3AD9-426F-A295-9BF2785CE151}
+name: Tip Title
+key: tip title
+content-length: 20
+
+Advanced Must Search
+----field----
+field: {E4671EDD-3EB2-4634-A944-B5D86397D111}
+name: Tip Text
+key: tip text
+content-length: 118
+
++(Sample OR Simple) +New
+Will bring back all results that must have Sample or Simple and MUST have the word New in it.
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111202T091800
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+f6be716d-433e-4a62-aac4-b08ad0e8bd58
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120324T204330:634682186104865265
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -1,0 +1,248 @@
+----item----
+version: 1
+id: {59F53BBB-D1F5-4E38-8EBA-0D73109BB59B}
+database: core
+path: /sitecore/content/Applications/Content Editor/Editors/Items/Search
+parent: {09142294-E477-4152-9E85-AE5F292648A0}
+name: Search
+master: {00000000-0000-0000-0000-000000000000}
+template: {A5AACA0D-77C0-4741-AB77-211CFBDD9E5C}
+templatekey: Editor
+
+----field----
+field: {AB8D0102-91F3-43B6-90AA-5A0641DC8521}
+name: Icon
+key: icon
+content-length: 27
+
+applications/32x32/view.png
+----field----
+field: {6F371C74-5BD5-4EBD-B10A-FC54716021AE}
+name: Url
+key: url
+content-length: 62
+
+/sitecore%20modules/Shell/Sitecore/ItemBuckets/ShowResult.aspx
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 27
+
+Applications/32x32/view.png
+----version----
+language: da
+version: 1
+revision: b1a59f13-1ad7-42af-a8b9-18b7db25a6da
+
+----field----
+field: {F7C42332-728E-48B7-BB3C-0D6883E45628}
+name: Header
+key: header
+content-length: 5
+
+Mappe
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115001:634492650011693877
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b1a59f13-1ad7-42af-a8b9-18b7db25a6da
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115001:634492650011693877
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: de-DE
+version: 1
+revision: d23309f1-11f2-4e6a-9dee-350ca01531eb
+
+----field----
+field: {F7C42332-728E-48B7-BB3C-0D6883E45628}
+name: Header
+key: header
+content-length: 17
+
+Ordner hinzufügen
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115843:634492655236481691
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+d23309f1-11f2-4e6a-9dee-350ca01531eb
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115843:634492655236481691
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: 2e165f2f-fff0-4429-80bc-a66969ab9085
+
+----field----
+field: {F7C42332-728E-48B7-BB3C-0D6883E45628}
+name: Header
+key: header
+content-length: 6
+
+Search
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20070126T130100
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+2e165f2f-fff0-4429-80bc-a66969ab9085
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120103T142003:634611972037627246
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja-JP
+version: 1
+revision: da1efaf5-4d41-4cf6-9129-670de3b413fa
+
+----field----
+field: {F7C42332-728E-48B7-BB3C-0D6883E45628}
+name: Header
+key: header
+content-length: 5
+
+フォルダー
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T120738:634492660589709471
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+da1efaf5-4d41-4cf6-9129-670de3b413fa
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T120738:634492660589709471
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -1,0 +1,114 @@
+----item----
+version: 1
+id: {376DA354-62FB-4066-ADE3-439419EAE7A8}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Item Buckets Settings
+parent: {877091A7-131E-40D2-BDC6-5534284C5D03}
+name: Item Buckets Settings
+master: {00000000-0000-0000-0000-000000000000}
+template: {9F6E14E6-C593-410B-A57E-21F6B5A413AD}
+templatekey: Item Buckets Settings
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 27
+
+Applications/32x32/gear.png
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+200
+----version----
+language: en
+version: 1
+revision: 325f50ff-06de-4eba-a840-1f4c79efea8c
+
+----field----
+field: {288AF075-8A39-434C-980F-127369D8F03B}
+name: Search Tab Shortcut
+key: search tab shortcut
+content-length: 4
+
+sc70
+----field----
+field: {5A81D794-7364-4CC5-8AA9-A921D5DDA4AF}
+name: Opening Search Results
+key: opening search results
+content-length: 7
+
+New Tab
+----field----
+field: {F061C0BF-FF51-4E28-91A7-57C44D8AB153}
+name: Items Per Page Result
+key: items per page result
+content-length: 2
+
+20
+----field----
+field: {0433D198-9B0D-4349-AE48-8CA8AFE68591}
+name: Tag FieldName
+key: tag fieldname
+content-length: 3
+
+tag
+----field----
+field: {37AC831A-7CB4-4962-AEBD-A269649E5D35}
+name: Tag Parent
+key: tag parent
+content-length: 38
+
+{53BF0DEE-D7CC-42F4-AD59-1EBC67F9DCD1}
+----field----
+field: {7FA679E9-19B7-4E95-AB96-389399F3BD63}
+name: Include Parent in Search Results
+key: include parent in search results
+content-length: 0
+
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111026T143900
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+325f50ff-06de-4eba-a840-1f4c79efea8c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120202T142947:634637897879939465
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

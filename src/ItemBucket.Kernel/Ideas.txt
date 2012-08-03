@@ -1,0 +1,52 @@
+﻿Drive through the drop down menu options with a keyboard
+
+
+
+
+Configuraiton to set which field is the start and end used for
+
+
+Keyboard SHortcuts for going through the list items
+
+COnfiguration Flag for storing folders in dateformat or GUID
+Support for exact phrasing
+
+
+
+
+Create a rules engine for setting security
+Add custom dates in datepicker for last hour, 24 hours, days, weeks, months, all time
+
+
+
+
+Related Search
+
+
+exclude:template
+
+
+
+
+sounds:fone
+
+updated: (datepicker)
+
+
+
+
+OMS
+If OMS is enabled then it will bring back the popular search keywords and track them
+popularity: slider control
+
+Have watermark text in search box on what type of searches you can do
+put Sitecore logo into magnifying glass
+
+
+
+
+Can i directly access the results items and run a search (security test)
+
+Add a button to the security editor which takes the context item and runs a rule on it.
+
+have to hook into the upload pipeline

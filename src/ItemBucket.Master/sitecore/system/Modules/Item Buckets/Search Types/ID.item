@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {5A531AF0-C44C-4141-A0D3-09C5CDC3D654}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Search Types/ID
+parent: {7CE9FDA0-E6C1-4495-9740-9944656E893B}
+name: ID
+master: {00000000-0000-0000-0000-000000000000}
+template: {3975905C-9658-4B3A-9789-5D4CFC13B50E}
+templatekey: Search Type
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 29
+
+Software/32x32/graph_node.png
+----version----
+language: en
+version: 1
+revision: 0f2b5566-5277-42cc-8d8b-1b35ee2cdbcf
+
+----field----
+field: {AA71B9BC-0C3A-4945-99B7-EEA911A1A8A1}
+name: Name
+key: name
+content-length: 2
+
+id
+----field----
+field: {F8060A55-A159-4A4D-B455-A1C85E00EBE7}
+name: Control Type
+key: control type
+content-length: 4
+
+Text
+----field----
+field: {014C0684-D776-4428-B6BB-5D1ABB3DFDF4}
+name: Display Text
+key: display text
+content-length: 27
+
+Search by ID (Max 1 Result)
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120202T121800
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+0f2b5566-5277-42cc-8d8b-1b35ee2cdbcf
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120626T130954:634763129943517645
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Sitecore.ItemBuckets</id>
+    <version>@@version@@</version>
+    <title>Sitecore Item Buckets</title>
+    <authors>Tim Ward</authors>
+    <owners>Tim Ward</owners>
+    <projectUrl>http://svn.sitecore.net/ItemBuckets/Documentation</projectUrl>
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore Items Buckets allows Sitecore Sites to manae repositories of hidden content.</description>
+    <releaseNotes>This is the first release</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>Sitecore CMS Item Buckets</tags>
+    <dependencies>
+        <dependency id="Sitecore.BigData" version="0.0.0.66" />
+    </dependencies>
+  </metadata>
+</package>

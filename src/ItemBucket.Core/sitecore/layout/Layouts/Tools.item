@@ -1,0 +1,37 @@
+----item----
+version: 1
+id: {08B83149-FCDD-4690-BA05-1C5187A96A13}
+database: core
+path: /sitecore/layout/Layouts/Tools
+parent: {75CC5CE4-8979-4008-9D3C-806477D57619}
+name: Tools
+master: {00000000-0000-0000-0000-000000000000}
+template: {A87A00B1-E6DB-45AB-8B54-636FEC3B5523}
+templatekey: Folder
+
+----version----
+language: en
+version: 1
+revision: F57F54B4-7987-4D95-BCFF-8B8DC6FF070F
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20050401T000000
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 5
+
+admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+F57F54B4-7987-4D95-BCFF-8B8DC6FF070F

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xamlControls 
+  xmlns:x="http://www.sitecore.net/xaml"
+  xmlns:ajax="http://www.sitecore.net/ajax"
+  xmlns:rest="http://www.sitecore.net/rest"
+  xmlns:javascript="http://www.sitecore.net/javascript"
+  xmlns:r="http://www.sitecore.net/renderings"
+  xmlns:xmlcontrol="http://www.sitecore.net/xmlcontrols"
+  xmlns:p="http://schemas.sitecore.net/Visual-Studio-Intellisense"
+  xmlns:asp="http://www.sitecore.net/microsoft/webcontrols"
+  xmlns:html="http://www.sitecore.net/microsoft/htmlcontrols"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  
+  <Sitecore.Shell.Applications.ItemBucketRollback x:inherits="Sitecore.ItemBucket.Kernel.Kernel.Forms.ItemBucketsRollbackForm,Sitecore.ItemBucket.Kernel">
+    <Sitecore.Controls.HtmlPage runat="server">
+      <x:register assembly="ComponentArt.Web.UI" namespace="ComponentArt.Web.UI"/>
+      <x:register assembly="Sitecore.Kernel" namespace="Sitecore.Web.UI.WebControls.Ribbons"/>
+
+      <Stylesheet Src="Content Manager.css" DeviceDependant="true" runat="server" />
+      <Stylesheet Src="Ribbon.css" DeviceDependant="true" runat="server" />
+      <Stylesheet Src="Grid.css" DeviceDependant="true" runat="server" />
+      <Stylesheet Key="RecycleBin" x:placeholder="Stylesheets" runat="server">
+        body {
+          overflow: auto;
+          background: transparent;
+        }
+
+      </Stylesheet>
+      
+      <Script Src="/sitecore/shell/Applications/Content Manager/Content Editor.js" runat="server" />
+
+      <script type="text/javascript" language="javascript">
+
+        function OnResize() {
+          var doc = $(document.documentElement);
+          var ribbon = $("RibbonContainer");
+          var grid = $("GridContainer");
+  
+          grid.style.height = doc.getHeight() - ribbon.getHeight() + 'px';
+          grid.style.width = doc.getWidth() + 'px';
+
+          Items.render();
+
+          /* re-render again after some "magic amount of time" - without this second re-render grid doesn't pick correct width sometimes */
+          setTimeout("Items.render()", 150);
+        }
+
+        window.onresize = OnResize;
+      </script>
+      
+      <AjaxScriptManager runat="server"/>
+      <ContinuationManager runat="server" />
+
+      <GridPanel Height="100%" Width="100%" runat="server">
+        <Border ID="RibbonContainer" runat="server">
+          <Ribbon ID="Ribbon" runat="server" />
+        </Border>
+        <Border ID="GridContainer" runat="server" GridPanel.Height="100%" Height="100%" Background="White">
+          <Grid id="Items"
+            AutoFocusSearchBox="false"
+            RunningMode="Callback"
+            CssClass="Grid"
+
+            ShowHeader="true"
+            HeaderCssClass="GridHeader"
+            
+            FooterCssClass="GridFooter"
+                
+            GroupByCssClass="GroupByCell"
+            GroupByTextCssClass="GroupByText"
+            GroupBySortAscendingImageUrl="group_asc.gif"
+            GroupBySortDescendingImageUrl="group_desc.gif"
+            GroupBySortImageWidth="10"
+            GroupBySortImageHeight="10"
+
+            GroupingNotificationTextCssClass="GridHeaderText"
+            GroupingPageSize="5"
+            
+            PageSize="15"
+            PagerStyle="Slider"
+            PagerTextCssClass="GridFooterText"
+      	    PagerButtonWidth="41"
+      	    PagerButtonHeight="22"
+            PagerImagesFolderUrl="/sitecore/shell/themes/standard/componentart/grid/pager/"
+            
+            ShowSearchBox="true"
+            SearchTextCssClass="GridHeaderText"
+            SearchBoxCssClass="SearchBox"
+      	    
+            SliderHeight="20"
+            SliderWidth="150"
+            SliderGripWidth="9"
+            SliderPopupOffsetX="20"
+            SliderPopupClientTemplateId="SliderTemplate"
+            
+            TreeLineImagesFolderUrl="/sitecore/shell/themes/standard/componentart/grid/lines/"
+            TreeLineImageWidth="22"
+            TreeLineImageHeight="19"
+            
+            PreExpandOnGroup="false"
+            ImagesBaseUrl="/sitecore/shell/themes/standard/componentart/grid/"
+            IndentCellWidth="22"
+
+            LoadingPanelClientTemplateId="LoadingFeedbackTemplate"
+            LoadingPanelPosition="MiddleCenter"
+            
+            Width="100%" Height="100%" runat="server">
+
+            <Levels>
+              <GridLevel
+                DataKeyField="ArchivalId"
+                ShowTableHeading="false"
+                ShowSelectorCells="false"
+                RowCssClass="Row"
+                ColumnReorderIndicatorImageUrl="reorder.gif"
+                DataCellCssClass="DataCell"
+                HeadingCellCssClass="HeadingCell"
+                HeadingCellHoverCssClass="HeadingCellHover"
+                HeadingCellActiveCssClass="HeadingCellActive"
+                HeadingRowCssClass="HeadingRow"
+                HeadingTextCssClass="HeadingCellText"
+                SelectedRowCssClass="SelectedRow"
+                GroupHeadingCssClass="GroupHeading"
+                SortAscendingImageUrl="asc.gif"
+                SortDescendingImageUrl="desc.gif"
+                SortImageWidth="13"
+                SortImageHeight="13" runat="server">
+                <Columns runat="server">
+                  <GridColumn DataField="SnapshotId" Visible="false" runat="server"/>
+                  <GridColumn DataField="ItemPathToTrack" AllowGrouping="false" IsSearchable="true" SortedDataCellCssClass="SortedDataCell" HeadingText="Name" runat="server" />
+                </Columns>
+              </GridLevel>
+            </Levels>
+
+            <ClientTemplates>
+              <ClientTemplate Id="LoadingFeedbackTemplate" runat="server">
+                <table cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td style="font-size:10px;">
+                      <Literal Text="Loading..." runat="server" />;
+                    </td>
+                    <td>
+                      <img src="/sitecore/shell/themes/standard/componentart/grid/spinner.gif" width="16" height="16" border="0" />
+                    </td>
+                  </tr>
+                </table>
+              </ClientTemplate>
+
+              <ClientTemplate Id="SliderTemplate" runat="server">
+                <table class="SliderPopup" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td>
+                      <div style="padding:4px;font:8pt tahoma;white-space:nowrap;overflow:hidden">## DataItem.GetMember('Name').Value ##</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height:14px;background-color:#666666;padding:1px 8px 1px 8px;color:white">
+                      ## DataItem.PageIndex + 1 ## / ## Items.PageCount ##
+                    </td>
+                  </tr>
+                </table>
+              </ClientTemplate>
+            </ClientTemplates>
+          </Grid>          
+        </Border>
+      </GridPanel>
+      
+    </Sitecore.Controls.HtmlPage>
+  </Sitecore.Shell.Applications.ItemBucketRollback>
+
+</xamlControls>
+                           

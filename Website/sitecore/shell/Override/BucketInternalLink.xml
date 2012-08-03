@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <BucketInternalLink>
+    <FormDialog Icon="Network/32x32/link.png" Header="Internal Link" Text="Select the item that you want to create a link to and specify the appropriate properties." OKButton="OK">
+      <Stylesheet Key="Style">
+        .ff input { 
+          width: 160px;
+        }        
+      </Stylesheet>
+      <CodeBeside Type="Sitecore.ItemBucket.Kernel.FieldTypes.BucketLinkForm,Sitecore.ItemBucket.Kernel"/>
+
+      <DataContext ID="InternalLinkDataContext"/>
+     
+      <GridPanel Columns="2" Width="100%" Height="100%" CellPadding="4" Style="table-layout:fixed">
+        
+        <Scrollbox Width="256" Height="100%" Background="transparent" Border="none" GridPanel.VAlign="top" GridPanel.Width="256">
+          <GridPanel CellPadding="2" Columns="2">
+            <Literal Text="Link Description:" GridPanel.NoWrap="true"/>
+            <Edit ID="Text"/>
+            
+            <Literal Text="Anchor:" GridPanel.NoWrap="true"/>
+            <Edit ID="Anchor"/>
+
+            <Label for="Target" GridPanel.NoWrap="true"><Literal Text="Target Window:"/></Label>
+            <Combobox ID="Target" Width="100%" Change="OnListboxChanged">
+              <ListItem Value="Self" Header="Active browser"/>
+              <ListItem Value="New" Header="New browser"/>
+              <ListItem Value="Custom" Header="Custom"/>
+            </Combobox>
+            
+            <Panel ID="CustomLabel" Background="transparent" Border="none" GridPanel.NoWrap="true" GridPanel.Align="right"><Label For="CustomTarget"><Literal Text="Custom:" /></Label></Panel>
+            <Edit ID="CustomTarget" />
+
+            <Literal Text="Style Class:" GridPanel.NoWrap="true"/>
+            <Edit ID="Class"/>
+            
+            <Literal Text="Alternate Text:" GridPanel.NoWrap="true"/>
+            <Edit ID="Title"/>
+<Literal Text="ItemLink:" GridPanel.NoWrap="true"/>
+            <Edit ID="ItemLink" class="BindMeToItem"/>
+            <Literal Text="Query String:" GridPanel.NoWrap="true"/>
+            <Edit ID="Querystring"/>
+<Button Header="Select" Click="ReturnQuery"/>
+          </GridPanel>
+        </Scrollbox>
+        <Scrollbox Width="100%" Class="scScrollbox scFixSize" Background="window" Padding="0" Border="1px solid #CFCFCF" GridPanel.VAlign="top" GridPanel.Width="100%" GridPanel.Height="100%">
+
+          <iframe src="/sitecore%20modules/shell/sitecore/itemBuckets/DataSourceResult.aspx" width="100%" height="100%" style="overflow-x: hidden;"></iframe>
+          
+        </Scrollbox>
+      </GridPanel>
+      
+    </FormDialog>            
+  </BucketInternalLink>
+</control>

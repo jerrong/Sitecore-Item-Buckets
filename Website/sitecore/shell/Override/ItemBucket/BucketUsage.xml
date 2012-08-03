@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <Bucket.Usage>
+    <FormPage Background="white">
+
+      <CodeBeside Type="Sitecore.ItemBucket.Kernel.Commands.BucketUsageForm,Sitecore.ItemBucket.Kernel"/>
+      <Stylesheet Src="/sitecore/shell/Override/ItemBucket/BucketUsage.css" DeviceDependant="true" />
+      <script type="text/javascript" src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/jquery.min.js"></script>
+      <script type="text/javascript"> $.noConflict=""();</script>
+      <script Type="text/javascript" Language="javascript" Src="/sitecore/shell/Override/ItemBucket/BucketUsage.js">.</script>
+      <div class="wrapper" style="width: 60%;float: left;">      <div class="chart">
+        <h2>Index Statistics</h2>
+        <table id="datatable" border="1" cellpadding="10" cellspacing="0" summary="The number of documents that live inside your buckets">
+          <caption>Index Item Count</caption>
+          <Literal ID="BucketTable" />
+        </table>
+      </div>
+      </div>
+
+
+      <Border Width="400" style="float:left" >
+        
+
+        <Border Style="font:bold 9pt tahoma" Padding="16px 0px 8px 4px">
+          <Literal Text="Bucket"/>
+        </Border>
+
+        
+
+        <Border ID="Buckets" Padding="0px 0px 0px 16px"/>
+
+        
+      </Border>
+
+     
+
+      
+
+      
+
+    
+
+    </FormPage>
+    
+  </Bucket.Usage>
+</control>

@@ -1,0 +1,86 @@
+----item----
+version: 1
+id: {473454F9-5184-4BDD-9A04-0F567641407A}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Search Types/Template
+parent: {7CE9FDA0-E6C1-4495-9740-9944656E893B}
+name: Template
+master: {00000000-0000-0000-0000-000000000000}
+template: {3975905C-9658-4B3A-9789-5D4CFC13B50E}
+templatekey: Search Type
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 33
+
+Applications/32x32/form_green.png
+----version----
+language: en
+version: 1
+revision: d5944e8d-6538-432d-b262-9b0dba27adfb
+
+----field----
+field: {AA71B9BC-0C3A-4945-99B7-EEA911A1A8A1}
+name: Name
+key: name
+content-length: 8
+
+template
+----field----
+field: {F8060A55-A159-4A4D-B455-A1C85E00EBE7}
+name: Control Type
+key: control type
+content-length: 17
+
+Auto Suggest List
+----field----
+field: {014C0684-D776-4428-B6BB-5D1ABB3DFDF4}
+name: Display Text
+key: display text
+content-length: 18
+
+Search by Template
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T104800
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+d5944e8d-6538-432d-b262-9b0dba27adfb
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120625T190058:634762476580871997
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

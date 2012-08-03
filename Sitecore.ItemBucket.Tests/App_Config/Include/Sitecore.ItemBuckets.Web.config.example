@@ -1,0 +1,194 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <search>
+      <configuration>
+        <indexes>
+          <index id="buckets" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">buckets</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>web</Database>
+                <Root>/sitecore/content</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <fieldId>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</fieldId>
+                  <fieldId>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</fieldId>
+                  <fieldId>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</fieldId>
+                </include>
+              </ItemSearch>
+            </locations>
+          </index>
+          <index id="systemfolder" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">systemfolder</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>web</Database>
+                <Root>/sitecore/system</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>
+                <include hint="list:ExcludeField">
+                  <fieldId>{41E10518-FFAD-4581-9406-C8F8EACE9889}</fieldId>
+                </include>-->
+              </ItemSearch>
+            </locations>
+          </index>
+          <index id="medialibrary" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">medialibrary</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>web</Database>
+                <Root>/sitecore/media library</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>
+                <include hint="list:ExcludeField">
+                  <fieldId>{41E10518-FFAD-4581-9406-C8F8EACE9889}</fieldId>
+                </include>-->
+              </ItemSearch>
+            </locations>
+          </index>
+          <index id="templates" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">templates</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>web</Database>
+                <Root>/sitecore/templates</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>
+                <include hint="list:ExcludeField">
+                  <fieldId>{41E10518-FFAD-4581-9406-C8F8EACE9889}</fieldId>
+                </include>-->
+              </ItemSearch>
+            </locations>
+          </index>
+        </indexes>
+      </configuration>
+    </search>
+    <databases>
+      <database id="web" singleInstance="true" type="Sitecore.Data.Database, Sitecore.Kernel">
+        <Engines.DataEngine.Commands.AddFromTemplatePrototype>
+          <obj type="Sitecore.ItemBucket.Kernel.Commands.AddFromTemplateCommand, Sitecore.ItemBucket.Kernel" />
+        </Engines.DataEngine.Commands.AddFromTemplatePrototype>
+      </database>
+    </databases>
+    
+  </sitecore>
+</configuration>
+
+

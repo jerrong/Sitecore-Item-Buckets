@@ -1,0 +1,66 @@
+----item----
+version: 1
+id: {E1CACC03-58B3-4FBF-92CC-2EFF3C0B3E68}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Tips/Simple Search
+parent: {C34856F2-E5EE-44A4-B72B-21B7ABF9F703}
+name: Simple Search
+master: {00000000-0000-0000-0000-000000000000}
+template: {1D3553FF-20C0-486D-ADA9-B258CE6D7F12}
+templatekey: Tip
+
+----version----
+language: en
+version: 1
+revision: 8a697726-2545-4582-8bf9-4bb75e1f9dca
+
+----field----
+field: {DCABF4BD-3AD9-426F-A295-9BF2785CE151}
+name: Tip Title
+key: tip title
+content-length: 13
+
+Simple Search
+----field----
+field: {E4671EDD-3EB2-4634-A944-B5D86397D111}
+name: Tip Text
+key: tip text
+content-length: 371
+
+A Single Term is a single word such as "Sitecore" or "Tim".
+
+This will return results for Sitecore orTim
+
+A Phrase is a group of words surrounded by double quotes such as "Sitecore Tim".
+
+This will return results that have "Sitecore Tim" exactly but won't return items that have "Sitecore or Tim"
+
+A Subquery is a query surrounded by parentheses such as "(Sitecore Tim)".
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111202T085600
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+8a697726-2545-4582-8bf9-4bb75e1f9dca
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120324T205318:634682191984801579
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

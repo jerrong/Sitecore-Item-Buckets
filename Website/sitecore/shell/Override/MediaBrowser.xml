@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense" xmlns:shell="http://www.sitecore.net/shell">
+  <Sitecore.Shell.Applications.Media.MediaBrowser>
+    <FormDialog Icon="Applications/32x32/photo_scenery.png" Header="Media Browser" Submittable="false" Width="800px"
+      Text="Select or Search for the image or file that you want to open.">
+
+      <Stylesheet Src="MediaBrowser.css" DeviceDependant="true" />
+      <CodeBeside Type="Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm,Sitecore.Client"/>
+
+      <DataContext ID="MediaDataContext" DataViewName="Master"/>
+
+      <Border def:placeholder="Buttons">
+        <Button Header="Upload" Click="UploadImage"/>
+        <Space Width="4"/>
+        <Button Header="Drag and Drop" ID="OpenWebDAVViewButton" Click="OpenWebDAVView" Style="white-space:nowrap;"/>
+      </Border>
+
+      <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+        <Tabstrip ID="Tabs" Width="100%" Height="471px">
+          <Tab ID="MediaLibraryTab" Header="Browse" Height="100%">
+            <GridPanel Width="100%" Height="100%" Style="table-layout:fixed" Columns="3" GridPanel.Height="100%">
+
+              <Scrollbox Height="100%" Class="scScrollbox scFixSize scFixSize8" Background="white" Padding="0px" GridPanel.Height="100%" GridPanel.Width="200" GridPanel.VAlign="top" Style="overflow:auto">
+                <TreeviewEx ID="Treeview" DataContext="MediaDataContext" Click="SelectTreeNode" DblClick="TreeViewDblClick" ShowRoot="true" ContextMenu='Treeview.GetContextMenu("contextmenu")' Width="100%" />
+              </Scrollbox>
+
+              <VSplitter ID="MediaBrowserLeft" Target="left" />
+
+              <Scrollbox ID="Listview" Width="100%" Height="100%" Class="scScrollbox scFixSize scFixSize8" Background="white" Padding="0px" GridPanel.Height="100%" GridPanel.Width="100%" GridPanel.VAlign="top" />
+
+            </GridPanel>
+          </Tab>
+          <Tab ID="MediaTab" Header="Search" Height="100%">
+            <Frame SourceUri="/sitecore%20modules/Shell/Sitecore/ItemBuckets/MediaBrowser.aspx" Width="100%" Height="100%"></Frame>
+          </Tab>
+        </Tabstrip>
+        <Border Class="filenameContainer">
+          <GridPanel Width="100%" Columns="2">
+
+            <Border Class="name">
+              <Literal Text="Name:"/>
+            </Border>
+
+            <Edit ID="Filename" Class="filename" Width="100%" GridPanel.Width="100%"/>
+          </GridPanel>
+        </Border>
+
+      </GridPanel>
+
+
+    </FormDialog>
+  </Sitecore.Shell.Applications.Media.MediaBrowser>
+</control>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <RichText.InsertBucketLink>
+  	 
+    <FormDialog Icon="Network/32x32/link.png" Header="Insert a Link" 
+      Text="Select the item or media that you want to create a link to.">
+	   <Stylesheet Key="Style">
+       #scButtons {
+	  z-index: 3400;
+	  
+	  }
+	    .scButtons {
+	  z-index: 3400;
+	  
+	  }
+      </Stylesheet>
+	  
+
+	 
+      <CodeBeside Type="Sitecore.ItemBucket.Kernel.Forms.BucketLinkForm.BucketLinkForm,Sitecore.ItemBucket.Kernel"/>
+      <DataContext ID="InternalLinkDataContext"/>
+      <DataContext ID="MediaDataContext" Root="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}"/>
+
+	<iframe src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/MiniResults.aspx" width="100%" height="100%"></iframe>	
+      
+    </FormDialog>
+  </RichText.InsertBucketLink>
+</control>

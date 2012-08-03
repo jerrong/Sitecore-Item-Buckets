@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <ChangeTemplate>
+    <WizardForm Application="Templates/Change Template" Background="#e9e9e9" CodeBeside="Sitecore.Shell.Applications.Templates.ChangeTemplate.ChangeTemplateForm,Sitecore.Client">
+
+      <Stylesheet Key="Warning">
+        .scWarning {
+          background: #ffffe4;
+          border: 1px solid #c9c9c9;
+          border-left:none;
+          border-right:none;
+          padding: 4px 2px 4px 4px;
+          margin: 24px 0px 4px 0px;
+          font-weight: bold;
+        }
+        
+        #LostFields ul {
+          margin-top: 0; 
+          margin-left: 32px;
+        }
+
+      </Stylesheet>
+    
+      <WizardFormFirstPage ID="FirstPage" Icon="Applications/32x32/form_blue.png">
+        <Border Class="scWizardWelcomeTitle"><Literal ID="Welcome" Text="Welcome to the Change Template Wizard."/></Border>
+        <Literal Text="This wizard helps you:"/>
+        <ul>
+          <li class="scWizardBullet"><Literal Text="Select a new template to use with the current item."/></li>
+        </ul>
+      </WizardFormFirstPage>
+      
+      <WizardFormPage ID="Template" Header="Select the Template" Text="Select the template that you want to use. Click Next to continue" Icon="Applications/32x32/form_blue.png">
+        <TemplateDataContext ID="TemplatesDataContext"/>
+
+        <WizardFormIndent>
+          <Tabstrip ID="Tabs" Width="100%" Height="471px">
+          <Tab ID="MediaLibraryTab" Header="Browse" Height="100%">
+          <Scrollbox Width="100%" Height="100%" Background="white" Border="1px inset" Padding="0">
+            <TreeviewEx ID="TemplateLister" DataContext="TemplatesDataContext" />
+          </Scrollbox>
+ </Tab>
+          <Tab ID="MediaTab" Header="Search" Height="100%">
+            <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+        <Scrollbox ID="SearchItems" Height="100%" Class="scScrollbox scFixSize scFixSize4" Background="white" Border="1px inset" Padding="0px" GridPanel.Height="100%">
+
+         <Frame SourceUri="/sitecore%20modules/Shell/Sitecore/ItemBuckets/FieldResults.aspx" Width="100%" Height="100%"></Frame>
+          
+        </Scrollbox>
+      </GridPanel>
+          </Tab>
+        </Tabstrip>
+
+
+
+
+
+
+
+        </WizardFormIndent>
+      </WizardFormPage>
+
+      <WizardFormPage ID="Confirm" Header="Change" Text="Are you sure you want to change the template? Click Next to change the template." Icon="Applications/32x32/form_blue.png">
+        <WizardFormIndent>
+          <Literal Text="The template will be changed from:"/>
+          <Border Padding="16px 0px 16px 16px">
+            <li><b><Literal ID="OldTemplateName"/></b></li>
+          </Border>
+
+          <Literal Text="to:"/>
+          
+          <Border Padding="16px 0px 0px 16px">
+            <li><b><Literal ID="TemplateName"/></b></li>
+          </Border>
+
+          <Border ID="Warning" Visible="false">
+            <Border class="scWarning">
+              <ThemedImage Height="16" Width="16" style="vertical-align:middle; margin-right: 4px" Src="Applications/16x16/warning.png" />
+              <Literal Text="If you change the template, the data in the following fields may be lost:" />
+            </Border>
+
+            <Border ID="LostFields">
+              <ul>
+                <li>
+                  <Literal Text="Text"/>
+                </li>
+                <li>
+                  <Literal Text="Description"/>
+                </li>
+              </ul>
+            </Border>
+          </Border>
+
+        </WizardFormIndent>
+      </WizardFormPage>
+
+      <WizardFormLastPage ID="LastPage" Icon="Applications/32x32/form_blue.png">
+        <Literal Text="The template has been changed successfully. Click Finish to close the Wizard."/>
+      </WizardFormLastPage>
+      
+    </WizardForm>
+  </ChangeTemplate>
+</control>

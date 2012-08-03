@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.ItemBucket.Kernel</RootNamespace>
+    <AssemblyName>Sitecore.ItemBucket.Kernel</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Sitecore.ItemBucket.Kernel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ComponentArt.Web.UI, Version=2010.1.2637.35, Culture=neutral, PublicKeyToken=9bc9f846553156bb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Sitecore\ComponentArt.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Sitecore\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Sitecore\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\lib\Solr\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Sitecore\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Sitecore\Sitecore.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Client">
+      <HintPath>..\lib\Sitecore\Sitecore.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="SolrNet">
+      <HintPath>..\..\lib\Solr\SolrNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Installer\PostSteps.cs" />
+    <Compile Include="Kernel\Commands\AddFromTemplateCommand.cs" />
+    <Compile Include="Kernel\Commands\AddSilentTab.cs" />
+    <Compile Include="Kernel\Commands\AddTab.cs" />
+    <Compile Include="Kernel\Commands\BaseCommand.cs" />
+    <Compile Include="Kernel\Commands\BucketUsage.cs" />
+    <Compile Include="Kernel\Commands\BucketUsageForm.cs" />
+    <Compile Include="Kernel\Commands\GenerateSOLRSchema.cs" />
+    <Compile Include="Kernel\Commands\GoToClosestBucketParent.cs" />
+    <Compile Include="Kernel\Commands\MarkAsUnBucketable.cs" />
+    <Compile Include="Kernel\Commands\PasteToField.cs" />
+    <Compile Include="Kernel\Commands\Rebuild.cs" />
+    <Compile Include="Kernel\Commands\SOLRGenerateForm.cs" />
+    <Compile Include="Kernel\Commands\SyncBucket.cs" />
+    <Compile Include="Kernel\Commands\MakeBucket.cs" />
+    <Compile Include="Kernel\Commands\MarkAsBucketable.cs" />
+    <Compile Include="Kernel\Commands\MarkImageFieldAsSearchResultsImage.cs" />
+    <Compile Include="Kernel\Commands\Optimise.cs" />
+    <Compile Include="Kernel\Commands\RebuildBucketIndex.cs" />
+    <Compile Include="Kernel\Commands\Search.cs" />
+    <Compile Include="Kernel\Commands\SetFieldAsTag.cs" />
+    <Compile Include="Kernel\Commands\SetSecurityRule.cs" />
+    <Compile Include="Kernel\Commands\ToggleBucket.cs" />
+    <Compile Include="Kernel\Commands\UnMakeBucket.cs" />
+    <Compile Include="Kernel\Crawlers\BigDataCrawler.cs" />
+    <Compile Include="Kernel\Crawlers\CustomCrawler.cs" />
+    <Compile Include="Kernel\Crawlers\CustomField.cs" />
+    <Compile Include="Kernel\Data\ScalableLinkDatabase.cs" />
+    <Compile Include="Kernel\Events\AddedVersion.cs" />
+    <Compile Include="Kernel\Events\AutoBucket.cs" />
+    <Compile Include="Kernel\Events\AddingVersions.cs" />
+    <Compile Include="Kernel\Events\ItemCopy.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketDatasourceField.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketLink.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketLinkForm.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketRichText.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketTreeList.cs" />
+    <Compile Include="Kernel\FieldTypes\BuildDataSourceQuery.cs" />
+    <Compile Include="Kernel\FieldTypes\PasteDatasourceQuery.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\BucketLinkForm.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\RollbackDelete.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\RollbackEmpty.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\RollbackRefresh.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\RollbackRestore.cs" />
+    <Compile Include="Kernel\Forms\ExtendedShellForm.cs" />
+    <Compile Include="Kernel\Forms\GalleryLinksFormOverride.cs" />
+    <Compile Include="Kernel\Forms\InjectScripts.cs" />
+    <Compile Include="Kernel\FieldTypes\LuceneQuery.cs" />
+    <Compile Include="Kernel\Forms\ExtendedContentEditorForm.cs" />
+    <Compile Include="Kernel\Forms\BucketLinkForm\ItemBucketsRollbackForm.cs" />
+    <Compile Include="Kernel\Forms\ScalableWorkbox.cs" />
+    <Compile Include="Kernel\Forms\SelectRenderingDatasourceForm.cs" />
+    <Compile Include="Kernel\Forms\WebEdit\Search.cs" />
+    <Compile Include="Kernel\Hooks\QueryWarmUp.cs" />
+    <Compile Include="Kernel\Interfaces\IBucketController.cs" />
+    <Compile Include="Kernel\Interfaces\IBucketSearchQuery.cs" />
+    <Compile Include="Kernel\Interfaces\IItem.cs" />
+    <Compile Include="Kernel\Interfaces\IRepository.cs" />
+    <Compile Include="Kernel\Interfaces\ISuggestable.cs" />
+    <Compile Include="Kernel\Interfaces\ITag.cs" />
+    <Compile Include="Kernel\ItemExtensions\Axes\ItemExtensions.cs" />
+    <Compile Include="Kernel\Interfaces\ITagRepository.cs" />
+    <Compile Include="Kernel\ItemExtensions\Axes\ItemSearchMethods.cs" />
+    <Compile Include="Kernel\LinkProvider\NewsLinkProvider.cs" />
+    <Compile Include="Kernel\LinkProvider\NewsLinkResolver.cs" />
+    <Compile Include="Kernel\LinkProvider\Tag.cs" />
+    <Compile Include="Kernel\LinkProvider\TagRepository.cs" />
+    <Compile Include="Kernel\Pipelines\BucketArgs.cs" />
+    <Compile Include="Kernel\Pipelines\Bucket\CreateBucketProcessor.cs" />
+    <Compile Include="Kernel\Pipelines\Initialize.cs" />
+    <Compile Include="Kernel\Pipelines\ItemCopy.cs" />
+    <Compile Include="Kernel\Pipelines\ItemDeleted.cs" />
+    <Compile Include="Kernel\Events\ItemMove.cs" />
+    <Compile Include="Kernel\FieldTypes\BucketList.cs" />
+    <Compile Include="Kernel\FieldTypes\CustomDataSource.cs" />
+    <Compile Include="Kernel\Gutters\BucketGutter.cs" />
+    <Compile Include="Kernel\ItemExtensions\Axes\BucketItemAxes.cs" />
+    <Compile Include="Kernel\ItemExtensions\Axes\FieldCrawler.cs" />
+    <Compile Include="Kernel\ItemExtensions\Axes\LookupFieldCrawler.cs" />
+    <Compile Include="Kernel\LinkProvider\ItemSearchLinkProvider.cs" />
+    <Compile Include="Kernel\Managers\BucketManager.cs" />
+    <Compile Include="Kernel\Pipelines\BucketItemClone.cs" />
+    <Compile Include="Kernel\Pipelines\ItemDrag.cs" />
+    <Compile Include="Kernel\Pipelines\ItemDuplicate.cs" />
+    <Compile Include="Kernel\Pipelines\ItemMove.cs" />
+    <Compile Include="Kernel\Pipelines\ItemSearchResolver.cs" />
+    <Compile Include="Kernel\Pipelines\UnBucket\UnbucketProcessor.cs" />
+    <Compile Include="Kernel\Presentation\BucketPresentationExtensions.cs" />
+    <Compile Include="Kernel\Publishing\ProcessQueue.cs" />
+    <Compile Include="Kernel\Rules\Actions\SetDataSourceViaSearchQuery.cs" />
+    <Compile Include="Kernel\Rules\Macro\SearchMacro.cs" />
+    <Compile Include="Kernel\Rules\WithinABucket.cs" />
+    <Compile Include="Kernel\Search\BaseDynamicField.cs" />
+    <Compile Include="Kernel\Search\DataContext.cs" />
+    <Compile Include="Kernel\Search\DateRangeSearchParam.cs" />
+    <Compile Include="Kernel\Search\DefaultFieldCrawler.cs" />
+    <Compile Include="Kernel\Search\DidYouMean\DidYouMean.cs" />
+    <Compile Include="Kernel\Search\ExtendedFieldCrawlerFactory.cs" />
+    <Compile Include="Kernel\Search\Facet.cs" />
+    <Compile Include="Kernel\Search\FacetReturn.cs" />
+    <Compile Include="Kernel\Search\Facets\AuthorFacet.cs" />
+    <Compile Include="Kernel\Search\Facets\DateRangeFacet.cs" />
+    <Compile Include="Kernel\Search\Facets\Dimensions.cs" />
+    <Compile Include="Kernel\Search\Facets\Extension.cs" />
+    <Compile Include="Kernel\Search\Facets\FieldFacet.cs" />
+    <Compile Include="Kernel\Search\Facets\FileSize.cs" />
+    <Compile Include="Kernel\Search\Facets\LanguageFacet.cs" />
+    <Compile Include="Kernel\Search\Facets\LocationFacet.cs" />
+    <Compile Include="Kernel\Search\Facets\TemplateFacet.cs" />
+    <Compile Include="Kernel\Search\FieldSearchParam.cs" />
+    <Compile Include="Kernel\Search\FieldValueSearchParam.cs" />
+    <Compile Include="Kernel\Search\FullSearch.cs" />
+    <Compile Include="Kernel\Search\IDataContextFactory.cs" />
+    <Compile Include="Kernel\Search\IFacet.cs" />
+    <Compile Include="Kernel\Search\ISearchDropDown.cs" />
+    <Compile Include="Kernel\Search\NumericRangeSearchParam.cs" />
+    <Compile Include="Kernel\Search\QueryTimer.cs" />
+    <Compile Include="Kernel\Search\Repository.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\RecentTabs.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\RecentlyCreated.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\RecentlyModified.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\RecentSeaches.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\SearchCommands.cs" />
+    <Compile Include="Kernel\Search\SearchDropdowns\SearchOperations.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\AddTag.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\ApplyFieldValueChangeToAllItems.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\ApplyPersonalisationToAllItems.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\ApplyPresentationToItems.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\ApplyProfileCardsToAllItems.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\ChangeTemplateForAllItems.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\CloneToCommand.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\CopyToCommand.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\CopyToDatasourceQuery.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\CopyToIDList.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\DeleteCommand.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\MoveToCommand.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\RunConditionalRule.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\SerialiseItems.cs" />
+    <Compile Include="Kernel\Search\SearchParam.cs" />
+    <Compile Include="Kernel\Search\SearchType.cs" />
+    <Compile Include="Kernel\Search\SimpleFacetSearch.cs" />
+    <Compile Include="Kernel\Search\SOLR\SOLRHistoryEngineHook.cs" />
+    <Compile Include="Kernel\Search\SOLR\SOLRItem.cs" />
+    <Compile Include="Kernel\Search\SOLR\SolrSearchParamters.cs" />
+    <Compile Include="Kernel\Search\SortableIndexSearchContent.cs" />
+    <Compile Include="Kernel\Search\SortableInMemoryIndexSearchContext.cs" />
+    <Compile Include="Kernel\Search\Tags\SitecoreHostedTagRepository.cs" />
+    <Compile Include="Kernel\Search\Tags\SitecoreHostedTagTemplate.cs" />
+    <Compile Include="Kernel\Search\Tip.cs" />
+    <Compile Include="Kernel\Search\View.cs" />
+    <Compile Include="Kernel\Security\AuthHelper.cs" />
+    <Compile Include="Kernel\Security\BucketAccessRight.cs" />
+    <Compile Include="Kernel\Security\BucketAuthorizationProvider.cs" />
+    <Compile Include="Kernel\Security\BucketRights.cs" />
+    <Compile Include="Kernel\Security\BucketSecurityManager.cs" />
+    <Compile Include="Kernel\Security\Rules\ItemEventResolver.cs" />
+    <Compile Include="Kernel\Security\Rules\ItemSecurityRuleEditor.cs" />
+    <Compile Include="Kernel\Templates\TemplateExtensions.cs" />
+    <Compile Include="Kernel\Tests\BucketTests.cs" />
+    <Compile Include="Kernel\Tests\Tests.cs" />
+    <Compile Include="Kernel\TextSearchQuery.cs" />
+    <Compile Include="Kernel\Util\Config.cs" />
+    <Compile Include="Kernel\Util\Constants.cs" />
+    <Compile Include="Kernel\Util\DateExtensions.cs" />
+    <Compile Include="Kernel\Util\IdHelper.cs" />
+    <Compile Include="Kernel\Util\IndexConstants.cs" />
+    <Compile Include="Kernel\Util\ItemExtensions.cs" />
+    <Compile Include="Kernel\Util\ItemUtil.cs" />
+    <Compile Include="Kernel\Util\EnumerableExtensions.cs" />
+    <Compile Include="Kernel\Util\ObjectExtensions.cs" />
+    <Compile Include="Kernel\Util\QueryTranslator.cs" />
+    <Compile Include="Kernel\Util\Searcher.cs" />
+    <Compile Include="Kernel\Util\SearcherMethods.cs" />
+    <Compile Include="Kernel\Util\SearchField.cs" />
+    <Compile Include="Kernel\Util\SearchHelper.cs" />
+    <Compile Include="Kernel\Util\SearchStringModelcs.cs" />
+    <Compile Include="Kernel\Util\ShortGuid.cs" />
+    <Compile Include="Kernel\Util\SitecoreExtensions.cs" />
+    <Compile Include="Kernel\Util\SitecoreItem.cs" />
+    <Compile Include="Kernel\Util\SortDirection.cs" />
+    <Compile Include="Kernel\Util\StringExtensions.cs" />
+    <Compile Include="Kernel\Validators\ValidBucketQuery.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kernel\Engines\" />
+    <Folder Include="Kernel\Pipelines\GetRenderingDataSource\" />
+    <Folder Include="Kernel\Search\Hadoop\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ideas.txt" />
+    <Content Include="Kernel\Search\DidYouMean\fulldictionary00.txt" />
+    <Content Include="Kernel\Search\SOLR\schema_template.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.BigData\Sitecore.BigData.csproj">
+      <Project>{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}</Project>
+      <Name>Sitecore.BigData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings.StyleCop" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

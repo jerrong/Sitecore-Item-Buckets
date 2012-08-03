@@ -1,0 +1,241 @@
+----item----
+version: 1
+id: {E1803E6E-BCF7-455D-86B0-6D238EFF8491}
+database: core
+path: /sitecore/content/Applications/Control Panel/Item Buckets/Trigger SOLR Replication
+parent: {63E13AE2-503A-49BD-8F30-25F2721C3598}
+name: Trigger SOLR Replication
+master: {C5F1AA82-F831-477E-BA04-11D435D476E4}
+template: {BDB6FA46-2F76-4BDE-8138-52B56C2FC47E}
+templatekey: Task option
+
+----field----
+field: {20F47B0C-B146-4847-AC4D-0B25983514B3}
+name: Click
+key: click
+content-length: 16
+
+solr:replication
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 2
+
+30
+----field----
+field: {DEC8D2D5-E3CF-48B6-A653-8E69E2716641}
+name: __Security
+key: __security
+content-length: 86
+
+ar|sitecore\Sitecore Client Maintaining|pe|+item:read|pd|+item:read|a?|Everyone|p*|!*|
+----version----
+language: da
+version: 1
+revision: 5b1bdd8d-900f-4d77-89cc-bd33b54394fd
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 21
+
+Genopbyg søgeindekset
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115008:634492650087164076
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+5b1bdd8d-900f-4d77-89cc-bd33b54394fd
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115008:634492650087164076
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: de-DE
+version: 1
+revision: 7dcb92c4-178b-4c0d-a360-e8f2b91fcc5b
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 23
+
+Such Index neu aufbauen
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T115850:634492655306483035
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+7dcb92c4-178b-4c0d-a360-e8f2b91fcc5b
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T115850:634492655306483035
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: c6e51634-a69b-4784-92d9-8bf8610fe813
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 78
+
+Trigger the SOLR Master servers to replicate their index across slave servers.
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T101900
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+c6e51634-a69b-4784-92d9-8bf8610fe813
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120803T083438:634795796785960941
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja-JP
+version: 1
+revision: 14ed8660-7de5-47dd-b3ce-ab70f1324e51
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 14
+
+検索インデックスを再構築する
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110818T120749:634492660691273921
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+14ed8660-7de5-47dd-b3ce-ab70f1324e51
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110818T120749:634492660691273921
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

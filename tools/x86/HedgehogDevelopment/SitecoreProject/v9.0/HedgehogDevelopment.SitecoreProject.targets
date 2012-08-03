@@ -1,0 +1,332 @@
+﻿<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <HedegehogToolsPath>..\..\..</HedegehogToolsPath>
+  </PropertyGroup>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.DeploySitecoreConnector"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.DeploySitecoreItems"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.RemoveSitecoreConnector"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.GetProjectContentFiles"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.ResetSitecoreItemCollection"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.CollectSitecoreItems"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.RemoveSitecoreItemsNotInProject"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.GeneratePackage"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+			   TaskName="HedgehogDevelopment.SitecoreProject.Tasks.ValidateProjectOutDir"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+       TaskName="HedgehogDevelopment.SitecoreProject.Tasks.ClearSitecoreCache"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+       TaskName="HedgehogDevelopment.SitecoreProject.Tasks.GetProjectName"/>
+  <UsingTask AssemblyFile="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.Tasks.dll"
+       TaskName="HedgehogDevelopment.SitecoreProject.Tasks.BuildReplacementTargetPath"/>
+
+  <Import Project="$(MSBuildProjectFullPath).user" Condition="Exists('$(MSBuildProjectFullPath).user')"/>
+
+  <PropertyGroup>
+    <SitecoreBuildDependsOn>
+      VerifyBuildProperties;
+      BeforeBuild;
+      DoTDSBuild;
+      AfterBuild;
+      GeneratePackage;
+    </SitecoreBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="BuildAndDeployFiles" DependsOnTargets="$(SitecoreBuildDependsOn)"/>
+  <Target Name="RebuildAndDeployFiles" DependsOnTargets="SitecoreBuildClean;$(SitecoreBuildDependsOn)"/>
+
+  <Target Name="Build">
+    <CallTarget Targets="BuildAndDeployFiles"/>
+  </Target>
+
+  <Target Name="Rebuild">
+    <CallTarget Targets="RebuildAndDeployFiles"/>
+  </Target>
+
+  <Target Name="Deploy" DependsOnTargets="Build">
+    <CallTarget Targets="DeploySitecoreItems"/>
+  </Target>
+
+  <Target Name="Clean" Condition="'$(OutputPath)' != ''" DependsOnTargets="SitecoreBuildClean">
+  </Target>
+
+  <Target Name="BeforeBuild">
+    <CallTarget Targets="SitecorePreBuild"/>
+
+    <CallTarget Targets="BeforeSitecoreBuild"/>
+  </Target>
+
+  <Target Name="DoTDSBuild">
+    <CallTarget Targets="SitecoreWebProjectDeploy" Condition="'$(SourceWebProject)' != ''"/>
+    <CallTarget Targets="PerformFileReplacements" Condition="'$(LegacyFileReplacement)' != 'false'"/>
+    <CallTarget Targets="DeploySitecoreItems" Condition="'$(BuildingInsideVisualStudio)' != 'true' and '$(SitecoreWebUrl)' != ''"/>
+  </Target>
+
+  <Target Name="AfterBuild">
+    <CallTarget Targets="AfterSitecoreBuild"/>
+  </Target>
+
+  <Target Name="GeneratePackage" Condition="'$(GeneratePackage)' == 'True'">
+    <CallTarget Targets="BeforeGeneratePackage"/>
+
+    <GetProjectName SourceWebProject="$(SourceWebProject)" Condition="'$(SourceWebProject)' != ''">
+      <Output TaskParameter="ProjectName" PropertyName="_ProjectName"/>
+    </GetProjectName>
+
+    <PropertyGroup>
+      <_PackageOutputDirectory Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">$(OutDir)_Packages\$(MSBuildProjectName)\</_PackageOutputDirectory>
+      <_PackageOutputDirectory Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)..\Package_$(Configuration)\</_PackageOutputDirectory>
+      <_OutputPath Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != '' and '$(SourceWebProject)' != ''">$(OutDir)_PublishedWebsites\$(MSBuildProjectName)</_OutputPath>
+      <_OutputPath Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)</_OutputPath>
+    </PropertyGroup>
+
+    <ValidateProjectOutDir BuildOutputDir="$(_OutputPath)" Condition="'$(IsDesktopBuild)' == 'true'"/>
+
+    <Message importance="high" Text="Building package with files in folder $(_OutputPath)"/>
+    <MakeDir Directories="$(_PackageOutputDirectory)"/>
+
+    <GeneratePackage
+      ProjectFilePath="$(MSBuildProjectFullPath)"
+      PackageOutputDirectory="$(_PackageOutputDirectory)"
+      ConfigurationToBuild="$(Configuration)"
+      CompiledFiles="$(_OutputPath)"
+      Verbose="true"/>
+
+    <CallTarget Targets="AfterGeneratePackage"/>
+  </Target>
+
+  <Target Name="VerifyBuildProperties">
+    <Error Text="Sitecore Deploy Folder not set, or package generation not enabled" Condition=" '$(SitecoreDeployFolder)' == '' and '$(GeneratePackage)' != 'True' "/>
+    <Error Text="OutputPath not set" Condition=" '$(OutputPath)' == ''"/>
+  </Target>
+
+  <Target Name="SitecoreBuildClean">
+    <PropertyGroup>
+      <_OutputPath Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">$(OutDir)_PublishedWebsites\$(MSBuildProjectName)\</_OutputPath>
+      <_OutputPath Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)</_OutputPath>
+    </PropertyGroup>
+
+    <ValidateProjectOutDir BuildOutputDir="$(_OutputPath)"/>
+
+    <ReadLinesFromFile File="BuiltFiles_$(Configuration).txt" Condition="Exists('BuiltFiles_$(Configuration).txt')">
+      <Output TaskParameter="Lines" ItemName="FilesToCleanup"/>
+    </ReadLinesFromFile>
+
+    <Delete Files="@(FilesToCleanup)" TreatErrorsAsWarnings="true" Condition="Exists('BuiltFiles_$(Configuration).txt')"/>
+  </Target>
+
+  <!-- this gets the built binaries for non-desktop builds-->
+  <Target Name="SitecorePreBuild" DependsOnTargets="VerifyBuildProperties" Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">
+    <Message Importance="high" Text="OutDir: $(OutDir) OutputPath: $(OutputPath)"/>
+
+    <ItemGroup>
+      <_BinaryFiles Include="$(OutDir)\*.*" Exclude="$(OutDir)\*_ErrorsWarnings.txt" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_BinaryFiles)" DestinationFolder="$(SourceWebPhysicalPath)\Bin"/>
+  </Target>
+
+  <Target Name="SitecoreWebProjectDeploy" DependsOnTargets="VerifyBuildProperties">
+    <PropertyGroup>
+      <_OutputPath Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">$(OutDir)_PublishedWebsites\$(MSBuildProjectName)\</_OutputPath>
+      <_OutputPath Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)</_OutputPath>
+    </PropertyGroup>
+
+    <ValidateProjectOutDir BuildOutputDir="$(_OutputPath)" Condition="'$(IsDesktopBuild)' == 'true'"/>
+
+    <CallTarget Targets="CopySourceProjectToOutputDir" Condition="'$(SourceWebProject)' != ''"/>
+
+    <ItemGroup>
+      <Deploy_PurgeFiles Include="$(_OutputPath)bin\Sitecore.*.dll"/>
+    </ItemGroup>
+
+    <Delete Files="@(Deploy_PurgeFiles)">
+      <Output ItemName="DeletedFiles" TaskParameter="DeletedFiles" />
+    </Delete>
+
+    <CallTarget Targets="PerformFileReplacements" Condition="'$(LegacyFileReplacement)' == 'false'"/>
+
+    <ItemGroup Condition="'$(SitecoreDeployFolder)' != ''">
+      <DeployFiles Include="$(_OutputPath)**\*.*" Exclude="**\.svn\**\*.*"/>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(DeployFiles)"
+          DestinationFiles="@(DeployFiles->'$(SitecoreDeployFolder)\%(RecursiveDir)%(FileName)%(Extension)')"
+          Condition="'$(SitecoreDeployFolder)' != ''" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="InstallConnector">
+    <CallTarget Targets="InstallSitecoreConnectorFiles" Condition=" '$(InstallSitecoreConnector)' == 'True'"/>
+    <DeploySitecoreConnector
+			WebConfigPath="$(SitecoreDeployFolder)\_DEV\web.config"
+			SitecoreConnectorAccessGuid="$(SitecoreAccessGuid)"
+			Condition=" '$(InstallSitecoreConnector)' == 'True'"/>
+    <Message Importance="high" Text="Sitecore Connector Successfully installed"/>
+  </Target>
+
+  <Target Name="PerformFileReplacements">
+    <CallTarget Targets="BeforeFileReplacements"/>
+    <CallTarget Targets="DoReplacements"/>
+    <CallTarget Targets="AfterFileReplacements"/>
+  </Target>
+
+  <Target Name="DoReplacements" Inputs="@(Replacement)" Outputs="%(Replacement.TargetPath)\_">
+    <GetProjectName SourceWebProject="$(SourceWebProject)" Condition="'$(SourceWebProject)' != ''">
+      <Output TaskParameter="ProjectName" PropertyName="_ProjectName"/>
+    </GetProjectName>
+
+    <PropertyGroup>
+      <_IsRelative>%(Replacement.IsRelative)</_IsRelative>
+      <_IsFolder>%(Replacement.IsFolder)</_IsFolder>
+      <_RawTargetPath>%(Replacement.TargetPath)</_RawTargetPath>
+      <!-- This was removed because the build was copying the file replacements into the wrong location.  -->
+      <!--<_OutputPath Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != '' and '$(SourceWebProject)' != ''">$(OutDir)_PublishedWebsites\$(_ProjectName)</_OutputPath>-->
+      <_OutputPath Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)</_OutputPath>
+    </PropertyGroup>
+
+    <BuildReplacementTargetPath TargetPath="$(_RawTargetPath)" OutputPath="$(_OutputPath)">
+      <Output TaskParameter="BuiltTargetPath" PropertyName="_TargetPath"/>
+    </BuildReplacementTargetPath>
+
+    <Message Importance="low" Text="Replacement Identity: %(Replacement.Identity) TargetPath: $(_TargetPath) IsRelative: $(_IsRelative) IsFolder: $(_IsFolder)"/>
+
+    <Message Importance="high" Text="Preparing to do FOLDER replacement from %(Replacement.Identity) to $(_TargetPath)" Condition="'$(_IsFolder)' == 'True'"/>
+    <Message Importance="high" Text="Preparing to do FILE replacement from %(Replacement.Identity) to $(_TargetPath)" Condition="'$(_IsFolder)' != 'True'"/>
+
+    <ItemGroup>
+      <_FilesToCopy
+				Include="$(SourceWebPhysicalPath)\%(Replacement.Identity)\**\*.*"
+				Exclude="$(SourceWebPhysicalPath)\%(Replacement.Identity)\**\.svn\**\*.*"
+				Condition=" '$(_IsRelative)' == 'True' and '$(_IsFolder)' == 'True'"/>
+      <_FilesToCopy
+				Include="%(Replacement.Identity)\**\*.*"
+				Exclude="%(Replacement.Identity)\**\.svn\**\*.*"
+				Condition=" '$(IsRelative)' != 'True' and '$(_IsFolder)' == 'True'"/>
+      <_FilesToCopy
+				Include="$(SourceWebPhysicalPath)\%(Replacement.Identity)"
+				Condition=" '$(_IsRelative)' == 'True' and '$(_IsFolder)' != 'True'"/>
+      <_FilesToCopy
+				Include="%(Replacement.Identity)"
+				Condition=" '$(_IsRelative)' != 'True' and '$(_IsFolder)' != 'True'"/>
+    </ItemGroup>
+
+    <Message Importance="low" Text="Copy from: %(_FilesToCopy.Identity) To: $(_TargetPath)\%(_FilesToCopy.RecursiveDir)%(_FilesToCopy.FileName)%(_FilesToCopy.Extension)"/>
+
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="@(_FilesToCopy->'$(_TargetPath)\%(RecursiveDir)%(FileName)%(Extension)')" Condition=" '$(_IsFolder)' == 'True'" SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles" ItemName="_CopiedFiles"/>
+    </Copy>
+    <Copy SourceFiles="@(_FilesToCopy)" DestinationFiles="$(_TargetPath)" Condition=" '$(_IsFolder)' != 'True'" SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles" ItemName="_CopiedFiles"/>
+    </Copy>
+
+    <Message Importance="high" Text="Copied: %(_CopiedFiles.Identity)"/>
+  </Target>
+
+  <Target Name="CopySourceProjectToOutputDir">
+    <PropertyGroup>
+      <_OutputPath Condition="'$(OutDir)' != '$(OutputPath)' and '$(OutDir)' != ''">$(OutDir)_PublishedWebsites\$(MSBuildProjectName)\</_OutputPath>
+      <_OutputPath Condition="'$(OutDir)' == '$(OutputPath)' or '$(OutDir)' == ''">$(OutputPath)</_OutputPath>
+    </PropertyGroup>
+
+    <ValidateProjectOutDir BuildOutputDir="$(_OutputPath)" Condition="'$(IsDesktopBuild)' == 'true'"/>
+
+    <GetProjectContentFiles WebProjectRoot="$(SourceWebPhysicalPath)" WebProject="$(SourceWebVirtualPath)">
+      <Output TaskParameter="ContentFiles" ItemName="SourceWebFiles"/>
+    </GetProjectContentFiles>
+
+    <ItemGroup>
+      <SourceWebBinaries Include="$(SourceWebPhysicalPath)\Bin\**\*.*"/>
+    </ItemGroup>
+
+    <Message Importance="high" Text="SourceWebFiles: @(SourceWebFiles)"/>
+
+    <WriteLinesToFile
+      File="BuiltFiles_$(Configuration).txt"
+      Lines="@(SourceWebFiles->'$(_OutputPath)%(RecursiveDir)%(FileName)%(Extension)')"
+      Overwrite="true"
+      Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+    <WriteLinesToFile
+      File="BuiltFiles_$(Configuration).txt"
+      Lines="@(SourceWebBinaries->'$(_OutputPath)bin\%(RecursiveDir)%(FileName)%(Extension)')"
+      Overwrite="false"
+      Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+
+    <Copy SourceFiles="@(SourceWebFiles)" DestinationFiles="@(SourceWebFiles->'$(_OutputPath)%(RecursiveDir)%(FileName)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(SourceWebBinaries)" DestinationFiles="@(SourceWebBinaries->'$(_OutputPath)bin\%(RecursiveDir)%(FileName)%(Extension)')" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="InstallSitecoreConnectorFiles">
+    <Delete Files="$(SitecoreDeployFolder)\_DEV\TfsService.asmx" Condition="Exists('$(SitecoreDeployFolder)\_DEV\TfsService.asmx')"/>
+
+    <Copy SourceFiles="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\TdsService.asmx"
+			  DestinationFiles="$(SitecoreDeployFolder)\_DEV\TdsService.asmx"/>
+    <Copy SourceFiles="$(HedegehogToolsPath)\HedgehogDevelopment\SitecoreProject\v9.0\bin\HedgehogDevelopment.SitecoreProject.Service.dll"
+			  DestinationFiles="$(SitecoreDeployFolder)\bin\HedgehogDevelopment.SitecoreProject.Service.dll"/>
+  </Target>
+
+  <Target Name="RemoveSitecoreConnectorFiles">
+    <Delete Files="$(SitecoreDeployFolder)\_DEV\TdsService.asmx"/>
+    <Delete Files="$(SitecoreDeployFolder)\_DEV\web.config"/>
+    <Delete Files="$(SitecoreDeployFolder)\bin\HedgehogDevelopment.SitecoreProject.Service.dll"/>
+  </Target>
+
+  <Target Name="BeforeSitecoreBuild"/>
+  <Target Name="BeforeSitecoreMerge"/>
+  <Target Name="AfterSitecoreBuild"/>
+  <Target Name="BeforeGeneratePackage"/>
+  <Target Name="AfterGeneratePackage"/>
+  <Target Name="BeforeFileReplacements"/>
+  <Target Name="AfterFileReplacements"/>
+
+  <Target Name="DeploySitecoreItems" DependsOnTargets="InstallConnector">
+    <Error
+			Text="The Recursive Deploy Action is not set in the project. Please go to the TDS Project property page and set this value."
+			Condition="'$(RecursiveDeployAction)' == ''"/>
+
+    <CallTarget Targets="BeforeSitecoreMerge"/>
+
+    <!-- See if we need to install the temporary connector-->
+    <CallTarget Targets="InstallSitecoreConnectorFiles" Condition=" '$(InstallSitecoreConnector)' != 'True'"/>
+    <DeploySitecoreConnector
+			WebConfigPath="$(SitecoreDeployFolder)\_DEV\web.config"
+			SitecoreConnectorAccessGuid="$(SitecoreAccessGuid)"
+			Condition=" '$(InstallSitecoreConnector)' != 'True'">
+      <Output TaskParameter="TempSitecoreConnectorAccessGuid" PropertyName="SitecoreAccessGuid"/>
+    </DeploySitecoreConnector>
+
+    <ResetSitecoreItemCollection/>
+
+    <CollectSitecoreItems
+			ItemPath="%(SitecoreItem.Identity)"
+			ChildNodeSynchronization="%(SitecoreItem.ChildItemSynchronization)"
+			ItemDeployment="%(SitecoreItem.ItemDeployment)"
+      CurrentConfig="$(Configuration)"
+      ExcludeItemFrom="%(SitecoreItem.ExcludeItemFrom)"
+      DeployAlwaysFields="%(SitecoreItem.DeployAlwaysFields)"
+			Condition="'%(SitecoreItem.Identity)' != ''"/>
+
+    <DeploySitecoreItems
+      SitecoreUrl="$(SitecoreWebUrl)"
+      SitecoreConnectorAccessGuid="$(SitecoreAccessGuid)"
+      SitecoreDatabase="$(SitecoreDatabase)"/>
+
+    <RemoveSitecoreItemsNotInProject
+      SitecoreUrl="$(SitecoreWebUrl)"
+      SitecoreConnectorAccessGuid="$(SitecoreAccessGuid)"
+      DeleteAction="$(RecursiveDeployAction)"
+      SitecoreDatabase="$(SitecoreDatabase)"
+      Condition="'$(RecursiveDeployAction)' != 'Ignore'"/>
+
+    <ClearSitecoreCache SitecoreUrl="$(SitecoreWebUrl)" SitecoreConnectorAccessGuid="$(SitecoreAccessGuid)"/>
+
+    <!-- Remove the temporary connector -->
+    <CallTarget Targets="RemoveSitecoreConnectorFiles" Condition=" '$(InstallSitecoreConnector)' != 'True'"/>
+  </Target>
+</Project>

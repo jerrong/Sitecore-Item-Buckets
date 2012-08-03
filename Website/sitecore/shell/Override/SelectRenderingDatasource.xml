@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource>
+    <FormDialog ID="Dialog" Icon="" Header="" Text="" >
+      <Stylesheet>
+        .scWarning
+        {
+          background: #ffffe4;
+          border: 1px solid #B99325;
+          padding: 2px;
+        }
+
+        table.scDialogContentContainer
+        {
+          padding: 0px 4px;
+        }
+
+        .edit
+        {
+          width: 100%;
+        }
+
+        .ff .edit
+        {
+          width: 98%;
+        }
+
+        .ff.wk .edit
+        {
+          width: 99%;
+        }
+
+        .mode
+        {
+          display: block;
+          height: 80px;
+          text-align: center;
+          text-decoration: none;
+          padding: 8px;
+        }
+
+        .mode:active
+        {
+          outline: none;
+        }
+
+        .ff .mode
+        {
+          height: 64px;
+        }
+
+        .mode:hover
+        {
+          background-color: #E8F5FD;
+          border: 1px solid #D8F0FA;
+          padding: 7px;
+        }
+
+        .selected .mode, .selected .mode:hover, .selected .mode:active
+        {
+          background-color: #D5EFFC;
+          border: 1px solid #99DEFD;
+          padding: 7px;
+        }
+
+        .option-disabled .mode, .option-disabled .mode:hover, .option-disabled .mode:active
+        {
+          cursor: default;
+          text-decoration: none;
+          color: #8D8D8D;
+          border: none;
+          background: none;
+          padding: 8px;
+        }
+
+        .mode-icon
+        {
+          display:block;
+          margin: 0px auto;
+          height: 32px;
+          width: 32px;
+        }
+
+        .mode-text
+        {
+          margin-top:4px;
+        }
+
+        .main-column
+        {
+          border: 1px solid #828790;
+        }
+
+        .section-header
+        {
+          font-weight: bold;
+          color: #333333;
+          border-bottom: 1px solid #999999;
+          height: 16px;
+          width: 100%;
+        }
+
+        .section
+        {
+          width: 100%;
+          height: 100%;
+        }
+
+        .ie #CreateDestination, .ie #CloneDestination, .ie #Treeview
+        {
+          position: relative;
+          margin-left: -16px;
+        }
+
+        .ff #Treeview > input[type="hidden"] + div.scContentTreeNode,
+        .ff #CloneDestination > input[type="hidden"] + div.scContentTreeNode,
+        .ff #CreateDestination > input[type="hidden"] + div.scContentTreeNode
+        {
+          padding-left: 0px;
+          }
+
+        #Treeview, #CloneDestination, #CreateDestination
+        {
+          margin-top:8px;
+        }
+
+        .ff #Right
+        {
+          padding: 8px;
+            }
+
+        .ie #RightContainer
+        {
+          padding: 8px;
+              }
+      </Stylesheet>
+      <Script>
+        function selectItemName(id) {
+          var element = $(id);
+          if (!element) {
+            return;
+          }
+
+          if (!window["$name_"+ element.id + "_modified"]) {
+            element.select();
+          }
+        }
+
+        function nameChanged(sender, event) {
+          if (sender) {
+            window["$name_"+ sender.id + "_modified"] = true;
+          }
+        }
+      </Script>      
+      <CodeBeside Type="Sitecore.ItemBucket.Kernel.Kernel.Forms.SelectRenderingDatasourceForm,Sitecore.ItemBucket.Kernel"/>
+      <DataContext ID="DataContext" Root="/"/>
+      <DataContext ID="CloneParentDataContext" Root="/"/>
+      <DataContext ID="CreateParentDataContext" Root="/" />            
+        <GridPanel Height="100%" Width="100%" VAlign="top" Fixed="true" Columns="3">
+          <!--Left column-->
+          <Border ID="Left" Class="main-column scQuirksBoxModel" Height="100%" Width="100%" GridPanel.Height="100%" GridPanel.Width="120px">
+            <!--Select-->
+            <Border ID="SelectOption">
+              <a href="#" class="mode" onfocus="this.blur()">
+                <ThemedImage Class="mode-icon" Src="ApplicationsV2/32x32/document.png" />
+                <div class="mode-text">
+                  <Literal ID="SelectExisting" Text="Select Existing Content"/>
+                </div>
+              </a>
+            </Border>
+            <Border ID="SearchOption">
+              <a href="#" class="mode" onfocus="this.blur()">
+                <ThemedImage Class="mode-icon" Src="ApplicationsV2/32x32/find.png" />
+                <div class="mode-text">
+                  <Literal ID="Search" Text="Search for Content"/>
+                </div>
+              </a>
+            </Border>
+            <!--Clone-->
+            <Border ID="CloneOption">
+              <a href="#" class="mode" onfocus="this.blur()">
+                <ThemedImage Class="mode-icon" Src="ApplicationsV2/32x32/copy.png?overlay=NetworkV2/16x16/link.png" />
+                <div class="mode-text">
+                  <Literal ID="CloneCurrent" Text="Clone Current Content"/>
+                </div>
+              </a>
+            </Border>
+            <!--Create-->
+            <Border ID="CreateOption">
+              <a href="#" class="mode" onfocus="this.blur()">
+                <ThemedImage ID="CreateIcon" Class="mode-icon" Src="ApplicationsV2/32x32/document_plain_new.png" />
+                <div class="mode-text">
+                  <Literal ID="CreateNew" Text="Create New Content"/>
+                </div>
+              </a>
+            </Border>
+          </Border>
+          <!--Center column-->
+          <Space GridPanel.Width="8px" />
+          <!--Right Panel-->
+          <Border ID="RightContainer" Class="main-column scQuirksBoxModel" Height="100%" Background="white" GridPanel.Width="100%" GridPanel.Height="100%">
+          <GridPanel ID="Right" VAlign="top" Fixed="true" Columns="1" Width="100%" Height="100%">
+            <Border Class="section-header">
+              <Literal ID="SectionHeader" />
+            </Border>
+
+            <Border Class="section" GridPanel.Height="100%">
+            <!--Select Section-->
+            <Scrollbox ID="SelectSection" Width="100%" Height="100%" Class="scScrollbox scFixSize scFixSize4" Style="border-top:none;border-left:none;padding: 0px">              
+                <TreeviewEx ID="Treeview" DataContext="DataContext" Click="Treeview_Click" ShowRoot="true"/>             
+          </Scrollbox>
+            <!--Clone Section-->
+            <Border ID="CloneSection" Height="100%" Visible="false">
+              <GridPanel Fixed="true" Width="100%" Height="100%">
+                <Space GridPanel.Height="8px"></Space>
+                <Literal Text="Name:"/>
+                <Edit ID="CloneName" OnChange="javascript:nameChanged(this,event)" Class="edit"></Edit>
+                <Space GridPanel.Height="8px"></Space>
+                <Literal Text="Parent:"/>                
+                <Scrollbox Height="100%" Width="100%" GridPanel.Valign="top" GridPanel.Height="100%" Style="border-left:none;padding:0px" Class="scScrollbox scFixSize scKeepFixSize scFixSize4">                  
+                   <TreeviewEx ID="CloneDestination" DataContext="CloneParentDataContext" Click="CloneDestination_Change" ShowRoot="true"/>                  
+                </Scrollbox>
+              </GridPanel>
+            </Border>
+            <!--Create Section-->
+            <Border ID="CreateSection" Height="100%" Visible="false">
+              <GridPanel Fixed="true" Width="100%" Height="100%">
+                <Space GridPanel.Height="8px"></Space>
+                <Literal Text="Name:"/>                
+                <Edit ID="NewDatasourceName" OnChange="javascript:nameChanged(this,event)" Class="edit"></Edit>
+                <Space GridPanel.Height="8px"></Space>                
+                <Literal Text="Parent:"/>                
+                <Scrollbox Height="100%" Width="100%" GridPanel.Valign="top" GridPanel.Height="100%" Style="border-left:none;padding:0px" Class="scScrollbox scFixSize scKeepFixSize scFixSize4">                  
+                    <TreeviewEx ID="CreateDestination" DataContext="CreateParentDataContext" Click="CreateDestination_Change" ShowRoot="true"/>              
+                </Scrollbox>
+              </GridPanel>              
+            </Border>
+
+
+<!--Search Section-->
+            <Border ID="SearchSection" Height="100%" Visible="false">
+              <GridPanel Fixed="true" Width="100%" Height="100%">
+                     <Space GridPanel.Height="8px"></Space>
+                <Literal Text="Item:"/>                
+                <Edit ID="ItemLink" OnChange="javascript:nameChanged(this,event)" Class="edit"></Edit>        
+                <Scrollbox Height="100%" Width="100%" GridPanel.Valign="top" GridPanel.Height="100%" Style="border-left:none;padding:0px" Class="scScrollbox scFixSize scKeepFixSize scFixSize4">                  
+                           <Frame SourceUri="/sitecore%20modules/Shell/Sitecore/ItemBuckets/FieldResults.aspx" Width="100%" Height="100%"></Frame>     
+                </Scrollbox>
+              </GridPanel>              
+            </Border>
+
+
+            </Border>
+            <Border ID="Warnings" Class="scWarning" Visible="false" GridPanel.Height="36px" GridPanel.VAlign="bottom">
+              <ThemedImage Height="16" Width="16" style="vertical-align:middle; margin-right: 4px" Src="Applications/16x16/warning.png" />
+                <Literal ID="Information"></Literal>
+            </Border>
+          </GridPanel>
+          </Border>
+        </GridPanel>                                
+    </FormDialog>
+  </Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource>
+</control>

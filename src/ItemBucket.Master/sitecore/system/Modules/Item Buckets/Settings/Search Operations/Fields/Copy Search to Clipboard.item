@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {8B0BC9FF-C718-405E-8A2B-EF61D66CF736}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Settings/Search Operations/Fields/Copy Search to Clipboard
+parent: {8FF16827-B2AD-4CB9-8AAE-9F105DA1D7B9}
+name: Copy Search to Clipboard
+master: {00000000-0000-0000-0000-000000000000}
+template: {9F63F3ED-BFB8-49A3-B370-1830E0A5920F}
+templatekey: Dropdown List
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 22
+
+Network/32x32/link.png
+----version----
+language: en
+version: 1
+revision: e7851b5c-5aed-4f51-aba5-9ce05782bf97
+
+----field----
+field: {CCD35091-1A66-4CE5-A1D3-77A2CCD29142}
+name: Type
+key: type
+content-length: 98
+
+Sitecore.ItemBucket.Kernel.Kernel.Search.SearchOperations.CopyToIDList, Sitecore.ItemBucket.Kernel
+----field----
+field: {D9BDF564-FF37-4564-B943-00D4D89C19F1}
+name: List Name
+key: list name
+content-length: 24
+
+Copy Search to Clipboard
+----field----
+field: {37FE9542-C8E7-41D6-95B0-AE559A48EB04}
+name: Command Name
+key: command name
+content-length: 21
+
+CopySearchToClipboard
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20120207T104300
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e7851b5c-5aed-4f51-aba5-9ce05782bf97
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120625T193128:634762494884232142
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

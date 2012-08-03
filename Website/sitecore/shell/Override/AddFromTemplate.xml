@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <AddFromTemplate>
+    <FormDialog ID="Dialog" Icon="Applications/32x32/form_blue_add.png" Header="Insert from Template" 
+      Text="Select a template and enter a name for the new item." OKButton="Insert">
+
+      <CodeBeside Type="Sitecore.Shell.Applications.Templates.AddFromTemplate.AddFromTemplateForm,Sitecore.Client"/>
+
+      <Script Src="/sitecore/shell/applications/Templates/AddFromTemplate/AddFromTemplate.xml.js" />
+
+      <TemplateDataContext ID="TemplatesDataContext"/>
+
+      <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+         <Tabstrip ID="Tabs" Width="100%" Height="460px">
+          <Tab ID="MediaLibraryTab" Header="Browse" Height="100%">
+        <Scrollbox Width="100%" Height="100%" Background="white" Class="scScrollbox scFixSize scInsetBorder" Padding="0" GridPanel.Height="100%">
+          <TreeviewEx ID="Templates" Click="SelectTreeNode" DblClick="DoOK" DataContext="TemplatesDataContext" />
+        </Scrollbox>
+</Tab>
+          <Tab ID="MediaTab" Header="Search" Height="100%">
+            <GridPanel Width="100%" Height="100%" Style="table-layout:fixed">
+        <Scrollbox ID="SearchItems" Height="100%" Class="scScrollbox scFixSize scFixSize4" Background="white" Border="1px inset" Padding="0px" GridPanel.Height="100%">
+
+         <Frame SourceUri="/sitecore%20modules/Shell/Sitecore/ItemBuckets/FieldResults.aspx" Width="100%" Height="100%"></Frame>
+          
+        </Scrollbox>
+      </GridPanel>
+          </Tab>
+        </Tabstrip>
+
+
+
+
+        <Border Padding="4px 0px 0px 0px">
+          <GridPanel Width="100%" Columns="2">
+
+            <Border Padding="0px 4px 0px 0px" GridPanel.Align="right" NoWrap="true">
+              <Literal Text="Template:"/>
+            </Border>
+
+            <Edit ID="TemplateName" Width="100%" GridPanel.Width="100%"/>
+
+            <Border Padding="0px 4px 0px 0px" GridPanel.Align="right" NoWrap="true">
+              <Literal Text="Item Name:"/>
+            </Border>
+
+            <Edit ID="ItemName" Width="100%" GridPanel.Width="100%" Class="not-dirty"/>
+
+          </GridPanel>
+        </Border>
+
+      </GridPanel>
+
+    </FormDialog>
+  </AddFromTemplate>
+</control>

@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.UI", "Website\Sitecore.ItemBucket.UI.csproj", "{5945A8DA-FB0D-4AED-95D4-68BBA5830954}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.Kernel", "src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj", "{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.ItemBucket.Core", "src\ItemBucket.Core\Sitecore.ItemBucket.Core.scproj", "{12B15B9A-C41D-4161-93DC-163AE1373C4A}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.ItemBucket.Master", "src\ItemBucket.Master\Sitecore.ItemBucket.Master.scproj", "{53E83AF5-7973-475A-B786-034FDE0918CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297040E-A73A-482E-AF1B-75CF08F76F2C}"
+	ProjectSection(SolutionItems) = preProject
+		buckets.vsmdi = buckets.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBuckets.BigData", "Sitecore.ItemBuckets.BigData\Sitecore.ItemBuckets.BigData.csproj", "{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.BigData", "src\Sitecore.BigData\Sitecore.BigData.csproj", "{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.ItemBucket.BigData.Solr", "Sitecore.ItemBucket.BigData.Solr\Sitecore.ItemBucket.BigData.Solr.scproj", "{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.Tests", "Sitecore.ItemBucket.Tests\Sitecore.ItemBucket.Tests.csproj", "{0CA150B2-6EA4-4F10-ABC5-32535BD41426}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Local Debug|Any CPU = Local Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Local Debug|Any CPU.ActiveCfg = Local Debug|Any CPU
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Local Debug|Any CPU.Build.0 = Local Debug|Any CPU
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5945A8DA-FB0D-4AED-95D4-68BBA5830954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Local Debug|Any CPU.ActiveCfg = Local Debug|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Local Debug|Any CPU.Build.0 = Local Debug|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Local Debug|Any CPU.ActiveCfg = Local Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Local Debug|Any CPU.Build.0 = Local Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Local Debug|Any CPU.Deploy.0 = Local Debug|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12B15B9A-C41D-4161-93DC-163AE1373C4A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Local Debug|Any CPU.ActiveCfg = Local Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Local Debug|Any CPU.Build.0 = Local Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Local Debug|Any CPU.Deploy.0 = Local Debug|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E83AF5-7973-475A-B786-034FDE0918CE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Local Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Local Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Local Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Local Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BDEBE42-660F-42EA-96A5-4263F1FDBAEF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Local Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA150B2-6EA4-4F10-ABC5-32535BD41426}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

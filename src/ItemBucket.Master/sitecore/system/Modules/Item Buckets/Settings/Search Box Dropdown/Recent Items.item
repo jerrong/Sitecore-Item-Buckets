@@ -1,0 +1,93 @@
+----item----
+version: 1
+id: {795842D3-3D69-49C3-8A42-B261868FA58F}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Settings/Search Box Dropdown/Recent Items
+parent: {00E978AE-076D-402F-B540-B1ACA5BC65A1}
+name: Recent Items
+master: {00000000-0000-0000-0000-000000000000}
+template: {9F63F3ED-BFB8-49A3-B370-1830E0A5920F}
+templatekey: Dropdown List
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 40
+
+Business/32x32/date-time_preferences.png
+----version----
+language: en
+version: 1
+revision: 223dfb4c-bec4-4779-ac25-4a40960307d0
+
+----field----
+field: {CCD35091-1A66-4CE5-A1D3-77A2CCD29142}
+name: Type
+key: type
+content-length: 93
+
+Sitecore.ItemBucket.Kernel.Search.SearchDropdowns.RecentlyModified,Sitecore.ItemBucket.Kernel
+----field----
+field: {D9BDF564-FF37-4564-B943-00D4D89C19F1}
+name: List Name
+key: list name
+content-length: 17
+
+Recently Modified
+----field----
+field: {5E34A660-3099-4E49-87DF-80EB1DECF2A6}
+name: Enabled
+key: enabled
+content-length: 1
+
+1
+----field----
+field: {39D0A502-8AEC-4EE6-8B9E-3C31CCB579C8}
+name: Display Text
+key: display text
+content-length: 31
+
+List of recently modified items
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111103T122200
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+223dfb4c-bec4-4779-ac25-4a40960307d0
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120711T053550:634775817500003444
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

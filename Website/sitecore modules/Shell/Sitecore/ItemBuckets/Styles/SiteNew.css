@@ -1,0 +1,346 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+body {
+  font-size: .80em;
+  font-family: "Helvetica Neue" , "Lucida Grande" , "Segoe UI" , Arial, Helvetica, Verdana, sans-serif;
+  margin: 0px;
+  padding: 0px;
+  color: #696969;
+}
+
+a:link, a:visited {
+  color: #034af3;
+}
+
+a:hover {
+  color: #1d60ff;
+  text-decoration: none;
+}
+
+a:active {
+  color: #034af3;
+}
+
+
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1.5em;
+  color: #666666;
+
+  text-transform: none;
+  font-weight: 200;
+  margin-bottom: 0px;
+}
+
+h1 {
+  font-size: 1.6em;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1.1em;
+}
+
+h5, h6 {
+  font-size: 1em;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2 {
+  margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page {
+  width: 960px;
+  background-color: #fff;
+  margin: 20px auto 0px auto;
+  border: 1px solid #496077;
+}
+
+.header {
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  background: #4b6c9e;
+  width: 100%;
+}
+
+.header h1 {
+  font-weight: 700;
+  margin: 0px;
+  padding: 0px 0px 0px 20px;
+  color: #f9f9f9;
+  border: none;
+  line-height: 2em;
+  font-size: 2em;
+}
+
+.main {
+  padding: 0px 12px;
+  margin: 12px 8px 8px 8px;
+  min-height: 600px;
+  min-width: 800px;
+}
+
+.leftCol, .rightCol {
+  padding: 6px 0px;
+  float: left;
+}
+
+.leftCol {
+  min-width: 300px;
+  width: 50%;
+}
+
+.rightCol {
+  width: 50%;
+}
+
+.leftCol > div, .rightCol > div {
+  border: 1px solid #CCCCCC;
+  margin: 4px 2px;
+}
+
+.footer {
+  color: #4e5766;
+  padding: 8px 0px 0px 0px;
+  margin: 0px auto;
+  text-align: center;
+  line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink {
+  background-color: #3a4f63;
+  width: 100%;
+}
+
+div.menu {
+  padding: 4px 0px 4px 8px;
+}
+
+div.menu ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  width: auto;
+}
+
+div.menu ul li a, div.menu ul li a:visited {
+  background-color: #465c71;
+  border: 1px #4e667d solid;
+  color: #dde4ec;
+  display: block;
+  line-height: 1.35em;
+  padding: 4px 20px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+div.menu ul li a:hover {
+  background-color: #bfcbd6;
+  color: #465c71;
+  text-decoration: none;
+}
+
+div.menu ul li a:active {
+  background-color: #465c71;
+  color: #cfdbe6;
+  text-decoration: none;
+}
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset {
+  margin: 1em 0px;
+  padding: 1em;
+  border: 1px solid #ccc;
+}
+
+fieldset p {
+  margin: 2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label {
+  display: block;
+}
+
+fieldset label.inline {
+  display: inline;
+}
+
+legend {
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 2px 4px 8px 4px;
+}
+
+input.textEntry {
+  width: 320px;
+  border: 1px solid #ccc;
+}
+
+input.passwordEntry {
+  width: 320px;
+  border: 1px solid #ccc;
+}
+
+div.accountInfo {
+  width: 42%;
+}
+
+/* PROGRESS BAR
+----------------------------------------------------------*/
+
+.actions {
+  padding: 6px 4px 4px;
+}
+
+.actions button {
+  height: 24px;
+}
+
+.result {
+  border: 1px solid #CCCCCC;
+  height: 26px;
+  margin-top: 4px;
+}
+
+.result.success {
+  background: url('/sitecore/testing/nunitwebrunner/images/progress_success.png') 0 0 repeat-x;
+}
+
+.result.failure {
+  background: url('/sitecore/testing/nunitwebrunner/images/progress_failure.png') 0 0 repeat-x;
+}
+
+.result.inconclusive {
+  background: url('/sitecore/testing/nunitwebrunner/images/progress_inconclusive.png') 0 0 repeat-x;
+}
+
+/* TREE VIEW  
+----------------------------------------------------------*/
+
+.treeview {
+  overflow-x: auto;
+  min-height: 322px;
+}
+
+.treeview ul {
+  padding: 0;
+  margin: 0;
+}
+
+.treeview > ul {
+  margin: 4px 0;
+}
+
+.treeview > ul > li {
+  padding: 0 4px;
+}
+
+.treeview li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 0 16px;
+  white-space: nowrap;
+}
+
+.treeview li.notincategory {
+  display: none;
+}
+
+.treeview .node, .treeview .state {
+  padding-left: 12px;
+}
+
+.treeview .node {
+  background: url('/sitecore/testing/nunitwebrunner/images/collapse.gif') 0 0 no-repeat;
+}
+
+.treeview .node.collapsed {
+  background: url('/sitecore/testing/nunitwebrunner/images/expand.gif') 0 0 no-repeat;
+}
+
+.treeview .node.last {
+  background-image: none;
+}
+
+.treeview .state.notrun {
+  background: url('/sitecore/testing/nunitwebrunner/images/notrun.png') 0 0 no-repeat;
+}
+
+.treeview .state.success {
+  background: url('/sitecore/testing/nunitwebrunner/images/success.png') 0 0 no-repeat;
+}
+
+.treeview .state.failure {
+  background: url('/sitecore/testing/nunitwebrunner/images/failure.png') 0 0 no-repeat;
+}
+
+.treeview .state.inconclusive {
+  background: url('/sitecore/testing/nunitwebrunner/images/ignored.png') 0 0 no-repeat;
+}
+
+.treeview .state.running {
+  background: url('/sitecore/shell/themes/standard/images/loading15x15.gif') 0 0 no-repeat;
+}
+
+.messageBox, .stackTrace {
+  overflow: auto;
+}
+
+.messageBox {
+  height: 300px;
+}
+
+.messageBox ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+.treeview .title, .messageBox ul li {
+  color: Black;
+  cursor: pointer;
+  background-color: transparent;
+  list-style-type: none;
+  padding: 0px 2px;
+}
+
+.treeview .title.selected, .messageBox ul li.selected {
+  background-color: #3399FF;
+  color: White;
+}
+
+.stackTrace p {
+  display: none;
+  margin: 2px;
+  height: 300px;
+}
+
+.stackTrace p.selected {
+  display: block;
+}

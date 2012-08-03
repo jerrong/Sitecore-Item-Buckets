@@ -1,0 +1,80 @@
+﻿.sb_search_container
+{
+  background: #fafafa url('/images/gray_gradient.png') repeat-x top left !important;            
+}
+
+.sb_search_container, .sb_dropdown, .sb_dropdown .sb_filter, .side, .side .sb_filter, .side .tip
+{
+  border: 1px solid #dfdfdf; 
+}
+
+.sb_up, .sb_down
+{
+  border: 1px solid;
+  border-top-color: #fafafa;
+  border-left-color: #fafafa;
+  border-right-color: #dadada;
+  border-bottom-color: #dadada;
+}
+
+div.content  
+{
+  margin-left:17%;
+  margin-right:18%;
+}
+
+/** Due to ie7 z-Index bug**/
+.mainmargin
+{
+  z-index: -1;
+}
+
+ li.token-input-token-facebook span
+ {
+   zoom: 1;
+ }
+
+#views {
+    width: 150px;
+    margin-right: -132px;
+}
+
+.sb_wrapper {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.myInputbox {
+    padding-right: 54px;
+}
+
+.sb_search {
+    padding-bottom: 24px;
+}
+
+.sb_down, .sb_up {
+       padding-bottom: 26px;
+}
+.sb_search_container {
+    width: 330px;
+}
+
+INPUT.sb_clear {
+    border-left-width: 0px;
+        padding-bottom: 23px;
+}
+
+
+
+.box {
+    width: 440px;
+}
+
+.pageSection {
+    width: 600px;
+}
+
+#results {
+    padding-left: 0px;
+}
+

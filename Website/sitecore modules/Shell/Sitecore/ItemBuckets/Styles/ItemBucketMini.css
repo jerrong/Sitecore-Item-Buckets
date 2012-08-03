@@ -1,0 +1,395 @@
+﻿.content {
+    background-color: white;
+    
+    min-width: 120px;
+  
+    position: relative;
+    width: 55%;
+    z-index: 3;
+}
+ .sb_wrapper
+        {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            width: 100%;           
+            z-index: 10;
+        }
+        
+        .sb_dropdown
+        {
+            border: 1px solid #fff;
+            background: #fafafa;
+            background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#fafafa));
+            background: -moz-linear-gradient(top, #f2f2f2, #fafafa);
+            font-size: 24px;
+            font-family: "Myriad Pro" , "Trebuchet MS" , sans-serif;
+            -moz-box-shadow: 1px 1px 3px #555;
+            -webkit-box-shadow: 1px 1px 3px #555;
+            -box-shadow: 1px 1px 3px #555;
+            -moz-border-radius: 0px 0px 10px 10px;
+            -webkit-border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            outline: none;
+            padding: 0px 5px;
+            text-shadow: 1px 1px 1px #fff;
+            width: 490px;
+            float: left;
+            margin: 3px 0px;
+            list-style: none;
+        }
+
+        .sb_search_container
+        {
+          margin: 0 100px 0 0;         
+          position:relative;
+          background: -moz-linear-gradient(center top , #F2F2F2, #FAFAFA) repeat scroll 0 0 transparent;
+          background: -webkit-gradient(linear, left top, left bottom, from(#F2F2F2), to(#FAFAFA));
+          background: gradient(linear, top, bottom, #F2F2F2, #FAFAFA);
+          border: 1px solid #FFFFFF;
+          box-shadow: 1px 1px 3px #555555;           
+        }
+        
+        
+        .ui-rangeSlider-label {
+ font: 11px verdana,arial,helvetica,sans-serif;
+}
+        
+        
+        .sb_wrapper input[type="text"]
+        {            
+            background-color: transparent;
+            font-size: 24px;
+            font-family: "Myriad Pro" , "Trebuchet MS" , sans-serif;
+            outline: none;
+            padding: 8px 5px 6px 20px;
+            text-shadow: 1px 1px 1px #fff;
+            width: 425px;
+            float: left;
+            margin: 0;
+        }      
+        .sb_dropdown li
+        {
+            font-size: 16px;
+            line-height: 32px;
+            height: 32px;
+            float: left;
+            width: 50%;
+            overflow:hidden;
+        }
+        .sb_dropdown li input[type="checkbox"]
+        {
+            float: left;
+            margin: 10px 4px 0 5px;
+        }
+        .sb_dropdown .sb_filter
+        {           
+            border: 1px solid #f9f9f9; 
+            clear:both;           
+            margin: 5px 0;            
+            background: #ddd;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444;
+            height: 16px;
+            line-height: 16px;
+            padding: 5px;
+            -moz-box-shadow: 0px 0px 2px #777;
+            -webkit-box-shadow: 0px 0px 3px #555 inset;
+            box-shadow: 0px 0px 3px #555 inset;
+            background: url('../images/down.png') no-repeat right;
+        }
+        span.sb_up, span.sb_down
+        {
+            position:absolute;            
+            left: 1px;
+            top: 1px;
+            bottom: 1px;
+            width: 14px;        
+            background-color: #f2f2f2;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 10;            
+            -moz-box-shadow: 1px 0px 1px #ddd;
+            -webkit-box-shadow: 1px 0px 1px #ddd;
+            box-shadow: 1px 0px 1px #ddd;                       
+        }
+        span.sb_up
+        {
+            background-image: url("../images/icons/up.png");
+        }
+        span.sb_down
+        {
+            background-image: url("../images/icons/down.png");
+        }
+        input.sb_search
+        {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: #f2f2f2 url("../images/search.png") no-repeat center center;            
+            width: 50px;                        
+            outline: none;
+            cursor: pointer;
+            border-left: 1px solid #DFDFDF;
+            -webkit-box-shadow: -1px 0px 1px 0 rgba(210,210,210,0.5);
+            -moz-box-shadow: -1px 0px 1px 0 rgba(210,210,210,0.5);
+            box-shadow: -1px 0px 1px 0 rgba(210,210,210,0.5);
+        }
+        input.sb_search:hover
+        {
+            background-color: #fff;
+        }
+        *
+        {
+            padding: 0;
+            margin: 0;
+        }
+        
+        
+        span.reference
+        {
+            position: fixed;
+            left: 10px;
+            bottom: 10px;
+            font-size: 11px;
+        }
+        span.reference a
+        {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            text-shadow: 0 1px 0 #000;
+        }
+        span.reference a:hover
+        {
+            color: #f0f0f0;
+        }
+        .box
+        {
+            margin: 2px auto 0 auto;
+        height: 86px;
+            width: 414px;
+            position: relative;
+      
+        }
+        .box h2
+        {
+            background-color: #1275AD;
+            border-color: #0E5A85 #0E5A85 #0E5A85;
+            border-style: ridge ridge solid;
+            border-width: 1px;
+            color: #FFFFFF;
+            font-size: 22px;
+            padding: 10px;
+            text-shadow: 1px 1px 1px #000000;
+        }
+        
+        
+         /* Example tokeninput style #2: Facebook style */
+        /* Example tokeninput style #2: Facebook style */
+        ul.token-input-list-facebook
+        {
+            overflow: hidden;
+            display: block;
+            height: auto !important;
+            height: 1%;
+            cursor: text;
+            min-height: 43px;
+            z-index: 999;           
+            list-style-type: none;
+            clear: left;
+        }
+        
+        ul.token-input-list-facebook li input
+        {
+            border: 0;
+            width: 100px;
+            padding: 3px 8px;            
+            margin: 2px 0;
+            -webkit-appearance: caret;
+        }
+        
+        .addition
+        {
+           /*background: -moz-linear-gradient(center top , #F2F2F2, #FAFAFA) repeat scroll 0 0 transparent;*/
+            border: 1px solid #FFFFFF;
+            float: left;
+            font-family: "Myriad Pro" , "Trebuchet MS" ,sans-serif;
+            font-size: 24px;
+            margin: 3px 0;
+            outline: medium none;
+            padding: 6px 5px 6px 20px;
+         
+            width: 425px;
+     
+   
+        }
+        
+        li.token-input-token-facebook
+        {
+            overflow: hidden;
+            height: auto !important;
+            height: 30px;
+            margin: 9px 3px;
+            padding: 1px 3px;
+            background-color: #eff2f7;
+            color: #000;
+            cursor: default;
+            border: 1px solid #ccd5e4;
+            font-size: 18px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            float: left;
+            white-space: nowrap;
+        }
+        
+        
+        li.token-input-token-facebook p
+        {
+            display: inline;
+            padding: 0;
+            margin-left: 5px;
+        }
+        
+        .boxme
+        {                    
+            font-family: "Myriad Pro" , "Trebuchet MS" ,sans-serif;
+            font-size: 24px;            
+            outline: medium none;
+            padding: 5px;
+            margin-right: 50px;
+            margin-left: 18px;
+            text-shadow: 1px 1px 1px #FFFFFF;    
+            width: 236px;     
+        }
+        
+        li.token-input-token-facebook span
+        {
+            color: #a6b3cf;
+            margin-left: 5px;
+            font-weight: bold;
+            cursor: pointer;           
+        }
+        
+        li.token-input-selected-token-facebook
+        {
+            background-color: #5670a6;
+            border: 1px solid #3b5998;
+            color: #fff;
+        }
+        
+        li.token-input-input-token-facebook
+        {
+            float: left;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        
+        div.token-input-dropdown-facebook
+        {
+            position: absolute;
+            width: 400px;
+            background-color: #fff;
+            overflow: hidden;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            cursor: default;
+            font-size: 11px;
+            font-family: Verdana;
+            z-index: 1;
+        }
+        
+        div.token-input-dropdown-facebook p
+        {
+            margin: 0;
+            padding: 5px;
+            font-weight: bold;
+            color: #777;
+        }
+        
+        div.token-input-dropdown-facebook ul
+        {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div.token-input-dropdown-facebook ul li
+        {
+            background-color: #fff;
+            padding: 3px;
+            margin: 0;
+            list-style-type: none;
+        }
+        
+        div.token-input-dropdown-facebook ul li.token-input-dropdown-item-facebook
+        {
+            background-color: #fff;
+        }
+        
+        div.token-input-dropdown-facebook ul li.token-input-dropdown-item2-facebook
+        {
+            background-color: #fff;
+        }
+        
+        div.token-input-dropdown-facebook ul li em
+        {
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook
+        {
+            background-color: #3b5998;
+            color: #fff;
+        }
+        
+        .myInputbox{
+	     background-color: #ebf3fc;
+		   border: 1px solid #abd2ff;
+       padding: 4px;	
+  }
+
+  
+  .command, .command:link, .command:hover, .command:active 
+  {    
+    background-color: transparent;
+    text-decoration: none;
+    height: 16px;
+    display: inline-block;
+    line-height: 16px;            
+  }
+
+  .command:hover
+  {
+    text-decoration: underline;
+  } 
+  
+  .open .handle, .open .handle2
+  {
+    /*display: none !important;*/
+  }
+  
+  .ceebox.imgcontainer
+  {
+    display:inline-block;
+  }
+  
+  .next-pages
+  {
+    margin-left: 16px !important;
+  } 
+  
+  .previous-pages
+  {
+    margin-right: 16px !important;
+  }   

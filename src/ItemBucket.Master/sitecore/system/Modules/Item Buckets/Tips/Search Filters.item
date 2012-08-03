@@ -1,0 +1,74 @@
+----item----
+version: 1
+id: {EDA998C9-CA08-409F-AF81-6B6D98C91571}
+database: master
+path: /sitecore/system/Modules/Item Buckets/Tips/Search Filters
+parent: {C34856F2-E5EE-44A4-B72B-21B7ABF9F703}
+name: Search Filters
+master: {00000000-0000-0000-0000-000000000000}
+template: {1D3553FF-20C0-486D-ADA9-B258CE6D7F12}
+templatekey: Tip
+
+----version----
+language: en
+version: 1
+revision: bf44e609-23ca-483e-b1dc-0585d8ebe133
+
+----field----
+field: {DCABF4BD-3AD9-426F-A295-9BF2785CE151}
+name: Tip Title
+key: tip title
+content-length: 14
+
+Search Filters
+----field----
+field: {E4671EDD-3EB2-4634-A944-B5D86397D111}
+name: Tip Text
+key: tip text
+content-length: 400
+
+Within the search box, you can not only place text, but also filter by template, tag, author, start and end date, filetype, sounds like, exclude, language, version and more.
+To do so, either type one of the reserved keywords above folowed by a colon ":" and after the colon place your filter text e.g. template:Article. Clicking enter, tab or the right arrow key will add this filter to your search.
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111101T054200
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+bf44e609-23ca-483e-b1dc-0585d8ebe133
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120324T205121:634682190812564530
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
