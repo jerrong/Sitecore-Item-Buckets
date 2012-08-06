@@ -102,10 +102,10 @@ content items in the content tree. It also brings with it other features such as
 “in-memory” indexes and “remote-indexes”. By installing with the Nuget Package, 
 you will be notified through Visual Studio when there is an update. You will have
 the choice to accept the updates or continue on with the version you have.
-
+``` Powershell
 PM> Install-Package Sitecore.ItemBuckets
 PM> Install-Package Sitecore.ItemBuckets.Client
-
+``` Powershell
 2) Sitecore ItemBuckets as a Sitecore Package
 You will get 3 packages for the Sitecore Item Buckets. The first is the Kernel. 
 This needs to be installed in all environments. The second is the Sitecore Item
