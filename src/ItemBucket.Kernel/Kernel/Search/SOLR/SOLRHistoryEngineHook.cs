@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Xml;
-using Sitecore.Collections;
+using Microsoft.Practices.ServiceLocation;
 using Sitecore.Data;
 using Sitecore.Data.Engines;
-using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
+using Sitecore.Events;
+using Sitecore.ItemBucket.Kernel.Kernel.Util;
+using Sitecore.ItemBucket.Kernel.Util;
+using SolrNet;
 
 namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
 {
@@ -15,8 +15,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
     {
         // Fields
         private Database m_database;
-        private bool m_saveDotNetCallStack;
-        private HistoryStorage m_storage;
+        private ISolrOperations<SOLRItem> solr;
 
         // Events
         public event EventHandler<HistoryAddedEventArgs> AddedEntry;
@@ -26,124 +25,43 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
         {
             Assert.ArgumentNotNull(database, "database");
             this.m_database = database;
-        }
-
-        private void AddEntry(HistoryCategory category, HistoryAction action, Item item, ID oldParentId,
-                              string additionalInfo)
-        {
-            HistoryStorage storage = this.Storage;
-            if (storage != null)
+            if (ServiceLocator.Current.IsNotNull())
             {
-                HistoryEntry entry = new HistoryEntry(category, action, item, oldParentId, additionalInfo);
-                if (this.SaveDotNetCallStack)
-                {
-                    entry.TaskStack = new StackTrace().ToString();
-                }
-                storage.AddEntry(entry);
-                MainUtil.RaiseEvent<HistoryAddedEventArgs>(this.AddedEntry, this,
-                                                           new HistoryAddedEventArgs(entry, this.Database));
-                SendSolrAdd(category, action, item, oldParentId, additionalInfo);
+                Startup.Init<SOLRItem>(Config.SOLRServiceLocation);
+                solr = ServiceLocator.Current.GetInstance<ISolrOperations<SOLRItem>>();
+                IndexingManager.Provider.OnRemoveItem += new EventHandler(Provider_OnRemoveItem);
+                IndexingManager.Provider.OnUpdateItem += new EventHandler(Provider_OnUpdateItem);
             }
         }
 
-        public static bool SendSolrAdd(HistoryCategory category, HistoryAction action, Item item, ID oldParentId,
-                              string additionalInfo)
+        void Provider_OnUpdateItem(object sender, EventArgs e)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("/solr/insert");
-            httpWebRequest.ContentType = "text/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            Assert.ArgumentNotNull(sender, "sender");
+            Assert.ArgumentNotNull(e, "e");
+            Database database = SitecoreEventArgs.GetObject(e, 0) as Database;
+            if ((database != null) && (database.Name == this.m_database.Name))
             {
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(item);
-
-                streamWriter.Write(json);
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var responseText = streamReader.ReadToEnd();
-                //Now you have your response.
-                //or false depending on information in the response
-                return true;
+                ID iD = SitecoreEventArgs.GetID(e, 1);
+                Assert.IsNotNull(iD, "ID is not passed to RemoveItem handler");
+                solr.Delete(IdHelper.NormalizeGuid(iD.ToString(), false));
+                solr.Add(new SOLRItem());
+                solr.Commit();
+                solr.Optimize();
             }
         }
 
-        public void Cleanup()
+        void Provider_OnRemoveItem(object sender, EventArgs e)
         {
-            HistoryStorage storage = this.Storage;
-            if (storage != null)
+            Assert.ArgumentNotNull(sender, "sender");
+            Assert.ArgumentNotNull(e, "e");
+            Database database = SitecoreEventArgs.GetObject(e, 0) as Database;
+            if ((database != null) && (database.Name == this.m_database.Name))
             {
-                storage.Cleanup();
+                ID iD = SitecoreEventArgs.GetID(e, 1);
+                Assert.IsNotNull(iD, "ID is not passed to RemoveItem handler");
+                solr.Delete(IdHelper.NormalizeGuid(iD.ToString(), false));
+                solr.Commit();
             }
-        }
-
-        public HistoryEntryCollection GetHistory(DateTime from, DateTime to)
-        {
-            HistoryStorage storage = this.Storage;
-            if (storage != null)
-            {
-                return storage.GetHistory(from, to);
-            }
-            return new HistoryEntryCollection();
-        }
-
-        public void RegisterItemCopied(Item copiedItem, Item sourceItem)
-        {
-            string additionalInfo =
-                string.Concat(new object[] {"copy: ", copiedItem.Paths.Path, " (", copiedItem.ID, ")"});
-            this.AddEntry(HistoryCategory.Item, HistoryAction.Copied, sourceItem, null, additionalInfo);
-        }
-
-        public void RegisterItemCreated(Item item)
-        {
-            this.AddEntry(HistoryCategory.Item, HistoryAction.Created, item, null, string.Empty);
-        }
-
-        public void RegisterItemDeleted(Item item, ID oldParentId)
-        {
-            this.AddEntry(HistoryCategory.Item, HistoryAction.Deleted, item, oldParentId, string.Empty);
-        }
-
-        public virtual void RegisterItemMoved(Item item, ID oldParentId)
-        {
-            string additionalInfo =
-                string.Concat(new object[] {"new parent: ", item.Paths.ParentPath, " (", item.ParentID, ")"});
-            this.AddEntry(HistoryCategory.Item, HistoryAction.Moved, item, oldParentId, additionalInfo);
-        }
-
-        public void RegisterItemSaved(Item item, ItemChanges changes)
-        {
-            this.AddEntry(HistoryCategory.Item, HistoryAction.Saved, item, null, string.Empty);
-        }
-
-        public void RegisterVersionAdded(Item item)
-        {
-            this.AddEntry(HistoryCategory.Item, HistoryAction.AddedVersion, item, null, string.Empty);
-        }
-
-        public virtual void RegisterVersionRemoved(Item item)
-        {
-            this.AddEntry(HistoryCategory.Item, HistoryAction.RemovedVersion, item, null, string.Empty);
-
-        }
-
-        // Properties
-        public Database Database
-        {
-            get { return this.m_database; }
-        }
-
-        public bool SaveDotNetCallStack
-        {
-            get { return this.m_saveDotNetCallStack; }
-            set { this.m_saveDotNetCallStack = value; }
-        }
-
-        public HistoryStorage Storage
-        {
-            get { return this.m_storage; }
-            set { this.m_storage = value; }
         }
     }
 }

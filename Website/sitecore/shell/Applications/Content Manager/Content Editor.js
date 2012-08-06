@@ -1703,63 +1703,62 @@ scContentEditor.prototype.onEditorTabClick = function(sender, evt, id) {
     frame.style.display = "none";
   }
 
-  var active = scForm.browser.getControl("B" + id);
+    var active = scForm.browser.getControl("B" + id);
+    if (active != null) {
+        active.className = "scRibbonEditorTabActive";
 
-  active.className = "scRibbonEditorTabActive";
+        if (active.parentNode.childNodes[1] == active) {
+            this.replaceImageSrc(active.firstChild, "tab0", "tab0_h");
+            active.childNodes[1].className = "scEditorTabHeaderActive";
+        } else {
+            var sibling = scForm.browser.getPreviousSibling(active);
+            this.replaceImageSrc(sibling.lastChild, "tab2", "tab2_h2")
+            active.firstChild.className = "scEditorTabHeaderActive";
+        }
+        if (active.parentNode.lastChild == active) {
+            this.replaceImageSrc(active.lastChild, "tab3", "tab3_h");
+        } else {
+            this.replaceImageSrc(active.lastChild, "tab2", "tab2_h1");
+        }
 
-  if (active.parentNode.childNodes[1] == active) {
-    this.replaceImageSrc(active.firstChild, "tab0", "tab0_h");
-    active.childNodes[1].className = "scEditorTabHeaderActive";
-  }
-  else {
-    var sibling = scForm.browser.getPreviousSibling(active);
-    this.replaceImageSrc(sibling.lastChild, "tab2", "tab2_h2")
-    active.firstChild.className = "scEditorTabHeaderActive";
-  }
-  if (active.parentNode.lastChild == active) {
-    this.replaceImageSrc(active.lastChild, "tab3", "tab3_h");
-  }
-  else {
-    this.replaceImageSrc(active.lastChild, "tab2", "tab2_h1");
-  }
+        var frame = scForm.browser.getControl("F" + id);
 
-  var frame = scForm.browser.getControl("F" + id);
+        frame.style.display = "";
 
-  frame.style.display = "";
+        if (Prototype.Browser.Gecko || Prototype.Browser.WebKit) {
+            scForm.browser.initializeFixsizeElements(true);
+        }
 
-  if (Prototype.Browser.Gecko || Prototype.Browser.WebKit) {
-    scForm.browser.initializeFixsizeElements(true);
-  }
+        var scActiveEditorTab = scForm.browser.getControl("scActiveEditorTab");
+        scActiveEditorTab.value = id;
 
-  var scActiveEditorTab = scForm.browser.getControl("scActiveEditorTab");
-  scActiveEditorTab.value = id;
+        if (this.isContextualTab) {
+            this.setActiveStrip(this.lastNoneContextualStrip);
+        }
 
-  if (this.isContextualTab) {
-    this.setActiveStrip(this.lastNoneContextualStrip);
-  }
+        this.clearContextualTabs();
 
-  this.clearContextualTabs();
+        try {
+            if (frame.contentWindow != null && frame.contentWindow.scOnShowEditor != null) {
+                frame.contentWindow.scOnShowEditor();
+            }
+        } catch(ex) {
+            console.log("Failed to accees frame. This typically happens due to a Permission Denied exception in IE9 caused by an intricate issue with Popup and ShowModalDialog calls. " + ex.message);
+        }
 
-  try {
-    if (frame.contentWindow != null && frame.contentWindow.scOnShowEditor != null) {
-      frame.contentWindow.scOnShowEditor();
+        $$("#EditorTabs > .scEditorTabControlsHolder").invoke("hide");
+
+        var e = $("EditorTabControls_" + id);
+        if (e != null) {
+            Element.show("EditorTabControls_" + id);
+        }
+
+        if (this.onEditorTabActivated) {
+            for (var k = 0; k < this.onEditorTabActivated.length; k++) {
+                this.onEditorTabActivated[k]();
+            }
+        }
     }
-  } catch (ex) {
-    console.log("Failed to accees frame. This typically happens due to a Permission Denied exception in IE9 caused by an intricate issue with Popup and ShowModalDialog calls. " + ex.message);
-  }
-
-  $$("#EditorTabs > .scEditorTabControlsHolder").invoke("hide");
-
-  var e = $("EditorTabControls_" + id);
-  if (e != null) {
-    Element.show("EditorTabControls_" + id);
-  }
-
-  if (this.onEditorTabActivated) {
-    for (var k = 0; k < this.onEditorTabActivated.length; k++) {
-      this.onEditorTabActivated[k]();
-    }
-  }
 }
 
 scContentEditor.prototype.onEditorTabActivated = [];
