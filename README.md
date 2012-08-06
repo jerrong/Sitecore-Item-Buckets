@@ -6,13 +6,13 @@ Manage Large Repositories of Content in Sitecore
 Item Buckets is a Lucene.net/SOLR based framework for storing, querying
 and scaling the Sitecore CMS to large content repositories.
 
-This module allows users to store large repositories of hidden content a
+This module allows users to store large repositories of hidden content
 within the Sitecore content tree that can be fetched efficiently with
 a new Search UI.
 
 This allows for very complex queries to run over large repositories of 
 content and utilises the Lucene.net/SOLR indexes to return results in
-a much faster way that the API/XPath/Sitecore Query etc.
+a much faster way than the API/XPath/Sitecore Query etc.
 
 Idea
 =====================
