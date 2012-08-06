@@ -26,7 +26,7 @@ completely remove the parent to child relationship between items.
 
 Having an item as a bucket brings many advantages including:
 
-* You now can search for content under it (even �non-bucketable� items)
+* You now can search for content under it (even �non-bucketable� items)
 * You can now use the new Bucket API with those items
 * All items are now auto-organised for you into logical format
 * You can now have items living below other items that act as embedded items
@@ -84,6 +84,46 @@ distributed, or replicated with SOLR.
 
 You can install through Nuget.org or through the standard Sitecore 
 package.
+
+Installation
+-------------
+
+1) Sitecore.ItemBuckets as a Nuget Package
+
+Either through Visual Studio 2010 or from Nuget.Org, search for Sitecore Item Buckets. 
+It will provide you with 3 links. 1 is for the Kernel and the other is for the UI.
+You will want to attach the Kernel to all projects that will be using the Item 
+Buckets Search API. You will want to attach the UI package to any of your projects
+that require the Item Buckets Search UI e.g. your Sitecore Website Project.
+There is a 3rd optional package with is Sitecore Item Buckets Big Data. 
+
+This can be attached to your projects if you plan on having millions of 
+content items in the content tree. It also brings with it other features such as 
+“in-memory” indexes and “remote-indexes”. By installing with the Nuget Package, 
+you will be notified through Visual Studio when there is an update. You will have
+the choice to accept the updates or continue on with the version you have.
+
+PM> Install-Package Sitecore.ItemBuckets
+PM> Install-Package Sitecore.ItemBuckets.Client
+
+2) Sitecore ItemBuckets as a Sitecore Package
+You will get 3 packages for the Sitecore Item Buckets. The first is the Kernel. 
+This needs to be installed in all environments. The second is the Sitecore Item
+Buckets UI. This will only need to be installed in environments that need the 
+UI e.g. Authoring, Development. Once you have downloaded the modules as a 
+Sitecore Package, simply install through the Installation Wizard within the 
+Desktop. It will ask you to override some content items. Please select “Override”
+or “Merge” if you have already made customisations to the template that is being
+modified.
+
+A 3rd optional package can be installed which is the Sitecore Item Buckets Big
+Data functionality. This can be installed alongside the Sitecore Item Buckets
+Kernel.
+
+The installation will fire some post installation steps and will run a Smart
+Publish as well as rebuilding the new index that will be installed for you.
+You will need to restart the client to see your changes.
+
 
 API Overview
 --------
