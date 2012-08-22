@@ -1,4 +1,5 @@
 ﻿using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR;
+using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR.SOLRItems;
 using Sitecore.SecurityModel;
 using SolrNet;
 
@@ -339,6 +340,205 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     AssignFieldValues(result, uriField, items);
                 }
+            }
+        }
+
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrBucketItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrBucketItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrTemplateItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrTemplateItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrSitecoreItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrSitecoreItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrMediaItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrMediaItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrLayoutItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrLayoutItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
+        public static void GetItemsFromSearchResultFromSOLR(SolrQueryResults<SolrSystemItem> searchResults, List<SitecoreItem> items)
+        {
+            foreach (var result in searchResults)
+            {
+                var uriField = result.Url;
+                if (uriField.IsNotNull() && !uriField.IsNullOrEmpty())
+                {
+                    AssignFieldValues(result, uriField, items);
+                }
+            }
+        }
+
+        private static void AssignFieldValues(SolrSystemItem result, string uriField, List<SitecoreItem> items)
+        {
+
+            var itemInfo = new SitecoreItem(new ItemUri(uriField));
+            try
+            {
+                foreach (
+                    Sitecore.Data.Fields.Field field in
+                        Sitecore.Context.ContentDatabase.GetItem(new ItemUri(result.Url).ItemID).Fields)
+                {
+                    itemInfo.Fields[field.Name] = field.Value;
+                }
+
+                items.Add(itemInfo);
+            }
+            catch (Exception exc)
+            {
+
             }
         }
 

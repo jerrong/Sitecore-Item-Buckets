@@ -27,9 +27,9 @@ namespace Sitecore.ItemBucket.Kernel.Commands
         /// </param>
         public override void Execute(CommandContext context)
         {
-            //Event.RaiseEvent("item:bucketing:index:rebuilding", new object[] { }, this);
+            Event.RaiseEvent("item:bucketing:index:rebuilding", new object[] { }, this);
             Windows.RunUri("control:Bucket.Rebuild", "Business/16x16/data_information.png", Translate.Text("Rebuild Indexes"));
-            //Event.RaiseEvent("item:bucketing:index:rebuilt", new object[] { }, this);
+            Event.RaiseEvent("item:bucketing:index:rebuilt", new object[] { }, this);
         }
     }
 }

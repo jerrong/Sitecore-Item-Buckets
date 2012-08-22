@@ -12,7 +12,7 @@ templatekey: View
 ----version----
 language: en
 version: 1
-revision: 8563bec5-77c2-4ddd-b926-68b8e357a161
+revision: f9a5d8d2-a4ec-4fe9-a213-18469a6f3088
 
 ----field----
 field: {BB7FF36D-6368-4117-AB7C-01AEFF56BEA2}
@@ -43,6 +43,13 @@ content-length: 6
 
 </div>
 ----field----
+field: {B41248A7-5111-4A19-907D-4E7EE4358069}
+name: Enabled
+key: enabled
+content-length: 0
+
+
+----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
 key: __owner
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8563bec5-77c2-4ddd-b926-68b8e357a161
+f9a5d8d2-a4ec-4fe9-a213-18469a6f3088
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20120629T113529:634765665299753879
+20120810T085332:634801856129582001
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -52,7 +52,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Rules.Macro
             options.Title = "Select Item";
             options.Text = "Select the item to use in this rule.";
             options.Icon = "People/16x16/cube_blue.png";
-            SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), true);
+            SheerResponse.ShowModalDialog(options.ToUrlString().ToString(), "1000", "700", "", true);
         }
     }
 }

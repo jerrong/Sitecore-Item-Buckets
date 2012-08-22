@@ -137,7 +137,7 @@ function buildTipsMenu(a) {
             tabHandle: ".handle2",
             pathToTabImage: "images/thin-arrow-left.png",
             imageHeight: "522px",
-            imageWidth: "40px",
+            imageWidth: "20px",
             tabLocation: "right",
             speed: 300,
             action: "click",
@@ -161,6 +161,44 @@ function buildTipsMenu(a) {
     $.each(a.tips, function () {
         $("#navBeta").append('<div class="side">' + ' <div class="tip">Random Tip</div><p>' + this.TipName + "</p>" + '<div style="display: block;width:142px;word-wrap:break-word;">' + "<p>" + this.TipText + "</p>" + "</div>" + "</div>")
     });
+}
+
+function autoSuggestText(element, filterName, data, characterCount) {
+    var a = $("#ui_element");
+    if (a.find(".addition").val().indexOf(filterName) > -1) {
+        if (element.val().length >= characterCount) {
+            jQuery.ajax({
+                type: "POST",
+                url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetNames",
+                data: data,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (a) {
+                    var b = a.d;
+                    b = b.toString().split(",");
+                    var c = new Array;
+                    $.each(b, function () {
+                        c.push(this.toString());
+                    });
+                    $(".ui-corner-all").live("click", function () {
+                        ConvertSearchQuery();
+                    });
+                    $(".addition").autocomplete({
+                        source: c,
+                        autoFocus: true
+                        
+                    });
+//                    $(".addition").autocomplete("hide");
+//                    $(".ui-autocomplete").css("top", "75px").css("left", "536px").css("width", "428px");
+//                    $(".ui-menu-item").css("height", "45px");
+//                    $(".ui-corner-all").css("height", "45px").css("text-indent", "19px").css("font-size", "24px");
+                    $(".addition").autocomplete("show");
+                    $("#token-input-demo-input-local").show();
+                }
+            });
+        }
+    }
 }
 
 function retrieveScalabilitySettings() {
@@ -277,7 +315,7 @@ function meme(a) {
             tabHandle: ".handle",
             pathToTabImage: "images/thin-arrow-right.png",
             imageHeight: "522px",
-            imageWidth: "40px",
+            imageWidth: "20px",
             tabLocation: "left",
             speed: 300,
             action: "click",
@@ -440,9 +478,10 @@ function runFacet(o, pageNumber, onSuccessFunction, onErrorFunction) {
 
     $.ajax
         ({
-            url: QueryServer + "/sitecore%20modules/Shell/Sitecore/ItemBuckets/Services/Search.ashx",
+            type: "GET",
+            url: QueryServer + "/sitecore%20modules/Shell/Sitecore/ItemBuckets/Services/Search.ashx?callback=?",
             contentType: "application/json; charset=utf-8",
-            dataType: "json",
+            dataType: "jsonp",
             cache: false,
             data:
             {
@@ -459,9 +498,10 @@ function runFacet(o, pageNumber, onSuccessFunction, onErrorFunction) {
 function runQuery(o, pageNumber, onSuccessFunction, onErrorFunction) {
 
     $.ajax({
-        url: QueryServer + "/sitecore%20modules/Shell/Sitecore/ItemBuckets/Services/Search.ashx",
+        type: "GET",
+        url: QueryServer + "/sitecore%20modules/Shell/Sitecore/ItemBuckets/Services/Search.ashx?callback=?",
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        dataType: "jsonp",
         cache: false,
         data: {
             selections: o,
@@ -1395,9 +1435,10 @@ $(function () {
             else {
 
                 if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-                    $('.boxme').stop().css("background-color", "#EE0000").animate({
-                        backgroundColor: "#FFFFFF"
-                    }, 3000);
+                    if (!($.browser.msie)) {
+
+                        $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                    }
                     // $('.addition').removeAttr('disabled');
                 } else {
                     b.preventDefault();
@@ -1470,8 +1511,20 @@ $(function () {
                                         $.each(c, function () {
                                             if (this != "") {
                                                 if ((scope.data.indexOf("RecentlyModified") > 0) || (scope.data.indexOf("RecentlyCreated")) > 0 || (scope.data.indexOf("RecentTabs")) > 0) {
-                                                    var splitMe = this.split("|");
-                                                    e = e + "<li><a href=\"#\" onclick=\"saveFieldValue('" + this.ItemId + "'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+
+                                                    if (this.indexOf('sed Tab') > 0) {
+
+                                                        var splitMe = this.replace("Closed Tabs (", "").replace(")");
+                                                        splitMe = splitMe.split("|");
+
+                                                        e = e + "<li><a href=\"#\" onclick=\"javascript:launchMultipleTabs('" + splitMe + "')\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+
+                                                    }
+                                                    else {
+
+                                                        var splitMe = this.split("|");
+                                                        e = e + "<li><a href=\"#\" onclick=\"scForm.getParentForm().postRequest('','','','" + "contenteditor:launchtab" + "(url=" + splitMe[1] + ")'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+                                                    }
                                                 } else if (scope.data.indexOf("SearchOperations") > 0) {
                                                     if ($.browser.msie) {
                                                         e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
@@ -1570,7 +1623,10 @@ $(function () {
         else {
 
             if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                if (!($.browser.msie)) {
+
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                }
                 // $('.addition').removeAttr('disabled');
             } else {
                 if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
@@ -1611,8 +1667,11 @@ $(function () {
     $(".list").click(function () {
         CurrentView = "list";
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-            $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
-           // $('.addition').removeAttr('disabled');
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
+            // $('.addition').removeAttr('disabled');
         } else {
             if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
                 $('.sb_clear').css({
@@ -1650,12 +1709,11 @@ $(function () {
     $(".pageLink").live("click", function () {
         $(this).addClass("pageClickLoad");
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-           // $('.addition').removeAttr('disabled');
-            $('.boxme').stop()
-                .css("background-color", "#EE0000")
-                .animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
+            // $('.addition').removeAttr('disabled');
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
 
             $(this).removeClass("pageClickLoad");
         } else {
@@ -1671,12 +1729,12 @@ $(function () {
             var p = buildQuery();
             retrieveFilters();
 
-            if (CurrentView != "list" && CurrentView != "grid") {
+            if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, g);
             }
 
-            else if ($(".grid").hasClass("active")) {
+            else if (CurrentView == "grid") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -1704,10 +1762,11 @@ $(function () {
     $(".grid").click(function () {
         CurrentView = "grid";
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-            $('.boxme').stop().css("background-color", "#EE0000").animate({
-                backgroundColor: "#FFFFFF"
-            }, 3000);
-           // $('.addition').removeAttr('disabled');
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
+            // $('.addition').removeAttr('disabled');
         } else {
             a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
             pageNumber = 0;
@@ -1806,8 +1865,24 @@ $(function () {
             retrieveFilters();
             b.preventDefault();
         }
+
+        clearTimeout(typingTimer);
+
+
+
     });
+
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 3000;  //time in ms, 3 second for example
+    function doneTyping() {
+        autoSuggestText($(".addition"), "", "{'tagChars' : '" + $(".addition").val() + "'}", 3);
+    }
     $("body").live("keyup", function (b) {
+
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+       
+
+
         //Spacebar and Ctrl pressed.
         if (b.which == 32 && b.ctrlKey) {
             event.preventDefault();
@@ -2039,11 +2114,10 @@ $(function () {
         $(this).addClass("pageClickLoad");
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
             // $('.addition').removeAttr('disabled');
-            $('.boxme').stop()
-                .css("background-color", "#EE0000")
-                .animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
 
             $(this).removeClass("pageClickLoad");
         } else {
@@ -2214,10 +2288,11 @@ $(function () {
                         CurrentView = filter.ViewName;
 
                         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-                            $('.boxme').stop().css("background-color", "#EE0000").animate({
-                                backgroundColor: "#FFFFFF"
-                            }, 3000);
-                           // $('.addition').removeAttr('disabled');
+                            if (!($.browser.msie)) {
+
+                                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                            }
+                            // $('.addition').removeAttr('disabled');
                         } else {
                             a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
                             pageNumber = 0;

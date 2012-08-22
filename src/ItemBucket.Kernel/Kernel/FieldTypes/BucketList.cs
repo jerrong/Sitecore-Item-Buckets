@@ -270,7 +270,7 @@ multilist" + ClientID + @".style.backgroundRepeat = ""no-repeat"";
                                             multilist" + ClientID + @".options.length = 0;
   multilist" + ClientID + @".style.background = ""window"";
                                             for (i = 0; i < responseParsed" + ClientID + @".items.length; i++) {
-                                            multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(responseParsed" + ClientID + @".items[i].Name + ' (' + responseParsed" + ClientID + @".items[i].TemplateName + ' - ' + responseParsed" + ClientID + @".items[i].Bucket + ')', responseParsed" + ClientID + @".items[i].ItemId);
+                                            multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(" + JavaScriptOutputString(ClientID) + ", responseParsed" + ClientID + @".items[i].ItemId);
                                                 }
 
 $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + ' of ' +   responseParsed" + ClientID + @".PageNumbers;
@@ -418,7 +418,7 @@ multilist" + ClientID + @".style.backgroundRepeat = ""no-repeat"";
   multilist" + ClientID + @".style.background = ""window"";
                                                      for (i = 0; i < responseParsed" + ClientID + @".items.length; i++) {
 
-                                                        multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(responseParsed" + ClientID + @".items[i].Name + ' (' + responseParsed" + ClientID + @".items[i].TemplateName + ' - ' + responseParsed" + ClientID + @".items[i].Bucket + ' )', responseParsed" + ClientID + @".items[i].ItemId);
+                                                        multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(" + JavaScriptOutputString(ClientID) + ", responseParsed" + ClientID + @".items[i].ItemId);
                                                     }
 $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + ' of ' +   responseParsed" + ClientID + @".PageNumbers;
 
@@ -487,7 +487,7 @@ multilist" + ClientID + @".style.backgroundRepeat = ""no-repeat"";
   multilist" + ClientID + @".style.background = ""window"";
                                                      for (i = 0; i < responseParsed" + ClientID + @".items.length; i++) {
 
-                                                        multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(responseParsed" + ClientID + @".items[i].Name + ' (' + responseParsed" + ClientID + @".items[i].TemplateName + ' - ' + responseParsed" + ClientID + @".items[i].Bucket + ' )', responseParsed" + ClientID + @".items[i].ItemId);
+                                                        multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(" + JavaScriptOutputString(ClientID) + ", responseParsed" + ClientID + @".items[i].ItemId);
                                                     }
 $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + ' of ' +   responseParsed" + ClientID + @".PageNumbers;
 
@@ -555,7 +555,7 @@ multilist" + ClientID + @".style.backgroundRepeat = ""no-repeat"";
   multilist" + ClientID + @".style.background = ""window"";
                                                  for (i = 0; i < responseParsed" + ClientID + @".items.length; i++) {
 
-                                                    multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(responseParsed" + ClientID + @".items[i].Name + ' (' + responseParsed" + ClientID + @".items[i].TemplateName + ' - ' + responseParsed" + ClientID + @".items[i].Bucket + ' )', responseParsed" + ClientID + @".items[i].ItemId);
+                                                    multilist" + ClientID + @".options[multilist" + ClientID + @".options.length] = new Option(" + JavaScriptOutputString(ClientID) + ", responseParsed" + ClientID + @".items[i].ItemId);
                                                 }
 $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + ' of ' +  responseParsed" + ClientID + @".PageNumbers;
 
@@ -639,7 +639,7 @@ $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + 
             output.Write("<td valign=\"top\" height=\"100%\">");
             var treeViewThing = new TreeList { ID = "DropTreeForBucket" };
             treeViewThing.RenderControl(output);
-            output.Write("<input type=\"text\" width=\"100%\" class=\"scIgnoreModified\" style=\"color:gray\" value=\"Type here to search\" id=\"filterBox" + this.ClientID + "\" style=\"width:100%\">");
+            output.Write("<input type=\"text\" width=\"100%\" class=\"scIgnoreModified\" style=\"color:gray\" value=\"Type here to search\" id=\"filterBox" + this.ClientID + "\" style=\"width:100%\" " +  (Sitecore.Context.Item.Access.CanWrite() ? "" : "disabled") +">");
             output.Write(@"<span id='prev" + this.ClientID + @"' class='hovertext' style='cursor:pointer;' onMouseOver=""this.style.color='#666'"" onMouseOut=""this.style.color='#000'"">" + " <img width=\"10\" height=\"10\" src=\"/sitecore%20modules/Shell/Sitecore/ItemBuckets/images/right.png\" style=\"margin-top: 1px;\"> prev |" + "</span>");
             output.Write(@"<span id='next" + this.ClientID + @"' class='hovertext' style='cursor:pointer;' onMouseOver=""this.style.color='#666'"" onMouseOut=""this.style.color='#000'""> " + " next <img width=\"10\" height=\"10\" src=\"/sitecore%20modules/Shell/Sitecore/ItemBuckets/images/left.png\" style=\"margin-top: 1px;\">  " + "</span>");
             output.Write(@"<span id='refresh" + this.ClientID + @"' class='hovertext' style='cursor:pointer;' onMouseOver=""this.style.color='#666'"" onMouseOut=""this.style.color='#000'""> " + " refresh <img width=\"10\" height=\"10\" src=\"/sitecore%20modules/Shell/Sitecore/ItemBuckets/images/refresh.png\" style=\"margin-top: 1px;\">  " + "</span>");
@@ -650,7 +650,8 @@ $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + 
                 var item = entry.Value as Item;
                 if (item != null)
                 {
-                    output.Write("<option value=\"" + this.GetItemValue(item) + "\">" + item.DisplayName + " (" + item.TemplateName + " - " + item.GetParentBucketItemOrParent().Name + ")" + "</option>");
+                    var outputString = OutputString(item);
+                    output.Write("<option value=\"" + this.GetItemValue(item) + "\">" + outputString + "</option>");
                 }
             }
 
@@ -670,7 +671,8 @@ $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + 
                 var item3 = list[i] as Item;
                 if (item3 != null)
                 {
-                    output.Write("<option value=\"" + this.GetItemValue(item3) + "\">" + item3.DisplayName + " (" + item3.TemplateName + " - " + item3.GetParentBucketItemOrSiteRoot().Name + ")" + "</option>");
+                    var outputString = OutputString(item3);
+                    output.Write("<option value=\"" + this.GetItemValue(item3) + "\">" + outputString + "</option>");
                 }
                 else
                 {
@@ -681,7 +683,8 @@ $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + 
                         var item4 = Sitecore.Context.ContentDatabase.GetItem(path);
                         if (item4 != null)
                         {
-                            str3 = item4.DisplayName + " (" + item4.TemplateName + " - " + item4.GetParentBucketItemOrSiteRoot().Name + ")";
+                            var outputString = OutputString(item4);
+                            str3 = outputString;
                         }
                         else
                         {
@@ -708,6 +711,17 @@ $('pageNumber" + ClientID + @"').innerHTML = pageNumberCount" + ClientID + @" + 
             output.Write("</table>");
             this.RenderScript(output);
         }
+
+        public virtual string OutputString(Item item4)
+        {
+            return item4.DisplayName + " (" + item4.TemplateName + " - " + item4.GetParentBucketItemOrParent().Name + ")";
+        }
+
+        public virtual string JavaScriptOutputString(string clientId)
+        {
+            return "responseParsed" + clientId + @".items[i].Name + ' (' + responseParsed" + clientId + @".items[i].TemplateName + ' - ' + responseParsed" + clientId + @".items[i].Bucket + ')'";
+        }
+
         #endregion
     }
 }

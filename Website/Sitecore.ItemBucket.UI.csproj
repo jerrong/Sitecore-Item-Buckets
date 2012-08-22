@@ -99,6 +99,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -112,6 +114,11 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\nav.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\table.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\table_selected.png" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Rebuild.asmx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\AddTab.aspx" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\clippy.swf" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\DataSourceResult.aspx" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\extension.png" />
@@ -230,6 +237,7 @@
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list.png" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list_selected.png" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\ItemBucket.asmx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\fullscreen.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketDatasource.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketMedia.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\date.js" />
@@ -241,12 +249,16 @@
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jQRangeSlider.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery-ui.min.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.clippy.min.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.easing.1.3.js" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.elastislide.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.min.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.mousewheel.min.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.remember-state.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.tabSlideOut.v1.3.js" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Services\schema_template.xml" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\ShowResult.aspx" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ListNewMini.css" />
+    <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Styles\elastislide.css" />
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\TestRunner.aspx" />
     <Content Include="sitecore\shell\Applications\Archives\RecycleBin\ItemBucketRollback.xaml.xml" />
     <Content Include="sitecore\shell\Applications\Content Manager\Content Editor.js" />
@@ -260,6 +272,8 @@
     <Content Include="sitecore\shell\Override\BucketLink.xml" />
     <Content Include="sitecore\shell\Override\ChangeTemplate.xml" />
     <Content Include="sitecore\shell\Override\CopyDeviceTo.xml" />
+    <Content Include="sitecore\shell\Override\CustomizeRibbon.xml" />
+    <Content Include="sitecore\shell\Override\Goals.xaml.xml" />
     <Content Include="sitecore\shell\Override\InsertImage.xml" />
     <Content Include="sitecore\shell\Override\InsertLink.js" />
     <Content Include="sitecore\shell\Override\InsertLink.xml" />
@@ -285,12 +299,21 @@
     <Content Include="sitecore\shell\Override\ItemBucket\Rebuild.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="sitecore\shell\Override\ItemBucket\SchemaBuild.xml" />
     <Content Include="sitecore\shell\Override\MediaBrowser.xml" />
+    <Content Include="sitecore\shell\Override\Profiles.xaml.xml" />
     <Content Include="sitecore\shell\Override\SelectItem.xml" />
     <Content Include="sitecore\shell\Override\SelectRenderingDatasource.xml" />
+    <Content Include="sitecore\shell\Override\Set Icon.xml" />
     <Content Include="sitecore\shell\Override\SetBaseTemplates.xml" />
+    <Content Include="sitecore\shell\Override\SetIcon.js" />
     <Content Include="sitecore\shell\Override\SetMasters.js" />
     <Content Include="sitecore\shell\Override\SetMasters.xml" />
+    <Content Include="sitecore\shell\Override\TrackingField.js" />
+    <Content Include="sitecore\shell\Override\TrackingField.xaml.xml" />
+    <Content Include="sitecore\shell\Override\TrackingFieldDetails.xaml.xml" />
+    <Content Include="sitecore\shell\Override\TreeListExEditor.js" />
+    <Content Include="sitecore\shell\Override\TreeListExEditor.xml" />
     <Content Include="sitecore\shell\Override\Workbox.xml" />
     <Content Include="temp\IconCache\ApplicationsV2\16x16\add.png" />
     <Content Include="temp\IconCache\ApplicationsV2\16x16\arrow_right_green.png" />
@@ -820,6 +843,8 @@
     <Content Include="temp\IconCache\Software\16x16\application_run.png" />
     <Content Include="temp\IconCache\Software\16x16\application_server.png" />
     <Content Include="temp\IconCache\Software\16x16\branch.png" />
+    <Content Include="temp\IconCache\Software\16x16\branch_find.png" />
+    <Content Include="temp\IconCache\Software\16x16\breakpoint.png" />
     <Content Include="temp\IconCache\Software\16x16\breakpoints.png" />
     <Content Include="temp\IconCache\Software\16x16\bug_red.png" />
     <Content Include="temp\IconCache\Software\16x16\bug_yellow.png" />
@@ -827,6 +852,8 @@
     <Content Include="temp\IconCache\Software\16x16\components.png" />
     <Content Include="temp\IconCache\Software\16x16\component_edit.png" />
     <Content Include="temp\IconCache\Software\16x16\component_green.png" />
+    <Content Include="temp\IconCache\Software\16x16\component_new.png" />
+    <Content Include="temp\IconCache\Software\16x16\component_replace.png" />
     <Content Include="temp\IconCache\Software\16x16\component_yellow.png" />
     <Content Include="temp\IconCache\Software\16x16\compress.png" />
     <Content Include="temp\IconCache\Software\16x16\debug_edit.png" />
@@ -847,21 +874,30 @@
     <Content Include="temp\IconCache\Software\16x16\shape_ellipse.png" />
     <Content Include="temp\IconCache\Software\16x16\shape_rectangle.png" />
     <Content Include="temp\IconCache\Software\16x16\shape_rhomb.png" />
+    <Content Include="temp\IconCache\Software\16x16\shape_square.png" />
     <Content Include="temp\IconCache\Software\16x16\text_code.png" />
     <Content Include="temp\IconCache\Software\16x16\text_code_colored.png" />
     <Content Include="temp\IconCache\Software\16x16\text_code_csharp.png" />
     <Content Include="temp\IconCache\Software\16x16\text_code_javascript.png" />
+    <Content Include="temp\IconCache\Software\24x24\branch_find.png" />
     <Content Include="temp\IconCache\Software\24x24\breakpoints.png" />
     <Content Include="temp\IconCache\Software\24x24\bug_yellow.png" />
     <Content Include="temp\IconCache\Software\24x24\debug_run.png" />
     <Content Include="temp\IconCache\Software\24x24\debug_time.png" />
+    <Content Include="temp\IconCache\Software\24x24\element.png" />
     <Content Include="temp\IconCache\Software\24x24\element_delete.png" />
     <Content Include="temp\IconCache\Software\24x24\element_new.png" />
+    <Content Include="temp\IconCache\Software\24x24\element_selection.png" />
+    <Content Include="temp\IconCache\Software\24x24\graph_edge_directed.png" />
     <Content Include="temp\IconCache\Software\24x24\jar.png" />
+    <Content Include="temp\IconCache\Software\24x24\shape_rectangle.png" />
     <Content Include="temp\IconCache\Software\24x24\step.png" />
     <Content Include="temp\IconCache\Software\24x24\text_code.png" />
     <Content Include="temp\IconCache\Software\32x32\branch.png" />
+    <Content Include="temp\IconCache\Software\32x32\branch_find.png" />
     <Content Include="temp\IconCache\Software\32x32\breakpoints.png" />
+    <Content Include="temp\IconCache\Software\32x32\bug_red.png" />
+    <Content Include="temp\IconCache\Software\32x32\bug_yellow.png" />
     <Content Include="temp\IconCache\Software\32x32\component.png" />
     <Content Include="temp\IconCache\Software\32x32\components.png" />
     <Content Include="temp\IconCache\Software\32x32\compress.png" />
@@ -875,7 +911,9 @@
     <Content Include="temp\IconCache\Software\32x32\graph_node.png" />
     <Content Include="temp\IconCache\Software\32x32\jar.png" />
     <Content Include="temp\IconCache\Software\32x32\shape_ellipse.png" />
+    <Content Include="temp\IconCache\Software\32x32\shape_rectangle.png" />
     <Content Include="temp\IconCache\Software\32x32\shape_rhomb.png" />
+    <Content Include="temp\IconCache\Software\32x32\shape_square.png" />
     <Content Include="temp\IconCache\Software\32x32\text_code.png" />
     <Content Include="temp\IconCache\Software\32x32\text_code_colored.png" />
     <Content Include="temp\IconCache\Temp\ApplicationsV2\16x16\add.png" />
@@ -4710,6 +4748,17 @@
     <Folder Include="sitecore\shell\Override\debug\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\Rebuild.asmx.cs">
+      <DependentUpon>Rebuild.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\AddTab.aspx.cs">
+      <DependentUpon>AddTab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\AddTab.aspx.designer.cs">
+      <DependentUpon>AddTab.aspx</DependentUpon>
+    </Compile>
     <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\DataSourceResult.aspx.cs">
       <DependentUpon>DataSourceResult.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4771,6 +4820,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Config\Include\Sitecore.ItemBuckets.Core.config.example">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App_Config\Include\Sitecore.ItemBuckets.Scaling.config">
       <SubType>Designer</SubType>
     </None>
@@ -4789,6 +4841,13 @@
       <Project>{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}</Project>
       <Name>Sitecore.ItemBucket.Kernel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\src\Sitecore.BigData\Sitecore.BigData.csproj">
+      <Project>{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}</Project>
+      <Name>Sitecore.BigData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -4810,6 +4869,10 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

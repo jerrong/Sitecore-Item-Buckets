@@ -97,17 +97,20 @@
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Installer\PostSteps.cs" />
+    <Compile Include="Kernel\Commands\AddBlankSearch.cs" />
     <Compile Include="Kernel\Commands\AddFromTemplateCommand.cs" />
     <Compile Include="Kernel\Commands\AddSilentTab.cs" />
     <Compile Include="Kernel\Commands\AddTab.cs" />
     <Compile Include="Kernel\Commands\BaseCommand.cs" />
     <Compile Include="Kernel\Commands\BucketUsage.cs" />
     <Compile Include="Kernel\Commands\BucketUsageForm.cs" />
+    <Compile Include="Kernel\Commands\FullScreen.cs" />
     <Compile Include="Kernel\Commands\GenerateSOLRSchema.cs" />
     <Compile Include="Kernel\Commands\GoToClosestBucketParent.cs" />
     <Compile Include="Kernel\Commands\MarkAsUnBucketable.cs" />
     <Compile Include="Kernel\Commands\PasteToField.cs" />
     <Compile Include="Kernel\Commands\Rebuild.cs" />
+    <Compile Include="Kernel\Commands\SelectInTree.cs" />
     <Compile Include="Kernel\Commands\SOLRGenerateForm.cs" />
     <Compile Include="Kernel\Commands\SyncBucket.cs" />
     <Compile Include="Kernel\Commands\MakeBucket.cs" />
@@ -163,6 +166,7 @@
     <Compile Include="Kernel\LinkProvider\NewsLinkResolver.cs" />
     <Compile Include="Kernel\LinkProvider\Tag.cs" />
     <Compile Include="Kernel\LinkProvider\TagRepository.cs" />
+    <Compile Include="Kernel\Managers\BucketImportContext.cs" />
     <Compile Include="Kernel\Pipelines\BucketArgs.cs" />
     <Compile Include="Kernel\Pipelines\Bucket\CreateBucketProcessor.cs" />
     <Compile Include="Kernel\Pipelines\Initialize.cs" />
@@ -185,8 +189,13 @@
     <Compile Include="Kernel\Pipelines\UnBucket\UnbucketProcessor.cs" />
     <Compile Include="Kernel\Presentation\BucketPresentationExtensions.cs" />
     <Compile Include="Kernel\Publishing\ProcessQueue.cs" />
+    <Compile Include="Kernel\Publishing\PublishItemWithParentFolders.cs" />
+    <Compile Include="Kernel\RemoteCrawlers\RemoteBigDataCrawler.cs" />
+    <Compile Include="Kernel\RemoteCrawlers\RemoteCustomCrawler.cs" />
+    <Compile Include="Kernel\RemoteCrawlers\RemoteDatabaseCrawler.cs" />
     <Compile Include="Kernel\Rules\Actions\SetDataSourceViaSearchQuery.cs" />
     <Compile Include="Kernel\Rules\Macro\SearchMacro.cs" />
+    <Compile Include="Kernel\Rules\TaggedWith.cs" />
     <Compile Include="Kernel\Rules\WithinABucket.cs" />
     <Compile Include="Kernel\Search\BaseDynamicField.cs" />
     <Compile Include="Kernel\Search\DataContext.cs" />
@@ -232,6 +241,7 @@
     <Compile Include="Kernel\Search\SearchOperations\CopyToIDList.cs" />
     <Compile Include="Kernel\Search\SearchOperations\DeleteCommand.cs" />
     <Compile Include="Kernel\Search\SearchOperations\MoveToCommand.cs" />
+    <Compile Include="Kernel\Search\SearchOperations\PublishItems.cs" />
     <Compile Include="Kernel\Search\SearchOperations\RunConditionalRule.cs" />
     <Compile Include="Kernel\Search\SearchOperations\SerialiseItems.cs" />
     <Compile Include="Kernel\Search\SearchParam.cs" />
@@ -239,6 +249,7 @@
     <Compile Include="Kernel\Search\SimpleFacetSearch.cs" />
     <Compile Include="Kernel\Search\SOLR\SOLRHistoryEngineHook.cs" />
     <Compile Include="Kernel\Search\SOLR\SOLRItem.cs" />
+    <Compile Include="Kernel\Search\SOLR\SOLRItems\SolrBaseItems.cs" />
     <Compile Include="Kernel\Search\SOLR\SolrSearchParamters.cs" />
     <Compile Include="Kernel\Search\SortableIndexSearchContent.cs" />
     <Compile Include="Kernel\Search\SortableInMemoryIndexSearchContext.cs" />
@@ -260,6 +271,7 @@
     <Compile Include="Kernel\Util\Config.cs" />
     <Compile Include="Kernel\Util\Constants.cs" />
     <Compile Include="Kernel\Util\DateExtensions.cs" />
+    <Compile Include="Kernel\Util\FieldParser.cs" />
     <Compile Include="Kernel\Util\IdHelper.cs" />
     <Compile Include="Kernel\Util\IndexConstants.cs" />
     <Compile Include="Kernel\Util\ItemExtensions.cs" />

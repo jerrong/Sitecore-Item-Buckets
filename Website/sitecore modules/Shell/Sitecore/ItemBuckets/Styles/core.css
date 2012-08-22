@@ -173,10 +173,49 @@ li {
 	width:150px;
 	height:252px;
 	overflow: hidden;
+    padding: 10px;
 	background-color: #ffffff;
 margin: 20px;
 	 float: left;
+	 
+	 border: 1px solid rgba(165, 165, 165, .6); /* #e1e1e1; */
+
+     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 1px 1px 8px #EEE;
+    -moz-box-shadow: 1px 1px 8px #EEE;
+    -webkit-box-shadow: 1px 1px 8px #EEE;
+    cursor: pointer;
 	}
+	
+	
+	#grid-content .post_float:hover
+{
+    
+    	width:150px;
+	height:252px;
+	overflow: hidden;
+	
+margin: 20px;
+	 float: left;
+    border: 1px solid rgba(165, 165, 165, .6); /* #e1e1e1; */
+ padding: 10px;
+    background-color: rgba(165, 165, 165, 0.1);
+     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 1px 1px 8px #EEE;
+    -moz-box-shadow: 1px 1px 8px #EEE;
+    -webkit-box-shadow: 1px 1px 8px #EEE;
+    cursor: pointer;
+    
+}
+	
+	
+	
+	
+	
 
 .post_float div.ceebox img {
 margin-bottom:-6px !important;
@@ -734,6 +773,7 @@ body
             
             float: right;
 margin-right: -92px;
+            width: 180px;
         }
         
          #views a{
@@ -846,6 +886,33 @@ margin-right: -92px;
             cursor: pointer;
             background: url("../images/video_selected.png");
         }
+
+        .Map
+        {
+            float: right;
+            width: 33px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 10px;
+            cursor: pointer;
+            background: url("../images/map.png") no-repeat;
+        }
+        
+       .Map:hover, .Map.active
+        {
+            float: right;
+            width: 33px;
+            height: 32px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 10px;
+            cursor: pointer;
+            background: url("../images/map_selected.png") no-repeat;
+        }
+       
         
   .InfiniteScroll
         {
@@ -872,6 +939,138 @@ margin-right: -92px;
             cursor: pointer;
             background: url("../images/infinitescroll_selected.png");
         }
+        
+        
+         .Table
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/table.png");
+        }
+        
+       .Table:hover, .Table.active
+        {
+            float: right;
+            width: 32px;
+            height: 28px;
+            position: relative;
+            z-index: 1;
+            margin: auto;
+            margin-top: 12px;
+            cursor: pointer;
+            background: url("../images/table_selected.png");
+        }
+        
+        /*
+Table Style - This is what you want
+------------------------------------------------------------------ */
+#results table a:link {
+	color: #666;
+	font-weight: bold;
+	text-decoration:none;
+}
+#results table a:visited {
+	color: #999999;
+	font-weight:bold;
+	text-decoration:none;
+}
+#results table a:active,
+#results table a:hover {
+	color: #bd5a35;
+	text-decoration:underline;
+}
+#results table {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:12px;
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	margin:20px -20px;
+	border:#ccc 1px solid;
+width: 100%;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+#results table th {
+	padding:7px 25px 7px 25px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+#results table th:first-child{
+	text-align: left;
+	padding-left:20px;
+}
+#results table tr:first-child th:first-child{
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+#results table tr:first-child th:last-child{
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+#results table tr{
+	text-align: center;
+	padding-left:20px;
+    cursor: pointer;
+}
+#results table tr td:first-child{
+	text-align: left;
+	padding-left:20px;
+	border-left: 0;
+}
+#results table tr td {
+	padding:7px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+#results table tr.even td{
+	background: #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+#results table tr:last-child td{
+	border-bottom:0;
+}
+#results table tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+#results table tr:last-child td:last-child{
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+#results table tr:hover td{
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+        
+        
+        
         .list 
         {
             float: right;

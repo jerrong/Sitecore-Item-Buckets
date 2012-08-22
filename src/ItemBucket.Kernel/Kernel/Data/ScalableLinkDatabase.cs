@@ -8,7 +8,9 @@ using Sitecore.Data.Items;
 using Sitecore.Data.SqlServer;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
+using Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Kernel.Util;
+using Sitecore.ItemBucket.Kernel.Managers;
 using Sitecore.Links;
 using Sitecore.ItemBucket.Kernel.ItemExtensions.Axes;
 using Sitecore.SecurityModel;
@@ -74,13 +76,17 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Data
         /// </param>
         public ItemLink[] GetReferrers(Item item, bool deep, int page)
         {
-            var db = Factory.GetDatabase("master");
-            int hitCount;
-            var query = db.GetItem(Sitecore.ItemIDs.RootID).Search(new SafeDictionary<string> { { "_links", "" } }, out hitCount, pageNumber: page);
-            if (query.IsNotNull())
+            if (!BulkUpdateContext.IsActive)
             {
-                return query.Select(innerItem => new ItemLink(item, item.ID, innerItem.GetItem(), innerItem.GetItem().Paths.FullPath)).ToArray();
+                var db = Factory.GetDatabase("master");
+                int hitCount;
+                var query = db.GetItem(Sitecore.ItemIDs.RootID).Search(new SafeDictionary<string> { { "_links", "" } }, out hitCount, pageNumber: page);
+                if (query.IsNotNull())
+                {
+                    return query.Select(innerItem => new ItemLink(item, item.ID, innerItem.GetItem(), innerItem.GetItem().Paths.FullPath)).ToArray();
+                }
             }
+
             return new ItemLink[] { };
         }
 
@@ -92,14 +98,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Data
 
         private bool HasExternalReferrers(ItemLink[] referrers, Hashtable tree)
         {
-            foreach (ItemLink link in referrers)
-            {
-                if (!tree.ContainsKey(link.SourceItemID))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return referrers.Any(link => !tree.ContainsKey(link.SourceItemID));
         }
 
         public virtual bool HasExternalReferrers(Item item, bool deep)
@@ -187,6 +186,30 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Data
             this.Compact(database);
         }
 
+        public virtual void DeferredRebuild(DateTime startDate, DateTime endDate, Database database)
+        {
+            Assert.ArgumentNotNull(database, "database");
+            using (new SecurityDisabler())
+            {
+                int hitCount;
+                Item rootItem = database.GetRootItem(Context.Language);
+                var items = new BucketQuery().Starting(startDate).Ending(endDate).Run(out hitCount);
+                var pages = hitCount/20;
+
+                for (int i = 0; i <= pages; i++ ) 
+                {
+                    var pagedResults = new BucketQuery().Starting(startDate).Ending(endDate).Page(i, out hitCount);
+                    foreach (var itm in pagedResults)
+                    {
+                        this.UpdateReferences(itm.GetItem());
+                    }
+                   
+                }
+            }
+
+            this.Compact(database);
+        }
+
         private void RebuildItem(Item item)
         {
             this.UpdateReferences(item);
@@ -247,12 +270,15 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Data
         /// </param>
         public override ItemLink[] GetReferences(Item item)
         {
-            var db = Factory.GetDatabase("master");
-            int hitCount;
-            var query = db.GetItem(Sitecore.ItemIDs.RootID).Search(new SafeDictionary<string> { { "_links", "" } }, out hitCount, pageNumber: 1);
-            if (query.IsNotNull())
+            if (!BulkUpdateContext.IsActive)
             {
-                return query.Select(innerItem => new ItemLink(item, item.ID, innerItem.GetItem(), innerItem.GetItem().Paths.FullPath)).ToArray();
+                var db = Factory.GetDatabase("master");
+                int hitCount;
+                var query = db.GetItem(Sitecore.ItemIDs.RootID).Search(new SafeDictionary<string> { { "_links", "" } }, out hitCount, pageNumber: 1);
+                if (query.IsNotNull())
+                {
+                    return query.Select(innerItem => new ItemLink(item, item.ID, innerItem.GetItem(), innerItem.GetItem().Paths.FullPath)).ToArray();
+                }
             }
             return new ItemLink[] { };
         }

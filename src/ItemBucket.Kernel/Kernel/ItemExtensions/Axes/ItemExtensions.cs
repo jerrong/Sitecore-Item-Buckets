@@ -1,3 +1,5 @@
+using Lucene.Net.Search;
+
 namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
 {
     using System;
@@ -434,6 +436,24 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
             using (var searcher = new IndexSearcher(indexName))
             {
                 var keyValuePair = searcher.GetItems(queryParser);
+                hitCount = keyValuePair.Key;
+                return keyValuePair.Value;
+            }
+        }
+
+        /// <summary>
+        /// An extension of Item that allows you to launch a Search from an item
+        /// </summary>
+        /// <returns>List of Results of Type IEnumerable List of SitecoreItem (which implements IItem)</returns>
+        /// <param name="startLocationItem">The start location of the search</param>
+        /// <param name="queryParser">The raw JSON Parse query</param>
+        /// <param name="hitCount">This will output the hitCount of the search</param>
+        /// <param name="indexName">Force query to run on a particular index</param>
+        public static IEnumerable<SitecoreItem> Search(this Item itm, Query rawLuceneQuery, out int hitCount, int pageSize = 20, int pageNumber = 1, string indexName = "itembuckets_buckets")
+        {
+            using (var searcher = new IndexSearcher(indexName))
+            {
+                var keyValuePair = searcher.RunQuery(rawLuceneQuery, pageSize, pageNumber);
                 hitCount = keyValuePair.Key;
                 return keyValuePair.Value;
             }

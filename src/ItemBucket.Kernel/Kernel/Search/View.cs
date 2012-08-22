@@ -14,6 +14,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
+    [Serializable]
     public class View
     {
         public string ViewName;

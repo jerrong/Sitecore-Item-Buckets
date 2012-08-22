@@ -12,7 +12,7 @@ templatekey: View
 ----version----
 language: en
 version: 1
-revision: 480b917f-d351-4afb-8649-6e4aa1b5b177
+revision: d143f228-ad63-4bdc-bf54-03284da830ab
 
 ----field----
 field: {BB7FF36D-6368-4117-AB7C-01AEFF56BEA2}
@@ -25,7 +25,7 @@ InfiniteScroll
 field: {2EDEF3FC-7264-443A-B0F4-3A2E3B602882}
 name: Header Template
 key: header template
-content-length: 310
+content-length: 432
 
 <script type="text/javascript">
 			$(document).ready(function(){
@@ -36,7 +36,7 @@ content-length: 310
 				});
 			});
 		</script>
-
+<div class="mainmargin" id="grid-content" style="position: relative; width: auto;overflow-x: hidden; overflow-y: hidden;">
 ----field----
 field: {3A13DAFA-0E96-4214-8C42-BC114CEA529B}
 name: Item Template
@@ -55,9 +55,16 @@ ContentPlaceholder<br/></p><p><a href="#" onclick="scForm.getParentForm().postRe
 field: {390576A2-5452-4CAE-AB91-116A8892CFD2}
 name: Footer Template
 key: footer template
-content-length: 0
+content-length: 6
 
+</div>
+----field----
+field: {B41248A7-5111-4A19-907D-4E7EE4358069}
+name: Enabled
+key: enabled
+content-length: 1
 
+1
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -85,14 +92,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-480b917f-d351-4afb-8649-6e4aa1b5b177
+d143f228-ad63-4bdc-bf54-03284da830ab
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20120704T093638:634769913987801019
+20120806T110357:634798478372417786
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

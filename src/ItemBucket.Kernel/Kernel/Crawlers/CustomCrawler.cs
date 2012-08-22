@@ -24,7 +24,7 @@
     /// <summary>
     /// Custom Buckets Crawler
     /// </summary>
-    public class CustomCrawler : BigData.Crawler
+    public class CustomCrawler : Sitecore.BigData.Crawler
     {
         #region Fields
         private List<BaseDynamicField> _dynamicFields = new List<BaseDynamicField>();

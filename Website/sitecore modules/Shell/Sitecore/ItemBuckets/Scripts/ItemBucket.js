@@ -2,20 +2,213 @@
 var QueryServer = "";
 var Expanded = false;
 var CurrentView = "";
+defaultView();
 disableInception();
+//swapTabs();
+function swapTabs() {
+    jQuery("#BContent", parent.document.body).after(jQuery("#BContent", parent.document.body).prev());
+    jQuery("#BContent", parent.document.body).first("img")[0].nextSibling.lastChild.src = '/sitecore/shell/themes/standard/Images/Ribbon/tab3.png';
+    jQuery("#BContent", parent.document.body).prev().first("img").first("img")[0].nextSibling.lastChild.src = '/sitecore/shell/themes/standard/Images/Ribbon/tab2.png';
+}
+
+    function getGloablQueryVariable(variable, qs) {
+
+    var vars = qs.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+            return unescape(pair[1]);
+        }
+    }
+
+}
+
+
+function AddFilterGlobal() {
+
+    var cleanFilter = filterForAllSearch;
+    var o = new Array;
+
+    var locationsFilter = getGloablQueryVariable("location", cleanFilter);
+    if (locationsFilter != undefined) {
+        if (locationsFilter.length > 0) {
+            o.push({
+                type: "location",
+                value: locationsFilter
+            })
+
+        }
+    }
+    
+      var idFilter = getGloablQueryVariable("id", cleanFilter);
+    if (idFilter != undefined) {
+        if (idFilter.length > 0) {
+            o.push({
+                type: "id",
+                value: idFilter
+            });
+
+        }
+    }
+    
+       var siteFilter = getGloablQueryVariable("site", cleanFilter);
+    if (siteFilter != undefined) {
+        if (siteFilter.length > 0) {
+            o.push({
+                type: "site",
+                value: siteFilter
+            });
+
+        }
+    }
+    
+
+         var authorFilter = getGloablQueryVariable("author", cleanFilter);
+    if (authorFilter != undefined) {
+        if (authorFilter.length > 0) {
+            o.push({
+                type: "author",
+                value: authorFilter
+            });
+
+        }
+    }
+    
+
+             var languageFilter = getGloablQueryVariable("language", cleanFilter);
+    if (languageFilter != undefined) {
+        if (languageFilter.length > 0) {
+            o.push({
+                type: "language",
+                value: languageFilter
+            });
+
+        }
+    }
+    
+                 var tagFilter = getGloablQueryVariable("tag", cleanFilter);
+    if (tagFilter != undefined) {
+        if (tagFilter.length > 0) {
+            o.push({
+                type: "tag",
+                value: tagFilter
+            });
+
+        }
+    }
+                        var startFilter = getGloablQueryVariable("start", cleanFilter);
+    if (startFilter != undefined) {
+        if (startFilter.length > 0) {
+            o.push({
+                type: "start",
+                value: resolveKnownDates(startFilter)
+            });
+
+        }
+    }
+
+                             var endFilter = getGloablQueryVariable("end", cleanFilter);
+    if (endFilter != undefined) {
+        if (endFilter.length > 0) {
+            o.push({
+                type: "end",
+                value: resolveKnownDates(endFilter)
+            });
+
+        }
+    }
+
+
+                                 var sortFilter = getGloablQueryVariable("sort", cleanFilter);
+    if (sortFilter != undefined) {
+        if (sortFilter.length > 0) {
+            o.push({
+                type: "sort",
+                value: sortFilter.split('|')[0]
+            });
+
+     
+        o.push({
+            type: "orderby",
+            value: sortFilter.split('|')[1]
+        });
+
+
+        }
+    }
+
+    var textFilter = getGloablQueryVariable("text", cleanFilter);
+    if (textFilter != undefined) {
+        if (textFilter.length > 0) {
+            o.push({
+                type: "text",
+                value: textFilter
+            })
+
+        }
+    }
+
+    var templateFilter = getGloablQueryVariable("template", cleanFilter);
+    if (templateFilter != undefined) {
+        if (templateFilter.length > 0) {
+            o.push({
+                type: "template",
+                value: templateFilter
+            })
+
+        }
+    }
+
+    var customFilter = getGloablQueryVariable("custom", cleanFilter);
+    if (customFilter != undefined) {
+        if (customFilter.length > 0) {
+            o.push({
+                type: "custom",
+                value: customFilter
+            })
+
+        }
+    }
+
+    if (o.length > 0) {
+     
+
+
+
+
+
+
+        filterForAllSearch = ''; 
+    }
+    return o;
+}
+
+function defaultView() {
+
+    jQuery.ajax({
+        type: "POST",
+        url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetDefault",
+        data: "",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (a) {
+            CurrentView = a.d;
+        }
+    });
+}
 
 function disableInception() {
-
+if($("#StartButton", parent.parent.parent.document.body).length > 0) {
     if ($(".scEditorTabIcon", parent.parent.document.body).length > 0) {
         var contextTabs = $(".scEditorTabIcon", parent.document.body);
         var disableSearch = false;
-        $.each(contextTabs, function () {
+        $.each(contextTabs, function() {
             if (this.nextElementSibling.innerText == "Search") {
                 disableSearch = true;
                 $(this.parentNode.parentNode).css("display", "none");
 
                 $(this.parentNode.parentNode.nextElementSibling).css("display", "");
-
 
 
             }
@@ -24,11 +217,85 @@ function disableInception() {
         $("#FContent", parent.document.body)[0].style.display = "";
     }
 }
+}
+
+
+
+function autoSuggestText(element, filterName, data, characterCount) {
+    var a = $("#ui_element");
+    var textBoxValue = a.find(".addition").val();
+    
+
+    
+    if (
+        (textBoxValue.indexOf("template:") > -1) ||
+        (textBoxValue.indexOf("location:") > -1) ||
+        (textBoxValue.indexOf("extension:") > -1) ||
+        (textBoxValue.indexOf("version:") > -1) ||
+        (textBoxValue.indexOf("debug:") > -1) ||
+        (textBoxValue.indexOf("id:") > -1) ||
+        (textBoxValue.indexOf("ref:") > -1) ||
+        (textBoxValue.indexOf("custom:") > -1) ||
+        (textBoxValue.indexOf("sort:") > -1) ||
+        (textBoxValue.indexOf("site:") > -1) ||
+        (textBoxValue.indexOf("author:") > -1) ||
+        (textBoxValue.indexOf("language:") > -1) ||
+        (textBoxValue.indexOf("text:") > -1) ||
+        (textBoxValue.indexOf("tag:") > -1) ||
+        (textBoxValue.indexOf("start:") > -1) ||
+        (textBoxValue.indexOf("end:") > -1) ||
+        (textBoxValue.indexOf("recent:") > -1)
+       ) 
+    {
+        
+    }
+    else {
+
+
+        if (a.find(".addition").val().indexOf(filterName) > -1) {
+            if (element.val().length >= characterCount) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetNames",
+                    data: data,
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(a) {
+                        var b = a.d;
+                        b = b.toString().split(",");
+                        var c = new Array;
+                        $.each(b, function() {
+                            c.push(this.toString());
+                        });
+                        $(".ui-corner-all").live("click", function() {
+                            ConvertSearchQuery();
+                        });
+                        $(".addition").autocomplete({
+                            source: c,
+                            autoFocus: true                       
+                        });
+//                    $(".addition").autocomplete("hide");
+//                    $(".ui-autocomplete").css("top", "75px").css("left", "536px").css("width", "428px");
+//                    $(".ui-menu-item").css("height", "45px");
+//                    $(".ui-corner-all").css("height", "45px").css("text-indent", "19px").css("font-size", "24px");
+                        $(".addition").autocomplete("show");
+                        $("#token-input-demo-input-local").show();
+                    }
+                });
+            }
+        }
+    }
+}
 
 //This will check if you have designate a URL for all quieries to be run from and switch to that. Default is empty. (Local)
 retrieveScalabilitySettings();
 
 function detectViewMode() {
+    if (CurrentView != "") {
+    return CurrentView;
+    }
+
     return $("#views").find(".active").attr("id");
 }
 
@@ -42,8 +309,8 @@ function buildTipsMenu(a) {
         ({
             tabHandle: ".handle2",
             pathToTabImage: "images/thin-arrow-left.png",
-            imageHeight: "522px",
-            imageWidth: "40px",
+            imageHeight: $(window).height() - 30 + "px",
+            imageWidth: "20px",
             tabLocation: "right",
             speed: 300,
             action: "click",
@@ -55,7 +322,7 @@ function buildTipsMenu(a) {
         $(".handle2").css("left", "-82px");
     }
     else {
-        $(".handle2").css("left", "-52px");
+        $(".handle2").css("left", "-32px");
     }
     $('.handle, .handle2').css("background-position", "50% 50%");
     if (a.tips.length == 0) {
@@ -82,6 +349,17 @@ function retrieveScalabilitySettings() {
         }
     });
 }
+
+
+function launchMultipleTabs(ids) {
+
+    var parsedIds = ids.split("|");
+    $.each(parsedIds, function () {
+        scForm.getParentForm().postRequest('', '', '', 'contenteditor:launchtab(url=' + this + ')');
+        return false;
+    });
+};
+
 
 function autoSuggest(filterName, serviceName, data) {
     var a = $("#ui_element");
@@ -182,8 +460,8 @@ function meme(a) {
         ({
             tabHandle: ".handle",
             pathToTabImage: "images/thin-arrow-right.png",
-            imageHeight: "522px",
-            imageWidth: "40px",
+            imageHeight: $(window).height() - 30 + "px",
+            imageWidth: "20px",
             tabLocation: "left",
             speed: 300,
             action: "click",
@@ -353,7 +631,7 @@ function runFacet(o, pageNumber, onSuccessFunction, onErrorFunction) {
             cache: false,
             data:
             {
-                selections: o,
+                selections: o.concat(AddFilterGlobal()),
                 pageNumber: pageNumber,
                 type: "facet"
             },
@@ -372,7 +650,7 @@ function runQuery(o, pageNumber, onSuccessFunction, onErrorFunction) {
         dataType: "jsonp",
         cache: false,
         data: {
-            selections: o,
+            selections: o.concat(AddFilterGlobal()),
             pageNumber: pageNumber,
             type: "Query"
         },
@@ -557,17 +835,19 @@ $('.sb_clear').live("click", function () {
 
 function IsClone(a, b, c) {
     var d = $("#ui_element");
-    $(".grid").removeClass("active");
-    $(".list").addClass("active");
+    //$(".grid").removeClass("active");
+    //$(".list").addClass("active");
+    
+
     var e = d.find(".boxme li .extension");
     var tt = d.find(".boxme li .id");
     var zz = d.find(".boxme li .custom");
     var f = d.find(".boxme li .text");
     var customSort = d.find(".boxme li .sort");
     var g = d.find(".boxme li .template");
-    var h = d.find(".boxme li .tag");
+    var hh = d.find(".boxme li .tag");
     var ref = d.find(".boxme li .ref");
-    var i = d.find(".boxme li .starthidden");
+    var ii = d.find(".boxme li .starthidden");
     var j = d.find(".boxme li .endhidden");
     var k = d.find(".boxme li .author");
     var l = d.find(".boxme li .version");
@@ -785,7 +1065,7 @@ function IsClone(a, b, c) {
         });
     });
 
-    $.each(h,
+    $.each(hh,
         function () {
             o.push({
                 type: "tag",
@@ -793,7 +1073,7 @@ function IsClone(a, b, c) {
             });
         });
 
-    $.each(i,
+    $.each(ii,
     function () {
         o.push
         ({
@@ -857,8 +1137,38 @@ function IsClone(a, b, c) {
     });
 
     retrieveFilters();
-    runQuery(o, 0, OnComplete, OnFail);
-    runFacet(o, 0, meme, g);
+//    runQuery(o, 0, OnComplete, OnFail);
+//    runFacet(o, 0, meme, g);
+    
+    if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
+       
+                runQuery(o, 0, h, g);
+        runFacet(o, 0, meme, g);
+            }
+
+            else if (CurrentView == "grid") {
+          
+                        runQuery(o, 0, h, i);
+        runFacet(o, 0, meme, g);
+
+                $(".navAlpha").html("");
+                $(".slide-out-div").html("");
+                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                $("#ajaxBusyFacet").css({
+                    margin: "0px auto",
+                    width: "44px"
+                });
+
+            } else {
+               
+                    runQuery(o, 0, OnComplete, OnFail);
+        runFacet(o, 0, meme, g);
+            }
+
+
+
+
+
 
     $(".navAlpha").html("");
     $(".slide-out-div").html("");
@@ -905,7 +1215,7 @@ function OnComplete(a) {
         (a.items,
             function () {
                 if (a.items != 0) {
-                    b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
+                    b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
                 }
             }
         );
@@ -944,10 +1254,25 @@ function OnComplete(a) {
             function () {
                 if (a.items != 0) {
                     if (this.Name != null) {
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
+                        var mediaCommand = "";
+                        if (this.TemplateName == "Mp3" || this.TemplateName == "Movie") {
+                            mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
+                        }
+                        else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
+                                   mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
+                  
+                        }
+
+                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>"
+                            
+                          + "<div class=\"quickactions\" onclick=\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>" +
+                            
+                            mediaCommand
+                            
+                            + "</div>"  + "</li>" );
                     }
                     else {
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
+                        $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + ' style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
                     }
                 }
             }
@@ -1029,10 +1354,8 @@ $.fn.outerHTML = function (a) {
 
 var pageNumber = 0;
 var maxPageCount = 10;
-$(function () {
 
-
-    function i() {
+function i() {
     }
 
     function h(a) {
@@ -1072,11 +1395,20 @@ $(function () {
                                 var imagePathFiller = this.ImagePath;
                                 var nameFiller = this.Name;
                                 var bucketFiller = this.Bucket;
-                                var contentFiller = (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content);
+                                var contentFiller = (this.Content.length > 140 ? (this.Content.substring(0, 140) + "...") : this.Content);
                                 var versionFiller = this.Version;
                                 var createdFiller = this.Cre;
                                 var createdbyFiller = this.CreBy;
+                                if (CurrentView == "Video") {
+                                   
 
+  
+               var yourVideoURL =contentFiller.split("</strong>")[1].split("</p>")[0];
+                contentFiller = yourVideoURL.replace(" ","");
+
+
+
+                                }
                                 var templateText = modeObject.ItemTemplate;
                                 b = b + templateText.replace(/TemplatePlaceholder/g, templateFiller).replace(/NamePlaceholder/g, nameFiller).replace(/MetaPlaceholder/g, metaFiller).replace(/LaunchTypePlaceholder/g, launchTypeFiller).replace(/ItemIdPlaceholder/g, itemIdFiller).replace(/ImagePathPlaceholder/g, imagePathFiller).replace(/NamePlaceholder/g, nameFiller).replace(/BucketPlaceholder/g, bucketFiller).replace(/ContentPlaceholder/g, contentFiller).replace(/VersionPlaceholder/g, versionFiller).replace(/CreatedPlaceholder/g, createdFiller).replace(/CreatedByPlaceholder/g, createdbyFiller);
                             }
@@ -1090,7 +1422,7 @@ $(function () {
                     $.each(a.items,
                         function () {
                             if (a.items != 0) {
-                                b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
+                                b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
                             }
                         }
                     );
@@ -1170,10 +1502,22 @@ $(function () {
             function () {
                 if (resultCallBack.items != 0) {
                     if (this.Name != null) {
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
+                        
+                        var mediaCommand = "";
+                        if (this.TemplateName == "Mp3" || this.TemplateName == "Movie") {
+                            mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
+                        }
+                        else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
+                                   mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
+                  
+                        }
+                        $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '"style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "<div class=\"quickactions\" onclick\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>"
+                       + mediaCommand + "</div>" + "</li>" );
                     } else {
                         $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"#\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=50&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
                     }
+                    
+
                 }
             });
 
@@ -1223,6 +1567,12 @@ $(function () {
         }
         $("#ajaxBusy").hide();
     }
+
+
+$(function () {
+
+
+    
 
 
     var a = $("#ui_element");
@@ -1381,8 +1731,20 @@ $(function () {
                                         $.each(c, function () {
                                             if (this != "") {
                                                 if ((scope.data.indexOf("RecentlyModified") > 0) || (scope.data.indexOf("RecentlyCreated")) > 0 || (scope.data.indexOf("RecentTabs")) > 0) {
-                                                    var splitMe = this.split("|");
-                                                    e = e + "<li><a href=\"#\" onclick=\"scForm.getParentForm().postRequest('','','','" + "contenteditor:launchtab" + "(url=" + splitMe[1] + ")'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+
+                                                    if (this.indexOf('sed Tab') > 0) {
+
+                                                        var splitMe = this.replace("Closed Tabs (", "").replace(")");
+                                                        splitMe = splitMe.split("|");
+
+                                                        e = e + "<li><a href=\"#\" onclick=\"javascript:launchMultipleTabs('" + splitMe + "')\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+
+                                                    }
+                                                    else {
+
+                                                        var splitMe = this.split("|");
+                                                        e = e + "<li><a href=\"#\" onclick=\"scForm.getParentForm().postRequest('','','','" + "contenteditor:launchtab" + "(url=" + splitMe[1] + ")'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
+                                                    }
                                                 } else if (scope.data.indexOf("SearchOperations") > 0) {
                                                     if ($.browser.msie) {
                                                         e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
@@ -1469,6 +1831,10 @@ $(function () {
         $(".sb_dropdown").hide();
         a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
     };
+
+
+
+
 
     $(".sb_down, .sb_up").toggle(toggleDropDown,
         toggleDropDownUp);
@@ -1591,12 +1957,12 @@ $(function () {
             var p = buildQuery();
             retrieveFilters();
 
-            if (CurrentView != "list" && CurrentView != "grid") {
+            if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, g);
             }
 
-            else if ($(".grid").hasClass("active")) {
+            else if (CurrentView == "grid") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -1727,8 +2093,24 @@ $(function () {
             retrieveFilters();
             b.preventDefault();
         }
+
+        clearTimeout(typingTimer);
+
+
+
     });
+
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 3000;  //time in ms, 3 second for example
+    function doneTyping() {
+        autoSuggestText($(".addition"), "", "{'tagChars' : '" + $(".addition").val() + "'}", 3);
+    }
     $("body").live("keyup", function (b) {
+
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+       
+
+
         //Spacebar and Ctrl pressed.
         if (b.which == 32 && b.ctrlKey) {
             event.preventDefault();
@@ -1979,11 +2361,36 @@ $(function () {
             var p = buildQuery();
             retrieveFilters();
 
-            if (CurrentView != "list" && CurrentView != "grid") {
+//            if (CurrentView != "list" && CurrentView != "grid") {
+//                pageNumber = a;
+//                runQuery(p, pageNumber, h, g);
+//            }
+//            else if ($(".grid").hasClass("active")) {
+//                pageNumber = a;
+//                runQuery(p, pageNumber, h, i);
+//                runFacet(p, pageNumber, meme, g);
+
+//                $(".navAlpha").html("");
+//                $(".slide-out-div").html("");
+//                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+//                $("#ajaxBusyFacet").css({
+//                    margin: "0px auto",
+//                    width: "44px"
+//                });
+
+//            } else {
+//                pageNumber = a;
+//                runQuery(p, pageNumber, c, g);
+//            }
+            
+
+
+             if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = a;
                 runQuery(p, pageNumber, h, g);
             }
-            else if ($(".grid").hasClass("active")) {
+
+            else if (CurrentView == "grid") {
                 pageNumber = a;
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -2000,6 +2407,10 @@ $(function () {
                 pageNumber = a;
                 runQuery(p, pageNumber, c, g);
             }
+
+
+
+
         }
 
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -2112,6 +2523,240 @@ $(function () {
             }
         );
     });
+
+    AddFilter();
+
+
+
+    function getQueryVariable(variable, qs) {
+
+    var vars = qs.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+            return unescape(pair[1]);
+        }
+    }
+
+}
+    
+    function resolveKnownDates(dateToParse) {
+        switch (dateToParse) {
+            case "Yesterday":
+               
+                        return Date.today().add(-1).days().toString("MM/dd/yyyy")
+             
+            case "LastWeek":
+               
+                       return Date.today().add(-7).days().toString("MM/dd/yyyy")
+                
+
+            case "LastMonth":
+             
+                        return Date.today().add(-1).months().toString("MM/dd/yyyy")
+              
+
+            case "LastYear":
+              
+                        return Date.today().add(-1).years().toString("MM/dd/yyyy")
+              
+
+               
+
+            default:
+                return dateToParse;
+        }
+    }
+    
+
+
+function AddFilter() {
+
+    var cleanFilter = filterForSearch;
+    var o = new Array;
+
+    var locationsFilter = getQueryVariable("location", cleanFilter);
+    if (locationsFilter != undefined) {
+        if (locationsFilter.length > 0) {
+            o.push({
+                type: "location",
+                value: locationsFilter
+            })
+
+        }
+    }
+    
+      var idFilter = getQueryVariable("id", cleanFilter);
+    if (idFilter != undefined) {
+        if (idFilter.length > 0) {
+            o.push({
+                type: "id",
+                value: idFilter
+            });
+
+        }
+    }
+    
+       var siteFilter = getQueryVariable("site", cleanFilter);
+    if (siteFilter != undefined) {
+        if (siteFilter.length > 0) {
+            o.push({
+                type: "site",
+                value: siteFilter
+            });
+
+        }
+    }
+    
+
+         var authorFilter = getQueryVariable("author", cleanFilter);
+    if (authorFilter != undefined) {
+        if (authorFilter.length > 0) {
+            o.push({
+                type: "author",
+                value: authorFilter
+            });
+
+        }
+    }
+    
+
+             var languageFilter = getQueryVariable("language", cleanFilter);
+    if (languageFilter != undefined) {
+        if (languageFilter.length > 0) {
+            o.push({
+                type: "language",
+                value: languageFilter
+            });
+
+        }
+    }
+    
+                 var tagFilter = getQueryVariable("tag", cleanFilter);
+    if (tagFilter != undefined) {
+        if (tagFilter.length > 0) {
+            o.push({
+                type: "tag",
+                value: tagFilter
+            });
+
+        }
+    }
+                        var startFilter = getQueryVariable("start", cleanFilter);
+    if (startFilter != undefined) {
+        if (startFilter.length > 0) {
+            o.push({
+                type: "start",
+                value: resolveKnownDates(startFilter)
+            });
+
+        }
+    }
+
+                             var endFilter = getQueryVariable("end", cleanFilter);
+    if (endFilter != undefined) {
+        if (endFilter.length > 0) {
+            o.push({
+                type: "end",
+                value: resolveKnownDates(endFilter)
+            });
+
+        }
+    }
+
+
+                                 var sortFilter = getQueryVariable("sort", cleanFilter);
+    if (sortFilter != undefined) {
+        if (sortFilter.length > 0) {
+            o.push({
+                type: "sort",
+                value: sortFilter.split('|')[0]
+            });
+
+     
+        o.push({
+            type: "orderby",
+            value: sortFilter.split('|')[1]
+        });
+
+
+        }
+    }
+
+    var textFilter = getQueryVariable("text", cleanFilter);
+    if (textFilter != undefined) {
+        if (textFilter.length > 0) {
+            o.push({
+                type: "text",
+                value: textFilter
+            })
+
+        }
+    }
+
+    var templateFilter = getQueryVariable("template", cleanFilter);
+    if (templateFilter != undefined) {
+        if (templateFilter.length > 0) {
+            o.push({
+                type: "template",
+                value: templateFilter
+            })
+
+        }
+    }
+
+    var customFilter = getQueryVariable("custom", cleanFilter);
+    if (customFilter != undefined) {
+        if (customFilter.length > 0) {
+            o.push({
+                type: "custom",
+                value: customFilter
+            })
+
+        }
+    }
+
+    if (o.length > 0) {
+      //  runQuery(o, 1, c, g);
+        //runFacet(o, 1, meme, g);
+        
+
+        if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
+       
+                runQuery(o, 1, h, g);
+        runFacet(o, 1, meme, g);
+            }
+
+            else if (CurrentView == "grid") {
+          
+                        runQuery(o, 1, h, i);
+        runFacet(o, 1, meme, g);
+
+                $(".navAlpha").html("");
+                $(".slide-out-div").html("");
+                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                $("#ajaxBusyFacet").css({
+                    margin: "0px auto",
+                    width: "44px"
+                });
+
+            } else {
+               
+                    runQuery(o, 1, c, g);
+        runFacet(o, 1, meme, g);
+            }
+
+
+
+
+
+
+        filterForSearch = ''; 
+    }
+}
+
+
+
 
     function establishViews() {
         var a = $("#ui_element");

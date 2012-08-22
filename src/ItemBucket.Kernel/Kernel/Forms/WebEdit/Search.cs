@@ -57,14 +57,20 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Forms.WebEdit
                 {
                     SheerResponse.Eval("window.top.location.href=window.top.location.href");
                     var itemId = ParseForAttribute(args.Result, "id");
-                    var url = new UrlString("http://" + HttpContext.Current.Request.Url.Host + LinkManager.GetItemUrl(Sitecore.Context.ContentDatabase.GetItem(itemId)).Replace("/sitecore/shell", ""));
-                    WebEditCommand.Reload(url);
+                    Item item = Sitecore.Context.ContentDatabase.GetItem(itemId);
+                    if (item.IsNotNull())
+                    {
+                        var url =
+                            new UrlString("http://" + HttpContext.Current.Request.Url.Host +
+                                          LinkManager.GetItemUrl(item).Replace("/sitecore/shell", ""));
+                        WebEditCommand.Reload(url);
+                    }
 
                 }
                 else
                 {
                     SheerResponse.ShowModalDialog(
-                        new UrlString("/sitecore/shell/Applications/Dialogs/Bucket%20link.aspx?").ToString(), true);
+                        new UrlString("/sitecore/shell/Applications/Dialogs/Bucket%20link.aspx?").ToString(), "1000", "700", "", true);
                     args.WaitForPostBack();
                 }
             }

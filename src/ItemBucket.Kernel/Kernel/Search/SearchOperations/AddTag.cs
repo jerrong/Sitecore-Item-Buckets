@@ -132,7 +132,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SearchOperations
                         str2.Append("ro", "/sitecore/content/Applications");
                         str2.Append("sc_content", Context.ContentDatabase.Name);
 
-                        SheerResponse.ShowModalDialog(str2.ToString(), true);
+                        SheerResponse.ShowModalDialog(str2.ToString(), "1000", "700", "", true);
 
                         args.WaitForPostBack();
                     }

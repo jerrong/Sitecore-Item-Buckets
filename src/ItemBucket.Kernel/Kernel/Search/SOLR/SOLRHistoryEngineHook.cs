@@ -44,7 +44,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
                 ID iD = SitecoreEventArgs.GetID(e, 1);
                 Assert.IsNotNull(iD, "ID is not passed to RemoveItem handler");
                 solr.Delete(IdHelper.NormalizeGuid(iD.ToString(), false));
-                solr.Add(new SOLRItem());
+               // solr.Add(new SOLRItem());
                 solr.Commit();
                 solr.Optimize();
             }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 using SolrNet.Attributes;
 
 namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
 {
-    public class SOLRItem
+    public abstract class SOLRItem : ISOLRItem
     {
         [SolrUniqueKey("_group")]
         public string Group { get; set; }
@@ -18,4 +14,18 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
         [SolrField("_url")]
         public string Url { get; set; }
     }
+
+    public interface  ISOLRItem
+    {
+        [SolrUniqueKey("_group")]
+        string Group { get; set; }
+
+        [SolrField("_name")]
+        ArrayList Name { get; set; }
+
+        [SolrField("_url")]
+        string Url { get; set; }
+    }
+
+
 }

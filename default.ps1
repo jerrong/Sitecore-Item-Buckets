@@ -7,9 +7,9 @@ properties {
 	$zip_exe = Resolve-Path ".\tools\7-Zip\7z.exe"
 	$nuget_exe = Resolve-Path ".\tools\Nuget\nuget.exe"
 	$nuget_version_number = $(
-	switch ($env:PACKAGE_VERSION){
-		($null) { "0.0.0.1"}
-		default {$env:PACKAGE_VERSION}
+	switch ($env:env.PACKAGE_VERSION){
+		($null) {"0.0.0.1"}
+		default {$env:env.PACKAGE_VERSION}
 	})
 	$nuget_api_key = "e7f0a09d-edfe-4dce-b50b-9f92a236a600"
 }
@@ -119,14 +119,6 @@ task nugetTemplate -depends emptyNugetTemplate {
 		$target = Convert-Path "$build_nuget_package/Sitecore.ItemBuckets/items"
 		CreateSitecorePackage -humanName "Item.Buckets.$scope" -project $project -target_directory $target
 	}
-
-	"BigData.Solr" | %{ 
-		$scope = $_
-		$project = Convert-Path "Sitecore.ItemBucket.$scope/Sitecore.ItemBucket.$scope.scproj"
-		
-		CreateSitecorePackage -humanName "Item.Buckets.$scope" -project $project -target_directory $target
-	}
-	
 	
 	$tmpDir = Create-Temp-Directory
 	RunMsBuild -task "Build" -outputFolder $tmpDir -projectOrSolution "src/Sitecore.BigData/Sitecore.BigData.csproj"
@@ -139,8 +131,7 @@ task nugetTemplate -depends emptyNugetTemplate {
 	$tmpDir = Create-Temp-Directory
 	RunMsBuild -task "Build" -outputFolder $tmpDir -projectOrSolution "src/ItemBucket.Kernel/Sitecore.ItemBucket.Kernel.csproj"
 	cp "$tmpDir/Sitecore.ItemBucket.Kernel.*" "$build_nuget_package/Sitecore.ItemBuckets/lib/net40"
-	cp "$tmpDir/SolrNet*" "$build_nuget_package/Sitecore.ItemBuckets/lib/net40"
-	cp "$tmpDir/Microsoft.Practices.ServiceLocation*" "$build_nuget_package/Sitecore.ItemBuckets/lib/net40"
+	
 	
 	$tmpDir = Create-Temp-Directory
 	RunMsBuild -task "Build" -outputFolder $tmpDir -projectOrSolution "Website/Sitecore.ItemBucket.UI.csproj"

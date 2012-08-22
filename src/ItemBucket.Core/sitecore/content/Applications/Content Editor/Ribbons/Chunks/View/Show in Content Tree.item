@@ -1,0 +1,311 @@
+----item----
+version: 1
+id: {7DF4D2A9-D954-4653-A855-CF9399626B95}
+database: core
+path: /sitecore/content/Applications/Content Editor/Ribbons/Chunks/View/Show in Content Tree
+parent: {8787E501-F2E9-434E-9F76-45259D9D8C7C}
+name: Show in Content Tree
+master: {00000000-0000-0000-0000-000000000000}
+template: {1DB34C92-03B0-4475-9A39-DA14E4D9D8FC}
+templatekey: Large Button
+
+----field----
+field: {D47ED548-84D5-4622-9886-5CC164727507}
+name: Icon
+key: icon
+content-length: 30
+
+Software/32x32/branch_find.png
+----field----
+field: {DBBF9EE3-C30E-4456-A81F-ED8C2E8DF91B}
+name: Click
+key: click
+content-length: 20
+
+content:selectintree
+----field----
+field: {CCD6BDE9-0A7A-4DA3-B0ED-D3C0F65379FE}
+name: KeyCode
+key: keycode
+content-length: 3
+
+c68
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 30
+
+Software/32x32/branch_find.png
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 4
+
+1100
+----field----
+field: {DEC8D2D5-E3CF-48B6-A653-8E69E2716641}
+name: __Security
+key: __security
+content-length: 138
+
+ar|sitecore\Sitecore Limited Content Editor|pd|-item:read|pe|-item:read|ar|sitecore\Sitecore Client Authoring|pd|+item:read|pe|+item:read|
+----field----
+field: {A4F985D9-98B3-4B52-AAAF-4344F6E747C6}
+name: __Workflow
+key: __workflow
+content-length: 0
+
+
+----version----
+language: da
+version: 1
+revision: a8b9b4d5-f224-484e-bc63-5e5d93dd91a4
+
+----field----
+field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
+name: Header
+key: header
+content-length: 8
+
+Dupliker
+----field----
+field: {A1A31A93-C4A0-4396-B629-67C33001A3CF}
+name: Tooltip
+key: tooltip
+content-length: 24
+
+Lav en kopi af elementet
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20111123T085842:634576355224980785
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+a8b9b4d5-f224-484e-bc63-5e5d93dd91a4
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111123T085842:634576355225137063
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: de-DE
+version: 1
+revision: 08c1d2fb-22d1-48d3-8ba1-b2097581b286
+
+----field----
+field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
+name: Header
+key: header
+content-length: 11
+
+Duplizieren
+----field----
+field: {A1A31A93-C4A0-4396-B629-67C33001A3CF}
+name: Tooltip
+key: tooltip
+content-length: 25
+
+Kopie des Items erstellen
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20111123T090951:634576361914297723
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+08c1d2fb-22d1-48d3-8ba1-b2097581b286
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111123T090951:634576361914453968
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: 2fec863b-0687-494a-97e7-c07af7682820
+
+----field----
+field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
+name: Header
+key: header
+content-length: 11
+
+Select Item
+----field----
+field: {A1A31A93-C4A0-4396-B629-67C33001A3CF}
+name: Tooltip
+key: tooltip
+content-length: 48
+
+Will select the current item in the content tree
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20060216T092700
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20060419T103000
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+2fec863b-0687-494a-97e7-c07af7682820
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20120812T130030:634803732306297567
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}
+name: __Workflow state
+key: __workflow state
+content-length: 0
+
+
+----version----
+language: ja-JP
+version: 1
+revision: 6a3d42b0-1eec-4cc7-9ac7-917e4e23bb39
+
+----field----
+field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
+name: Header
+key: header
+content-length: 2
+
+複製
+----field----
+field: {A1A31A93-C4A0-4396-B629-67C33001A3CF}
+name: Tooltip
+key: tooltip
+content-length: 13
+
+アイテムの複製を作成します
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20111123T092208:634576369285735196
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+6a3d42b0-1eec-4cc7-9ac7-917e4e23bb39
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111123T092208:634576369286203952
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -9,6 +9,8 @@ using System.Web;
 using Lucene.Net.Search;
 using Sitecore.Events;
 using Sitecore.ItemBucket.Kernel.Kernel.Search;
+using Sitecore.ItemBuckets.BigData.RamDirectory;
+using Sitecore.ItemBuckets.BigData.RemoteIndex;
 using Sitecore.Search;
 using Sitecore.Sites;
 using Sitecore.Web;
@@ -107,6 +109,32 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             
             if (item.IsNotNull())
             {
+                RemoteSearchManager.Initialize();
+                foreach (var index in from index in RemoteSearchManager.Indexes
+                                      let indexConfigurationNode =
+                                          Configuration.Factory.GetConfigNode(
+                                              "/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name +
+                                              "']/locations/ItemBucketSearch/Root")
+                                      where indexConfigurationNode != null
+                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
+                                      select index)
+                {
+                    return (index as RemoteIndex).Name;
+                }
+
+                InMemorySearchManager.Initialize();
+                foreach (var index in from index in InMemorySearchManager.Indexes
+                                      let indexConfigurationNode =
+                                          Configuration.Factory.GetConfigNode(
+                                              "/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name +
+                                              "']/locations/ItemBucketSearch/Root")
+                                      where indexConfigurationNode != null
+                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
+                                      select index)
+                {
+                    return (index as InMemoryIndex).Name;
+                }
+
                 foreach (var index in from index in Sitecore.Search.SearchManager.Indexes
                                       let indexConfigurationNode =
                                           Configuration.Factory.GetConfigNode(
@@ -349,6 +377,25 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             }
         }
 
+
+        /// <summary>
+        /// An extension of Item that allows you to launch a Search from an item
+        /// </summary>
+        /// <returns>List of Results of Type IEnumerable List of SitecoreItem (which implements IItem)</returns>
+        /// <param name="startLocationItem">The start location of the search</param>
+        /// <param name="queryParser">The raw JSON Parse query</param>
+        /// <param name="hitCount">This will output the hitCount of the search</param>
+        /// <param name="indexName">Force query to run on a particular index</param>
+        public static IEnumerable<SitecoreItem> Search(Query rawLuceneQuery, out int hitCount, int pageSize = 20, int pageNumber = 1, string indexName = "itembuckets_buckets")
+        {
+            using (var searcher = new IndexSearcher(indexName))
+            {
+                var keyValuePair = searcher.RunQuery(rawLuceneQuery, pageSize, pageNumber);
+                hitCount = keyValuePair.Key;
+                return keyValuePair.Value;
+            }
+        }
+
         /// <summary>
         /// Given an Item, this will determine if this Item is a Bucket Container
         /// </summary>
@@ -396,7 +443,26 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="item">The item that is being turned into a Bucket</param>
         public static void CreateBucket(Item item)
         {
-            CreateBucket(item, () => { });
+            CreateBucket(item, (itm) => { });
+        }
+
+        /// <summary>
+        /// The item that is passed to this method will now be made into a Bucket and all items under it will be automatically organised and hidden.
+        /// </summary>
+        /// <param name="item">The item that is being turned into a Bucket</param>
+        public static void AddSearchTabToItem(Item item)
+        {
+            MultilistField editors = item.Fields["__Editors"];
+            using (new EditContext(item, SecurityCheck.Disable))
+            {
+                if (!editors.Items.Contains(Constants.SearchEditor))
+                {
+                    var tempEditors = editors.GetItems();
+                    tempEditors.ToList().ForEach(tempEditor => editors.Remove(tempEditor.ID.ToString()));
+                    editors.Add(Constants.SearchEditor);
+                    tempEditors.ToList().ForEach(tempEditor => editors.Add(tempEditor.ID.ToString()));
+                }
+            }
         }
 
         /// <summary>
@@ -404,7 +470,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// </summary>
         /// <param name="item">The item that is being turned into a Bucket</param>
         /// <param name="callBack">Callback function that gets run once the Bucket Process has finised</param>
-        public static void CreateBucket(Item item, Action callBack)
+        public static void CreateBucket(Item item, Action<Item> callBack)
         {
             Contract.Requires(item.IsNotNull());
 
@@ -448,7 +514,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                 
             }
 
-            callBack();
+            callBack(item);
         }
 
         /// <summary>

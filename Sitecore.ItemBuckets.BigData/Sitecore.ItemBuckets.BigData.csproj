@@ -55,17 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RamDirectory\InMemoryIndex.cs" />
-    <Compile Include="RamDirectory\IRamCrawler.cs" />
-    <Compile Include="RamDirectory\RamCrawler.cs" />
-    <Compile Include="RemoteIndex\IRemoteCrawler.cs" />
-    <Compile Include="RemoteIndex\RemoteIndex.cs" />
-    <Compile Include="RamDirectory\SearchConfiguration.cs" />
-    <Compile Include="RemoteIndex\IRemoteCopy.cs" />
-    <Compile Include="RemoteIndex\RemoteCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Solr\SolrQuerycs.cs" />
-    <Compile Include="Solr\SolrSitecoreItem.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

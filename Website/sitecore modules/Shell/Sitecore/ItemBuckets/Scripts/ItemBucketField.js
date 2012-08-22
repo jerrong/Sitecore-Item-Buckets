@@ -11,37 +11,43 @@
 }
 
 function BindItemResult(b) {
+    if (workBox != "") {
+        scForm.getParentForm().postRequest('', '', '', 'search:launchresult(url=' + b + ')');
+    }
+    else {
+        $('#ItemLink', parent.document.body).val(b);
+        jQuery.ajax({
+            type: "POST",
+            url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetMediaPath",
+            data: "{'id' : '" + b + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(a) {
+                $('#TemplateName', parent.document.body).val(a.d);
+                $('#Filename', parent.document.body).val(a.d);
+                $('#IconFile', parent.document.body).val(a.d);
 
-    $('#ItemLink', parent.document.body).val(b);
-    jQuery.ajax({
-        type: "POST",
-        url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetMediaPath",
-        data: "{'id' : '" + b + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (a) {
-            $('#TemplateName', parent.document.body).val(a.d);
-            $('#Filename', parent.document.body).val(a.d);
-            var parsedId = b.replace(/{/g, "").replace(/}/g, "").replace(/-/g, "");
-            if ($('#TemplateLister_Selected', parent.document.body).length > 0) {
-                $('#TemplateLister_Selected', parent.document.body)[0].value = parsedId;
+
+                var parsedId = b.replace(/{/g, "").replace(/}/g, "").replace(/-/g, "");
+                if ($('#TemplateLister_Selected', parent.document.body).length > 0) {
+                    $('#TemplateLister_Selected', parent.document.body)[0].value = parsedId;
+
+                }
+                if ($('#Treeview_Selected', parent.document.body).length > 0) {
+                    $('#Treeview_Selected', parent.document.body)[0].value = parsedId;
+
+                }
+
+
+                var numRand = Math.floor(Math.random() * 101);
+                $('#TreeList_selected', parent.document.body).html($('#TreeList_selected', parent.document.body).html() + "<option id=\"I" + numRand + "\" value=\"I" + numRand + "|" + b + "\">" + a.d + "</option>");
+
 
             }
-            if ($('#Treeview_Selected', parent.document.body).length > 0) {
-                $('#Treeview_Selected', parent.document.body)[0].value = parsedId;
-
-            }
-
-           
-            var numRand = Math.floor(Math.random() * 101);
-            $('#TreeList_selected', parent.document.body).html($('#TreeList_selected', parent.document.body).html() + "<option id=\"I" + numRand + "\" value=\"I" + numRand + "|" + b + "\">" + a.d + "</option>");
-          
+        });
+    }
 
 
-        }
-    });
-  
-   
 }
 
 
@@ -112,6 +118,44 @@ function detectViewMode() {
     return $("#views").find(".active").attr("id");
 }
 
+function autoSuggestText(element, filterName, data, characterCount) {
+    var a = $("#ui_element");
+    if (a.find(".addition").val().indexOf(filterName) > -1) {
+        if (element.val().length >= characterCount) {
+            jQuery.ajax({
+                type: "POST",
+                url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetNames",
+                data: data,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (a) {
+                    var b = a.d;
+                    b = b.toString().split(",");
+                    var c = new Array;
+                    $.each(b, function () {
+                        c.push(this.toString());
+                    });
+                    $(".ui-corner-all").live("click", function () {
+                        ConvertSearchQuery();
+                    });
+                    $(".addition").autocomplete({
+                        source: c,
+                        autoFocus: true
+                        
+                    });
+//                    $(".addition").autocomplete("hide");
+//                    $(".ui-autocomplete").css("top", "75px").css("left", "536px").css("width", "428px");
+//                    $(".ui-menu-item").css("height", "45px");
+//                    $(".ui-corner-all").css("height", "45px").css("text-indent", "19px").css("font-size", "24px");
+                    $(".addition").autocomplete("show");
+                    $("#token-input-demo-input-local").show();
+                }
+            });
+        }
+    }
+}
+
 function buildTipsMenu(a) {
 
     $("#navBeta").html("");
@@ -123,7 +167,7 @@ function buildTipsMenu(a) {
             tabHandle: ".handle2",
             pathToTabImage: "images/thin-arrow-left.png",
             imageHeight: "522px",
-            imageWidth: "40px",
+            imageWidth: "20px",
             tabLocation: "right",
             speed: 300,
             action: "click",
@@ -263,7 +307,7 @@ function meme(a) {
             tabHandle: ".handle",
             pathToTabImage: "images/thin-arrow-right.png",
             imageHeight: "522px",
-            imageWidth: "40px",
+            imageWidth: "20px",
             tabLocation: "left",
             speed: 300,
             action: "click",
@@ -985,7 +1029,7 @@ function OnComplete(a) {
         (a.items,
             function () {
                 if (a.items != 0) {
-                    b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
+                    b = b + '<div onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '"  class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
                 }
             }
         );
@@ -1024,7 +1068,7 @@ function OnComplete(a) {
             function () {
                 if (a.items != 0) {
                     if (this.Name != null) {
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
+                        $("#results").append('<li class="BlogPostArea" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '"  style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
                     }
                     else {
                         $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
@@ -1169,7 +1213,7 @@ $(function () {
                     $.each(a.items,
                 function () {
                     if (a.items != 0) {
-                        b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
+                        b = b + '<div onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '"  class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
                     }
                 }
             );
@@ -1252,7 +1296,7 @@ $(function () {
         function () {
             if (a.items != 0) {
                 if (this.Name != null) {
-                    $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
+                    $("#results").append('<li class="BlogPostArea" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"BindItemResult('" + this.ItemId + "');   $('.BlogPostViews').removeClass('BlogPostViewsSelected');$(this).parent().toggleClass('BlogPostViewsSelected');return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "BindItemResult('" + this.ItemId + "'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "</li>")
                 }
                 else {
                     $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"#\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=50&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
@@ -1398,9 +1442,10 @@ $(function () {
             else {
 
                 if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-                    $('.boxme').stop().css("background-color", "#EE0000").animate({
-                        backgroundColor: "#FFFFFF"
-                    }, 3000);
+                    if (!($.browser.msie)) {
+
+                        $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                    }
                     // $('.addition').removeAttr('disabled');
                 } else {
                     b.preventDefault();
@@ -1573,7 +1618,10 @@ $(function () {
         else {
 
             if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                if (!($.browser.msie)) {
+
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                }
                 // $('.addition').removeAttr('disabled');
             } else {
                 if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
@@ -1616,7 +1664,10 @@ $(function () {
     $(".list").click(function () {
         CurrentView = "list";
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-            $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
             // $('.addition').removeAttr('disabled');
         } else {
             if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
@@ -1655,13 +1706,11 @@ $(function () {
     $(".pageLink").live("click", function () {
         $(this).addClass("pageClickLoad");
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-           // $('.addition').removeAttr('disabled');
-            $('.boxme').stop()
-                       .css("background-color", "#EE0000")
-                       .animate
-                       ({
-                           backgroundColor: "#FFFFFF"
-                       }, 3000);
+            // $('.addition').removeAttr('disabled');
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
 
             $(this).removeClass("pageClickLoad");
         }
@@ -1680,12 +1729,12 @@ $(function () {
             var p = buildQuery();
             retrieveFilters();
 
-            if (CurrentView != "list" && CurrentView != "grid") {
+            if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, g);
             }
 
-            else if ($(".grid").hasClass("active")) {
+            else if (CurrentView == "grid") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -1714,10 +1763,11 @@ $(function () {
     $(".grid").click(function () {
         CurrentView = "grid";
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-            $('.boxme').stop().css("background-color", "#EE0000").animate({
-                backgroundColor: "#FFFFFF"
-            }, 3000);
-           // $('.addition').removeAttr('disabled');
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
+            // $('.addition').removeAttr('disabled');
         } else {
             a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
             pageNumber = 0;
@@ -1821,8 +1871,24 @@ $(function () {
             retrieveFilters();
             b.preventDefault();
         }
+
+        clearTimeout(typingTimer);
+
+
+
     });
+
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 3000;  //time in ms, 3 second for example
+    function doneTyping() {
+        autoSuggestText($(".addition"), "", "{'tagChars' : '" + $(".addition").val() + "'}", 3);
+    }
     $("body").live("keyup", function (b) {
+
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+       
+
+
         //Spacebar and Ctrl pressed.
         if (b.which == 32 && b.ctrlKey) {
             event.preventDefault();
@@ -2058,11 +2124,10 @@ $(function () {
         $(this).addClass("pageClickLoad");
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
             // $('.addition').removeAttr('disabled');
-            $('.boxme').stop()
-                .css("background-color", "#EE0000")
-                .animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
+            if (!($.browser.msie)) {
+
+                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+            }
 
             $(this).removeClass("pageClickLoad");
         } else {
@@ -2236,10 +2301,11 @@ $(function () {
                         CurrentView = filter.ViewName;
 
                         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-                            $('.boxme').stop().css("background-color", "#EE0000").animate({
-                                backgroundColor: "#FFFFFF"
-                            }, 3000);
-                           // $('.addition').removeAttr('disabled');
+                            if (!($.browser.msie)) {
+
+                                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                            }
+                            // $('.addition').removeAttr('disabled');
                         } else {
                             a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
                             pageNumber = 0;

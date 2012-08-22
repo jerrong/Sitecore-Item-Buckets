@@ -60,7 +60,7 @@
     <PackageReadme>
     </PackageReadme>
     <SitecoreAssemblyPath>..\..\lib\Sitecore</SitecoreAssemblyPath>
-    <GeneratePackage>True</GeneratePackage>
+    <GeneratePackage>False</GeneratePackage>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
   </PropertyGroup>
@@ -280,6 +280,11 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\system\Modules\Item Buckets\Settings\Search Operations\Fields\Add Tag.item">
       <Icon>/temp/IconCache/Applications/32x32/bullet_ball_red.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\system\Modules\Item Buckets\Settings\Search Operations\Information Architecture\Publish Items.item">
+      <Icon>/temp/IconCache/Network/32x32/earth_preferences.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
@@ -699,6 +704,11 @@
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\system\Modules\Item Buckets\Views\InfiniteScroll.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\system\Modules\Item Buckets\Views\Table.item">
       <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
@@ -1275,6 +1285,26 @@
     </SitecoreItem>
     <SitecoreItem Include="sitecore\templates\System\Templates\Sections\Appearance\Appearance.item">
       <Icon>/temp/IconCache/People/32x32/monitor_brush.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Sections\Appearance\Appearance\Default Bucket Query.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Sections\Appearance\Appearance\Default Filter.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Sections\Appearance\Appearance\Default View.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Templates\Sections\Appearance\Appearance\Enabled Views.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>

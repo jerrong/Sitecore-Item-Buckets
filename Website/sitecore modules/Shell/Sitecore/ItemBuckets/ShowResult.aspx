@@ -20,10 +20,15 @@
     <script src="/sitecore/shell/controls/Gecko.js" type="text/javascript"></script>
     <% } %>
     <script src="/sitecore/shell/controls/Sitecore.js" type="text/javascript"></script>
+  
     <link rel="stylesheet" href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/styles/token-input.css" type="text/css" />
     <link rel="stylesheet" href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/styles/jquery-ui.css" type="text/css" media="all" />
     <script type="text/javascript" src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/jquery.min.js"></script>    
-    <script src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/jquery-ui.min.js" type="text/javascript"></script>   
+    <script src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/jquery-ui.min.js" type="text/javascript"></script>  
+  
+<!-- Enable if you would like Map View to work -->
+ <!--<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+     
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/ItemBucket.css" rel="stylesheet" type="text/css" />
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/SiteNew.css" rel="stylesheet" type="text/css" />
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/ListNew.css" rel="stylesheet" type="text/css" />
@@ -83,4 +88,5 @@
     </div>
     </form>
 </body>
+
 </html>

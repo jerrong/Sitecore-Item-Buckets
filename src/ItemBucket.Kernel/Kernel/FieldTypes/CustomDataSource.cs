@@ -1,4 +1,8 @@
-﻿namespace Sitecore.ItemBucket.Kernel.FieldTypes
+﻿using System.Linq;
+using Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes;
+using Sitecore.ItemBucket.Kernel.Util;
+
+namespace Sitecore.ItemBucket.Kernel.FieldTypes
 {
     using System;
 
@@ -24,7 +28,7 @@
         Item[] ListQuery(Item itm);
     }
 
-        /// <summary>
+    /// <summary>
     /// Test Implementation of IDataSource
     /// </summary>
     public class BucketListQuery : IDataSource
@@ -41,6 +45,26 @@
         public Item[] ListQuery(Item itm)
         {
             return itm.Children.ToArray();
+        }
+    }
+
+    /// <summary>
+    /// Test Implementation of IDataSource
+    /// </summary>
+    public class LargeBucketListQuery : IDataSource
+    {
+        /// <summary>
+        /// List Children
+        /// </summary>
+        /// <param name="itm">
+        /// The itm.
+        /// </param>
+        /// <returns>
+        /// Item Array
+        /// </returns>
+        public Item[] ListQuery(Item itm)
+        {
+            return new BucketQuery().WhereContentContains("Test").Run(itm, 10).Select(sitecoreItem => sitecoreItem.GetItem()).Where(i => i != null).ToArray();
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿.sb_search_container
 {
-  background: #fafafa url('/images/gray_gradient.png') repeat-x top left !important;            
+  background: #fafafa url('../images/gray_gradient.png') repeat-x top left !important;            
 }
 
 .sb_dropdown {
@@ -79,6 +79,7 @@ INPUT.sb_clear {
 
 .pageSection {
     width: 800px;
+    margin-left: -150px;
 }
 
 #results {

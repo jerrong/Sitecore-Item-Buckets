@@ -8,12 +8,18 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using System;
+
 namespace Sitecore.ItemBucket.Kernel.Common.Providers
 {
     using Sitecore.ItemBucket.Kernel.Kernel.Interfaces;
-
+    [Serializable]
     public class Tag : ITag
     {
+        private Tag()
+        {
+            
+        }
         public Tag(string displayText, string value)
         {
             DisplayText = displayText;

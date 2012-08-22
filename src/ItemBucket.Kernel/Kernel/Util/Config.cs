@@ -25,11 +25,28 @@
             }
         }
 
+
+        public static string NetworkDropPoint
+        {
+            get
+            {
+                return Settings.GetSetting("NetworkDropPoint", "");
+            }
+        }
+
         public static string RemoteIndexingServer
         {
             get
             {
                 return Settings.GetSetting("RemoteIndexingServer", "");
+            }
+        }
+
+        public static string RemoteIndexLocation
+        {
+            get
+            {
+                return Settings.GetSetting("RemoteIndexLocation", "");
             }
         }
 

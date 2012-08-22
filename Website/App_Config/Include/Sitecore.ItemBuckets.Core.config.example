@@ -1,0 +1,553 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <search>
+      <configuration>
+        <indexes>
+          <index id="itembuckets_buckets_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_buckets_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/content</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <!-- <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_systemfolder_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_systemfolder_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/system</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_layoutsfolder_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_layoutsfolder_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/layout</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="integer" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" padding="8" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_medialibrary_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_medialibrary_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/media library</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>-->
+                <include hint="list:IncludeField">
+                  <fieldId>{65885C44-8FCD-4A7F-94F1-EE63703FE193}</fieldId>
+                  <fieldId>{8CF45D0E-ADD4-4772-911A-AC6FC50F9C7D}</fieldId>
+                </include>
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <!-- Determines if certain inbuilt Sitecore fields will not be included into the index.
+                  Options for type include "template", "both", "item".
+                  Available Element Values include:
+                  Links|Editor|Icon|Creator|DisplayName|AllTemplates|TemplateName|Hidden|Created|Updated|Path
+                  Use: 
+                  
+                  -->
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_templates_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_templates_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/templates</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <!--<include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_sitecore_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_sitecore_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <!-- <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+          <index id="itembuckets_masters_core" type="Sitecore.Search.Index, Sitecore.Kernel">
+            <param desc="name">$(id)</param>
+            <param desc="folder">itembuckets_masters_core</param>
+            <Analyzer ref="search/analyzer" />
+            <locations hint="list:AddCrawler">
+              <ItemBucketSearch type="Sitecore.ItemBucket.Kernel.Crawlers.CustomCrawler,Sitecore.ItemBucket.Kernel">
+                <Database>core</Database>
+                <Root>/sitecore/masters</Root>
+                <IndexAllFields>true</IndexAllFields>
+                <fieldTypes hint="raw:AddFieldTypes">
+                  <fieldType name="multilist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="treelistex" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checklist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="tree list" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="rich text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="checkbox" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="file" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="single-Line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="word document" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="multi-line text" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="grouped droplist" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droplink" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="droptree" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                  <fieldType name="general link" storageType="NO" indexType="TOKENIZED" vectorType="NO" boost="1f" />
+                </fieldTypes>
+                <include hint="list:ExcludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <!-- <include hint="list:IncludeTemplate">
+                  <layout>{ADB6CA4F-03EF-4F47-B9AC-9CE2BA53FF97}</layout>
+                </include>
+                <include hint="list:IncludeField">
+                  <fieldId>{8CDC337E-A112-42FB-BBB4-4143751E123F}</fieldId>
+                </include>-->
+                <include hint="list:ExcludeField">
+                  <__DefaultWorkflow>{CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}</__DefaultWorkflow>
+                  <__Lock>{001DD393-96C5-490B-924A-B0F25CD9EFD8}</__Lock>
+                  <__WorkflowState>{3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}</__WorkflowState>
+                  <__LongDescription>{577F1689-7DE4-4AD2-A15F-7FDC1759285F}</__LongDescription>
+                  <__Originator>{F6D8A61C-2F84-4401-BD24-52D2068172BC}</__Originator>
+                  <__Owner>{52807595-0F8F-4B20-8D2A-CB71D28C6103}</__Owner>
+                  <__ReadOnly>{9C6106EA-7A5A-48E2-8CAD-F0F693B1E2D4}</__ReadOnly>
+                  <__Renderings>{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}</__Renderings>
+                  <__Revision>{8CDC337E-A112-42FB-BBB4-4143751E123F}</__Revision>
+                  <__Security>{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}</__Security>
+                  <__ShortDescription>{9541E67D-CE8C-4225-803D-33F7F29F09EF}</__ShortDescription>
+                  <__SortOrder>{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}</__SortOrder>
+                  <__UpdatedBy>{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}</__UpdatedBy>
+                  <__ValidFrom>{C8F93AFE-BFD4-4E8F-9C61-152559854661}</__ValidFrom>
+                  <__Source>{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}</__Source>
+                  <__Workflow>{A4F985D9-98B3-4B52-AAAF-4344F6E747C6}</__Workflow>
+                  <__Updated>{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}</__Updated>
+                  <__Created>{25BED78C-4957-4165-998A-CA1B52F67497}</__Created>
+                </include>
+                <fields hint="raw:AddCustomField">
+                  <field luceneName="__smallCreatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__created</field>
+                  <field luceneName="__smallUpdatedDate" storageType="no" indexType="untokenized" format="yyyyMMdd">__updated</field>
+                  <field luceneName="_tags" storageType="no" indexType="tokenized">tags</field>
+                </fields>
+                <fields hint="raw:RemoveSpecialFields">
+                  <remove type="both">Links</remove>
+                  <remove type="both">Editor</remove>
+                  <remove type="both">Icon</remove>
+                  <remove type="both">DisplayName</remove>
+                  <remove type="both">AllTemplates</remove>
+                  <remove type="both">Hidden</remove>
+                  <remove type="both">Created</remove>
+                  <remove type="both">Updated</remove>
+                </fields>
+              </ItemBucketSearch>
+            </locations>
+          </index>
+        </indexes>
+      </configuration>
+    </search>
+    <databases>
+      <database id="core" singleInstance="true" type="Sitecore.Data.Database, Sitecore.Kernel">
+        <Engines.DataEngine.Commands.AddFromTemplatePrototype>
+          <obj type="Sitecore.ItemBucket.Kernel.Commands.AddFromTemplateCommand, Sitecore.ItemBucket.Kernel" />
+        </Engines.DataEngine.Commands.AddFromTemplatePrototype>
+      </database>
+    </databases>
+  </sitecore>
+</configuration>
+
+

@@ -51,7 +51,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                 var newDestination = BucketManager.CreateAndReturnDateFolderDestination(Destination, DateTime.Now);
                 if (newDestination.IsNotNull() && !newDestination.Uri.Equals(Destination.Uri))
                 {
-                    //Event.RaiseEvent("item:bucketing:adding", new object[] { this.NewId, this.ItemName, this.TemplateId, newDestination }, this);
+                    Event.RaiseEvent("item:bucketing:adding", new object[] { this.NewId, this.ItemName, this.TemplateId, newDestination }, this);
 
                     var item = Nexus.DataApi.AddFromTemplate(TemplateId, newDestination, ItemName, NewId);
 
@@ -60,7 +60,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                         this.SetLocation(item);
                     }
 
-                    //Event.RaiseEvent("item:bucketing:added", new object[] { item }, this);
+                    Event.RaiseEvent("item:bucketing:added", new object[] { item }, this);
                     return item;
                 }
             }

@@ -62,7 +62,7 @@
     </PackageVersion>
     <PackageReadme>
     </PackageReadme>
-    <SitecoreAssemblyPath>..\lib\Sitecore</SitecoreAssemblyPath>
+    <SitecoreAssemblyPath>..\..\lib\Sitecore</SitecoreAssemblyPath>
     <GeneratePackage>False</GeneratePackage>
     <SeperateFilesAndItems>False</SeperateFilesAndItems>
     <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
@@ -171,6 +171,10 @@
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\Content Editor\Editors\Items\New Search.item">
+      <Icon>/temp/IconCache/Applications/32x32/view_add.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\Content Editor\Editors\Items\Search.item">
       <Icon>/temp/IconCache/Applications/32x32/view.png</Icon>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
@@ -196,6 +200,11 @@
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Chunks\Add.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Chunks\Item Buckets.item">
       <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
@@ -215,6 +224,21 @@
       <Icon>/temp/IconCache/People/32x32/box_previous.png</Icon>
       <ChildItemSynchronization>KeepAllChildrenSynchronized</ChildItemSynchronization>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Chunks\View.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Chunks\View\Full Screen.item">
+      <Icon>/temp/IconCache/People/32x32/monitor.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Chunks\View\Show in Content Tree.item">
+      <Icon>/temp/IconCache/Software/32x32/branch_find.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\Content Editor\Ribbons\Contextual Ribbons.item">
       <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
@@ -361,6 +385,20 @@
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\WebEdit\Ribbons\Preview.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\WebEdit\Ribbons\Preview\Buttons.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\content\Applications\WebEdit\Ribbons\Preview\Buttons\Search.item">
+      <Icon>/temp/IconCache/Applications/32x32/view.png</Icon>
+      <ItemDeployment>DeployOnce</ItemDeployment>
+    </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\WebEdit\Ribbons\WebEdit.item">
       <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
@@ -374,6 +412,7 @@
     <SitecoreItem Include="sitecore\content\Applications\WebEdit\Ribbons\WebEdit\Buttons\Search.item">
       <Icon>/temp/IconCache/Applications/32x32/view.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Documents and settings.item">
       <Icon>/temp/IconCache/Applications/16x16/documents_gear.png</Icon>
@@ -704,6 +743,35 @@
       <Icon>/temp/IconCache/Applications/16x16/preferences.png</Icon>
       <ItemDeployment>DeployOnce</ItemDeployment>
       <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates.item">
+      <Icon>/temp/IconCache/Software/16x16/component_yellow.png</Icon>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder_gear.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Security.item">
+      <Icon>/temp/IconCache/Applications/16x16/folder.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Security\User.item">
+      <Icon>/temp/IconCache/People/16x16/user1.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Security\User\Item Buckets.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
+    </SitecoreItem>
+    <SitecoreItem Include="sitecore\templates\System\Security\User\Item Buckets\Tips Enabled.item">
+      <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
+      <ItemDeployment>AlwaysUpdate</ItemDeployment>
     </SitecoreItem>
   </ItemGroup>
   <Import Project="..\..\tools\x86\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" />

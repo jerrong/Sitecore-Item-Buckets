@@ -14,6 +14,11 @@
             if (searches.IsNotNull())
             {
                 var list = searches.ToString().Split('|').ToList().Where(s => s != string.Empty).Where(guidCheck => guidCheck.IsGuid()).Where(item => Context.ContentDatabase.GetItem(item).IsNotNull()).Select(i => Context.ContentDatabase.GetItem(i).Name + "|" + i);
+                var combinedResults =
+                    searches.ToString().Split('|').ToList().Where(s => s != string.Empty).Where(
+                        items => items.StartsWith("Closed Tabs"));
+                list = list.Concat(combinedResults);
+                
                 list.Reverse();
                 return list.Where(item => item != string.Empty).Take(20).ToList();
             }

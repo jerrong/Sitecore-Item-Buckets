@@ -26,7 +26,7 @@
     <script src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/jquery-ui.min.js" type="text/javascript"></script>   
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/ItemBucketMini.css" rel="stylesheet" type="text/css" />
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/SiteNew.css" rel="stylesheet" type="text/css" />
-    <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/ListNew.css" rel="stylesheet" type="text/css" />
+    <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/ListNewMini.css" rel="stylesheet" type="text/css" />
     <link href="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Styles/core.css" rel="stylesheet" type="text/css" />
     <script src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/date.js" type="text/javascript"></script>
     <script src="/sitecore%20modules/Shell/Sitecore/ItemBuckets/Scripts/ItemBucketField.js" type="text/javascript"></script>
@@ -38,7 +38,7 @@
     <style>
    .BlogPostArea {
   
-    padding: 0;
+    /*padding: 0; */
 }
 
 .sb_dropdown 

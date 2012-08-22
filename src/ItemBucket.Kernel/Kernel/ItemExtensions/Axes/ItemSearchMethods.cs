@@ -59,6 +59,18 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes
             return BucketManager.Search(Sitecore.Context.Item, out hitCount, returnQuery);
         }
 
+        public static IEnumerable<SitecoreItem> Run(this BucketQuery query, Item startLocationItem, out int numberOfHits)
+        {
+            var returnQuery = query.Select(subQuery => new SearchStringModel()
+            {
+                Type = subQuery.Split(':')[0],
+                Value = subQuery.Split(':')[1]
+            }).ToList();
+            int hitCount = 0;
+            numberOfHits = hitCount;
+            return BucketManager.Search(startLocationItem, out hitCount, returnQuery);
+        }
+
         /// <summary>
         /// Deferred Execution of the Search
         /// </summary>
@@ -192,6 +204,15 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes
         public static BucketQuery WhereTaggedWith(this BucketQuery query, ID tagId)
         {
             query.Add("tag:" + tagId);
+            return query;
+        }
+
+        /// <summary>
+        /// Search for Items are tagged by a particular Tag ID
+        /// </summary>
+        public static BucketQuery BoostContent(this BucketQuery query, string searchString, int boostValue)
+        {
+            query.Add("text:" + searchString + "^" + boostValue.ToString());
             return query;
         }
 

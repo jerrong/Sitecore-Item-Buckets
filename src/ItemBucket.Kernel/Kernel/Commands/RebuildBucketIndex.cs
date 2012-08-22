@@ -9,6 +9,8 @@
 
 using System.Diagnostics;
 using System.IO;
+using Sitecore.ItemBuckets.BigData.RamDirectory;
+using Sitecore.ItemBuckets.BigData.RemoteIndex;
 using Sitecore.Search.Crawlers;
 
 namespace Sitecore.ItemBucket.Kernel.Commands
@@ -189,9 +191,9 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
             Registry.SetString("/Current_User/Rebuild Search Index/Selected", str.ToString());
 
-            var serverAddress = Util.Config.RemoteIndexingServer;
-            if (string.IsNullOrEmpty(serverAddress))
-            {
+            //var serverAddress = Util.Config.RemoteIndexingServer;
+            //if (string.IsNullOrEmpty(serverAddress))
+            //{
                 var options2 = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
                                               new Builder(str.ToString()), "Build")
                                    {
@@ -202,20 +204,34 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                 var job = JobManager.Start(options);
                 Context.ClientPage.ServerProperties["handle"] = job.Handle.ToString();
                 Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
-            }
-            else
-            {
-                var options2 = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
+            //}
+            //else
+            //{
+                var options3 = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
                                              new Builder(str.ToString()), "RemoteBuild")
                 {
                     AfterLife = TimeSpan.FromMinutes(1.0),
                     ContextUser = Context.User
                 };
-                var options = options2;
-                var job = JobManager.Start(options);
-                Context.ClientPage.ServerProperties["handle"] = job.Handle.ToString();
+                var options4 = options3;
+                var job2 = JobManager.Start(options4);
+                Context.ClientPage.ServerProperties["handle"] = job2.Handle.ToString();
                 Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
-            }
+
+
+                var memoryOption = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
+                                                 new Builder(str.ToString()), "InMemoryBuild")
+                {
+                    AfterLife = TimeSpan.FromMinutes(1.0),
+                    ContextUser = Context.User
+                };
+
+                var job3 = JobManager.Start(memoryOption);
+                Context.ClientPage.ServerProperties["handle"] = job3.Handle.ToString();
+                Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
+
+
+            //}
         }
 
         /// <summary>
@@ -244,7 +260,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
             child.ID = Control.GetUniqueID("dk_");
             child.Header = header;
             child.Value = name;
-            child.Checked = true;//selected.Contains(name);
+            child.Checked = selected.Contains(name);
             indexMap.Add(child.ID);
             indexMap.Add(name);
             this.Indexes.Controls.Add(new LiteralControl("<br />"));
@@ -262,7 +278,17 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                 this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
             }
 
+            RemoteSearchManager.Initialize();
+            foreach (RemoteIndex str3 in RemoteSearchManager.Indexes)
+            {
+                this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
+            }
 
+            InMemorySearchManager.Initialize();
+            foreach (InMemoryIndex str3 in InMemorySearchManager.Indexes)
+            {
+                this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
+            }
             //this.BuildIndexCheckbox("Select All", "Select All", selected, indexMap);
             //this.BuildIndexCheckbox("Deselect All", "Deselect All", selected, indexMap);
             this.BuildIndexCheckbox("$system", "Quick search index", selected, indexMap);
@@ -304,14 +330,17 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                     {
                         foreach (var str in this.indexNames)
                         {
-                            var index = SearchManager.GetIndex(str);
-                            if (index != null)
+                            if (!str.EndsWith("_remote") && !str.EndsWith("_inmemory"))
                             {
-                                index.Rebuild();
-                            } 
-                           
-                            var status = job.Status;
-                            status.Processed += 1L;
+                                var index = SearchManager.GetIndex(str);
+                                if (index != null)
+                                {
+                                    index.Rebuild();
+                                }
+
+                                var status = job.Status;
+                                status.Processed += 1L;
+                            }
                         }
                     }
                     catch (Exception exception)
@@ -336,24 +365,52 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                         
                         foreach (var str in this.indexNames)
                         {
-                            var index = SearchManager.GetIndex(str);
-                            if (index != null)
+                            if (str.EndsWith("_remote"))
                             {
-                                
-                                using (IndexUpdateContext context = new IndexUpdateContext(index))
+                                var index = RemoteSearchManager.GetIndex(str) as RemoteIndex;
+                                if (index != null)
                                 {
-                                    foreach (ICrawler crawler in SearchManager.Indexes.Where(indexType => indexType.GetType() == Type.GetType("Sitecore.ItemBuckets.BigData.RemoteIndex.RemoteIndex, Sitecore.ItemBuckets.BigData")))
-                                    {
-                                        crawler.Add(context);
-                                    }
-                                    context.Optimize();
-                                    context.Commit();
+                                    index.Rebuild();
                                 }
 
+                                var status = job.Status;
+                                status.Processed += 1L;
                             }
 
-                            var status = job.Status;
-                            status.Processed += 1L;
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        job.Status.Failed = true;
+                        job.Status.Messages.Add(exception.ToString());
+                    }
+
+                    job.Status.State = JobState.Finished;
+                }
+            }
+
+            protected void InMemoryBuild()
+            {
+                var job = Context.Job;
+                if (job != null)
+                {
+                    try
+                    {
+                       
+                        foreach (var str in this.indexNames)
+                        {
+                            if (str.EndsWith("_inmemory"))
+                            {
+                                var index = InMemorySearchManager.GetIndex(str) as InMemoryIndex;
+                                if (index != null)
+                                {
+                                    index.Rebuild();
+                                }
+
+                                var status = job.Status;
+                                status.Processed += 1L;
+                            }
+
                         }
                     }
                     catch (Exception exception)

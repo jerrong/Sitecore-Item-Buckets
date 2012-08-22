@@ -88,6 +88,20 @@
             query.Add(new FieldQuery(fieldName, fieldValue), occurance);
         }
 
+        internal static void AddFieldValueClause(BooleanQuery query, string fieldName, string fieldValue, QueryOccurance occurance)
+        {
+            if (fieldName.IsNullOrEmpty() || fieldValue.IsNullOrEmpty())
+            {
+                return;
+            }
+            var globalBooleanQuery = new BooleanQuery();
+            var qp = new QueryParser("__workflow state", ItemBucket.Kernel.Util.IndexSearcher.Index.Analyzer);
+            qp.SetAllowLeadingWildcard(true);
+            globalBooleanQuery.Add(qp.Parse(fieldValue), BooleanClause.Occur.MUST);
+
+            query.Add(globalBooleanQuery, BooleanClause.Occur.MUST);
+        }
+
         internal static void AddPartialFieldValueClause(BooleanQuery query, string fieldName, string fieldValue)
         {
             if (fieldValue.IsNullOrEmpty())
@@ -269,6 +283,12 @@
         {
             ApplyIdFilter(query, BuiltinFields.Path, locationIds);
         }
+
+        internal static void ApplyCombinedLocationFilter(CombinedQuery query, string locationIds)
+        {
+            ApplyIdFilter(query, BuiltinFields.Path, locationIds);
+        }
+
 
         internal static void ApplyRelationFilter(CombinedQuery query, string ids)
         {

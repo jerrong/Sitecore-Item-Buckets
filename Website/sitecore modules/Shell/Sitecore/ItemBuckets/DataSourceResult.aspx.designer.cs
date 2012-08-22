@@ -8,9 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace ItemBuckets {
-    
-    
-    public partial class DataSourceResult {
+
+
+    public partial class DataSourceResult
+    {
         
         /// <summary>
         /// Head2 control.

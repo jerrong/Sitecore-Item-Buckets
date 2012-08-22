@@ -103,7 +103,15 @@ namespace ItemBuckets.Services
                         {
                             sitecoreItem.TemplateName = innerItem.TemplateName;
                             sitecoreItem.Name = innerItem.Name;
-                            sitecoreItem.Bucket = innerItem.GetParentBucketItemOrParent().Name;
+                            var parentBucketItemOrParent = innerItem.GetParentBucketItemOrParent();
+                            if (parentBucketItemOrParent.IsNotNull())
+                            {
+                                sitecoreItem.Bucket = parentBucketItemOrParent.Name;
+                            }
+                            else
+                            {
+                                sitecoreItem.Bucket = "sitecore";
+                            }
                             sitecoreItem.Cre = innerItem.Statistics.Created.ToString();
                             //sitecoreItem.Language = innerItem.Language.CultureInfo.TwoLetterISOLanguageName;
                             sitecoreItem.Path = innerItem.Paths.IsMediaItem
@@ -115,12 +123,21 @@ namespace ItemBuckets.Services
                             {
                                 if (innerItem.Fields[fieldItem.Name].IsNotNull())
                                 {
-                                    if (fieldItem.Type.ToLowerInvariant() != Constants.AttachmentFieldType && fieldItem.Type != Constants.ImageFieldType)
+                                    if (fieldItem.Type != "Thumbnail" && fieldItem.Type.ToLowerInvariant() != Constants.AttachmentFieldType && fieldItem.Type != Constants.ImageFieldType || fieldItem.Type == "Multilist" || fieldItem.Type == "Checkbox")
                                     {
-                                        sitecoreItem.Content += "<p>" + innerItem.Fields[fieldItem.Name].Value + "</p><br/>";
+                                        if (fieldItem.Type == "Multilist" || fieldItem.Type == "Checkbox")
+                                        {
+                                            sitecoreItem.Content += "<p><strong>" + fieldItem.Name + ":</strong> " + FieldParser.ParseIdsForFieldFriendlyValue(innerItem, fieldItem.Name) +
+                                                                   "</p><br/>";
+                                        }
+                                        else
+                                        {
+                                            sitecoreItem.Content += "<p><strong>" + fieldItem.Name + ":</strong> " + innerItem.Fields[fieldItem.Name].Value +
+                                                                    "</p><br/>";
+                                        }
                                     }
 
-                                    if (fieldItem.Type.ToLowerInvariant() == Constants.AttachmentFieldType || fieldItem.Type == Constants.ImageFieldType)
+                                    if (fieldItem.Type.ToLowerInvariant() == Constants.AttachmentFieldType || fieldItem.Type == Constants.ImageFieldType || fieldItem.Type == "Multilist" || fieldItem.Type == "Thumbnail")
                                     {
                                         if ((innerItem.Fields[fieldItem.Name] != null) && (((ImageField)innerItem.Fields[fieldItem.Name]).MediaItem != null))
                                         {
@@ -131,7 +148,25 @@ namespace ItemBuckets.Services
                                         {
                                             sitecoreItem.ImagePath = MediaManager.GetMediaUrl(new MediaItem(innerItem));
                                         }
+
+                                        if ((innerItem.Fields[fieldItem.Name] != null) && (((ThumbnailField)innerItem.Fields[fieldItem.Name]).MediaItem != null))
+                                        {
+                                            sitecoreItem.ImagePath = MediaManager.GetMediaUrl(((ThumbnailField)innerItem.Fields[fieldItem.Name]).MediaItem);
+                                        }
+                                        else if (fieldItem.Type == "Multilist")
+                                        {
+                                            if (sitecoreItem.ImagePath.IsNullOrEmpty())
+                                            {
+                                                var multiPath = FieldParser.ParseIdsForImage(innerItem, fieldItem.Name);
+                                                if (multiPath.IsNotNull())
+                                                {
+                                                    sitecoreItem.ImagePath = MediaManager.GetMediaUrl(multiPath);
+                                                }
+
+                                            }
+                                        }
                                     }
+                                   
                                 }
                             }
 
@@ -160,7 +195,7 @@ namespace ItemBuckets.Services
                                                                        {
                                                                            PageNumbers = pageNumbers,
                                                                            items = items,
-                                                                           tips = GetRandomTips(Config.EnableTips ? 2 : 0),
+                                                                           tips = GetRandomTips((!Config.EnableTips || Sitecore.Context.User.Profile.GetCustomProperty("Tips Enabled") == "")? 0 : 2),
                                                                            launchType = GetEditorLaunchType(),
                                                                            SearchTime = this.SearchTime,
                                                                            SearchCount = itemsCount.ToString(),

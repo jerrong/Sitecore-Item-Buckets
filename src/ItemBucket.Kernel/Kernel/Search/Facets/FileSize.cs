@@ -29,9 +29,9 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Facets
             {
                 var listOfSizes = new List<string>()
                 {
-                    "[0 TO 60000]",
-                    "[60000 TO 800000]",
-                    "[800000 TO 9000000]",
+                    "[00000000 TO 00060000]",
+                    "[00060000 TO 08000000]",
+                    "[08000000 TO 90000000]",
                 };
 
                 var stopWatch = new Stopwatch();

@@ -148,7 +148,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                     rebuildTimer.Stop();
                     this.Active = "LastPage";
                     this.BackButton.Disabled = true;
-                    this.ResultText.Value = "Finished in : " + (rebuildTimer.ElapsedMilliseconds / 1000) + " seconds";
+                    this.ResultText.Value = "Finished in : " + (rebuildTimer.ElapsedMilliseconds / 1000) + " seconds. Your file is under /sitecore modules/Shell/Sitecore/ItemBuckets/Services/";
 
                 }
                 else
@@ -196,9 +196,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
             Registry.SetString("/Current_User/Rebuild Search Index/Selected", str.ToString());
 
-            var serverAddress = Util.Config.RemoteIndexingServer;
-            if (string.IsNullOrEmpty(serverAddress))
-            {
+           
                 var options2 = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
                                               new Builder(str.ToString()), "Build")
                 {
@@ -209,20 +207,8 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                 var job = JobManager.Start(options);
                 Context.ClientPage.ServerProperties["handle"] = job.Handle.ToString();
                 Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
-            }
-            else
-            {
-                var options2 = new JobOptions("RebuildSearchIndex", "index", Client.Site.Name,
-                                             new Builder(str.ToString()), "RemoteBuild")
-                {
-                    AfterLife = TimeSpan.FromMinutes(1.0),
-                    ContextUser = Context.User
-                };
-                var options = options2;
-                var job = JobManager.Start(options);
-                Context.ClientPage.ServerProperties["handle"] = job.Handle.ToString();
-                Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
-            }
+            
+       
         }
 
         /// <summary>

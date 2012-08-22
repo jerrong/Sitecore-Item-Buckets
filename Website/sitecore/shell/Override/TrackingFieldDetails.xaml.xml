@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xamlControls 
+  xmlns:x="http://www.sitecore.net/xaml"
+  xmlns:ajax="http://www.sitecore.net/ajax"
+  xmlns:rest="http://www.sitecore.net/rest"
+  xmlns:javascript="http://www.sitecore.net/javascript"
+  xmlns:r="http://www.sitecore.net/renderings"
+  xmlns:xmlcontrol="http://www.sitecore.net/xmlcontrols"
+  xmlns:p="http://schemas.sitecore.net/Visual-Studio-Intellisense"
+  xmlns:asp="http://www.sitecore.net/microsoft/webcontrols"
+  xmlns:html="http://www.sitecore.net/microsoft/htmlcontrols"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <Sitecore.Shell.Applications.Analytics.TrackingFieldDetails x:inherits="Sitecore.Shell.Applications.Analytics.TrackingField.TrackingFieldDetailsPage,Sitecore.Client">
+    <Sitecore.Controls.HtmlPage runat="server">
+      <AjaxScriptManager runat="server"/>
+      <ContinuationManager runat="server" />
+
+      <script type="text/javascript" language="javascript">
+        function scGetFrameValue() {
+        var ctl = scForm.browser.getControl("ctl00$ctl00$TrackingValue");
+
+        if (!ctl || ctl.value == "__#!$No value$!#__") {
+        return null;
+        }
+
+        return ctl.value;
+        }
+      </script>
+
+      <input id="TrackingValue" type="hidden" runat="server"/>
+
+      <Scrollbox ID="Tracking" Height="100%" Class="scScrollbox scFixSize" Border="none" runat="server" Padding="0px" />
+      
+    </Sitecore.Controls.HtmlPage>
+  </Sitecore.Shell.Applications.Analytics.TrackingFieldDetails>
+
+</xamlControls>
+                           

@@ -1,5 +1,10 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Lucene.Net.Analysis.Standard;
+using Microsoft.Practices.ServiceLocation;
+using Sitecore.BigData;
 using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR;
+using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR.SOLRItems;
+using Sitecore.ItemBuckets.BigData.RamDirectory;
+using Sitecore.ItemBuckets.BigData.RemoteIndex;
 using SolrNet;
 using SolrNet.Commands.Parameters;
 using SolrNet.Impl;
@@ -35,7 +40,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         #region Properties
 
-        public static Index Index
+        public static ILuceneIndex Index
         {
             get;
             set;
@@ -56,18 +61,15 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
             if (Config.SOLREnabled == "true")
             {
-                if (ServiceLocator.Current.IsNotNull())
-                {
-                    Startup.Init<SOLRItem>(Config.SOLRServiceLocation);
-                }
-
-                var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SOLRItem>>();
-                SolrQueryResults<SOLRItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
-                SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                GetValue(query, items);
                 return new KeyValuePair<int, List<SitecoreItem>>(items.Count, items);
             }
             else
             {
+                if(Index is Index)
+                {
+                    (Index as Index).Analyzer = new StandardAnalyzer(Consts.StopWords);
+                }
                 using (var context = new SortableIndexSearchContext(Index))
                 {
                     BooleanQuery.SetMaxClauseCount(Config.LuceneMaxClauseCount);
@@ -103,6 +105,51 @@ namespace Sitecore.ItemBucket.Kernel.Util
             }
         }
 
+        private static void GetValue(Query query, List<SitecoreItem> items)
+        {
+            if (Index is Index)
+            {
+                if ((Index as Index).Name == "itembuckets_templates")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrTemplateItem>>();
+                    SolrQueryResults<SolrTemplateItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+                if ((Index as Index).Name == "itembuckets_buckets")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrBucketItem>>();
+                    SolrQueryResults<SolrBucketItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+                if ((Index as Index).Name == "itembuckets_sitecore")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrSitecoreItem>>();
+                    SolrQueryResults<SolrSitecoreItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+                if ((Index as Index).Name == "itembuckets_layoutsfolder")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrLayoutItem>>();
+                    SolrQueryResults<SolrLayoutItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+                if ((Index as Index).Name == "itembuckets_systemfolder")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrSystemItem>>();
+                    SolrQueryResults<SolrSystemItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+                if ((Index as Index).Name == "itembuckets_medialibrary")
+                {
+                    var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrMediaItem>>();
+                    SolrQueryResults<SolrMediaItem> remoteSearch = solr.Query(new SolrQuery(query.ToString()));
+                    SearchHelper.GetItemsFromSearchResultFromSOLR(remoteSearch, items);
+                }
+            }
+
+            
+        }
+
         public virtual KeyValuePair<int, List<SitecoreItem>> RunQuery(Query query, int pageSize, int pageNumber)
         {
             return this.RunQuery(query, pageSize, pageNumber, null, null);
@@ -124,118 +171,30 @@ namespace Sitecore.ItemBucket.Kernel.Util
             var runningCOunt = new Dictionary<string, int>();
             var db = Context.ContentDatabase ?? Sitecore.Context.Database;
             var indexName = BucketManager.GetContextIndex(db.GetItem(locationFilter));
-            using (var context = new SortableIndexSearchContext(SearchManager.GetIndex(indexName)))
+      
+            if (indexName.EndsWith("_remote"))
+            {
+                Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
+            }
+            else if (indexName.EndsWith("_inmemory"))
+            {
+                Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
+            }
+            else
+            {
+                Index = SearchManager.GetIndex(indexName) as Index;
+            }
+            using (var context = new SortableIndexSearchContext(Index))
             {
                 if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                 {
+                    Log.Info("Using: " + indexName, this);
                     Log.Info("Bucket Facet Original Debug Query: " + query, this);
                 }
 
                 foreach (var terms in termValue)
                 {
-                    var tempTerms = terms;
-                    var newGuid = new Guid();
-                    var isGuid = Guid.TryParse(terms, out newGuid);
-                    if (isGuid)
-                    {
-                        tempTerms = IdHelper.NormalizeGuid(terms, true);
-                    }
-
-                    var genreQueryFilter = new QueryFilter(query);
-                    if (!isFacet)
-                    {
-                        if (termName == "_language" || isIdLookup)
-                        {
-                            var termValueParse = terms.Split('|')[0].ToLowerInvariant();
-                            if (isIdLookup)
-                            {
-                                termValueParse = IdHelper.NormalizeGuid(termValueParse, true);
-                            }
-                            genreQueryFilter =
-                                new QueryFilter(
-                                    new TermQuery(new Term(termName.ToLowerInvariant(), termValueParse)));
-                        }
-                        else if (termName == "size" || termName == "dimensions")
-                        {
-
-                            var term = new BooleanQuery();
-                            term.Add(new TermQuery(new Term(termName, terms)), BooleanClause.Occur.MUST);
-                            genreQueryFilter = new QueryFilter(term);
-                        }
-                        else
-                        {
-                            genreQueryFilter =
-                                new QueryFilter(
-                                    new TermQuery(new Term(terms.Split('|')[0].ToLowerInvariant(),
-                                                           termName.ToLowerInvariant())));
-                        }
-                    }
-                    else
-                    {
-                        if (termName == "__created by")
-                        {
-                            genreQueryFilter =
-                              new QueryFilter(new TermQuery(new Term(termName, tempTerms)));
-                        }
-                        else
-                        {
-                            if (Config.ExcludeContextItemFromResult)
-                            {
-                                if (termName == "_path")
-                                {
-                                    var term = new BooleanQuery();
-                                    term.Add(new TermQuery(new Term(termName, tempTerms.ToLowerInvariant())), BooleanClause.Occur.MUST);
-                                    term.Add(new TermQuery(new Term(BuiltinFields.ID, tempTerms.ToLowerInvariant())), BooleanClause.Occur.MUST_NOT);
-                                    genreQueryFilter = new QueryFilter(term);
-                                }
-                                else
-                                {
-                                    var term = new TermQuery(new Term(termName, tempTerms.ToLowerInvariant()));
-                                    genreQueryFilter = new QueryFilter(term);
-                                }
-                            }
-                            else
-                            {
-                                var term = new TermQuery(new Term(termName, tempTerms.ToLowerInvariant()));
-                                genreQueryFilter = new QueryFilter(term);
-                            }
-
-                        }
-                    }
-                    if (termName == "__smallCreatedDate")
-                    {
-                        var dateStart = terms.Split('|')[0];
-                        var typeOfDate = terms.Split('|')[1];
-                        var dateEnd = new DateTime();
-                        if (typeOfDate == "Within a Day")
-                        {
-                            dateEnd = DateTime.Now;
-                        }
-                        if (typeOfDate == "Within a Week")
-                        {
-                            dateEnd = DateTime.Now.AddDays(-1);
-                        }
-                        if (typeOfDate == "Within a Month")
-                        {
-                            dateEnd = DateTime.Now.AddDays(-7);
-                        }
-                        if (typeOfDate == "Within a Year")
-                        {
-                            dateEnd = DateTime.Now.AddMonths(-1);
-                        }
-                        if (typeOfDate == "Older")
-                        {
-                            dateEnd = DateTime.Now.AddYears(-1);
-                        }
-
-                        var boolQuery = new BooleanQuery(true);
-                        SearcherMethods.AddDateRangeQuery(boolQuery, new DateRangeSearchParam.DateRangeField(termName, DateTime.Parse(dateStart), dateEnd) { InclusiveEnd = true, InclusiveStart = true }, BooleanClause.Occur.MUST);
-                        genreQueryFilter = new QueryFilter(boolQuery);
-                        if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
-                        {
-                            Log.Info("Search Clauses Number: " + boolQuery.Clauses().Count, this);
-                        }
-                    }
+                    var genreQueryFilter = GenreQueryFilter(query, isFacet, isIdLookup, termName, terms);
                     var tempSearchArray = queryBase.Clone() as BitArray;
                     if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                     {
@@ -273,11 +232,129 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return runningCOunt;
         }
 
+        public virtual QueryFilter GenreQueryFilter(Query query, bool isFacet, bool isIdLookup, string termName, string terms)
+        {
+            var tempTerms = terms;
+            var newGuid = new Guid();
+            var isGuid = Guid.TryParse(terms, out newGuid);
+            if (isGuid)
+            {
+                tempTerms = IdHelper.NormalizeGuid(terms, true);
+            }
+
+            var genreQueryFilter = new QueryFilter(query);
+            if (!isFacet)
+            {
+                if (termName == "_language" || isIdLookup)
+                {
+                    var termValueParse = terms.Split('|')[0].ToLowerInvariant();
+                    if (isIdLookup)
+                    {
+                        termValueParse = IdHelper.NormalizeGuid(termValueParse, true);
+                    }
+                    genreQueryFilter =
+                        new QueryFilter(
+                            new TermQuery(new Term(termName.ToLowerInvariant(), termValueParse)));
+                }
+                else if (termName == "size" || termName == "dimensions")
+                {
+                    var term = new BooleanQuery();
+                    term.Add(new TermQuery(new Term(termName, terms)), BooleanClause.Occur.MUST);
+                    genreQueryFilter = new QueryFilter(term);
+                }
+                else
+                {
+                    genreQueryFilter =
+                        new QueryFilter(
+                            new TermQuery(new Term(terms.Split('|')[0].ToLowerInvariant(),
+                                                   termName.ToLowerInvariant())));
+                }
+            }
+            else
+            {
+                if (termName == "__created by")
+                {
+                    genreQueryFilter =
+                        new QueryFilter(new TermQuery(new Term(termName, tempTerms)));
+                }
+                else
+                {
+                    if (Config.ExcludeContextItemFromResult)
+                    {
+                        if (termName == "_path")
+                        {
+                            var term = new BooleanQuery();
+                            term.Add(new TermQuery(new Term(termName, tempTerms.ToLowerInvariant())), BooleanClause.Occur.MUST);
+                            term.Add(new TermQuery(new Term(BuiltinFields.ID, tempTerms.ToLowerInvariant())),
+                                     BooleanClause.Occur.MUST_NOT);
+                            genreQueryFilter = new QueryFilter(term);
+                        }
+                        else
+                        {
+                            var term = new TermQuery(new Term(termName, tempTerms.ToLowerInvariant()));
+                            genreQueryFilter = new QueryFilter(term);
+                        }
+                    }
+                    else
+                    {
+                        var term = new TermQuery(new Term(termName, tempTerms.ToLowerInvariant()));
+                        genreQueryFilter = new QueryFilter(term);
+                    }
+                }
+            }
+            if (termName == "__smallCreatedDate")
+            {
+                var dateStart = terms.Split('|')[0];
+                var typeOfDate = terms.Split('|')[1];
+                var dateEnd = new DateTime();
+                if (typeOfDate == "Within a Day")
+                {
+                    dateEnd = DateTime.Now;
+                }
+                if (typeOfDate == "Within a Week")
+                {
+                    dateEnd = DateTime.Now.AddDays(-1);
+                }
+                if (typeOfDate == "Within a Month")
+                {
+                    dateEnd = DateTime.Now.AddDays(-7);
+                }
+                if (typeOfDate == "Within a Year")
+                {
+                    dateEnd = DateTime.Now.AddMonths(-1);
+                }
+                if (typeOfDate == "Older")
+                {
+                    dateEnd = DateTime.Now.AddYears(-1);
+                }
+
+                var boolQuery = new BooleanQuery(true);
+                SearcherMethods.AddDateRangeQuery(boolQuery,
+                                                  new DateRangeSearchParam.DateRangeField(termName, DateTime.Parse(dateStart),
+                                                                                          dateEnd)
+                                                      {InclusiveEnd = true, InclusiveStart = true}, BooleanClause.Occur.MUST);
+                genreQueryFilter = new QueryFilter(boolQuery);
+                if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
+                {
+                    Log.Info("Search Clauses Number: " + boolQuery.Clauses().Count, this);
+                }
+            }
+            return genreQueryFilter;
+        }
+
         internal virtual KeyValuePair<int, List<SitecoreItem>> RunQuery(QueryBase query)
         {
             var translator = new QueryTranslator(Index);
             var luceneQuery = translator.Translate(query);
             return this.RunQuery(luceneQuery, 20, 0);
+        }
+
+
+        internal virtual KeyValuePair<int, List<SitecoreItem>> RunQuery(QueryBase query, int numberOfResults)
+        {
+            var translator = new QueryTranslator(Index);
+            var luceneQuery = translator.Translate(query);
+            return this.RunQuery(luceneQuery, numberOfResults, 0);
         }
 
         #endregion
@@ -294,6 +371,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             var query = new FieldQuery(fieldName, fieldValue);
             return this.RunQuery(query);
+        }
+
+        internal virtual KeyValuePair<int, List<SitecoreItem>> GetItemsViaFieldQuery(string fieldName, string fieldValue, int numberOfResults)
+        {
+            var query = new FieldQuery(fieldName, fieldValue);
+            return this.RunQuery(query, numberOfResults);
         }
 
         internal virtual KeyValuePair<int, List<SitecoreItem>> GetItems(SearchParam param)
@@ -320,16 +403,20 @@ namespace Sitecore.ItemBucket.Kernel.Util
             {
                 var indexName = Util.Constants.Index.Name;
                 var item = db.GetItem(param.LocationIds);
-                if (item.IsNotNull())
+                indexName = BucketManager.GetContextIndex(item.IsNotNull() ? item : db.GetItem(Sitecore.ItemIDs.RootID));
+
+                if (indexName.EndsWith("_remote"))
                 {
-                    indexName = BucketManager.GetContextIndex(item);
+                    Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
+                }
+                else if (indexName.EndsWith("_inmemory"))
+                {
+                    Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
                 }
                 else
                 {
-                    Log.Error("Unable to retrieve Location from search parameter", this);
+                    Index = SearchManager.GetIndex(indexName) as Index;
                 }
-
-                Index = SearchManager.GetIndex(indexName);
 
                 if (Index.IsNotNull())
                 {
@@ -350,8 +437,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
                     SearcherMethods.ApplyTemplateNotFilter(globalQuery);
                     SearcherMethods.ApplyIDFilter(globalQuery, param.ID);
-                    SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
-                    SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
+                    if (param.LocationIds.Contains("|"))
+                    {
+                        SearcherMethods.ApplyCombinedLocationFilter(globalQuery, param.LocationIds);
+                    }
+                    else
+                    {
+                        SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
+                    }
+                    if (!param.Refinements.ContainsKey("__workflow state")) //Hack!!!!!
+                    {
+                        SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
+                    }
                     SearcherMethods.ApplyLatestVersion(globalQuery);
 
                     if (Config.ExcludeContextItemFromResult)
@@ -376,6 +473,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
                     SearcherMethods.ApplyAuthor(booleanQuery, param.Author);
                     SearcherMethods.ApplyDateRangeSearchParam(booleanQuery, param, innerOccurance);
+                    if (param.Refinements.ContainsKey("__workflow state"))
+                    {
+                        SearcherMethods.AddFieldValueClause(booleanQuery, "__workflow state", param.Refinements["__workflow state"], QueryOccurance.Should);
+                    }
                     if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                     {
                         Log.Info("Search Clauses Number: " + booleanQuery.Clauses().Count, this);
@@ -397,7 +498,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(param.LocationIds));
 
-            Index = SearchManager.GetIndex(indexName);
+            if (indexName.EndsWith("_remote"))
+            {
+                Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
+            }
+            else if (indexName.EndsWith("_inmemory"))
+            {
+                Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
+            }
+            else
+            {
+                Index = SearchManager.GetIndex(indexName) as Index;
+            }
             if (Index.IsNotNull())
             {
                 var globalQuery = new CombinedQuery();

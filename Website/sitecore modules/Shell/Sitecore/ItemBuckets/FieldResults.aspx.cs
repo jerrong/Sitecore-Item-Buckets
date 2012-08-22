@@ -24,6 +24,7 @@ namespace ItemBuckets
             set { _ID = value; }
         }
         private string Filter = "";
+        private string thisIsWorkBox = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -57,7 +58,7 @@ namespace ItemBuckets
                 {
                     requestString["StartSearchLocation"] = Sitecore.ItemIDs.RootID.ToString();
                 }
-               
+              
                 var refinements = new SafeDictionary<string>();
                  if (requestString["FieldsFilter"] != null)
                  {
@@ -67,11 +68,13 @@ namespace ItemBuckets
                          refinements.Add(key, splittedFields[key]);
                      }
                  }
+                
 
                  else if (System.Web.HttpContext.Current.Request.UrlReferrer.AbsolutePath == "/sitecore/shell/sitecore/content/Applications/Workbox")
                  {
                      requestString["Custom"] = "__workflow\\ state|*";
                      requestString["StartSearchLocation"] = Sitecore.ItemIDs.RootID.ToString();
+                     thisIsWorkBox = "true";
                  }
 
                  else if (System.Web.HttpContext.Current.Request.UrlReferrer.AbsolutePath == "/sitecore/shell/Applications/Templates/Change%20template.aspx")
@@ -138,13 +141,13 @@ namespace ItemBuckets
             {
                 if (!Id.IsNullOrEmpty())
                 {
+                    var item = Sitecore.Context.ContentDatabase.GetItem(Id);
                     Page.Response.Write(
-                        "<style>.token-input-list-facebook.boxme {background-image: url(/temp/IconCache/" +
-                        Sitecore.Context.ContentDatabase.GetItem(Id).Appearance.Icon +
+                        "<style>.token-input-list-facebook.boxme {background-image: url(/temp/IconCache/" + (item.IsNotNull() ? item.Appearance.Icon : "") +
                         ");background-size:16px 16px;background-position: 2% 50%;background-repeat: no-repeat;}</style>");
                 }
                 var script = "<script type='text/javascript' language='javascript'>var filterForSearch='" + Filter +
-                             "';</script>";
+                             "';var workBox='" + thisIsWorkBox +"';</script>";
                 Page.Response.Write(script);
             }
 

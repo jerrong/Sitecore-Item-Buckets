@@ -21,7 +21,7 @@
     <RootNamespace>Sitecore.ItemBucket.BigData.Solr</RootNamespace>
     <SitecoreDatabase>core</SitecoreDatabase>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Local Debug' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>.\Local Debug\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
@@ -44,6 +44,35 @@
     <DebugSymbols>false</DebugSymbols>
     <OutputPath>.\Release\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <PackageAuthor>Timothy Ward</PackageAuthor>
+    <PackagePublisher>Sitecore</PackagePublisher>
+    <PackageVersion>
+    </PackageVersion>
+    <PackageReadme>
+    </PackageReadme>
+    <SitecoreAssemblyPath>..\lib\Sitecore</SitecoreAssemblyPath>
+    <GeneratePackage>False</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>C:\inetpub\wwwroot\newbucket\Website</SitecoreDeployFolder>
+    <SitecoreWebUrl>http://newbucket</SitecoreWebUrl>
+    <SitecoreAccessGuid>0a12c23f-46d9-4d49-8d92-ef3bcf5a5884</SitecoreAccessGuid>
+    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <PackageAuthor>Timothy Ward</PackageAuthor>
+    <PackagePublisher>Sitecore</PackagePublisher>
+    <PackageVersion>
+    </PackageVersion>
+    <PackageReadme>
+    </PackageReadme>
+    <SitecoreAssemblyPath>..\lib\Sitecore</SitecoreAssemblyPath>
+    <GeneratePackage>False</GeneratePackage>
+    <SeperateFilesAndItems>False</SeperateFilesAndItems>
+    <AddDateTimeToPackageName>False</AddDateTimeToPackageName>
+    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttributes Include="AssemblyFileVersion">
@@ -77,10 +106,12 @@
     <SitecoreItem Include="sitecore\content\Applications\Control Panel\Item Buckets\Generate SOLR Schema.item">
       <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\Control Panel\Item Buckets\Trigger SOLR Replication.item">
       <Icon>/temp/IconCache/Applications/32x32/Document.png</Icon>
       <ItemDeployment>AlwaysUpdate</ItemDeployment>
+      <ChildItemSynchronization>NoChildSynchronization</ChildItemSynchronization>
     </SitecoreItem>
     <SitecoreItem Include="sitecore\content\Applications\SOLR.item">
       <Icon>/temp/IconCache/Network/32x32/clients.png</Icon>

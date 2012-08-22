@@ -38,7 +38,7 @@
     <style>
    .BlogPostArea {
   
-    padding: 0;
+    /*  padding: 0; */
 }
 
 .sb_dropdown 

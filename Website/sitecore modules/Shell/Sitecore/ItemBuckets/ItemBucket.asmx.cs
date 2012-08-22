@@ -1,4 +1,6 @@
-﻿using Sitecore.SecurityModel;
+﻿using System.IO;
+using Sitecore.ItemBuckets.BigData.RemoteIndex;
+using Sitecore.SecurityModel;
 
 namespace ItemBuckets
 {
@@ -57,6 +59,22 @@ namespace ItemBuckets
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string> GetNames(string tagChars)
+        {
+           if (tagChars.Length >= 3)
+           {
+               var currentItem = Sitecore.Context.ContentDatabase.GetItem(WebUtil.ExtractUrlParm("id", HttpContext.Current.Request.UrlReferrer.AbsoluteUri));
+               int hitCount;
+               return currentItem.Search(out hitCount, text: tagChars + "*").Select(item => item.GetItem().Name).Distinct().ToList();
+           }
+           else
+           {
+                return new List<string>();
+           }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string QueryServer()
         {
             return Sitecore.ItemBucket.Kernel.Util.Config.QueryServerAddress;
@@ -82,7 +100,8 @@ namespace ItemBuckets
         public View[] GetViews()
         {
             var views = new List<View>();
-            var parentPath = Sitecore.Context.ContentDatabase.GetItem("{3B750F26-520E-4B33-852A-9633C54706BE}").Children.Where(item => ((CheckboxField)item.Fields["Enabled"]).Checked);
+            //var parentPath = Sitecore.Context.ContentDatabase.GetItem("{3B750F26-520E-4B33-852A-9633C54706BE}").Children.Where(item => ((CheckboxField)item.Fields["Enabled"]).Checked);
+            var parentPath = ((MultilistField)Sitecore.Context.ContentDatabase.GetItem(WebUtil.ExtractUrlParm("id", HttpContext.Current.Request.UrlReferrer.AbsoluteUri)).Fields["Enabled Views"]).GetItems();
             foreach (Item item in parentPath)
             {
                 views.Add(new View
@@ -121,6 +140,14 @@ namespace ItemBuckets
             return null;
         }
 
+         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string GetDefault()
+        {
+            var viewItem =  Sitecore.Context.ContentDatabase.GetItem(WebUtil.ExtractUrlParm("id", HttpContext.Current.Request.UrlReferrer.AbsoluteUri));
+             return viewItem.Fields["Default View"].Value;
+        }
+         
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<string> GetFileType(string tagChars)
@@ -281,6 +308,28 @@ namespace ItemBuckets
             }
 
             return string.Empty;
+        }
+
+        [WebMethod]
+        public void SaveClosedTabs(string ids)
+        {
+            if (ClientContext.GetValue("RecentlyOpenedTabs").IsNull())
+            {
+                ClientContext.SetValue("RecentlyOpenedTabs", string.Empty);
+            }
+            string[] parsedIds = IdHelper.ParseId(ids);
+            
+            foreach (var id in parsedIds)
+            {
+                //if (!ClientContext.GetValue("RecentlyOpenedTabs").ToString().Contains("|" + id + "|"))
+                //{
+                   
+                //}
+            }
+
+            ClientContext.SetValue("RecentlyOpenedTabs",
+                                          ClientContext.GetValue("RecentlyOpenedTabs") + "|" + "Closed Tabs (" + ids + ")" +
+                                          "|");
         }
 
 

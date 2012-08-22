@@ -4,6 +4,7 @@ using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
 using Sitecore.ItemBucket.Kernel.ItemExtensions.Axes;
+using Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Managers;
 
 namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
@@ -18,13 +19,16 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
             //Test 2 - Get All Items Under Tim Folder that have the Title Field Starting with the Word Tim
 
             var TimDescendantsWithTitleOfTime =
-            BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{27812FBA-F5E6-41B9-9DDE-4A82AE81496C}"), new SafeDictionary<string> { { "title", "Tim" } }, out hitCount);
+            BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{27812FBA-F5E6-41B9-9DDE-4A82AE81496C}"), new SafeDictionary<string> { { "_links", "GUID" } }, out hitCount);
             Assert.AreEqual(hitCount, 3, "");
             //Test 3
 
             var RepositoryFolderWithNameOfTim =
             BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{346C12DF-8FC7-4B97-8570-9D26F78240F2}"), new SafeDictionary<string> { { "_name", "Tim" } }, out hitCount);
             Assert.AreEqual(hitCount, 3, "");
+
+            var gowriQuery = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{346C12DF-8FC7-4B97-8570-9D26F78240F2}"), new SafeDictionary<string> { { "authorid", "6801" } }, out hitCount);
+
            // Test 4 - Get All Items Under Home of Template "Sample Item"
             var HomeDescendantsOfTypeArticleWithTimContainedWithinIt =
                BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount,
@@ -113,7 +117,6 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
             var items3 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), new SafeDictionary<string> { { "_name", "Tim" } }, out hitsCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
 
             var items4 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, text: "Tim", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
-
 
             //New Test Folder Tests
 

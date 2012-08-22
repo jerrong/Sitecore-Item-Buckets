@@ -62,7 +62,7 @@
                         <ul class="token-input-list-facebook boxme">
                             <li class="token-input-input-token-facebook">
                                 <input type="text" autocomplete="off" class="addition" style="outline: medium none;
-                                    width: 200px;" id="token-input-demo-input-local" />
+                                    width: 200px;" id="token-input-demo-input-local" <%# HasLock ? "" : "disabled" %>/>
                             </li>                            
                         </ul>
                         <div id="slider" style="position: absolute; bottom: 20px; width: 180px; right: 60px;"></div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <ul class="pageSection">
+            <ul class="pageSection" <%# HasLock ? "" : "disabled" %>>
             <h2>Selected Item List</h2>
                 <div id="savedIds" style="height: 50px;">
                 </div>

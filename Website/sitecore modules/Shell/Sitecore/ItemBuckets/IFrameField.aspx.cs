@@ -20,6 +20,12 @@ namespace ItemBuckets
             set { _ID = value; }
         }
 
+        public bool HasLock
+        {
+            get { return Sitecore.Context.ContentDatabase.GetItem(Id).Locking.HasLock() || Sitecore.Context.User.IsAdministrator; }
+           
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Id.IsNullOrEmpty())
@@ -31,6 +37,8 @@ namespace ItemBuckets
 
 
             }
+
+            DataBind();
         }
     }
 }

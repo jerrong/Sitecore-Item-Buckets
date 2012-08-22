@@ -9,11 +9,7 @@
     z-index: 10;
 }
 
-#keySelect
-{
-    border: 1px solid #020202;
-   
-}
+
 
 
 .sb_dropdown
@@ -33,9 +29,9 @@
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     outline: none;
-    padding: 0px 5px;
+    padding: 3px 5px;
     text-shadow: 1px 1px 1px #fff;
-    width: 490px;
+    width: 488px;
     float: left;
     margin: 3px 0px;
     list-style: none;
@@ -97,6 +93,7 @@
     letter-spacing: 1px;
     color: #444;
     height: 16px;
+border-radius: 5px;
     line-height: 16px;
     padding: 5px;
     -moz-box-shadow: 0px 0px 2px #777;
@@ -128,6 +125,11 @@ span.sb_down
 {
     background-image: url("../images/icons/down.png");
 }
+span.sb_down:hover
+{
+   background-color: #fff;
+}
+
 input.sb_search
 {
     position: absolute;
@@ -258,6 +260,7 @@ ul.token-input-list-facebook li input
     border: 1px solid #F2F2F2;
     -webkit-box-shadow: 1px 0px 1px #DDD;
     box-shadow: 1px 0px 1px #DDD;
+   
 }
 
 .handle2
@@ -272,6 +275,7 @@ a.handle:hover
 {
     background-position: 50% 50%;
     border: 1px solid #DDD;
+    background-color: #DDD;
     -webkit-box-shadow: 1px 0px 1px #AAA;
     box-shadow: 1px 0px 1px #AAA;
 }
@@ -280,6 +284,7 @@ a.handle2:hover
 {
     background-position: 50% 50%;
     border: 1px solid #DDD;
+    background-color: #DDD;
     -webkit-box-shadow: 1px 0px 1px #AAA;
     box-shadow: 1px 0px 1px #AAA;
 }
@@ -448,5 +453,5 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
 }
 
 #results {
-    padding-left: 94px;
+  /*  padding-left: 94px; */
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Lucene.Net.Index;
+using Lucene.Net.Search;
 using Sitecore.Collections;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -63,6 +65,8 @@ namespace Sitecore.ItemBucket.UI
             stopWatch.Start();
             // Test 1 - Get All Items Under Home of Template "Sample Item"
             int hitCount;
+            var itemsss = BucketManager.Search(new TermQuery(new Term("_name", "Tim")), out hitCount);
+
            
             var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
            

@@ -22,7 +22,7 @@
                 if (locationFilter.IsNotEmpty())
                 {
                     buckets.AddRange(
-                        searcher.GetItemsViaFieldQuery("isbucket", "1").Value.Where(item => item.GetItem().IsNotNull()).Where(
+                        searcher.GetItemsViaFieldQuery("isbucket", "1", 200).Value.Where(item => item.GetItem().IsNotNull()).Where(
                             itm => Context.ContentDatabase.GetItem(locationFilter).Axes.IsAncestorOf(itm.GetItem())));
                 }
             }

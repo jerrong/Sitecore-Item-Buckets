@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xamlControls 
+  xmlns:x="http://www.sitecore.net/xaml"
+  xmlns:ajax="http://www.sitecore.net/ajax"
+  xmlns:rest="http://www.sitecore.net/rest"
+  xmlns:r="http://www.sitecore.net/renderings"
+  xmlns:xmlcontrol="http://www.sitecore.net/xmlcontrols"
+  xmlns:p="http://schemas.sitecore.net/Visual-Studio-Intellisense"
+  xmlns:asp="http://www.sitecore.net/microsoft/webcontrols"
+  xmlns:html="http://www.sitecore.net/microsoft/htmlcontrols"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <Sitecore.Shell.Applications.Analytics.TrackingField.Profiles x:inherits="Sitecore.Shell.Applications.Analytics.TrackingField.ProfilesPage,Sitecore.Client">
+    <x:register assembly="ComponentArt.Web.UI" namespace="ComponentArt.Web.UI" />
+
+    <Sitecore.Controls.DialogPage runat="server" Header="Profiles" Icon="Business/32x32/radar-chart.png" Text="Select the content profile values that best describe the content on this page. Content profile values help build a picture of the visitor’s interests as they navigate through your Web site.">
+      <AjaxScriptManager runat="server"/>
+      <ContinuationManager runat="server" />
+      <Script runat="server" Src="/sitecore/Shell/Applications/Analytics/TrackingField/TrackingField.js" />
+
+      <script type="text/javascript" language="javascript">
+
+        function scToggle(id) {
+        var element = $("profile_" + id);
+
+        var checked = element.checked;
+
+        var panel = $("profile_panel_" + id);
+
+        panel.disabled = !checked;
+        panel.descendants().each(function(element) { element.disabled = !checked });
+        panel.descendants().each(function(element) { if (typeof(element.slider) != 'undefined') { if (!checked) {element.slider.setDisabled();} else element.slider.setEnabled(); } });
+        }
+
+      </script>
+
+      <Style runat="server" x:placeholder="Stylesheets">
+        .EntryGrid {
+        padding:0px 8px 2px 8px;
+        }
+
+        .EntryGrid td {
+        white-space:nowrap;
+        }
+
+        .TabStrip {
+        position:relative;
+        top:2px;
+        z-index:1;
+        }
+
+        .DefaultTab {
+        color:black;
+        background-image: url(/sitecore/shell/themes/standard/ComponentArt/Tabstrip/tab_bg.gif);
+        font-family:Tahoma;
+        font-size:8pt;
+        cursor:default;
+        }
+
+        .DefaultTabHover {
+        color:black;
+        background-image: url(/sitecore/shell/themes/standard/ComponentArt/Tabstrip/hover_tab_bg.gif);
+        font-family:Tahoma;
+        font-size:8pt;
+        cursor:default;
+        }
+
+        .SelectedTab {
+        color:black;
+        background-image: url(/sitecore/shell/themes/standard/ComponentArt/Tabstrip/selected_tab_bg.gif);
+        font-family:Tahoma;
+        font-size:8pt;
+        cursor:default;
+        }
+
+        .MultiPage {
+        background-color:White;
+        border: 1px solid #919B9C;
+        width:100%;
+        height:100%;
+        }
+
+        .PageContent {
+        background:#fbfbfb;
+        height:100%;
+        }
+
+        .scText,
+        .scPassword,
+        .scLookup,
+        .scChecklist {
+        width:100%;
+        }
+
+        .scMemo {
+        width:100%;
+        height:120px;
+        }
+
+        .scCheckbox {
+        }
+
+        .scFieldLabel {
+        color:#6487DC;
+        padding:4px 0px 2px 0px;
+        background:white;
+        border:none;
+        }
+
+      </Style>
+
+      <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td height="100%">
+            <GridPanel Width="100%" Height="100%" runat="server">
+              <Border runat="server" GridPanel.Style="height:100%" Height="100%">
+                <Scrollbox id="ProfilesList" runat="server" Height="100%" Padding="0px" />
+              </Border>
+            </GridPanel>
+          </td>
+        </tr>
+      </table>        
+        
+    </Sitecore.Controls.DialogPage>
+  </Sitecore.Shell.Applications.Analytics.TrackingField.Profiles>
+
+</xamlControls>
