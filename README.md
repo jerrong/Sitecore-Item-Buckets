@@ -292,3 +292,17 @@ A common requirement with masses of content is to import content from many diffe
      BucketManager.CreateBucket(item, (itm => BucketManager.AddSearchTabToItem(item)));
   }
 ```
+
+Roadmap
+-------------------
+
+* Integration with Hadoop for Search Analysis of Log Files
+* Custom Facet Controls e.g. Sliders, Colour Pickers, Calendars
+* PerFieldWrapperAnalysis
+* More Like This..
+* Sounds Like...
+* Greater Than or Less Than filters
+* Stemming 
+* Saved Searches e.g. "Items created today"
+* Redesign of Index Rebuilding Wizard
+* Bucket Treelist Field Type
