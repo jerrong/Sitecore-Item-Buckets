@@ -134,6 +134,11 @@ You will need to restart the client to see your changes.
 You will also receive 3 update packages. You will need to install these as well as
 these are the items associated with the package.
 
+UI
+=====================
+
+The UI was designed for best use in Google Chrome. IE and Firefox are supported, but best experience
+will be in Google Chrome.
 
 API Overview
 --------
