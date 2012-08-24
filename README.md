@@ -85,6 +85,11 @@ distributed, or replicated with SOLR.
 You can install through Nuget.org or through the standard Sitecore 
 package.
 
+This source is targeted towards the current recommended release of Sitecore i.e. Sitecore 
+6.5 Update 5.
+
+Check the releases folder for a packaged build in other versions.
+
 Installation
 -------------
 
