@@ -1,5 +1,5 @@
 Sitecore-Item-Buckets
-=====================
+--------
 
 This module allows you to manage large repositories of content in Sitecore
 
@@ -15,7 +15,7 @@ content and utilises the Lucene.net/SOLR indexes to return results in
 a much faster way than the API/XPath/Sitecore Query etc.
 
 Idea
-=====================
+--------
 A bucket is a container within the Content Tree that will store content
 items. What differs this from a normal container is that all items 
 stored within the container will be hidden and have a new Content 
@@ -33,7 +33,7 @@ Having an item as a bucket brings many advantages including:
 * You have a repository that can store millions of items and not hinder the UI.
 
 Why Bucket?
-=====================
+--------
 Sitecore Item Buckets addresses the management of large amounts of items within the 
 content tree and being able to retrieve and work with them in a speedy and 
 efficient manner. To decide if you should turn an item into a bucket, and 
@@ -52,7 +52,7 @@ each product with what category they belong to.
 
 
 Design
-=====================
+--------
 
 Item Buckets has been designed for flexibility of architecture and
 extensiblity and is broken up into 3 main libraries:
@@ -135,7 +135,7 @@ You will also receive 3 update packages. You will need to install these as well 
 these are the items associated with the package.
 
 UI
-=====================
+--------
 
 The UI was designed for best use in Google Chrome. IE and Firefox are supported, but best experience
 will be in Google Chrome.
