@@ -1,6 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297040E-A73A-482E-AF1B-75CF08F76F2C}"
+	ProjectSection(SolutionItems) = preProject
+		buckets.vsmdi = buckets.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.UI", "Website\Sitecore.ItemBucket.UI.csproj", "{5945A8DA-FB0D-4AED-95D4-68BBA5830954}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.Kernel", "src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj", "{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}"
@@ -8,13 +15,6 @@ EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.ItemBucket.Core", "src\ItemBucket.Core\Sitecore.ItemBucket.Core.scproj", "{12B15B9A-C41D-4161-93DC-163AE1373C4A}"
 EndProject
 Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.ItemBucket.Master", "src\ItemBucket.Master\Sitecore.ItemBucket.Master.scproj", "{53E83AF5-7973-475A-B786-034FDE0918CE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297040E-A73A-482E-AF1B-75CF08F76F2C}"
-	ProjectSection(SolutionItems) = preProject
-		buckets.vsmdi = buckets.vsmdi
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBuckets.BigData", "Sitecore.ItemBuckets.BigData\Sitecore.ItemBuckets.BigData.csproj", "{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}"
 EndProject
