@@ -10,8 +10,6 @@
     public interface IFacet
     {
         List<FacetReturn> Filter(Query query, List<SearchStringModel> searchQuery, string locationFilter, BitArray baseQuery);
-
-        Dictionary<string, int> GetSearch(Query query, List<string> filter, List<SearchStringModel> searchQuery, string locationFilter, BitArray baseQuery);
     }
 }
 
