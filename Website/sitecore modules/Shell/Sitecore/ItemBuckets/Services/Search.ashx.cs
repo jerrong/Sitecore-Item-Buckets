@@ -412,7 +412,7 @@ namespace ItemBuckets.Services
             {
                 if (facet.Fields["Enabled"].Value == "1")
                 {
-                    dynamic type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
+                    var type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
                     if ((type as IFacet).IsNotNull())
                     {
                         var locationOverride = GetLocationOverride();

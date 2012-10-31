@@ -13,7 +13,6 @@ namespace Sitecore.ItemBucket.Kernel.Pipelines.UnBucket
     using Sitecore.ItemBucket.Kernel.Kernel.Pipelines;
     using Sitecore.ItemBucket.Kernel.Kernel.Util;
     using Sitecore.Resources;
-    using System.Threading.Tasks;
 
     public class UnbucketProcessor
     {

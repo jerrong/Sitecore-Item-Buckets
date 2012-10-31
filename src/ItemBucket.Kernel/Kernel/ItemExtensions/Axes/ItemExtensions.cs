@@ -23,7 +23,7 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
     using Sitecore.Web;
 
     using IndexSearcher = Sitecore.ItemBucket.Kernel.Util.IndexSearcher;
-    using System.Diagnostics.Contracts;
+    //using System.Diagnostics.Contracts;
 
     /// <summary>
     /// This is a group of handy extension methods to be easily able to search through content from the API
@@ -465,7 +465,11 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
         /// <returns>IEnumreable List of Results that have been typed to a smaller version of the Item Object</returns>
         public static bool IsABucket(this Item item)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
 
             var field = item.Fields[Constants.IsBucket];
             return field.IsNotNull() && "1".Equals(field.Value);

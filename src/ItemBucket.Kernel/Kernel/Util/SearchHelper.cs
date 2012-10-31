@@ -285,7 +285,13 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     }
                     else
                     {
-                        var isGuid = Guid.TryParse(template.Value, out newGuid);
+                        var isGuid =
+#if NET4
+                            Guid.TryParse(template.Value, out newGuid);
+#else
+                            IdHelper.IsGuid(template.Value);
+#endif
+                        
                         if (template.Value.IsEmpty())
                         {
                             return string.Empty;

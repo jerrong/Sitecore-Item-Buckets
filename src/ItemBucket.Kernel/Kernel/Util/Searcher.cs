@@ -74,7 +74,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     BooleanQuery.SetMaxClauseCount(Config.LuceneMaxClauseCount);
                     var sortingDir = sortDirection == "asc" ? false : true;
-                    var searchHits = string.IsNullOrWhiteSpace(sortField)
+                    var searchHits = 
+#if NET4
+                        string.IsNullOrWhiteSpace(sortField)
+#else
+                        string.IsNullOrEmpty(sortField)
+#endif
                                          ? context.Search(query)
                                          : context.Search(query, new Sort(sortField, sortingDir));
                     if (searchHits.IsNull())
@@ -236,12 +241,14 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             var tempTerms = terms;
             var newGuid = new Guid();
-            var isGuid = Guid.TryParse(terms, out newGuid);
-            if (isGuid)
+#if NET4
+            if (Guid.TryParse(terms, out newGuid))
+#else
+            if (IdHelper.IsGuid(terms))
+#endif
             {
                 tempTerms = IdHelper.NormalizeGuid(terms, true);
             }
-
             var genreQueryFilter = new QueryFilter(query);
             if (!isFacet)
             {
@@ -383,7 +390,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             var globalQuery = new CombinedQuery();
             SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
+#if NET4
             if (!string.IsNullOrWhiteSpace(param.FullTextQuery))
+#else
+            if (!string.IsNullOrEmpty(param.FullTextQuery))
+#endif
             {
                 SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery);
             }
@@ -422,7 +433,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     var globalQuery = new CombinedQuery();
                     SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
+#if NET4
                     if (!string.IsNullOrWhiteSpace(param.FullTextQuery))
+#else
+                    if (!string.IsNullOrEmpty(param.FullTextQuery))
+#endif
                     {
                         if (!param.FullTextQuery.StartsWith("*"))
                         {
@@ -460,7 +475,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     var booleanQuery = translator.ConvertCombinedQuery(globalQuery);
                     var innerOccurance = translator.GetOccur(param.Occurance);
 
+#if NET4
                     if (!string.IsNullOrWhiteSpace(param.FullTextQuery))
+#else
+                    if (!string.IsNullOrEmpty(param.FullTextQuery))
+#endif
                     {
                         if (param.FullTextQuery.StartsWith("*"))
                         {
@@ -482,7 +501,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
                         Log.Info("Search Clauses Number: " + booleanQuery.Clauses().Count, this);
                     }
 
+#if NET4
+                    if (!param.SortByField.IsNullOrWhiteSpace())
+#else
                     if (!param.SortByField.IsNullOrEmpty())
+#endif
+                        
                     {
                         return this.RunQuery(booleanQuery, param.PageSize, param.PageNumber, param.SortByField, param.SortDirection);
                     }
@@ -515,7 +539,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 var globalQuery = new CombinedQuery();
                 var fullTextQuery = param.FullTextQuery; // .TrimStart('*').TrimEnd('*') + "*";
                 SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
+#if NET4
                 if (!string.IsNullOrWhiteSpace(fullTextQuery))
+#else
+                if (!string.IsNullOrEmpty(fullTextQuery))
+#endif
+                    
                 {
                     if (!fullTextQuery.StartsWith("*"))
                     {
@@ -540,7 +569,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 var booleanQuery = translator.ConvertCombinedQuery(globalQuery);
                 var innerOccurance = translator.GetOccur(param.Occurance);
 
+#if NET4
                 if (!string.IsNullOrWhiteSpace(fullTextQuery))
+#else
+                if (!string.IsNullOrEmpty(fullTextQuery))
+#endif
                 {
                     if (fullTextQuery.StartsWith("*"))
                     {
@@ -566,7 +599,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
             var globalQuery = new CombinedQuery();
 
             SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
-            if (!string.IsNullOrWhiteSpace(param.FullTextQuery))
+#if NET4
+            if (!string.IsNullOrEmpty(param.FullTextQuery))
+#else
+            if (!string.IsNullOrEmpty(param.FullTextQuery))
+#endif
+
             {
                 SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery);
             }

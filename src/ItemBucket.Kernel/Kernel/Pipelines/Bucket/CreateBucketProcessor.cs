@@ -1,4 +1,5 @@
-﻿using Sitecore.SecurityModel;
+﻿using Sitecore.ItemBucket.Kernel.Util;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.ItemBucket.Kernel.Pipelines.Bucket
 {
@@ -12,7 +13,6 @@ namespace Sitecore.ItemBucket.Kernel.Pipelines.Bucket
     using Sitecore.ItemBucket.Kernel.Kernel.Pipelines;
     using Sitecore.ItemBucket.Kernel.Managers;
     using Sitecore.Resources;
-    using System.Threading.Tasks;
 
     public class CreateBucketProcessor
     {
@@ -56,7 +56,11 @@ namespace Sitecore.ItemBucket.Kernel.Pipelines.Bucket
 
                 if (contextItem.HasChildren)
                 {
+#if NET40
                     Parallel.ForEach(contextItem.GetChildren(), (child, state, i) =>
+#else
+                    contextItem.GetChildren().ForEach(child =>
+#endif
                     {
                         using (new EditContext(child, SecurityCheck.Disable))
                         {

@@ -73,11 +73,11 @@ namespace Sitecore.ItemBucket.Kernel.Common.Providers
                 {
                     if (pathSegments.First() == "sitecore")
                     {
-                        itemToReturn = "/" + string.Join("/", pathSegments);
+                        itemToReturn = "/" + string.Join("/", pathSegments.ToArray());
                     }
                     else
                     {
-                        itemToReturn = "/sitecore/content/" + string.Join("/", pathSegments);
+                        itemToReturn = "/sitecore/content/" + string.Join("/", pathSegments.ToArray());
                     }
                 }
 
@@ -99,11 +99,11 @@ namespace Sitecore.ItemBucket.Kernel.Common.Providers
                 {
                     if (pathSegments.First() == "sitecore")
                     {
-                        itemToReturn = "/" + string.Join("/", pathSegments);
+                        itemToReturn = "/" + string.Join("/", pathSegments.ToArray());
                     }
                     else
                     {
-                        itemToReturn = Sitecore.Context.Site.StartPath + "/" + string.Join("/", pathSegments);
+                        itemToReturn = Sitecore.Context.Site.StartPath + "/" + string.Join("/", pathSegments.ToArray());
                     }
                 }
                 item = Sitecore.Context.Database.GetItem(itemToReturn);
