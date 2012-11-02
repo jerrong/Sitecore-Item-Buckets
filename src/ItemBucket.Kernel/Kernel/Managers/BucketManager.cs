@@ -4,6 +4,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+#if NET40
+using System.Diagnostics.Contracts;
+using System.Threading.Tasks;
+#endif
 using System.Web;
 using Lucene.Net.Search;
 using Sitecore.Events;

@@ -2,10 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Framework Condition=" '$(Framework)' == '' ">NET40</Framework>
+    <ExtraConstants>$(Framework)</ExtraConstants>
     <OutputPath>bin\$(Configuration)\$(Framework)</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="  '$(Framework)' == 'NET40' ">
-    <DefineConstants>NET40</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -17,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.ItemBucket.Kernel</RootNamespace>
     <AssemblyName>Sitecore.ItemBucket.Kernel</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(TargetFrameworkVersion)' == ''">v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -25,14 +23,14 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;$(ExtraConstants)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;$(ExtraConstants)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -331,7 +329,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
-    <MSBuild Condition=" '$(Framework)' != 'NET35'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET35" RunEachTargetSeparately="true" />
+  <Target Name="BeforeBuild">
+    <Message Text="ExtraConstants: $(ExtraConstants)" Importance="high"/>
+    <Message Text="Framework: $(Framework)" Importance="high"/>
+    <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" Importance="high"/>
+  </Target>
+  <Target Name="AfterBuild" Condition=" '$(nestedbuild)' == '' ">
+    <Message Text="----------- done building -------------------- starting next one: ---------------" />
+    <MSBuild Condition=" '$(Framework)' != 'NET35'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET35;nestedbuild=1;TargetFrameworkVersion=v3.5" RunEachTargetSeparately="true" />
+    <MSBuild Condition=" '$(Framework)' != 'NET40'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET40;nestedbuild=1;TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />
   </Target>
 </Project>

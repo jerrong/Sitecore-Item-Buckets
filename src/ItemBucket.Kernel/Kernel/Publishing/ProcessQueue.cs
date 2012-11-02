@@ -1,4 +1,7 @@
-﻿using Sitecore.ItemBucket.Kernel.Util;
+﻿#if NET40
+using System.Threading.Tasks;
+#endif
+using Sitecore.ItemBucket.Kernel.Util;
 
 namespace Sitecore.ItemBucket.Kernel.Publishing
 {

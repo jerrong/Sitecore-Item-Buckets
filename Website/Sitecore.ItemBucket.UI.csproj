@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Framework Condition=" '$(Framework)' == '' ">NET40</Framework>
+    <ExtraConstants>$(Framework)</ExtraConstants>
     <OutputPath>bin\$(Configuration)\$(Framework)</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="  '$(Framework)' == 'NET40' ">
-    <DefineConstants>NET40</DefineConstants>
-  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -20,7 +18,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.ItemBucket</RootNamespace>
     <AssemblyName>Sitecore.ItemBucket.UI</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition=" '$(TargetFrameworkVersion)' == ''">v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -37,20 +35,20 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;$(ExtraConstants)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;$(ExtraConstants)</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;$(ExtraConstants)</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\buckets.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
@@ -93,6 +91,9 @@
     <Reference Include="Lucene.Net">
       <HintPath>..\lib\Sitecore\Lucene.Net.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ItemBucket.Kernel.dll">
+        <HintPath>..\src\ItemBucket.Kernel\bin\$(Framework)\$(Configuration)\Sitecore.ItemBucket.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -421,6 +422,7 @@
     </None>
     <Content Include="sitecore modules\Shell\Sitecore\ItemBuckets\Services\Search.ashx" />
     <Content Include="web.config" />
+    <Content Include="App_Config\Include\Sitecore.ItemBuckets.Web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -435,10 +437,6 @@
     <ProjectReference Include="..\Sitecore.ItemBuckets.BigData\Sitecore.ItemBuckets.BigData.csproj">
       <Project>{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}</Project>
       <Name>Sitecore.ItemBuckets.BigData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj">
-      <Project>{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}</Project>
-      <Name>Sitecore.ItemBucket.Kernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\src\Sitecore.BigData\Sitecore.BigData.csproj">
       <Project>{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}</Project>
@@ -484,7 +482,14 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
-    <MSBuild Condition=" '$(Framework)' != 'NET35'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET35" RunEachTargetSeparately="true" />
+  <Target Name="BeforeBuild">
+    <Message Text="ExtraConstants: $(ExtraConstants)" Importance="high" />
+    <Message Text="Framework: $(Framework)" Importance="high" />
+    <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" Importance="high" />
+  </Target>
+  <Target Name="AfterBuild" Condition=" '$(nestedbuild)' == '' ">
+    <Message Text="----------- done building -------------------- starting next one: ---------------" />
+    <MSBuild Condition=" '$(Framework)' != 'NET35'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET35;nestedbuild=1;TargetFrameworkVersion=v3.5" RunEachTargetSeparately="true" />
+    <MSBuild Condition=" '$(Framework)' != 'NET40'" Projects="$(MSBuildProjectFile)" Properties="Framework=NET40;nestedbuild=1;TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />
   </Target>
 </Project>

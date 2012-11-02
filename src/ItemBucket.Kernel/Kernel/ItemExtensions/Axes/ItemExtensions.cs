@@ -1,3 +1,6 @@
+#if NET40
+using System.Diagnostics.Contracts;
+#endif
 using Lucene.Net.Search;
 
 namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
