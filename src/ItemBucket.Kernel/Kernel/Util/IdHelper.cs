@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Sitecore.ItemBucket.Kernel.Util
 {
@@ -9,16 +10,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
     public class IdHelper
     {
-        public static string[] ParseId(string value)
+        public static IEnumerable<Guid> ParseId(string value)
         {
-            return value.Split(new[] { "|", " ", "," }, StringSplitOptions.RemoveEmptyEntries);
+            return 
+                value.Split(new[] {"|", " ", ","}, StringSplitOptions.RemoveEmptyEntries)
+                .Where(IsGuid)
+                .Select(s => new Guid(s));
         }
 
         [DefaultValue(false)]
         public static bool ContainsMultiGuids(string value)
         {
-            var ids = ParseId(value).Where(ID.IsID).ToArray();
-            return ids.Length > 0;
+            return value.Contains('|') || value.Contains(' ') || value.Contains(',');
         }
 
         /// <summary>
@@ -52,22 +55,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
                                  || ('a' <= suspect && 'f' >= suspect)
                                  || ('0' <= suspect && '9' >= suspect)
                                  || '-' == suspect;
-                        if (!result) break;
+                        if (!result) return false;
                     }
                 }
             }
-
             return result;
-        }
-
-        public static string ProcessGuiDs(string value, bool lowercase)
-        {
-            if (ID.IsID(value))
-            {
-                return NormalizeGuid(value, lowercase);
-            }
-
-            return ContainsMultiGuids(value) ? string.Join(" ", ParseId(value).Select(NormalizeGuid).ToArray()) : value;
         }
 
         public static string ProcessGUIDs(string value)
@@ -77,38 +69,42 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 return string.Empty;
             }
 
-            if (ID.IsID(value))
+            if (IsGuid(value))
             {
                 return NormalizeGuid(value);
             }
 
             return ContainsMultiGuids(value) ? string.Join(" ", ParseId(value).Select(NormalizeGuid).ToArray()) : value;
         }
-
-        public static string NormalizeGuid(string guid, bool lowercase)
+        public static string NormalizeGuid(Guid id)
         {
-            if (!string.IsNullOrEmpty(guid))
-            {
-                var shortId = ShortID.Encode(guid);
-                return lowercase ? shortId.ToLowerInvariant() : shortId;
-            }
-
-            return guid;
+            return NormalizeGuid(id, true);
         }
-
+        public static string NormalizeGuid(Guid id, bool lowercase)
+        {
+            return NormalizeGuid(new ID(id), lowercase);
+        }
+        public static string NormalizeGuid(ID id)
+        {
+            return NormalizeGuid(id, true);
+        }
+        public static string NormalizeGuid(ID id, bool lowercase)
+        {
+            return lowercase ? id.ToShortID().ToString().ToLowerInvariant() : id.ToShortID().ToString();
+        }
         public static string NormalizeGuid(string guid)
         {
-            if (!string.IsNullOrEmpty(guid) && guid.StartsWith("{"))
+            return NormalizeGuid(guid, true);
+        }
+        public static string NormalizeGuid(string guid, bool lowercase)
+        {
+            if (!string.IsNullOrEmpty(guid) && IsGuid(guid))
             {
-                return ShortID.Encode(guid);
+                var shortId = new ShortID(guid);
+                return lowercase ? shortId.ToString().ToLowerInvariant() : shortId.ToString();
             }
 
             return guid;
-        }
-
-        public static string NormalizeGuid(ID guid)
-        {
-            return NormalizeGuid(guid.ToString());
         }
     }
 }

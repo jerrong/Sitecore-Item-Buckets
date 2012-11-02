@@ -9,6 +9,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
 {
     public static class EnumerableExtensions
     {
+        public static IEnumerable<T> ToEnumerable<T>(this T value)
+        {
+            return new []{value};
+        }
+
         public static T FirstOrLazy<T>(this IEnumerable<T> sequence, Func<T> lazy)
         {
             foreach (T item in sequence)

@@ -199,6 +199,7 @@
 .\Debug\sitecore\shell\Override\Workbox.xml
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Services\Search.ashx
 .\Debug\web.config
+.\Debug\bin\ComponentArt.Web.UI.dll
 .\Debug\bin\Debug\NET35\Sitecore.BigData.dll
 .\Debug\bin\Debug\NET35\Sitecore.BigData.pdb
 .\Debug\bin\Debug\NET35\Sitecore.ItemBucket.Kernel.dll
@@ -219,3 +220,24 @@
 .\Debug\bin\Debug\NET40\Sitecore.ItemBuckets.BigData.pdb
 .\Debug\bin\Debug\NET40\SolrNet.dll
 .\Debug\bin\Debug\NET40\SolrNet.xml
+.\Debug\bin\HtmlAgilityPack.dll
+.\Debug\bin\ITHit.WebDAV.Server.dll
+.\Debug\bin\Lucene.Net.dll
+.\Debug\bin\Microsoft.Practices.ServiceLocation.dll
+.\Debug\bin\Mvp.Xml.dll
+.\Debug\bin\Newtonsoft.Json.dll
+.\Debug\bin\RadEditor.Net2.dll
+.\Debug\bin\Sitecore.Automation.MarketingAutomation.dll
+.\Debug\bin\Sitecore.BigData.dll
+.\Debug\bin\Sitecore.ItemBucket.Kernel.dll
+.\Debug\bin\Sitecore.ItemBuckets.BigData.dll
+.\Debug\bin\Sitecore.Kernel.dll
+.\Debug\bin\Sitecore.Logging.dll
+.\Debug\bin\Sitecore.NVelocity.dll
+.\Debug\bin\Sitecore.Zip.dll
+.\Debug\bin\SolrNet.dll
+.\Debug\bin\Stimulsoft.Base.dll
+.\Debug\bin\Stimulsoft.Report.dll
+.\Debug\bin\Stimulsoft.Report.Web.dll
+.\Debug\bin\Stimulsoft.Report.WebDesign.dll
+.\Debug\bin\Telerik.Web.UI.dll

@@ -1,6 +1,7 @@
 ﻿using Lucene.Net.Analysis.Standard;
 using Microsoft.Practices.ServiceLocation;
 using Sitecore.BigData;
+using Sitecore.Data;
 using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR;
 using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR.SOLRItems;
 using Sitecore.ItemBuckets.BigData.RamDirectory;
@@ -172,7 +173,6 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         public virtual Dictionary<string, int> RunFacet(Query query, bool showAllVersions, bool isFacet, bool isIdLookup, int pageSize, int pageNumber, string termName, List<string> termValue, BitArray queryBase, string locationFilter)
         {
-
             var runningCOunt = new Dictionary<string, int>();
             var db = Context.ContentDatabase ?? Sitecore.Context.Database;
             var indexName = BucketManager.GetContextIndex(db.GetItem(locationFilter));
@@ -413,7 +413,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
             if (db != null)
             {
                 var indexName = Util.Constants.Index.Name;
-                var item = db.GetItem(param.LocationIds);
+                var item = db.GetItem(new ID(param.LocationIds.FirstOrDefault()) ?? Sitecore.ItemIDs.RootID);
                 indexName = BucketManager.GetContextIndex(item.IsNotNull() ? item : db.GetItem(Sitecore.ItemIDs.RootID));
 
                 if (indexName.EndsWith("_remote"))
@@ -433,33 +433,12 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     var globalQuery = new CombinedQuery();
                     SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
-#if NET4
-                    if (!string.IsNullOrWhiteSpace(param.FullTextQuery))
-#else
-                    if (!string.IsNullOrEmpty(param.FullTextQuery))
-#endif
-                    {
-                        if (!param.FullTextQuery.StartsWith("*"))
-                        {
-                            if (param.FullTextQuery != "*All*" && param.FullTextQuery != "*" && param.FullTextQuery != "**")
-                            {
-                                SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery, indexName);
-                            }
-                        }
-                    }
-
+                    SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery, indexName);
                     SearcherMethods.ApplyRelationFilter(globalQuery, param.RelatedIds);
                     SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
                     SearcherMethods.ApplyTemplateNotFilter(globalQuery);
-                    SearcherMethods.ApplyIDFilter(globalQuery, param.ID);
-                    if (param.LocationIds.Contains("|"))
-                    {
-                        SearcherMethods.ApplyCombinedLocationFilter(globalQuery, param.LocationIds);
-                    }
-                    else
-                    {
-                        SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
-                    }
+                    SearcherMethods.ApplyIdFilter(globalQuery, param.ID);
+                    SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
                     if (!param.Refinements.ContainsKey("__workflow state")) //Hack!!!!!
                     {
                         SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
@@ -520,7 +499,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         public static BooleanQuery ContructQuery(DateRangeSearchParam param)
         {
-            var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(param.LocationIds));
+            var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(new ID(param.LocationIds.FirstOrDefault()) ?? Sitecore.ItemIDs.RootID));
 
             if (indexName.EndsWith("_remote"))
             {
@@ -555,7 +534,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 SearcherMethods.ApplyRelationFilter(globalQuery, param.RelatedIds);
                 SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
                 SearcherMethods.ApplyTemplateNotFilter(globalQuery);
-                SearcherMethods.ApplyIDFilter(globalQuery, param.ID);
+                SearcherMethods.ApplyIdFilter(globalQuery, param.ID);
                 SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
                 SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
                 SearcherMethods.ApplyLatestVersion(globalQuery);
@@ -616,10 +595,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return this.RunQuery(globalQuery);
         }
 
-        internal virtual bool ContainsItemsByFields(string ids, string fieldName, string fieldValue)
+        internal virtual bool ContainsItemsByFields(IEnumerable<Guid> ids, string fieldName, string fieldValue)
         {
             var globalQuery = new CombinedQuery();
-            SearcherMethods.ApplyIdFilter(globalQuery, BuiltinFields.ID, ids);
+            SearcherMethods.ApplyIdFilter(globalQuery, BuiltinFields.ID, ids.ToArray());
             SearcherMethods.AddFieldValueClause(globalQuery, fieldName, fieldValue, QueryOccurance.Must);
             return this.RunQuery(globalQuery).Value.Any();
         }

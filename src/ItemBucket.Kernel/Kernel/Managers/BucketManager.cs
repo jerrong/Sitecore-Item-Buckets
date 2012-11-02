@@ -187,7 +187,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="pageNumber">Go directly to a Page of results</param>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID")</example>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID", sortField: "_name")</example>
-        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1)
+        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, IEnumerable<Guid> relatedIds = null, string indexName = "itembuckets_buckets", string text = "", IEnumerable<Guid> templates = null, string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1)
         {
 #if NET40
             Contract.Requires(startLocationItem.IsNotNull());
@@ -227,7 +227,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                               FullTextQuery = text,
                                               RelatedIds = relatedIds,
                                               TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
+                                              LocationIds = new [] {startLocationItem.ID.ToGuid()},
                                               Language = language,
                                               ID = id,
                                               SortDirection = sortDirection,
@@ -277,7 +277,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="numberOfItemsToReturn">0-XXXXXX (The bigger this number is the less performant it will be)</param>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID")</example>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", relatedIds: "ItemGUID", sortField: "_name")</example>
-        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20)
+        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, IEnumerable<Guid> relatedIds = null, string indexName = "itembuckets_buckets", string text = "", IEnumerable<Guid> templates = null, string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20)
         {
             using (var searcher = new IndexSearcher(indexName))
             {
@@ -311,7 +311,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                               FullTextQuery = text,
                                               RelatedIds = relatedIds,
                                               TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
+                                              LocationIds = startLocationItem.ID.ToGuid().ToEnumerable(),
                                               Language = language,
                                               SortDirection = sortDirection,
                                               Refinements = refinements,
@@ -371,7 +371,12 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             }
             using (var searcher = new IndexSearcher(indexName))
             {
-                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), RelatedIds = string.Empty, SortDirection = sortDirection, TemplateIds = SearchHelper.GetTemplates(currentSearchString), LocationIds = startLocationItem.ID.ToString(), SortByField = sortField, Refinements = refinements});
+                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), 
+                    RelatedIds = null, 
+                    SortDirection = sortDirection, 
+                    TemplateIds = SearchHelper.GetTemplates(currentSearchString), 
+                    LocationIds = startLocationItem.ID.ToGuid().ToEnumerable(), 
+                    SortByField = sortField, Refinements = refinements});
                 hitCount = keyValuePair.Key;
                 return keyValuePair.Value;
             }
@@ -693,18 +698,18 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
             using (var searcher = new IndexSearcher(indexName))
             {
-                var location = SearchHelper.GetLocation(currentSearchString, locationSearch);
-                var locationIdFromItem = itm != null ? itm.ID.ToString() : string.Empty;
+                var location = IdHelper.ParseId(SearchHelper.GetLocation(currentSearchString, locationSearch));
+                var locationIdFromItem = itm != null ? itm.ID.ToGuid().ToEnumerable() : null;
                 var rangeSearch = new DateRangeSearchParam
                 {
                     ID = SearchHelper.GetID(currentSearchString).IsEmpty() ? SearchHelper.GetRecent(currentSearchString) : SearchHelper.GetID(currentSearchString),
                     ShowAllVersions = false,
                     FullTextQuery = SearchHelper.GetText(currentSearchString),
                     Refinements = refinements,
-                    RelatedIds = references.Any() ? references : string.Empty,
+                    RelatedIds = references.Any() ? IdHelper.ParseId(references) : null,
                     SortDirection = sortDirection,
                     TemplateIds = SearchHelper.GetTemplates(currentSearchString),
-                    LocationIds = location == string.Empty ? locationIdFromItem : location,
+                    LocationIds = !location.Any() ? locationIdFromItem : location,
                     Language = languages,
                     SortByField = sortField,
                     PageNumber = pageNumber,

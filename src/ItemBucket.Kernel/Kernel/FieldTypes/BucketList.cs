@@ -60,8 +60,8 @@
             var searchParam = new DateRangeSearchParam
             {
                 Refinements = refinements,
-                LocationIds = locationFilter.IsNullOrEmpty() ? Sitecore.Context.ContentDatabase.GetItem(this.ItemID).GetParentBucketItemOrRootOrSelf().ID.ToString() : locationFilter,
-                TemplateIds = templateFilter,
+                LocationIds = locationFilter.IsNullOrEmpty() ? Sitecore.Context.ContentDatabase.GetItem(this.ItemID).GetParentBucketItemOrRootOrSelf().ID.ToGuid().ToEnumerable() : IdHelper.ParseId(locationFilter),
+                TemplateIds = IdHelper.ParseId(templateFilter),
                 FullTextQuery = values["FullTextQuery"],
                 Language = values["Language"],
                 PageSize = pageSize.IsEmpty() ? 10 : int.Parse(pageSize),

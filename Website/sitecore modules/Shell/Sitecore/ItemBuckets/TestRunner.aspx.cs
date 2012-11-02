@@ -12,6 +12,7 @@ using Sitecore.ItemBucket.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Kernel.Util;
 using Sitecore.ItemBucket.Kernel.Managers;
+using Sitecore.ItemBucket.Kernel.Util;
 
 
 namespace Sitecore.ItemBucket.UI
@@ -68,7 +69,7 @@ namespace Sitecore.ItemBucket.UI
             var itemsss = BucketManager.Search(new TermQuery(new Term("_name", "Tim")), out hitCount);
 
            
-            var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+            var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount, templates:new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
            
             Page.Response.Write("1:  Get All Items Under Test Stub of Template Sample Item " + HomeDescendantsOfTypeSampleItem.Count() + " Items, Expecting 10</br>");
             //Test 2 - Get All Items Under Tim Folder that have the Title Field Starting with the Word Tim
@@ -83,7 +84,7 @@ namespace Sitecore.ItemBucket.UI
             // Test 4 - Get All Items Under Home of Template "Sample Item"
             var HomeDescendantsOfTypeArticleWithTimContainedWithinIt =
                BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount,
-                                     templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", text: "Tim");
+                                     templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable(), text: "Tim");
 
             Page.Response.Write("4:  Get All Items Under Test Stub where the Item contains the text Tim and is based off the Sample item Template" + HomeDescendantsOfTypeArticleWithTimContainedWithinIt.Count() + " Items, Expecting 10</br>");
 
@@ -93,7 +94,7 @@ namespace Sitecore.ItemBucket.UI
             Page.Response.Write(TimItemsSortedByName.Count() + "</br>");
             // Test 7 - Items under Home that contain the word Tim, sort by Name
             var TimItemsOfTypeSampleItemSortedByName =
-                BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount, text: "Tim", sortField: "_name", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount, text: "Tim", sortField: "_name", templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
             Page.Response.Write(TimItemsOfTypeSampleItemSortedByName.Count() + "</br>");
             //Test 8 - Items under Home that contain the word Tim, sort by Name
             var ItemsUnderHomeContainingBrisbane =
@@ -120,7 +121,7 @@ namespace Sitecore.ItemBucket.UI
             var hitsCount = 0;
             var HomeDescendantsOfTypeSampleItem =
                 Factory.GetDatabase("master").GetItem(itm.ID.ToString()).Search(out hitsCount,
-                                     templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                                     templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
             Page.Response.Write(HomeDescendantsOfTypeSampleItem.Count() + "</br>");
             //Test 2 - Get All Items Under Tim Folder that have the Title Field Starting with the Word Tim
 
@@ -135,7 +136,7 @@ namespace Sitecore.ItemBucket.UI
             //Test 4 - Get All Items Under Home of Template "Sample Item"
             var HomeDescendantsOfTypeArticleWithTimContainedWithinIt =
                BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount,
-                                     templates: "{14633DB7-360E-447F-808B-B71128628009}", text: "Tim");
+                                     templates: new Guid("{14633DB7-360E-447F-808B-B71128628009}").ToEnumerable(), text: "Tim");
             Page.Response.Write(HomeDescendantsOfTypeArticleWithTimContainedWithinIt.Count() + "</br>");
             //Test 6 - Items under Home that contain the word Tim, sort by Name
             var TimItemsSortedByName =
@@ -143,7 +144,7 @@ namespace Sitecore.ItemBucket.UI
             Page.Response.Write(TimItemsSortedByName.Count() + "</br>");
             //Test 7 - Items under Home that contain the word Tim, sort by Name
             var TimItemsOfTypeSampleItemSortedByName =
-                Factory.GetDatabase("master").GetItem(itm.ID.ToString()).Search(out hitsCount, text: "Tim", sortField: "_name", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                Factory.GetDatabase("master").GetItem(itm.ID.ToString()).Search(out hitsCount, text: "Tim", sortField: "_name", templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
             Page.Response.Write(TimItemsOfTypeSampleItemSortedByName.Count() + "</br>");
             //Test 8 - Items under Home that contain the word Tim, sort by Name
             var ItemsUnderHomeContainingBrisbane =
@@ -168,13 +169,13 @@ namespace Sitecore.ItemBucket.UI
 
             //Shanee Tests
             Page.Response.Write(ComplexSearch.Count() + "</br>");
-            var items1 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, numberOfItemsToReturn: 5, pageNumber: 1, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+            var items1 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, numberOfItemsToReturn: 5, pageNumber: 1, templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
             Page.Response.Write(items1.Count() + "</br>");
-            var items2 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "title");
+            var items2 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")}, sortField: "title");
             Page.Response.Write(items2.Count() + "</br>");
-            var items3 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), new SafeDictionary<string> { { "_name", "Tim" } }, out hitsCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
+            var items3 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), new SafeDictionary<string> { { "_name", "Tim" } }, out hitsCount, templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable(), sortField: "_name");
             Page.Response.Write(items3.Count() + "</br>");
-            var items4 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, text: "Tim", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
+            var items4 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitsCount, text: "Tim", templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable(), sortField: "_name");
             Page.Response.Write(items4.Count() + "</br>");
 
             //New Test Folder Tests
@@ -193,7 +194,7 @@ namespace Sitecore.ItemBucket.UI
             Page.Response.Write(items7.Count() + "</br>");
             var hitCount4 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items8 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount4, text: "Tim", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name", sortDirection: "asc");
+            var items8 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount4, text: "Tim", templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable(), sortField: "_name", sortDirection: "asc");
             Page.Response.Write(items8.Count() + "</br>");
             var hitCount5 = 0;
             //Get me all items that have the text tim in it but are of template sample item
@@ -205,15 +206,15 @@ namespace Sitecore.ItemBucket.UI
             Page.Response.Write(items10.Count() + "</br>");
             var hitCount7 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items11 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount7, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name");
+            var items11 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount7, templates: IdHelper.ParseId("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}"), sortField: "_name");
             Page.Response.Write(items11.Count() + "</br>");
             var hitCount8 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items112 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount8, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, language: "de");
+            var items112 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount8, templates: IdHelper.ParseId("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}"), sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, language: "de");
             Page.Response.Write(items112.Count() + "</br>");
             var hitCount9 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items113 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount9, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, itemName: "Tim");
+            var items113 = BucketManager.Search(Factory.GetDatabase("master").GetItem(itm.ID.ToString()), out hitCount9, templates: IdHelper.ParseId("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}"), sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, itemName: "Tim");
             Page.Response.Write(items113.Count() + "</br>");
             var hitCount10 = 0;
             //Get me all items that have the text tim in it but are of template sample item

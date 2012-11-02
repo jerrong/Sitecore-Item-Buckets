@@ -5,6 +5,7 @@ using Sitecore.Data.Fields;
 using Sitecore.ItemBucket.Kernel.Common.Providers;
 using Sitecore.ItemBucket.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Kernel.Util;
+using Sitecore.ItemBucket.Kernel.Util;
 
 namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Tags
 {
@@ -17,7 +18,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Tags
                                             : Context.ContentDatabase.GetItem((
                                                 (ReferenceField)Sitecore.ItemBucket.Kernel.Util.Constants.SettingsItem.Fields["Tag Parent"]).TargetItem.ID);
             var hitsCount = 0;
-            return tagParent.Search(out hitsCount, location: "{380E56C2-801A-486F-BA5C-4E545701C146}", templates: "{EED0DE0E-F391-41E4-9BED-BF314D5DB5F4}").Select(itemreturn => new Tag(itemreturn.GetItem().Fields["Tag Name"].Value, itemreturn.GetItem().ID.ToString()));
+            return tagParent.Search(out hitsCount, location: "{380E56C2-801A-486F-BA5C-4E545701C146}", templates: new Guid("{EED0DE0E-F391-41E4-9BED-BF314D5DB5F4}").ToEnumerable()).Select(itemreturn => new Tag(itemreturn.GetItem().Fields["Tag Name"].Value, itemreturn.GetItem().ID.ToString()));
         }
 
         public Tag Single(Func<Tag, bool> exp)

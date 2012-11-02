@@ -1,4 +1,6 @@
-﻿namespace Sitecore.ItemBucket.Kernel.Kernel.Util
+﻿using System.Collections.Generic;
+
+namespace Sitecore.ItemBucket.Kernel.Kernel.Util
 {
     using System;
     using System.Linq;
@@ -135,7 +137,12 @@
 
         internal static void ApplyFullTextClause(CombinedQuery query, string searchText, string indexName)
         {
-            if (searchText.IsNullOrEmpty())
+#if NET4
+            if (!string.IsNullOrWhiteSpace(searchTexty)
+#else
+            if (!string.IsNullOrEmpty(searchText)
+#endif
+                || searchText == "*All*" || searchText == "*" || searchText == "**")
             {
                 return;
             }
@@ -203,41 +210,46 @@
             query.Add(new TermQuery(new Term("__created by", searchText)), BooleanClause.Occur.MUST);
         }
 
-        internal static void ApplyIdFilter(CombinedQuery query, string fieldName, string filter)
+        internal static void ApplyIdFilter(CombinedQuery query, string fieldName, params Guid[] guids)
         {
-            if (fieldName.IsNullOrEmpty() || filter.IsNullOrEmpty())
+            if (guids == null || !guids.Any())
             {
                 return;
             }
-
-            var filterQuery = new CombinedQuery();
-            IdHelper.ParseId(filter).Where(IdHelper.IsGuid).ForEach(value => AddFieldValueClause(filterQuery, fieldName, value, QueryOccurance.Should));
-            query.Add(filterQuery, QueryOccurance.Must);
-        }
-
-        internal static void ApplyTemplateFilter(CombinedQuery query, string templateIds)
-        {
-            if (templateIds.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var templateList = templateIds.Split('|');
-            if (templateList.Length > 1)
+            if (guids.Length > 1)
             {
                 var filterQuery = new CombinedQuery();
-                foreach (var templateId in templateList)
+                guids.Select(IdHelper.NormalizeGuid).ForEach(value => AddFieldValueClause(filterQuery, fieldName, value, QueryOccurance.Should));
+                query.Add(filterQuery, QueryOccurance.Must);
+            }
+            else
+            {
+                AddFieldValueClause(query, fieldName, IdHelper.NormalizeGuid(guids.First()), QueryOccurance.Must);
+            }
+        }
+
+        internal static void ApplyTemplateFilter(CombinedQuery query, IEnumerable<Guid> templateIds)
+        {
+            if (templateIds == null || !templateIds.Any())
+            {
+                return;
+            }
+
+            var ids = templateIds as Guid[] ?? templateIds.ToArray();
+
+            if (ids.Count() > 1)
+            {
+                var filterQuery = new CombinedQuery();
+                foreach (var templateId in ids.Select(IdHelper.NormalizeGuid))
                 {
-                    templateIds = IdHelper.NormalizeGuid(templateId);
-                    filterQuery.Add(new FieldQuery(BuiltinFields.Template, templateIds), QueryOccurance.Should);
+                    filterQuery.Add(new FieldQuery(BuiltinFields.Template, templateId), QueryOccurance.Should);
                 }
 
                 query.Add(filterQuery, QueryOccurance.Must);
             }
             else
             {
-                templateIds = IdHelper.NormalizeGuid(templateIds);
-                query.Add(new FieldQuery(BuiltinFields.Template, templateIds), QueryOccurance.Must);
+                query.Add(new FieldQuery(BuiltinFields.Template, IdHelper.NormalizeGuid(ids.First())), QueryOccurance.Must);
             }
         }
 
@@ -246,26 +258,14 @@
             query.Add(new FieldQuery(BuiltinFields.Template, IdHelper.NormalizeGuid(Config.ContainerTemplateId)), QueryOccurance.MustNot);
         }
 
-        internal static void ApplyIDFilter(CombinedQuery query, string Id)
+
+        internal static void ApplyContextItemRemoval(CombinedQuery query, IEnumerable<Guid> ids)
         {
-            if (Id.IsNullOrEmpty())
+            if (ids == null || !ids.Any())
             {
                 return;
             }
-
-            Id = IdHelper.NormalizeGuid(Id);
-            query.Add(new FieldQuery(BuiltinFields.ID, Id), QueryOccurance.Must);
-        }
-
-        internal static void ApplyContextItemRemoval(CombinedQuery query, string Id)
-        {
-            if (Id.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            Id = IdHelper.NormalizeGuid(Id);
-            query.Add(new FieldQuery(BuiltinFields.ID, Id), QueryOccurance.MustNot);
+            ids.ForEach(id => query.Add(new FieldQuery(BuiltinFields.ID, IdHelper.NormalizeGuid(id)), QueryOccurance.MustNot));
         }
 
         internal static void ApplyNameFilter(CombinedQuery query, string Name)
@@ -279,20 +279,19 @@
         }
 
       
-        internal static void ApplyLocationFilter(CombinedQuery query, string locationIds)
+        internal static void ApplyLocationFilter(CombinedQuery query, IEnumerable<Guid> locationIds)
         {
-            ApplyIdFilter(query, BuiltinFields.Path, locationIds);
-        }
-
-        internal static void ApplyCombinedLocationFilter(CombinedQuery query, string locationIds)
-        {
-            ApplyIdFilter(query, BuiltinFields.Path, locationIds);
+            if (locationIds == null)
+                return;
+            ApplyIdFilter(query, BuiltinFields.Path, locationIds.ToArray());
         }
 
 
-        internal static void ApplyRelationFilter(CombinedQuery query, string ids)
+        internal static void ApplyRelationFilter(CombinedQuery query, IEnumerable<Guid> ids)
         {
-            ApplyIdFilter(query, BuiltinFields.Links, ids);
+            if (ids == null)
+                return;
+            ApplyIdFilter(query, BuiltinFields.Links, ids.ToArray());
         }
 
         #endregion

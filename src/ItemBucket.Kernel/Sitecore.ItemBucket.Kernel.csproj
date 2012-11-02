@@ -296,7 +296,6 @@
     <Compile Include="Kernel\Util\SearchField.cs" />
     <Compile Include="Kernel\Util\SearchHelper.cs" />
     <Compile Include="Kernel\Util\SearchStringModelcs.cs" />
-    <Compile Include="Kernel\Util\ShortGuid.cs" />
     <Compile Include="Kernel\Util\SitecoreExtensions.cs" />
     <Compile Include="Kernel\Util\SitecoreItem.cs" />
     <Compile Include="Kernel\Util\SortDirection.cs" />
