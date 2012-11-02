@@ -499,7 +499,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         public static BooleanQuery ContructQuery(DateRangeSearchParam param)
         {
-            var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(new ID(param.LocationIds.FirstOrDefault()) ?? Sitecore.ItemIDs.RootID));
+            var item =
+                (Context.ContentDatabase ?? Context.Database).GetItem(new ID(param.LocationIds.FirstOrDefault()) ??
+                                                                      Sitecore.ItemIDs.RootID);
+            var indexName = BucketManager.GetContextIndex(item);
 
             if (indexName.EndsWith("_remote"))
             {

@@ -109,6 +109,21 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             return item.Axes.GetAncestors().Where(items => items.GetEditors().Items.Contains(Constants.SearchEditor)).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).Last();
         }
 
+        static bool IsIndexMatch(string root, string itemPath, string dbName = null)
+        {
+            var rootNode = Configuration.Factory.GetConfigNode(root + "/locations/ItemBucketSearch/Root");
+            if (rootNode != null)
+            {
+                if (!String.IsNullOrEmpty(dbName))
+                {
+                    var dbNode = Configuration.Factory.GetConfigNode(root + "/locations/ItemBucketSearch/Database");
+                    if (dbNode == null || dbNode.InnerText != dbName)
+                        return false;
+                }
+                return itemPath.StartsWith(rootNode.InnerText);
+            }
+            return false;
+        }
         /// <summary>
         /// Given an Item, this will return the name of the Index that it will use to search on
         /// </summary>
@@ -121,48 +136,50 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 #else
             Assert.ArgumentNotNull(item, "item");
 #endif
-            if (item.IsNotNull())
-            {
+                string dbName = item.Database.Name;
+                var itemPath = item.Paths.FullPath;
+                //try to match with dbName
                 RemoteSearchManager.Initialize();
-                foreach (var index in from index in RemoteSearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in RemoteSearchManager.Indexes)
                 {
-                    return (index as RemoteIndex).Name;
+                    if (IsIndexMatch("/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name + "']", itemPath, dbName))
+                        return (index as RemoteIndex).Name;
                 }
 
                 InMemorySearchManager.Initialize();
-                foreach (var index in from index in InMemorySearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in InMemorySearchManager.Indexes)
                 {
-                    return (index as InMemoryIndex).Name;
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name + "']", itemPath, dbName))
+                        return (index as InMemoryIndex).Name;
                 }
 
-                foreach (var index in from index in Sitecore.Search.SearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/configuration/indexes/index[@id='" + index.Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in Sitecore.Search.SearchManager.Indexes)
                 {
-                    return index.Name;
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + index.Name + "']", itemPath, dbName))
+                        return index.Name;
                 }
-            }
 
-            return "itembuckets_buckets";
+                //try to match WITHOUT dbName
+                foreach (var index in RemoteSearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name + "']", itemPath))
+                        return (index as RemoteIndex).Name;
+                }
+
+                foreach (var index in InMemorySearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name + "']", itemPath))
+                        return (index as InMemoryIndex).Name;
+                }
+
+                foreach (var index in Sitecore.Search.SearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + index.Name + "']", itemPath))
+                        return index.Name;
+                }
+
+
+            return "itembuckets_sitecore";
         }
 
         /// <summary>

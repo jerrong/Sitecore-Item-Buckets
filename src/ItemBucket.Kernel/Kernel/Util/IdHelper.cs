@@ -37,7 +37,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             if (string.IsNullOrEmpty(subject)) return false;
             subject = subject.Trim();
-            var result = '{' == subject[0] ? '}' == subject[37] && 38 == subject.Length : 36 == subject.Length;
+            if (subject.Length == 0) return false;
+            var result = '{' == subject[0] 
+                    ? 38 == subject.Length && '}' == subject[37]
+                    : 36 == subject.Length;
             if (result)
             {
                 var offset = '{' == subject[0] ? 1 : 0;
