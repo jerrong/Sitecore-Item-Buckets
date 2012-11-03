@@ -213,6 +213,7 @@
 .\Debug\bin\Debug\NET40\Sitecore.BigData.dll
 .\Debug\bin\Debug\NET40\Sitecore.BigData.pdb
 .\Debug\bin\Debug\NET40\Sitecore.ItemBucket.Kernel.dll
+.\Debug\bin\Debug\NET40\Sitecore.ItemBucket.Kernel.pdb
 .\Debug\bin\Debug\NET40\Sitecore.ItemBucket.UI.dll
 .\Debug\bin\Debug\NET40\Sitecore.ItemBucket.UI.pdb
 .\Debug\bin\Debug\NET40\Sitecore.ItemBuckets.BigData.dll

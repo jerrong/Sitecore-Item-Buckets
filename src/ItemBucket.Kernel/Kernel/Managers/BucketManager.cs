@@ -159,7 +159,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
                 foreach (var index in Sitecore.Search.SearchManager.Indexes)
                 {
-                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + index.Name + "']", itemPath, dbName))
+                    if (IsIndexMatch("/sitecore/search/configuration/indexes/index[@id='" + index.Name + "']", itemPath, dbName))
                         return index.Name;
                 }
 
@@ -178,7 +178,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
                 foreach (var index in Sitecore.Search.SearchManager.Indexes)
                 {
-                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + index.Name + "']", itemPath))
+                    if (IsIndexMatch("/sitecore/search/configuration/indexes/index[@id='" + index.Name + "']", itemPath))
                         return index.Name;
                 }
 

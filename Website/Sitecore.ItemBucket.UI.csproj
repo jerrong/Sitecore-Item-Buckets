@@ -93,7 +93,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.ItemBucket.Kernel.dll">
-        <HintPath>..\src\ItemBucket.Kernel\bin\$(Framework)\$(Configuration)\Sitecore.ItemBucket.Kernel.dll</HintPath>
+        <HintPath>..\src\ItemBucket.Kernel\bin\$(Configuration)\$(Framework)\Sitecore.ItemBucket.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
