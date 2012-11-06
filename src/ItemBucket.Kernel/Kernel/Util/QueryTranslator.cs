@@ -50,7 +50,7 @@
             }
 
             Assert.IsNotNull(fullTextQuery.Query, "Full text query is empty");
-            Assert.IsNotNullOrEmpty(fullTextQuery.Query.Trim(), "Full text query is empty");
+            //Assert.IsNotNullOrEmpty(fullTextQuery.Query.Trim(), "Full text query is empty");
 
             return this.InternalParse(fullTextQuery.Query);
         }

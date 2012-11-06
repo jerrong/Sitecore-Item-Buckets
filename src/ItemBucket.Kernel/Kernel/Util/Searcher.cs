@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Sitecore.BigData;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR;
 using Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR.SOLRItems;
 using Sitecore.ItemBuckets.BigData.RamDirectory;
@@ -32,9 +33,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
     {
         #region ctor
 
+        public IndexSearcher(): this(Sitecore.Context.Item) {}
+
+        public IndexSearcher(Item item)
+        {
+            if (item != null)
+                Index = SearchManager.GetIndex(BucketManager.GetContextIndex(item));
+        }
+
+
         public IndexSearcher(string indexId)
         {
-            Index = SearchManager.GetIndex(BucketManager.GetContextIndex(Sitecore.Context.Item));
+            Index = SearchManager.GetIndex(indexId);
         }
 
         #endregion ctor

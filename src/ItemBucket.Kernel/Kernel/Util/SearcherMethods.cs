@@ -138,9 +138,9 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
         internal static void ApplyFullTextClause(CombinedQuery query, string searchText, string indexName)
         {
 #if NET4
-            if (!string.IsNullOrWhiteSpace(searchTexty)
+            if (string.IsNullOrWhiteSpace(searchTexty)
 #else
-            if (!string.IsNullOrEmpty(searchText)
+            if (string.IsNullOrEmpty(searchText)
 #endif
                 || searchText == "*All*" || searchText == "*" || searchText == "**")
             {
