@@ -44,6 +44,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         public IndexSearcher(string indexId)
         {
+            if (indexId.EndsWith("_remote"))
+            {
+                Index = RemoteSearchManager.GetIndex(indexId) as RemoteIndex;
+            }
+            else if (indexId.EndsWith("_inmemory"))
+            {
+                Index = InMemorySearchManager.GetIndex(indexId) as InMemoryIndex;
+            }
+            else
+            {
+                Index = SearchManager.GetIndex(indexId) as Index;
+            }
             Index = SearchManager.GetIndex(indexId);
         }
 
@@ -110,11 +122,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     }
 
 
-                    var resultCollection = new SearchResultCollection();
-
-                    resultCollection = searchHits.FetchResults((pageNumber - 1) * pageSize, pageSize);
-
-
+                    var resultCollection = searchHits.FetchResults((pageNumber - 1) * pageSize, pageSize);
                     SearchHelper.GetItemsFromSearchResult(resultCollection, items);
                 }
                 return new KeyValuePair<int, List<SitecoreItem>>(hitCount, items);
@@ -171,73 +179,47 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return this.RunQuery(query, pageSize, pageNumber, null, null);
         }
 
-        public virtual Dictionary<string, int> RunFacet(Query query, bool showAllVersions, bool isFacet, int pageSize, int pageNumber, string termName, List<string> termValue, BitArray queryBase, string locationFilter)
+        public virtual Dictionary<string, int> RunFacet(Query query, bool isFacet, int pageSize, int pageNumber, string termName, IEnumerable<string> termValue, BitArray queryBase)
         {
-            return RunFacet(query, showAllVersions, isFacet, false, pageSize, pageNumber, termName, termValue, queryBase, locationFilter);
+            return RunFacet(query, isFacet, false, pageSize, pageNumber, termName, termValue);
         }
 
-        public virtual Dictionary<string, int> RunFacet(Query query, bool showAllVersions, bool isFacet, bool isIdLookup, int pageSize, int pageNumber, string termName, List<string> termValue, BitArray queryBase)
-        {
-            return RunFacet(query, showAllVersions, isFacet, false, pageSize, pageNumber, termName, termValue, queryBase, "");
-        }
-
-        public virtual Dictionary<string, int> RunFacet(Query query, bool showAllVersions, bool isFacet, bool isIdLookup, int pageSize, int pageNumber, string termName, List<string> termValue, BitArray queryBase, string locationFilter)
+        public virtual Dictionary<string, int> RunFacet(Query query, bool isFacet, bool isIdLookup, int pageSize, int pageNumber, string termName, IEnumerable<string> termValue)
         {
             var runningCOunt = new Dictionary<string, int>();
             var db = Context.ContentDatabase ?? Sitecore.Context.Database;
-            var indexName = BucketManager.GetContextIndex(db.GetItem(locationFilter));
+            query = query ?? new MatchAllDocsQuery();
       
-            if (indexName.EndsWith("_remote"))
-            {
-                Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
-            }
-            else if (indexName.EndsWith("_inmemory"))
-            {
-                Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
-            }
-            else
-            {
-                Index = SearchManager.GetIndex(indexName) as Index;
-            }
             using (var context = new SortableIndexSearchContext(Index))
             {
                 if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                 {
-                    Log.Info("Using: " + indexName, this);
+                    //Log.Info("Using: " + Index, this);
                     Log.Info("Bucket Facet Original Debug Query: " + query, this);
                 }
 
-                foreach (var terms in termValue)
+                if (termValue != null)
                 {
-                    var genreQueryFilter = GenreQueryFilter(query, isFacet, isIdLookup, termName, terms);
-                    var tempSearchArray = queryBase.Clone() as BitArray;
-                    if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
+                    var queryBase = new QueryFilter(query).Bits(context.Searcher.GetIndexReader());
+                    foreach (var terms in termValue)
                     {
-                        Log.Info("Bucket Facet Debug Query: " + genreQueryFilter, this);
-                    }
-
-                    BitArray genreBitArray = genreQueryFilter.Bits(context.Searcher.GetIndexReader());
-                    if (tempSearchArray.Length == genreBitArray.Length)
-                    {
-                        BitArray combinedResults = tempSearchArray.And(genreBitArray);
-
-                        var cardinality = SearchHelper.GetCardinality(combinedResults);
-
-                        if (cardinality > 0)
+                        var genreQueryFilter = GenreQueryFilter(query, isFacet, isIdLookup, termName, terms);
+                        var tempSearchArray = queryBase.Clone() as BitArray;
+                        if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                         {
-                            if (!isFacet)
+                            Log.Info("Bucket Facet Debug Query: " + genreQueryFilter, this);
+                        }
+
+                        BitArray genreBitArray = genreQueryFilter.Bits(context.Searcher.GetIndexReader());
+                        if (tempSearchArray.Length == genreBitArray.Length)
+                        {
+                            BitArray combinedResults = tempSearchArray.And(genreBitArray);
+
+                            var cardinality = SearchHelper.GetCardinality(combinedResults);
+
+                            if (cardinality > 0 && !runningCOunt.ContainsKey(terms))
                             {
-                                if (!runningCOunt.ContainsKey(terms))
-                                {
-                                    runningCOunt.Add(terms, cardinality);
-                                }
-                            }
-                            else
-                            {
-                                if (!runningCOunt.ContainsKey(terms))
-                                {
-                                    runningCOunt.Add(terms, cardinality);
-                                }
+                                runningCOunt.Add(terms, cardinality);
                             }
                         }
                     }

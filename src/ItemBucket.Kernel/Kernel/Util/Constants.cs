@@ -310,10 +310,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
             /// <summary>
             /// Gets the default/fallback Index name which contains ONLY content
             /// </summary>
-            public static string Name
-            {
-                get { return "itembuckets_buckets"; }
-            }
+            public const string Name = "itembuckets_sitecore";
         }
     }
 }

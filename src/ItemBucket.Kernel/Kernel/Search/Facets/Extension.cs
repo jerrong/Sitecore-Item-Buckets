@@ -105,7 +105,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Facets
         {
             using (var searcher = new IndexSearcher(ItemBucket.Kernel.Util.Constants.Index.Name))
             {
-                var results = searcher.RunFacet(query, false, true, 0, 0, "extension", filter, baseQuery, locationFilter);
+                var results = searcher.RunFacet(query, false, true, 0, 0, "extension", filter);
                 return results;
             }
         }

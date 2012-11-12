@@ -46,7 +46,7 @@
         {
             using (var searcher = new IndexSearcher(Constants.Index.Name))
             {
-                var results = searcher.RunFacet(query, false, true, 0, 0, "_path", filters, baseQuery, locationFilter);
+                var results = searcher.RunFacet(query, false, true, 0, 0, "_path", filters);
                 return results;
             }
         }

@@ -72,7 +72,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Facets
         {
             using (var searcher = new IndexSearcher(ItemBucket.Kernel.Util.Constants.Index.Name))
             {
-                var results = searcher.RunFacet(query, false, false, 0, 0, "dimensions", filter, baseQuery, locationFilter);
+                var results = searcher.RunFacet(query, false, false, 0, 0, "dimensions", filter);
                 return results;
             }
         }
