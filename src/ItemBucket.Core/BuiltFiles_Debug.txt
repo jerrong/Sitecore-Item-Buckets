@@ -229,6 +229,7 @@
 .\Debug\bin\Newtonsoft.Json.dll
 .\Debug\bin\RadEditor.Net2.dll
 .\Debug\bin\Sitecore.BigData.dll
+.\Debug\bin\Sitecore.ItemBuckets.BigData.dll
 .\Debug\bin\Sitecore.Kernel.dll
 .\Debug\bin\Sitecore.Logging.dll
 .\Debug\bin\Sitecore.NVelocity.dll

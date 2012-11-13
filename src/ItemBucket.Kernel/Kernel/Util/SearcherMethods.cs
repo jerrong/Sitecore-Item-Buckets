@@ -90,21 +90,21 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
             query.Add(new FieldQuery(fieldName, fieldValue), occurance);
         }
 
-        internal static void AddFieldValueClause(BooleanQuery query, string fieldName, string fieldValue, QueryOccurance occurance)
+        internal static void AddFieldValueClause(this ItemBucket.Kernel.Util.IndexSearcher indexSearcher, BooleanQuery query, string fieldName, string fieldValue, QueryOccurance occurance)
         {
             if (fieldName.IsNullOrEmpty() || fieldValue.IsNullOrEmpty())
             {
                 return;
             }
             var globalBooleanQuery = new BooleanQuery();
-            var qp = new QueryParser("__workflow state", ItemBucket.Kernel.Util.IndexSearcher.Index.Analyzer);
+            var qp = new QueryParser("__workflow state", indexSearcher.Index.Analyzer);
             qp.SetAllowLeadingWildcard(true);
             globalBooleanQuery.Add(qp.Parse(fieldValue), BooleanClause.Occur.MUST);
 
             query.Add(globalBooleanQuery, BooleanClause.Occur.MUST);
         }
 
-        internal static void AddPartialFieldValueClause(BooleanQuery query, string fieldName, string fieldValue)
+        internal static void AddPartialFieldValueClause(this ItemBucket.Kernel.Util.IndexSearcher indexSearcher, BooleanQuery query, string fieldName, string fieldValue)
         {
             if (fieldValue.IsNullOrEmpty())
             {
@@ -112,7 +112,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
             }
 
             fieldValue = IdHelper.ProcessGUIDs(fieldValue);
-            query.Add(new QueryParser(fieldName, ItemBucket.Kernel.Util.IndexSearcher.Index.Analyzer).Parse(fieldValue), BooleanClause.Occur.MUST);
+            query.Add(new QueryParser(fieldName, indexSearcher.Index.Analyzer).Parse(fieldValue), BooleanClause.Occur.MUST);
         }
 
         internal static void ApplyLanguageClause(CombinedQuery query, string language)
@@ -125,17 +125,17 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
             query.Add(new FieldQuery(BuiltinFields.Language, language.ToLowerInvariant()), QueryOccurance.Must);
         }
 
-        internal static void ApplyFullTextClause(CombinedQuery query, string searchText)
+        internal static void ApplyFullTextClause(this ItemBucket.Kernel.Util.IndexSearcher searcher, CombinedQuery query, string searchText)
         {
-            ApplyFullTextClause(query, searchText, string.Empty);
+            searcher.ApplyFullTextClause(query, searchText, string.Empty);
         }
 
-        internal static void ApplyFullTextClause(BooleanQuery query, string searchText)
+        internal static void ApplyFullTextClause(this ItemBucket.Kernel.Util.IndexSearcher searcher, BooleanQuery query, string searchText)
         {
-            SearcherMethods.ApplyFullTextClause(query, searchText, string.Empty);
+            searcher.ApplyFullTextClause(query, searchText, string.Empty);
         }
 
-        internal static void ApplyFullTextClause(CombinedQuery query, string searchText, string indexName)
+        internal static void ApplyFullTextClause(this ItemBucket.Kernel.Util.IndexSearcher searcher, CombinedQuery query, string searchText, string indexName)
         {
 #if NET4
             if (string.IsNullOrWhiteSpace(searchTexty)
@@ -182,7 +182,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
             }
         }
 
-        internal static void ApplyFullTextClause(BooleanQuery query, string searchText, string indexName)
+        internal static void ApplyFullTextClause(this ItemBucket.Kernel.Util.IndexSearcher indexSearcher, BooleanQuery query, string searchText, string indexName)
         {
             if (searchText.IsNullOrEmpty())
             {
@@ -190,11 +190,11 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Util
             }
 
             var globalBooleanQuery = new BooleanQuery();
-            var qp = new QueryParser("_content", ItemBucket.Kernel.Util.IndexSearcher.Index.Analyzer);
+            var qp = new QueryParser("_content", indexSearcher.Index.Analyzer);
             qp.SetAllowLeadingWildcard(true);
             globalBooleanQuery.Add(qp.Parse(searchText), BooleanClause.Occur.SHOULD);
 
-            var qp1 = new QueryParser("_name", ItemBucket.Kernel.Util.IndexSearcher.Index.Analyzer);
+            var qp1 = new QueryParser("_name", indexSearcher.Index.Analyzer);
             qp1.SetAllowLeadingWildcard(true);
             globalBooleanQuery.Add(qp1.Parse(searchText), BooleanClause.Occur.SHOULD);
             query.Add(globalBooleanQuery, BooleanClause.Occur.MUST);

@@ -56,17 +56,35 @@ namespace Sitecore.ItemBucket.Kernel.Util
             {
                 Index = SearchManager.GetIndex(indexId) as Index;
             }
-            Index = SearchManager.GetIndex(indexId);
         }
+
 
         #endregion ctor
 
         #region Properties
 
-        public static ILuceneIndex Index
+        public string IndexName
+        {
+            get
+            {
+                var index = Index as Index;
+                if (index != null)
+                    return index.Name;
+                var remoteIndex = Index as RemoteIndex;
+                if (remoteIndex != null)
+                    return remoteIndex.Name;
+                var inMemoryIndex = Index as InMemoryIndex;
+                if (inMemoryIndex != null)
+                    return inMemoryIndex.Name;
+                
+                return null;
+            }
+        }
+
+        public ILuceneIndex Index
         {
             get;
-            set;
+            private set;
         }
 
         #endregion Properties
@@ -129,7 +147,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
             }
         }
 
-        private static void GetValue(Query query, List<SitecoreItem> items)
+        private void GetValue(Query query, List<SitecoreItem> items)
         {
             if (Index is Index)
             {
@@ -388,7 +406,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
             if (!string.IsNullOrEmpty(param.FullTextQuery))
 #endif
             {
-                SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery);
+                this.ApplyFullTextClause(globalQuery, param.FullTextQuery);
             }
 
             SearcherMethods.ApplyRelationFilter(globalQuery, param.RelatedIds);
@@ -404,28 +422,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
             var db = Context.ContentDatabase ?? Sitecore.Context.Database;
             if (db != null)
             {
-                var indexName = Util.Constants.Index.Name;
-                var item = db.GetItem(new ID(param.LocationIds.FirstOrDefault()) ?? Sitecore.ItemIDs.RootID);
-                indexName = BucketManager.GetContextIndex(item.IsNotNull() ? item : db.GetItem(Sitecore.ItemIDs.RootID));
-
-                if (indexName.EndsWith("_remote"))
-                {
-                    Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
-                }
-                else if (indexName.EndsWith("_inmemory"))
-                {
-                    Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
-                }
-                else
-                {
-                    Index = SearchManager.GetIndex(indexName) as Index;
-                }
-
                 if (Index.IsNotNull())
                 {
                     var globalQuery = new CombinedQuery();
                     SearcherMethods.ApplyLanguageClause(globalQuery, param.Language);
-                    SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery, indexName);
+                    this.ApplyFullTextClause(globalQuery, param.FullTextQuery, IndexName);
                     SearcherMethods.ApplyRelationFilter(globalQuery, param.RelatedIds);
                     SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
                     SearcherMethods.ApplyTemplateNotFilter(globalQuery);
@@ -456,7 +457,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                         {
                             if (param.FullTextQuery != "*All*" && param.FullTextQuery != "*" && param.FullTextQuery != "**")
                             {
-                                SearcherMethods.ApplyFullTextClause(booleanQuery, param.FullTextQuery, indexName);
+                                this.ApplyFullTextClause(booleanQuery, param.FullTextQuery, IndexName);
                             }
                         }
                     }
@@ -465,7 +466,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     SearcherMethods.ApplyDateRangeSearchParam(booleanQuery, param, innerOccurance);
                     if (param.Refinements.ContainsKey("__workflow state"))
                     {
-                        SearcherMethods.AddFieldValueClause(booleanQuery, "__workflow state", param.Refinements["__workflow state"], QueryOccurance.Should);
+                        this.AddFieldValueClause(booleanQuery, "__workflow state", param.Refinements["__workflow state"], QueryOccurance.Should);
                     }
                     if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
                     {
@@ -489,25 +490,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return new KeyValuePair<int, List<SitecoreItem>>();
         }
 
-        public static BooleanQuery ContructQuery(DateRangeSearchParam param)
+        public BooleanQuery ContructQuery(DateRangeSearchParam param)
         {
             var item =
                 (Context.ContentDatabase ?? Context.Database).GetItem(new ID(param.LocationIds.FirstOrDefault()) ??
                                                                       Sitecore.ItemIDs.RootID);
-            var indexName = BucketManager.GetContextIndex(item);
-
-            if (indexName.EndsWith("_remote"))
-            {
-                Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
-            }
-            else if (indexName.EndsWith("_inmemory"))
-            {
-                Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
-            }
-            else
-            {
-                Index = SearchManager.GetIndex(indexName) as Index;
-            }
             if (Index.IsNotNull())
             {
                 var globalQuery = new CombinedQuery();
@@ -522,7 +509,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     if (!fullTextQuery.StartsWith("*"))
                     {
-                        SearcherMethods.ApplyFullTextClause(globalQuery, fullTextQuery, indexName);
+                        this.ApplyFullTextClause(globalQuery, fullTextQuery, IndexName);
                     }
                 }
 
@@ -551,7 +538,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     if (fullTextQuery.StartsWith("*"))
                     {
-                        SearcherMethods.ApplyFullTextClause(booleanQuery, fullTextQuery, indexName);
+                        this.ApplyFullTextClause(booleanQuery, fullTextQuery, IndexName);
                     }
                 }
 
@@ -580,7 +567,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
 #endif
 
             {
-                SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery);
+                this.ApplyFullTextClause(globalQuery, param.FullTextQuery);
             }
             SearcherMethods.ApplyRelationFilter(globalQuery, param.RelatedIds);
             SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
