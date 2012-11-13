@@ -6,6 +6,7 @@ using Sitecore.Diagnostics;
 using Sitecore.ItemBucket.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Kernel.ItemExtensions.Axes;
 using Sitecore.ItemBucket.Kernel.Managers;
+using Sitecore.ItemBucket.Kernel.Util;
 
 namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
 {
@@ -15,7 +16,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
         {
            // Test 1 - Get All Items Under Home of Template "Sample Item"
             int hitCount;
-            var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+            var HomeDescendantsOfTypeSampleItem = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")});
             //Test 2 - Get All Items Under Tim Folder that have the Title Field Starting with the Word Tim
 
             var TimDescendantsWithTitleOfTime =
@@ -32,7 +33,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
            // Test 4 - Get All Items Under Home of Template "Sample Item"
             var HomeDescendantsOfTypeArticleWithTimContainedWithinIt =
                BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount,
-                                     templates: "{14633DB7-360E-447F-808B-B71128628009}", text: "Tim");
+                                     templates: new []{new Guid("{14633DB7-360E-447F-808B-B71128628009}")}, text: "Tim");
 
             Assert.AreEqual(hitCount, 3, "");
             //Test 6 - Items under Home that contain the word Tim, sort by Name
@@ -41,7 +42,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
             Assert.AreEqual(hitCount, 3, "");
            // Test 7 - Items under Home that contain the word Tim, sort by Name
             var TimItemsOfTypeSampleItemSortedByName =
-                BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount, text: "Tim", sortField: "_name", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitCount, text: "Tim", sortField: "_name", templates:new[]{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")});
             Assert.AreEqual(hitCount, 3, "");
             //Test 8 - Items under Home that contain the word Tim, sort by Name
             var ItemsUnderHomeContainingBrisbane =
@@ -64,7 +65,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
             var hitsCount = 0;
             var HomeDescendantsOfTypeSampleItem =
                 Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}").Search(out hitsCount,
-                                     templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                                     templates: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}").ToEnumerable());
 
             //Test 2 - Get All Items Under Tim Folder that have the Title Field Starting with the Word Tim
 
@@ -79,7 +80,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
             //Test 4 - Get All Items Under Home of Template "Sample Item"
             var HomeDescendantsOfTypeArticleWithTimContainedWithinIt =
                BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount,
-                                     templates: "{14633DB7-360E-447F-808B-B71128628009}", text: "Tim");
+                                     templates: new []{new Guid("{14633DB7-360E-447F-808B-B71128628009}")}, text: "Tim");
 
             //Test 6 - Items under Home that contain the word Tim, sort by Name
             var TimItemsSortedByName =
@@ -87,7 +88,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
 
             //Test 7 - Items under Home that contain the word Tim, sort by Name
             var TimItemsOfTypeSampleItemSortedByName =
-                Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}").Search(out hitsCount, text: "Tim", sortField: "_name", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
+                Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}").Search(out hitsCount, text: "Tim", sortField: "_name", templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")});
 
             //Test 8 - Items under Home that contain the word Tim, sort by Name
             var ItemsUnderHomeContainingBrisbane =
@@ -112,11 +113,11 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
 
             //Shanee Tests
 
-            var items1 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, numberOfItemsToReturn: 5, pageNumber: 1, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}");
-            var items2 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "title");
-            var items3 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), new SafeDictionary<string> { { "_name", "Tim" } }, out hitsCount, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
+            var items1 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, numberOfItemsToReturn: 5, pageNumber: 1, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")});
+            var items2 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")}, sortField: "title");
+            var items3 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), new SafeDictionary<string> { { "_name", "Tim" } }, out hitsCount, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")}, sortField: "_name");
 
-            var items4 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, text: "Tim", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name");
+            var items4 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}"), out hitsCount, text: "Tim", templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")}, sortField: "_name");
 
             //New Test Folder Tests
 
@@ -134,7 +135,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
 
             var hitCount4 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items8 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount4, text: "Tim", templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}", sortField: "_name", sortDirection: "asc");
+            var items8 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount4, text: "Tim", templates:new []{new Guid( "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}")}, sortField: "_name", sortDirection: "asc");
 
             var hitCount5 = 0;
             //Get me all items that have the text tim in it but are of template sample item
@@ -146,15 +147,15 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Tests
   
             var hitCount7 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items11 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount7, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name");
+            var items11 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount7, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}")}, sortField: "_name");
 
             var hitCount8 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items112 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount8, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber:2, language: "de");
+            var items112 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount8, templates: new []{new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}")}, sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber:2, language: "de");
 
             var hitCount9 = 0;
             //Get me all items that have the text tim in it but are of template sample item
-            var items113 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount9, templates: "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}", sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, itemName: "Tim");
+            var items113 = BucketManager.Search(Sitecore.Context.ContentDatabase.GetItem("{0412204C-FF6B-47B8-99C4-E471B55BDAB8}"), out hitCount9, templates:new []{new Guid( "{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}|{14633DB7-360E-447F-808B-B71128628009}")}, sortField: "_name", sortDirection: "desc", numberOfItemsToReturn: 2, pageNumber: 2, itemName: "Tim");
 
             var hitCount10 = 0;
             //Get me all items that have the text tim in it but are of template sample item

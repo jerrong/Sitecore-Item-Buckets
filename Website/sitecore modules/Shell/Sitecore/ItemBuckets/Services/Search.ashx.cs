@@ -412,15 +412,17 @@ namespace ItemBuckets.Services
             {
                 if (facet.Fields["Enabled"].Value == "1")
                 {
-                    dynamic type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
+                    var type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
                     if ((type as IFacet).IsNotNull())
                     {
                         var locationOverride = GetLocationOverride();
-                        using (var context = new SortableIndexSearchContext(SearchManager.GetIndex(BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(locationOverride)))))
+                        var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(locationOverride));
+                        using (var searcher = new IndexSearcher(indexName))
+                        using (var context = new SortableIndexSearchContext(SearchManager.GetIndex(indexName)))
                         {
 
                             var query = SearchHelper.GetBaseQuery(this._searchQuery, locationOverride);
-                            var queryBase = IndexSearcher.ContructQuery(query);
+                            var queryBase = searcher.ContructQuery(query);
                             var searchBitArray = new QueryFilter(queryBase).Bits(context.Searcher.GetIndexReader());
                             var res = ((IFacet)type).Filter(queryBase, this._searchQuery, locationOverride, searchBitArray);
                             ret.Add(res);

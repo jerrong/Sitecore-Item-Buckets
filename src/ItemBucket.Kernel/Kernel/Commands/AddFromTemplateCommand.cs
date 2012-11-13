@@ -4,6 +4,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Web;
+
 namespace Sitecore.ItemBucket.Kernel.Commands
 {
     using System;
@@ -29,7 +31,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
         /// <remarks>You will need to override this if you are running without HttpContext e.g. Unit Tests</remarks>
         protected virtual void SetLocation(Item item)
         {
-            if (Context.ClientPage.IsNotNull())
+            if (Context.ClientPage.IsNotNull() && HttpContext.Current.IsNotNull()) //clientpage is never null?
             {
                 var urlString = new UrlString(Constants.ContentEditorRawUrlAddress);
                 urlString.Add(Constants.OpenItemEditorQueryStringKeyName, item.ID.ToString());

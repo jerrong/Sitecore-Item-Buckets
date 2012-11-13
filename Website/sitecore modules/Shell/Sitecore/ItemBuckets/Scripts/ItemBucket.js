@@ -874,17 +874,13 @@ function IsClone(a, b, c) {
             ContinueSearch = false;
             $(".continue").fadeOut("slow");
         }
-    }
-
-    if (b == "field") {
+    } else if (b == "field") {
         o.push
         ({
             type: "field",
             value: a.split('|')[0]
         });
-    }
-
-    if (b == "date range") {
+    } else if (b == "date range") {
         var now = new Date();
         var year = now.getYear();
         if (year < 2000) {
@@ -971,20 +967,25 @@ function IsClone(a, b, c) {
                     });
         } //Switch
     } //If
-
-    if (b == "template") {
+    else if (b == "template") {
         o.push
         ({
             type: b,
             value: a.split('|')[1]
         });
     }
-
-    if (b == "author") {
+    else if (b == "author") {
         o.push
         ({
             type: b,
             value: a.replace('|', '\\')
+        });
+    }
+    else {
+        o.push
+        ({
+            type: "custom",
+            value: b + "|" +a
         });
     }
 

@@ -1,4 +1,6 @@
-﻿namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Tags
+﻿using Sitecore.ItemBucket.Kernel.Util;
+
+namespace Sitecore.ItemBucket.Kernel.Kernel.Search.Tags
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +20,7 @@
                                             : Context.ContentDatabase.GetItem((
                                                 (ReferenceField)ItemBucket.Kernel.Util.Constants.SettingsItem.Fields["Tag Parent"]).TargetItem.ID);
             int hitsCount;
-            return tagParent.Search(out hitsCount, location: tagParent.ID.ToString(), templates: "{58DA2398-0F91-4989-AB76-78DAC905E775}").Select(itemreturn => new Tag(itemreturn.GetItem().Name, itemreturn.GetItem().ID.ToString()));
+            return tagParent.Search(out hitsCount, location: tagParent.ID.ToString(), templates: new Guid("{58DA2398-0F91-4989-AB76-78DAC905E775}").ToEnumerable()).Select(itemreturn => new Tag(itemreturn.GetItem().Name, itemreturn.GetItem().ID.ToString()));
         }
 
         public Tag Single(Func<Tag, bool> exp)

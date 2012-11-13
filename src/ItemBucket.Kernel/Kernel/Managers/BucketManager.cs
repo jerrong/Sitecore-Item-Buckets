@@ -4,7 +4,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+#if NET40
+using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
+#endif
 using System.Web;
 using Lucene.Net.Search;
 using Sitecore.Events;
@@ -35,7 +38,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
     using Sitecore.ItemBucket.Kernel.Templates;
     using Sitecore.ItemBucket.Kernel.Util;
     using Sitecore.SecurityModel;
-    using System.Diagnostics.Contracts;
+    //using System.Diagnostics.Contracts;
 
     /// <summary>
     /// This is your entry point for doing most things with the Item Buckets. This Manager allows you to search, create, move etc. with Bucket Items
@@ -62,7 +65,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <example> var BucketContainer = Sitecore.Context.Item.GetParentBucketItemOrRoot()</example>
         public static Item GetParentBucketItemOrSiteRoot(this Item item)
         {
-            return item.Axes.GetAncestors().AsParallel().Where(IsBucket).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).First();
+            return item.Axes.GetAncestors()
+#if NET4
+                .AsParallel()
+#endif
+                .Where(IsBucket).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).First();
         }
 
         /// <summary>
@@ -73,7 +80,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <example> var BucketContainer = Sitecore.Context.Item.GetParentBucketItemOrRoot()</example>
         public static Item GetParentBucketItemOrParent(this Item item)
         {
-            return item.Axes.GetAncestors().AsParallel().Where(IsBucket).DefaultIfEmpty(item.Parent).First();
+            return item.Axes.GetAncestors()
+#if NET4
+                    .AsParallel()
+#endif
+                    .Where(IsBucket).DefaultIfEmpty(item.Parent).First();
         }
 
         /// <summary>
@@ -84,7 +95,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <example> var BucketContainer = Sitecore.Context.Item.GetParentBucketItemOrRoot()</example>
         public static Item GetParentBucketItemOrRootOrSelf(this Item item)
         {
-            return item.IsABucket() ? item : item.Axes.GetAncestors().AsParallel().Where(IsBucket).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).First();
+            return item.IsABucket() ? item : item.Axes.GetAncestors()
+#if NET4
+                    .AsParallel()
+#endif
+                    .Where(IsBucket).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).First();
         }
 
         /// <summary>
@@ -98,6 +113,21 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             return item.Axes.GetAncestors().Where(items => items.GetEditors().Items.Contains(Constants.SearchEditor)).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).Last();
         }
 
+        static bool IsIndexMatch(string root, string itemPath, string dbName = null)
+        {
+            var rootNode = Configuration.Factory.GetConfigNode(root + "/locations/ItemBucketSearch/Root");
+            if (rootNode != null)
+            {
+                if (!String.IsNullOrEmpty(dbName))
+                {
+                    var dbNode = Configuration.Factory.GetConfigNode(root + "/locations/ItemBucketSearch/Database");
+                    if (dbNode == null || dbNode.InnerText != dbName)
+                        return false;
+                }
+                return itemPath.StartsWith(rootNode.InnerText);
+            }
+            return false;
+        }
         /// <summary>
         /// Given an Item, this will return the name of the Index that it will use to search on
         /// </summary>
@@ -105,50 +135,55 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="item">The item which will be used to determine (based off the item path) which index will be used for the search</param>
         public static string GetContextIndex(Item item)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
-            
-            if (item.IsNotNull())
-            {
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
+                string dbName = item.Database.Name;
+                var itemPath = item.Paths.FullPath;
+                //try to match with dbName
                 RemoteSearchManager.Initialize();
-                foreach (var index in from index in RemoteSearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in RemoteSearchManager.Indexes)
                 {
-                    return (index as RemoteIndex).Name;
+                    if (IsIndexMatch("/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name + "']", itemPath, dbName))
+                        return (index as RemoteIndex).Name;
                 }
 
                 InMemorySearchManager.Initialize();
-                foreach (var index in from index in InMemorySearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in InMemorySearchManager.Indexes)
                 {
-                    return (index as InMemoryIndex).Name;
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name + "']", itemPath, dbName))
+                        return (index as InMemoryIndex).Name;
                 }
 
-                foreach (var index in from index in Sitecore.Search.SearchManager.Indexes
-                                      let indexConfigurationNode =
-                                          Configuration.Factory.GetConfigNode(
-                                              "/sitecore/search/configuration/indexes/index[@id='" + index.Name +
-                                              "']/locations/ItemBucketSearch/Root")
-                                      where indexConfigurationNode != null
-                                      where item.Paths.FullPath.StartsWith(indexConfigurationNode.InnerText)
-                                      select index)
+                foreach (var index in Sitecore.Search.SearchManager.Indexes)
                 {
-                    return index.Name;
+                    if (IsIndexMatch("/sitecore/search/configuration/indexes/index[@id='" + index.Name + "']", itemPath, dbName))
+                        return index.Name;
                 }
-            }
 
-            return "itembuckets_buckets";
+                //try to match WITHOUT dbName
+                foreach (var index in RemoteSearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/remoteconfiguration/indexes/index[@id='" + (index as RemoteIndex).Name + "']", itemPath))
+                        return (index as RemoteIndex).Name;
+                }
+
+                foreach (var index in InMemorySearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/inmemoryconfiguration/indexes/index[@id='" + (index as InMemoryIndex).Name + "']", itemPath))
+                        return (index as InMemoryIndex).Name;
+                }
+
+                foreach (var index in Sitecore.Search.SearchManager.Indexes)
+                {
+                    if (IsIndexMatch("/sitecore/search/configuration/indexes/index[@id='" + index.Name + "']", itemPath))
+                        return index.Name;
+                }
+
+
+            return "itembuckets_sitecore";
         }
 
         /// <summary>
@@ -173,9 +208,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="pageNumber">Go directly to a Page of results</param>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID")</example>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID", sortField: "_name")</example>
-        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1)
+        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, IEnumerable<Guid> relatedIds = null, string indexName = "itembuckets_buckets", string text = "", IEnumerable<Guid> templates = null, string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1)
         {
+#if NET40
             Contract.Requires(startLocationItem.IsNotNull());
+#else
+            Assert.ArgumentNotNull(startLocationItem, "startLocationItem");
+#endif
 
             using (var searcher = new IndexSearcher(indexName))
             {
@@ -209,7 +248,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                               FullTextQuery = text,
                                               RelatedIds = relatedIds,
                                               TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
+                                              LocationIds = new [] {startLocationItem.ID.ToGuid()},
                                               Language = language,
                                               ID = id,
                                               SortDirection = sortDirection,
@@ -259,7 +298,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="numberOfItemsToReturn">0-XXXXXX (The bigger this number is the less performant it will be)</param>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID")</example>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", relatedIds: "ItemGUID", sortField: "_name")</example>
-        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20)
+        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, IEnumerable<Guid> relatedIds = null, string indexName = "itembuckets_buckets", string text = "", IEnumerable<Guid> templates = null, string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20)
         {
             using (var searcher = new IndexSearcher(indexName))
             {
@@ -293,7 +332,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                               FullTextQuery = text,
                                               RelatedIds = relatedIds,
                                               TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
+                                              LocationIds = startLocationItem.ID.ToGuid().ToEnumerable(),
                                               Language = language,
                                               SortDirection = sortDirection,
                                               Refinements = refinements,
@@ -353,7 +392,12 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             }
             using (var searcher = new IndexSearcher(indexName))
             {
-                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), RelatedIds = string.Empty, SortDirection = sortDirection, TemplateIds = SearchHelper.GetTemplates(currentSearchString), LocationIds = startLocationItem.ID.ToString(), SortByField = sortField, Refinements = refinements});
+                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), 
+                    RelatedIds = null, 
+                    SortDirection = sortDirection, 
+                    TemplateIds = SearchHelper.GetTemplates(currentSearchString), 
+                    LocationIds = startLocationItem.ID.ToGuid().ToEnumerable(), 
+                    SortByField = sortField, Refinements = refinements});
                 hitCount = keyValuePair.Key;
                 return keyValuePair.Value;
             }
@@ -403,7 +447,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="item">Item being checked to see if it is a bucket or not</param>
         public static bool IsBucket(Item item)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
 
             return item.IsBucketItemCheck();
         }
@@ -416,8 +464,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="database">Context Database</param>
         public static bool IsTemplateBucketable(ID templateId, Database database)
         {
+#if NET40
             Contract.Requires(templateId.IsNotNull());
             Contract.Requires(database.IsNotNull());
+#else
+            Assert.ArgumentNotNull(templateId, "templateId");
+            Assert.ArgumentNotNull(database, "database");
+#endif
 
             var template = database.GetTemplate(templateId).IsNull() ? database.GetItem(templateId).Template : database.GetTemplate(templateId);
             return template.IsBucketTemplateCheck();
@@ -431,9 +484,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="database">Context Database</param>
         public static bool IsItemContainedWithinBucket(Item item, Database database)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
             Contract.Requires(database.IsNotNull());
-
+#else
+            Assert.ArgumentNotNull(item, "item");
+            Assert.ArgumentNotNull(database, "database");
+#endif
             return item.Axes.GetAncestors().Any(a => a.IsBucketItemCheck());
         }
 
@@ -472,8 +529,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="callBack">Callback function that gets run once the Bucket Process has finised</param>
         public static void CreateBucket(Item item, Action<Item> callBack)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
-
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
             var bucketableItems = item.Children.ToList().Where(child => child.Template.IsBucketTemplateCheck());
 
             using(new EditContext(item, SecurityCheck.Disable))
@@ -659,18 +719,18 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
             using (var searcher = new IndexSearcher(indexName))
             {
-                var location = SearchHelper.GetLocation(currentSearchString, locationSearch);
-                var locationIdFromItem = itm != null ? itm.ID.ToString() : string.Empty;
+                var location = IdHelper.ParseId(SearchHelper.GetLocation(currentSearchString, locationSearch));
+                var locationIdFromItem = itm != null ? itm.ID.ToGuid().ToEnumerable() : null;
                 var rangeSearch = new DateRangeSearchParam
                 {
                     ID = SearchHelper.GetID(currentSearchString).IsEmpty() ? SearchHelper.GetRecent(currentSearchString) : SearchHelper.GetID(currentSearchString),
                     ShowAllVersions = false,
                     FullTextQuery = SearchHelper.GetText(currentSearchString),
                     Refinements = refinements,
-                    RelatedIds = references.Any() ? references : string.Empty,
+                    RelatedIds = references.Any() ? IdHelper.ParseId(references) : null,
                     SortDirection = sortDirection,
                     TemplateIds = SearchHelper.GetTemplates(currentSearchString),
-                    LocationIds = location == string.Empty ? locationIdFromItem : location,
+                    LocationIds = !location.Any() ? locationIdFromItem : location,
                     Language = languages,
                     SortByField = sortField,
                     PageNumber = pageNumber,
@@ -787,7 +847,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
         internal static void ShowAllSubFolders(Item contextItem)
         {
+#if NET40
             Parallel.ForEach(contextItem.Children, (item, state, i) =>
+#else
+            contextItem.Children.ForEach(item =>
+#endif
             {
                 foreach (var child in item.Children.ToList())
                 {
@@ -836,8 +900,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="childItemCreationDateTime">Determins the folder that the item will be created within</param>
         internal static Item CreateAndReturnDateFolderDestination(Item topParent, DateTime childItemCreationDateTime)
         {
+#if NET40
             Contract.Requires(topParent.IsNotNull());
             Contract.Requires(childItemCreationDateTime.IsNotNull());
+#else
+            Assert.ArgumentNotNull(topParent, "topParent");
+            Assert.ArgumentNotNull(childItemCreationDateTime, "childItemCreationDateTime");
+#endif
 
             var database = topParent.Database;
             var dateFolder = childItemCreationDateTime.ToString(Config.BucketFolderPath);
@@ -856,8 +925,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                 topParent.GetChildren().ToList().ForEach(HideItem);
             }
 
+#if NET40
             Contract.Ensures(destinationFolderItem.IsNotNull());
-
+#else
+            Assert.IsTrue(destinationFolderItem.IsNotNull(), "destinationFolderItem cannot be null");
+#endif
             return destinationFolderItem;
         }
 
@@ -869,9 +941,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="itemToMove">Determines the item that is moving</param>
         internal static Item CreateAndReturnDateFolderDestination(Item topParent, Item itemToMove)
         {
+#if NET40
             Contract.Requires(topParent.IsNotNull());
             Contract.Requires(itemToMove.IsNotNull());
-
+#else
+            Assert.ArgumentNotNull(topParent, "topParent");
+            Assert.ArgumentNotNull(itemToMove, "itemToMove");
+#endif
             return CreateAndReturnDateFolderDestination(topParent, itemToMove.Statistics.Created);
         }
 
@@ -881,7 +957,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="item">Gets the root of where this item will be created</param>
         internal static void MakeIntoBucket(Item item)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
             // TODO: Change to use Tail Recursion to save on CPU and memory
             foreach (var child in item.Children.ToList())
             {
@@ -902,7 +982,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="firstLevelChild">Gets the root of where this item will be created</param>
         private static void HideItem(Item firstLevelChild)
         {
+#if NET40
             Contract.Requires(firstLevelChild.IsNotNull());
+#else
+            Assert.ArgumentNotNull(firstLevelChild, "firstLevelChild");
+#endif
 
             if (firstLevelChild.Template.IsBucketTemplateCheck() || firstLevelChild.TemplateID == Config.BucketTemplateId)
             {
@@ -917,8 +1001,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="toMove">Item that is being moved</param>
         private static void MoveItemToDateFolder(Item topParent, Item toMove)
         {
+#if NET40
             Contract.Requires(topParent.IsNotNull());
             Contract.Requires(toMove.IsNotNull());
+#else
+            Assert.ArgumentNotNull(topParent, "topParent");
+            Assert.ArgumentNotNull(toMove, "toMove");
+#endif
 
             foreach (var item in toMove.Children.ToList())
             {
@@ -971,7 +1060,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="item">Item that is being moved</param>
         private static bool ShouldDeleteInCreationOfBucket(Item item)
         {
+#if NET40
             Contract.Requires(item.IsNotNull());
+#else
+            Assert.ArgumentNotNull(item, "item");
+#endif
             return item.TemplateID.ToString().Equals(Constants.BucketFolder);
         }
 
@@ -995,15 +1088,16 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             {
                 if (facet.Fields["Enabled"].Value == "1")
                 {
-                    dynamic type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
+                    var type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
                     if ((type as IFacet).IsNotNull())
                     {
                         var locationOverride = GetLocationOverride(_searchQuery);
-                        using (var context = new SortableIndexSearchContext(SearchManager.GetIndex(BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(locationOverride)))))
+                        var indexName = BucketManager.GetContextIndex(Context.ContentDatabase.GetItem(locationOverride));
+                        using (var searcher = new IndexSearcher(indexName))
+                        using (var context = new SortableIndexSearchContext(searcher.Index))
                         {
-
                             var query = SearchHelper.GetBaseQuery(_searchQuery, locationOverride);
-                            var queryBase = IndexSearcher.ContructQuery(query);
+                            var queryBase = searcher.ContructQuery(query);
                             var searchBitArray = new QueryFilter(queryBase).Bits(context.Searcher.GetIndexReader());
                             var res = ((IFacet)type).Filter(queryBase, _searchQuery, locationOverride, searchBitArray);
                             ret.Add(res);

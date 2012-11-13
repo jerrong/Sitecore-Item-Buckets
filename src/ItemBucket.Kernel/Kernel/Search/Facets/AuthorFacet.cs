@@ -70,7 +70,7 @@ namespace Sitecore.ItemBucket.Kernel.Search.Facets
         {
             using (var searcher = new IndexSearcher(Util.Constants.Index.Name))
             {
-                var results = searcher.RunFacet(query, false, true, 0, 0, "__created by", filter, baseQuery, locationFilter);
+                var results = searcher.RunFacet(query, false, true, 0, 0, "__created by", filter);
                 return results;
             }
         }

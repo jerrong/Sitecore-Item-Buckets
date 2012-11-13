@@ -245,9 +245,9 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 ShowAllVersions = false,
                 FullTextQuery = GetText(_searchQuery),
                 Refinements = refinements,
-                RelatedIds = references.Any() ? references : string.Empty,
+                RelatedIds = references.Any() ? IdHelper.ParseId(references) : null,
                 TemplateIds = GetTemplates(_searchQuery),
-                LocationIds = GetLocation(_searchQuery, locationFilter),
+                LocationIds = IdHelper.ParseId(GetLocation(_searchQuery, locationFilter)),
                 Language = languages,
                 IsFacet = true,
                 Author = author == string.Empty ? string.Empty : author,
@@ -267,56 +267,47 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return returnResult;
         }
 
-        public static string GetTemplates(List<SearchStringModel> searchParams)
+        public static IEnumerable<Guid> GetTemplates(List<SearchStringModel> searchParams)
         {
             var templates = searchParams.Where(i => i.Type == "template");
             var newGuid = new Guid();
             var returnString = string.Empty;
             if (templates.Any())
             {
-                foreach (var template in templates)
+                var templatesArray = templates as SearchStringModel[] ?? templates.ToArray();
+                var alltemplates =
+                    templatesArray.Where(template => !template.Value.Contains('|')).Select(template => template.Value)
+                        .Union(
+                            templatesArray.Where(template => template.Value.Contains('|')).Select(
+                                template => template.Value))
+                        .Where(s => !String.IsNullOrEmpty(s));
+                foreach (var template in alltemplates)
                 {
-                    if (template.Value.Contains('|'))
+                    if (!IdHelper.IsGuid(template))
                     {
-                        foreach (var templateName in template.Value.Split('|'))
+                        if (Context.ContentDatabase != null)
                         {
-                            returnString = returnString + templateName + "|";
+                            int hitsCount;
+                            var templateSearch =
+                                Context.ContentDatabase.GetItem(ItemIDs.TemplateRoot).Search(
+                                    new SafeDictionary<string> {{"_name", template}, {"bucketable", "1"}},
+                                    out hitsCount, location: ItemIDs.TemplateRoot.ToString());
+                            if (templateSearch.Any())
+                            {
+                                foreach (var guid in templateSearch.Select(s => s.ItemId))
+                                {
+                                    yield return guid;
+                                };
+                            }
                         }
                     }
                     else
                     {
-                        var isGuid = Guid.TryParse(template.Value, out newGuid);
-                        if (template.Value.IsEmpty())
-                        {
-                            return string.Empty;
-                        }
-
-                        if (!isGuid)
-                        {
-                            if (Context.ContentDatabase != null)
-                            {
-                                int hitsCount;
-                                var templateSearch = Context.ContentDatabase.GetItem(ItemIDs.TemplateRoot).Search(new SafeDictionary<string> { { "_name", template.Value }, { "bucketable", "1" } }, out hitsCount, location: ItemIDs.TemplateRoot.ToString());
-                                if (templateSearch.Any())
-                                {
-                                    returnString = returnString + templateSearch.First().ItemId + "|";
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (templates.Any())
-                            {
-                                returnString = returnString + (Context.ContentDatabase ?? Context.Database).GetItem(template.Value).ID + "|";
-                            }
-                        }
+                        yield return (Context.ContentDatabase ?? Context.Database).GetItem(template).ID.ToGuid();
                     }
                 }
-
-                return returnString.TrimEnd('|');
             }
 
-            return string.Empty;
         }
 
         public static void GetItemsFromSearchResult(IEnumerable<SearchResult> searchResults, List<SitecoreItem> items)

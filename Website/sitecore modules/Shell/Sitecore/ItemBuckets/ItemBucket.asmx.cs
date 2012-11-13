@@ -317,7 +317,7 @@ namespace ItemBuckets
             {
                 ClientContext.SetValue("RecentlyOpenedTabs", string.Empty);
             }
-            string[] parsedIds = IdHelper.ParseId(ids);
+            var parsedIds = IdHelper.ParseId(ids);
             
             foreach (var id in parsedIds)
             {

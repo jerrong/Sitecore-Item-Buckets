@@ -68,14 +68,14 @@ namespace Sitecore.ItemBucket.Kernel.Common.Providers
                         appendedSection += "/" + sec.Name;
                     }
                     var urlParts = AddDatePart(item, match.Select(m => m.Name).Take(5).Reverse());
-                    yield return appendedSection + "/" + string.Join("/", urlParts);
+                    yield return appendedSection + "/" + string.Join("/", urlParts.ToArray());
                 }
             }
 
            
             private static IEnumerable<string> AddDatePart(Item item, IEnumerable<string> folderNames)
             {
-                var dateFolderAbbrev = string.Join(string.Empty, folderNames);
+                var dateFolderAbbrev = string.Join(string.Empty, folderNames.ToArray());
                 var itemUrlPart = string.Format("{0}-{1}", MainUtil.EncodeName(item.Name), dateFolderAbbrev);
                 yield return itemUrlPart;
             }

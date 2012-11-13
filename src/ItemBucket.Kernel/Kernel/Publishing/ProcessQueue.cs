@@ -1,9 +1,12 @@
-﻿namespace Sitecore.ItemBucket.Kernel.Publishing
+﻿#if NET40
+using System.Threading.Tasks;
+#endif
+using Sitecore.ItemBucket.Kernel.Util;
+
+namespace Sitecore.ItemBucket.Kernel.Publishing
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Threading.Tasks;
-
     using Sitecore.Diagnostics;
     using Sitecore.Globalization;
     using Sitecore.ItemBucket.Kernel.Kernel.Util;
@@ -47,8 +50,12 @@
             {
                 level = 1;
             }
-
-            Parallel.ForEach(entries, new ParallelOptions { MaxDegreeOfParallelism = level }, candidate => this.ProcessCandidate(candidate, context, depth));
+#if NET40
+            Parallel.ForEach(entries, new ParallelOptions { MaxDegreeOfParallelism = level }, 
+#else
+            entries.ForEach(
+#endif
+                candidate => this.ProcessCandidate(candidate, context, depth));
         }
 
         private void ProcessCandidate(PublishingCandidate candidate, PublishContext context, int depth)

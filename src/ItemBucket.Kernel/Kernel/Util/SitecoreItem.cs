@@ -1,4 +1,6 @@
-﻿namespace Sitecore.ItemBucket.Kernel.Util
+﻿using System;
+
+namespace Sitecore.ItemBucket.Kernel.Util
 {
     using System.Collections.Generic;
     using System.Collections.Specialized;
@@ -94,11 +96,11 @@
             get; set;
         }
 
-        public string ItemId
+        public Guid ItemId
         {
             get
             {
-                return this.Uri.ItemID.ToString();
+                return this.Uri.ItemID.ToGuid();
             }
         }
 

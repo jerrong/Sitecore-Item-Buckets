@@ -59,7 +59,7 @@ namespace Sitecore.ItemBucket.Kernel.FieldTypes
             var searchParam = new DateRangeSearchParam
             {
                 Refinements = refinements,
-                LocationIds = locationFilter.IsNullOrEmpty() ? Sitecore.Context.ContentDatabase.GetItem(this.ItemID).GetParentBucketItemOrRootOrSelf().ID.ToString() : locationFilter,
+                LocationIds = locationFilter.IsNullOrEmpty() ? Sitecore.Context.ContentDatabase.GetItem(this.ItemID).GetParentBucketItemOrRootOrSelf().ID.ToGuid().ToEnumerable() : IdHelper.ParseId(locationFilter),
                 //TemplateIds = templateFilter,
                 FullTextQuery = values["FullTextQuery"],
                 Language = values["Language"],

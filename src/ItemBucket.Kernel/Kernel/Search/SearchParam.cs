@@ -8,23 +8,26 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using System;
+using System.Collections.Generic;
+
 namespace Sitecore.ItemBucket.Kernel.Search
 {
     using Sitecore.Collections;
 
     public class SearchParam
     {
-        public string RelatedIds
+        public IEnumerable<Guid> RelatedIds
         {
             get; set;
         }
 
-        public string TemplateIds
+        public IEnumerable<Guid> TemplateIds
         {
             get; set;
         }
 
-        public string LocationIds
+        public IEnumerable<Guid> LocationIds
         {
             get; set;
         }

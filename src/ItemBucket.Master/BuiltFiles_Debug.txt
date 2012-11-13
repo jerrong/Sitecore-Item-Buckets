@@ -1,4 +1,18 @@
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\nav.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\table.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\table_selected.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Rebuild.asmx
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\AddTab.aspx
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\clippy.swf
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\DataSourceResult.aspx
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\extension.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\filetype.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\location.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\recent.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\refresh.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\right_4.gif
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\ui-bg_flat_75_ffffff_40x100.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\MediaBrowser.aspx
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\IFrameField.aspx
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\FieldResults.aspx
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\author.gif
@@ -21,6 +35,8 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\id.gif
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\id.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\imagesearch.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\infinitescroll.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\infinitescroll_selected.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\language.gif
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\language.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\Left.png
@@ -50,6 +66,7 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\sortdesc.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\start.gif
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\start.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\startdate.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\tag.gif
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\template.gif
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\text.gif
@@ -60,6 +77,9 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\ui-icons-222222-256x240.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\ui-icons_454545_256x240.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\version.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\video.jpg
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\video.png
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\video_selected.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\MiniResults.aspx
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\arrows.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\author.png
@@ -101,6 +121,9 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\images\view_list_selected.png
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\ItemBucket.asmx
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\fullscreen.js
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketDatasource.js
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketMedia.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\date.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\IFrameItemBucket.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\ItemBucketField.js
@@ -110,19 +133,35 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jQRangeSlider.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery-ui.min.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.clippy.min.js
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.easing.1.3.js
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.elastislide.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.min.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.mousewheel.min.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.remember-state.js
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Scripts\jquery.tabSlideOut.v1.3.js
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Services\schema_template.xml
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\ShowResult.aspx
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Styles\ListNewMini.css
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Styles\elastislide.css
+.\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\TestRunner.aspx
 .\Debug\sitecore\shell\Applications\Archives\RecycleBin\ItemBucketRollback.xaml.xml
+.\Debug\sitecore\shell\Applications\Content Manager\Content Editor.js
 .\Debug\sitecore\shell\Applications\Content Manager\Default.aspx
+.\Debug\sitecore\shell\Applications\WebEdit\WebEditRibbon.js
 .\Debug\sitecore\shell\Controls\Rich Text Editor\RichText Commands.js
+.\Debug\sitecore\shell\Override\AddFromTemplate.xml
+.\Debug\sitecore\shell\Override\AddFromTemplate.xml.js
+.\Debug\sitecore\shell\Override\BucketInternalLink.xml
 .\Debug\sitecore\shell\Override\BucketLink.js
 .\Debug\sitecore\shell\Override\BucketLink.xml
+.\Debug\sitecore\shell\Override\ChangeTemplate.xml
+.\Debug\sitecore\shell\Override\CopyDeviceTo.xml
+.\Debug\sitecore\shell\Override\CustomizeRibbon.xml
+.\Debug\sitecore\shell\Override\Goals.xaml.xml
 .\Debug\sitecore\shell\Override\InsertImage.xml
 .\Debug\sitecore\shell\Override\InsertLink.js
 .\Debug\sitecore\shell\Override\InsertLink.xml
+.\Debug\sitecore\shell\Override\ItemBrowser.xml
 .\Debug\sitecore\shell\Override\ItemBucketRollback.xaml.xml
 .\Debug\sitecore\shell\Override\ItemBucket\BucketUsage.css
 .\Debug\sitecore\shell\Override\ItemBucket\BucketUsage.js
@@ -142,4 +181,58 @@
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Styles\style.css
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Styles\token-input.css
 .\Debug\sitecore\shell\Override\ItemBucket\Rebuild.xml
+.\Debug\sitecore\shell\Override\ItemBucket\SchemaBuild.xml
+.\Debug\sitecore\shell\Override\MediaBrowser.xml
+.\Debug\sitecore\shell\Override\Profiles.xaml.xml
+.\Debug\sitecore\shell\Override\SelectItem.xml
+.\Debug\sitecore\shell\Override\SelectRenderingDatasource.xml
+.\Debug\sitecore\shell\Override\Set Icon.xml
+.\Debug\sitecore\shell\Override\SetBaseTemplates.xml
+.\Debug\sitecore\shell\Override\SetIcon.js
+.\Debug\sitecore\shell\Override\SetMasters.js
+.\Debug\sitecore\shell\Override\SetMasters.xml
+.\Debug\sitecore\shell\Override\TrackingField.js
+.\Debug\sitecore\shell\Override\TrackingField.xaml.xml
+.\Debug\sitecore\shell\Override\TrackingFieldDetails.xaml.xml
+.\Debug\sitecore\shell\Override\TreeListExEditor.js
+.\Debug\sitecore\shell\Override\TreeListExEditor.xml
+.\Debug\sitecore\shell\Override\Workbox.xml
 .\Debug\sitecore modules\Shell\Sitecore\ItemBuckets\Services\Search.ashx
+.\Debug\web.config
+.\Debug\App_Config\Include\Sitecore.ItemBuckets.Web.config
+.\Debug\bin\ComponentArt.Web.UI.dll
+.\Debug\bin\Debug\NET35\Sitecore.BigData.dll
+.\Debug\bin\Debug\NET35\Sitecore.BigData.pdb
+.\Debug\bin\Debug\NET35\Sitecore.ItemBucket.Kernel.dll
+.\Debug\bin\Debug\NET35\Sitecore.ItemBucket.Kernel.pdb
+.\Debug\bin\Debug\NET35\Sitecore.ItemBucket.UI.dll
+.\Debug\bin\Debug\NET35\Sitecore.ItemBucket.UI.pdb
+.\Debug\bin\Debug\NET35\Sitecore.ItemBuckets.BigData.dll
+.\Debug\bin\Debug\NET35\Sitecore.ItemBuckets.BigData.pdb
+.\Debug\bin\Debug\NET35\SolrNet.dll
+.\Debug\bin\Debug\NET35\SolrNet.xml
+.\Debug\bin\Debug\NET40\Sitecore.BigData.dll
+.\Debug\bin\Debug\NET40\Sitecore.BigData.pdb
+.\Debug\bin\Debug\NET40\Sitecore.ItemBucket.Kernel.dll
+.\Debug\bin\Debug\NET40\Sitecore.ItemBucket.Kernel.pdb
+.\Debug\bin\Debug\NET40\Sitecore.ItemBucket.UI.dll
+.\Debug\bin\Debug\NET40\Sitecore.ItemBucket.UI.pdb
+.\Debug\bin\Debug\NET40\Sitecore.ItemBuckets.BigData.dll
+.\Debug\bin\Debug\NET40\Sitecore.ItemBuckets.BigData.pdb
+.\Debug\bin\Debug\NET40\SolrNet.dll
+.\Debug\bin\Debug\NET40\SolrNet.xml
+.\Debug\bin\HtmlAgilityPack.dll
+.\Debug\bin\ITHit.WebDAV.Server.dll
+.\Debug\bin\Lucene.Net.dll
+.\Debug\bin\Microsoft.Practices.ServiceLocation.dll
+.\Debug\bin\Mvp.Xml.dll
+.\Debug\bin\Newtonsoft.Json.dll
+.\Debug\bin\RadEditor.Net2.dll
+.\Debug\bin\Sitecore.BigData.dll
+.\Debug\bin\Sitecore.ItemBuckets.BigData.dll
+.\Debug\bin\Sitecore.Kernel.dll
+.\Debug\bin\Sitecore.Logging.dll
+.\Debug\bin\Sitecore.NVelocity.dll
+.\Debug\bin\Sitecore.Zip.dll
+.\Debug\bin\SolrNet.dll
+.\Debug\bin\Telerik.Web.UI.dll
