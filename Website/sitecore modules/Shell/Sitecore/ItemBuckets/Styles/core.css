@@ -546,7 +546,7 @@ body
         .content
         {
             position: relative; /* Position is declared "relative" to gain control of stacking order (z-index). */
-            width: 82%;
+            width: 65%;
             min-width: 120px;
             margin: 0 auto;
             background-color: white;
@@ -699,6 +699,7 @@ body
             -webkit-border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
             border-bottom-left-radius: 10px;
+            
         }
                        
         .side li
@@ -993,7 +994,7 @@ Table Style - This is what you want
 	background:#eaebec;
 	margin:20px -20px;
 	border:#ccc 1px solid;
-width: 100%;
+    width: 100%;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px;

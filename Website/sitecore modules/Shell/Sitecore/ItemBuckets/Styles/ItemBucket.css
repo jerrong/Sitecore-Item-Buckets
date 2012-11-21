@@ -260,7 +260,7 @@ ul.token-input-list-facebook li input
     border: 1px solid #F2F2F2;
     -webkit-box-shadow: 1px 0px 1px #DDD;
     box-shadow: 1px 0px 1px #DDD;
-   
+    outline: none;
 }
 
 .handle2
@@ -276,8 +276,6 @@ a.handle:hover
     background-position: 50% 50%;
     border: 1px solid #DDD;
     background-color: #DDD;
-    -webkit-box-shadow: 1px 0px 1px #AAA;
-    box-shadow: 1px 0px 1px #AAA;
 }
 
 a.handle2:hover

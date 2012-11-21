@@ -42,7 +42,8 @@
             position: e.positioning
         });
         var i = {
-            containerWidth: parseInt(f.outerWidth(), 10) + "px",
+        //5 is added as outerWidth is not accurate
+            containerWidth: parseInt(f.outerWidth(), 10) + 5 + "px",
             containerHeight: parseInt(f.outerHeight(), 10) + "px",
             tabWidth: parseInt(e.tabHandle.outerWidth(), 10) + "px",
             tabHeight: parseInt(e.tabHandle.outerHeight(), 10) + "px"
