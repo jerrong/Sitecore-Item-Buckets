@@ -24,6 +24,7 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
 
     using IndexSearcher = Sitecore.ItemBucket.Kernel.Util.IndexSearcher;
     using System.Diagnostics.Contracts;
+    using Sitecore.Data;
 
     /// <summary>
     /// This is a group of handy extension methods to be easily able to search through content from the API
@@ -90,131 +91,15 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
         /// </returns>
         public static IEnumerable<SitecoreItem> FullSearch(this Item itm, List<SearchStringModel> currentSearchString, out int hitCount, string indexName = "itembuckets_buckets", string sortField = "", string sortDirection = "", int pageSize = 0, int pageNumber = 0, object[] parameters = null)
         {
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddDays(1);
-            var locationSearch = LocationFilter;
-            var refinements = new SafeDictionary<string>();
-            var searchStringModels = SearchHelper.GetTags(currentSearchString);
-
-            if (searchStringModels.Count > 0)
-            {
-                foreach (var ss in searchStringModels)
-                {
-                    var query = ss.Value;
-                    if (query.Contains("tagid="))
-                    {
-                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
-                    }
-                    var db = Context.ContentDatabase ?? Context.Database;
-                    refinements.Add("_tags", db.GetItem(query).ID.ToString());
-                }
-            }
-
-            var author = SearchHelper.GetAuthor(currentSearchString);
-       
-
-            var languages = SearchHelper.GetLanguages(currentSearchString);
-            if (languages.Length > 0)
-            {
-                refinements.Add("_language", languages);
-            }
-
-            var references = SearchHelper.GetReferences(currentSearchString);
-          
-            var custom = SearchHelper.GetCustom(currentSearchString);
-            if (custom.Length > 0)
-            {
-                var customSearch = custom.Split('|');
-                if (customSearch.Length > 0)
-                {
-                    try
-                    {
-                        refinements.Add(customSearch[0], customSearch[1]);
-                    }
-                    catch (Exception exc)
-                    {
-                      Log.Error("Could not parse the custom search query", exc);
-                    }
-                }
-            }
-
-            var search = SearchHelper.GetField(currentSearchString);
-            if (search.Length > 0)
-            {
-                var customSearch = search;
-                refinements.Add(customSearch, SearchHelper.GetText(currentSearchString));
-            }
-
-            var fileTypes = SearchHelper.GetFileTypes(currentSearchString);
-            if (fileTypes.Length > 0)
-            {
-                refinements.Add("extension", SearchHelper.GetFileTypes(currentSearchString));
-            }
-
-            var s = SearchHelper.GetSite(currentSearchString);
-            if (s.Length > 0)
-            {
-                SiteContext siteContext = SiteContextFactory.GetSiteContext(SiteManager.GetSite(s).Name);
-                var db = Context.ContentDatabase ?? Context.Database;
-                var startItemId = db.GetItem(siteContext.StartPath);
-                locationSearch = startItemId.ID.ToString();
-            }
-
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
-            var startFlag = true;
-            var endFlag = true;
-            if (SearchHelper.GetStartDate(currentSearchString).Any())
-            {
-                if (!DateTime.TryParse(SearchHelper.GetStartDate(currentSearchString), culture, DateTimeStyles.None, out startDate))
-                {
-                    startDate = DateTime.Now;
-                }
-
-                startFlag = false;
-            }
-
-            if (SearchHelper.GetEndDate(currentSearchString).Any())
-            {
-                if (!DateTime.TryParse(SearchHelper.GetEndDate(currentSearchString), culture, DateTimeStyles.None, out endDate))
-                {
-                    endDate = DateTime.Now.AddDays(1);
-                }
-
-                endFlag = false;
-            }
-
             using (var searcher = new IndexSearcher(indexName))
             {
-                var location = SearchHelper.GetLocation(currentSearchString, locationSearch);
+                var rangeSearch = SearchHelper.GetSearchSettings(currentSearchString, LocationFilter);
                 var locationIdFromItem = itm != null ? itm.ID.ToString() : string.Empty;
-                var rangeSearch = new DateRangeSearchParam
-                                {
-                                    ID = SearchHelper.GetID(currentSearchString).IsEmpty() ? SearchHelper.GetRecent(currentSearchString) : SearchHelper.GetID(currentSearchString),
-                                    ShowAllVersions = false,
-                                    FullTextQuery = SearchHelper.GetText(currentSearchString),
-                                    Refinements = refinements,
-                                    RelatedIds = references.Any() ? references : string.Empty,
-                                    SortDirection = sortDirection,
-                                    TemplateIds = SearchHelper.GetTemplates(currentSearchString),
-                                    LocationIds = location == string.Empty ? locationIdFromItem : location,
-                                    Language = languages,
-                                    SortByField = sortField,
-                                    PageNumber = pageNumber,
-                                    PageSize = pageSize,
-                                    Author = author == string.Empty ? string.Empty : author,
-                                };
-
-                if (!startFlag || !endFlag)
-                {
-                    rangeSearch.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                             {
-                                                 new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDate, endDate)
-                                                     {
-                                                         InclusiveStart = true, InclusiveEnd = true
-                                                     }
-                                             };
-                }
-
+                rangeSearch.SortDirection = sortDirection;                
+                rangeSearch.SortByField = sortField;
+                rangeSearch.PageNumber = pageNumber;
+                rangeSearch.PageSize = pageSize;
+                rangeSearch.LocationIds = rangeSearch.LocationIds == string.Empty ? locationIdFromItem : rangeSearch.LocationIds;
                 var returnResult = searcher.GetItems(rangeSearch);
                 hitCount = returnResult.Key;
                 return returnResult.Value;

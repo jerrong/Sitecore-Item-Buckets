@@ -335,27 +335,18 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <example>BucketManager.Search(Sitecore.Context.Item, SearchModel)</example>
         public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, List<SearchStringModel> currentSearchString, string indexName = "itembuckets_buckets", string sortField = "", string sortDirection = "")
         {
-            var refinements = new SafeDictionary<string>();
-            var searchStringModels = SearchHelper.GetTags(currentSearchString);
-
-            if (searchStringModels.Count > 0)
-            {
-                foreach (var ss in searchStringModels)
-                {
-                    var query = ss.Value;
-                    if (query.Contains("tagid="))
-                    {
-                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
-                    }
-                    var db = Context.ContentDatabase ?? Context.Database;
-                    refinements.Add("_tags", db.GetItem(query).ID.ToString());
-                }
-            }
+            //var refinements = new SafeDictionary<string>();
+            //refinements = SearchHelper.GetTagRefinements(currentSearchString);
+            var locationIdFromItem = startLocationItem != null ? startLocationItem.ID.ToString() : string.Empty;
+            var rangeSearch = SearchHelper.GetSearchSettings(currentSearchString, locationIdFromItem);
             using (var searcher = new IndexSearcher(indexName))
             {
-                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), RelatedIds = string.Empty, SortDirection = sortDirection, TemplateIds = SearchHelper.GetTemplates(currentSearchString), LocationIds = startLocationItem.ID.ToString(), SortByField = sortField, Refinements = refinements});
-                hitCount = keyValuePair.Key;
-                return keyValuePair.Value;
+               // var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), RelatedIds = string.Empty, SortDirection = sortDirection, TemplateIds = SearchHelper.GetTemplates(currentSearchString), LocationIds = startLocationItem.ID.ToString(), SortByField = sortField, Refinements = refinements});
+                //hitCount = keyValuePair.Key;
+                //return keyValuePair.Value;
+                var returnResult = searcher.GetItems(rangeSearch);
+                hitCount = returnResult.Key;
+                return returnResult.Value;
             }
         }
 

@@ -455,7 +455,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     {
                         SearcherMethods.ApplyContextItemRemoval(globalQuery, param.LocationIds);
                     }
-
+                    SearcherMethods.ApplyNameFilter(globalQuery, param.ItemName);
                     var translator = new QueryTranslator(Index);
                     var booleanQuery = translator.ConvertCombinedQuery(globalQuery);
                     var innerOccurance = translator.GetOccur(param.Occurance);
