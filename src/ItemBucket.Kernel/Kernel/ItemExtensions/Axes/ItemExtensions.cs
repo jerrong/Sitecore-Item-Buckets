@@ -137,7 +137,7 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
         /// <summary>
         /// Using a strongly types List of SearchStringModel, you can run a search based off a JSON String
         /// </summary>
-        /// <returns>IEnumreable List of Results that have been typed to a smaller version of the Item Object</returns>
+        /// <returns>IEnumerable List of Results that have been typed to a smaller version of the Item Object</returns>
         public static IEnumerable<SitecoreItem> Search(this Item itm, SafeDictionary<string> refinements, out int hitCount,
             string relatedIds = "",
             string indexName = "itembuckets_buckets", 
@@ -163,24 +163,7 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
             }
 
             using (var searcher = new IndexSearcher(indexName))
-            {
-                var culture = CultureInfo.CreateSpecificCulture("en-US");
-                var startDateOut = DateTime.Now;
-                var endDateOut = DateTime.Now.AddDays(1);
-                var startFlag = true;
-                var endFlag = true;
-                if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
-                {
-                    startDateOut = DateTime.Now;
-                    startFlag = false;
-                }
-
-                if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
-                {
-                    endDateOut = DateTime.Now.AddDays(1);
-                    endFlag = false;
-                }
-
+            {                
                 var dateSearchParam = new DateRangeSearchParam
                                           {
                                               ItemName = itemName,
@@ -194,19 +177,9 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
                                               ID = id,
                                               SortByField = sortField,
                                               PageSize = numberOfItemsToReturn,
-                                              PageNumber = pageNumber 
-                                          };
-                if (startFlag || endFlag)
-                {
-                    dateSearchParam.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                                 {
-                                                     new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDateOut, endDateOut)
-                                                         {
-                                                             InclusiveStart = true, InclusiveEnd = true
-                                                         }
-                                                 };
-                }
-
+                                              PageNumber = pageNumber,
+                                              Ranges = SearchHelper.GetDateRefinements(startDate, endDate)
+                                          };                
                 var keyValuePair = searcher.GetItems(dateSearchParam);
                 hitCount = keyValuePair.Key;
                 return keyValuePair.Value;
@@ -218,24 +191,7 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
         /// </summary>
         /// <returns>IEnumreable List of Results that have been typed to a smaller version of the Item Object</returns>
         public static IEnumerable<SitecoreItem> Search(this Item itm, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string sortDirection = "", string language = "en", string id = "", string sortField = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 0)
-        {
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
-            var startDateOut = new DateTime();
-            var endDateOut = new DateTime();
-            var startFlag = true;
-            var endFlag = true;
-            if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
-            {
-                startDateOut = DateTime.Now;
-                startFlag = false;
-            }
-
-            if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
-            {
-                endDateOut = DateTime.Now.AddDays(1);
-                endFlag = false;
-            }
-
+        {            
             using (var searcher = new IndexSearcher(indexName))
             {
                 var dateSearchParam = new DateRangeSearchParam
@@ -250,21 +206,11 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
                                               SortDirection = sortDirection,
                                               SortByField = sortField,
                                               PageSize = numberOfItemsToReturn,
-                                              PageNumber = pageNumber
+                                              PageNumber = pageNumber,
+                                              Ranges = SearchHelper.GetDateRefinements(startDate,endDate)
                                           };
                 var keyValuePair = searcher.GetItems(dateSearchParam);
-
-                if (startFlag || endFlag)
-                {
-                    dateSearchParam.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                                 {
-                                                     new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDateOut, endDateOut)
-                                                         {
-                                                             InclusiveStart = true, InclusiveEnd = true
-                                                         }
-                                                 };
-                }
-
+               
                 hitCount = keyValuePair.Key;
                 return keyValuePair.Value;
             }
@@ -276,46 +222,25 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
         /// <returns>IEnumreable List of Results that have been typed to a smaller version of the Item Object</returns>
         public static IEnumerable<SitecoreItem> Search(this Item itm, List<SearchStringModel> currentSearchString, out int hitCount, string indexName = "itembuckets_buckets", string sortField = "", string sortDirection = "", int numberOfItems = 20, int pageNumber = 0)
         {
-            var refinements = new SafeDictionary<string>();
-            var searchStringModels = SearchHelper.GetTags(currentSearchString);
-
-            if (searchStringModels.Count > 0)
-            {
-                foreach (var ss in searchStringModels)
-                {
-                    var query = ss.Value;
-                    if (query.Contains("tagid="))
-                    {
-                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
-                    }
-                    var db = Context.ContentDatabase ?? Context.Database;
-                    refinements.Add("_tags", db.GetItem(query).ID.ToString());
-                }
-            }
-
             using (var searcher = new IndexSearcher(indexName))
             {
-                var sitecoreItems = searcher.GetItems(new DateRangeSearchParam()
-                    {
-                        FullTextQuery = SearchHelper.GetText(currentSearchString), 
-                        RelatedIds = string.Empty, 
-                        TemplateIds = SearchHelper.GetTemplates(currentSearchString), 
-                        LocationIds = itm.ID.ToString(), 
-                        Refinements = refinements,
-                        SortByField = sortField,
-                        PageNumber = pageNumber,
-                        PageSize = numberOfItems
-                    });
-
-                hitCount = sitecoreItems.Key;
-                return sitecoreItems.Value;
-            }
+                var rangeSearch = SearchHelper.GetSearchSettings(currentSearchString, LocationFilter);
+                var locationIdFromItem = itm != null ? itm.ID.ToString() : string.Empty;
+                rangeSearch.SortDirection = sortDirection;
+                rangeSearch.SortByField = sortField;
+                rangeSearch.PageNumber = pageNumber;
+                rangeSearch.PageSize = numberOfItems;
+                rangeSearch.LocationIds = rangeSearch.LocationIds == string.Empty ? locationIdFromItem : rangeSearch.LocationIds;
+                var returnResult = searcher.GetItems(rangeSearch);
+                hitCount = returnResult.Key;
+                return returnResult.Value;
+            }                     
         }
 
         /// <summary>
         /// Using a strongly types List of SearchStringModel, you can run a search based off a JSON String
         /// </summary>
-        /// <returns>IEnumreable List of Results that have been typed to a smaller version of the Item Object</returns>
+        /// <returns>IEnumerable List of Results that have been typed to a smaller version of the Item Object</returns>
         public static IEnumerable<SitecoreItem> Search(this Item itm, SearchParam queryParser, out int hitCount, string indexName = "itembuckets_buckets")
         {
             using (var searcher = new IndexSearcher(indexName))
@@ -355,50 +280,5 @@ namespace Sitecore.ItemBucket.Kernel.ItemExtensions.Axes
             var field = item.Fields[Constants.IsBucket];
             return field.IsNotNull() && "1".Equals(field.Value);
         }
-
-        //public static IEnumerable<SitecoreItem> Search(this Item itm, dynamic relatedIds = null, dynamic indexName = null, dynamic text = null, dynamic templates = null, dynamic location = null, dynamic language = null, dynamic id = null, dynamic sortField = null, dynamic itemName = null, dynamic startDate = null, dynamic endDate = null, int numberOfItemsToReturn = 20)
-        //{
-           
-        //    var culture = CultureInfo.CreateSpecificCulture("en-US");
-        //    var startDateOut = new DateTime();
-        //    var endDateOut = new DateTime();
-        //    if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
-        //        startDateOut = DateTime.MinValue;
-        //    if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
-        //        endDateOut = DateTime.MaxValue;
-        //    if (indexName == null)
-        //    {
-        //        indexName = "buckets";
-        //    }
-
-        //    Nullable.GetUnderlyingType(itemName.PropertyType);
-
-        //    itemName = itemName.IsNull() ? "" : itemName.Search + "|" + itemName.BooleanOperation;
-        //    text = text.IsNull() ? "" : text.Search + "|" + text.BooleanOperation;
-        //    relatedIds = relatedIds.IsNull() ? "" : relatedIds.Search + "|" + relatedIds.BooleanOperation;
-        //    templates = templates.IsNull() ? "" : templates.Search + "|" + templates.BooleanOperation;
-        //    language = language.IsNull() ? "" : language.Search + "|" + language.BooleanOperation;
-        //    id = id.IsNull() ? "" : id.Search + "|" + id.BooleanOperation;
-        //    sortField = sortField.IsNull() ? "" : sortField.Search + "|" + sortField.BooleanOperation;
-
-        //    using (var searcher = new IndexSearcher(indexName))
-        //    {
-        //        return searcher.GetItems(new DateRangeSearchParam
-        //        {
-        //            ItemName = itemName,
-        //            FullTextQuery = text,
-        //            RelatedIds = relatedIds,
-        //            TemplateIds = templates,
-        //            Language =  language,
-        //            ID = id,
-        //            SortByField = sortField,
-        //            PageSize = numberOfItemsToReturn,
-        //            Ranges = new List<DateRangeSearchParam.DateRangeField> {
-        //                                         new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate,
-        //                                                                                 startDateOut,
-        //                                                                                 endDateOut) {InclusiveStart = true, InclusiveEnd = true}}
-        //        }).Value;
-        //    }
-        //}
     }
 }

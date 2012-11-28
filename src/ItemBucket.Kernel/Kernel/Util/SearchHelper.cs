@@ -531,11 +531,42 @@ namespace Sitecore.ItemBucket.Kernel.Util
             }
             return refinements;
         }
-
-        public static DateRangeSearchParam GetSearchSettings(List<SearchStringModel> currentSearchString, string locationFilter)
+        public static List<DateRangeSearchParam.DateRangeField> GetDateRefinements(string startDate, string endDate)
         {
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddDays(1);
+            var culture = CultureInfo.CreateSpecificCulture("en-US");
+            var startDateOut = DateTime.MinValue;
+            var endDateOut = DateTime.Now.AddDays(1);  
+            var dateIsSet = false;
+            if (startDate != null && startDate.Any())
+            {
+                dateIsSet = true;
+                if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
+                {
+                    startDateOut = DateTime.Now;                    
+                }
+            }
+            if (endDate != null && endDate.Any())
+            {
+                dateIsSet = true;
+                if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
+                {
+                    endDateOut = DateTime.Now.AddDays(1);                    
+                }                
+            }
+            if (dateIsSet)
+            {
+                return new List<DateRangeSearchParam.DateRangeField>
+                                                 {
+                                                     new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDateOut, endDateOut)
+                                                         {
+                                                             InclusiveStart = true, InclusiveEnd = true
+                                                         }
+                                                 };
+            }
+            return null;
+        }
+        public static DateRangeSearchParam GetSearchSettings(List<SearchStringModel> currentSearchString, string locationFilter)
+        {            
             var locationSearch = locationFilter;
             var refinements = new SafeDictionary<string>();
             refinements = GetTagRefinements(currentSearchString);
@@ -589,30 +620,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 var startItemId = db.GetItem(siteContext.StartPath);
                 locationSearch = startItemId.ID.ToString();
             }
-
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
-            var startFlag = true;
-            var endFlag = true;
-            if (SearchHelper.GetStartDate(currentSearchString).Any())
-            {
-                if (!DateTime.TryParse(SearchHelper.GetStartDate(currentSearchString), culture, DateTimeStyles.None, out startDate))
-                {
-                    startDate = DateTime.Now;
-                }
-
-                startFlag = false;
-            }
-
-            if (SearchHelper.GetEndDate(currentSearchString).Any())
-            {
-                if (!DateTime.TryParse(SearchHelper.GetEndDate(currentSearchString), culture, DateTimeStyles.None, out endDate))
-                {
-                    endDate = DateTime.Now.AddDays(1);
-                }
-
-                endFlag = false;
-            }
-
+           
             var location = SearchHelper.GetLocation(currentSearchString, locationSearch);
             
             var rangeSearch = new DateRangeSearchParam
@@ -626,19 +634,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 LocationIds = location,
                 Language = languages,
                 Author = author == string.Empty ? string.Empty : author,
-                ItemName = SearchHelper.GetItemName(currentSearchString)
+                ItemName = SearchHelper.GetItemName(currentSearchString),
+                Ranges = GetDateRefinements(SearchHelper.GetStartDate(currentSearchString),SearchHelper.GetEndDate(currentSearchString))
             };
            
-            if (!startFlag || !endFlag)
-            {
-                rangeSearch.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                             {
-                                                 new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDate, endDate)
-                                                     {
-                                                         InclusiveStart = true, InclusiveEnd = true
-                                                     }
-                                             };
-            }
             return rangeSearch;
         }
     }
