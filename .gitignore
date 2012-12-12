@@ -251,3 +251,12 @@ Website/web.config.Net3_5.MVC
 Website/web.config.Net4.MVC
 Website/webedit.css
 Website/xsl/
+Website/App_Config/Include/Captcha.config
+Website/App_Config/Include/forms.config
+Website/bin_x64/
+Website/sitecore modules/Shell/Web Forms for Marketers/
+Website/sitecore modules/Web/
+Website/sitecore/shell/Applications/Modules/
+Website/test.aspx
+Website/test.aspx.cs
+Website/test.aspx.designer.cs
