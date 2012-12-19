@@ -83,21 +83,15 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     }
 
                     hitCount = searchHits.Length;
-                    if (pageSize == 0)
+                    if (pageSize == 0 || pageNumber < 1)
                     {
                         pageSize = searchHits.Length;
-                    }
-
-                    if (pageNumber == 1)
-                    {
                         pageNumber = 1;
                     }
-
 
                     var resultCollection = new SearchResultCollection();
 
                     resultCollection = searchHits.FetchResults((pageNumber - 1) * pageSize, pageSize);
-
 
                     SearchHelper.GetItemsFromSearchResult(resultCollection, items);
                 }
@@ -349,12 +343,18 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return this.RunQuery(luceneQuery, 20, 0);
         }
 
-
         internal virtual KeyValuePair<int, List<SitecoreItem>> RunQuery(QueryBase query, int numberOfResults)
         {
             var translator = new QueryTranslator(Index);
             var luceneQuery = translator.Translate(query);
             return this.RunQuery(luceneQuery, numberOfResults, 0);
+        }
+
+        internal virtual KeyValuePair<int, List<SitecoreItem>> RunQuery(QueryBase query, int numberOfResults, int pageNumber, string sortField, string sortDirection)
+        {
+            var translator = new QueryTranslator(Index);
+            var luceneQuery = translator.Translate(query);
+            return this.RunQuery(luceneQuery, numberOfResults, pageNumber, sortField, sortDirection);
         }
 
         #endregion
@@ -392,8 +392,8 @@ namespace Sitecore.ItemBucket.Kernel.Util
             SearcherMethods.ApplyTemplateFilter(globalQuery, param.TemplateIds);
             SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
             SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Must);
-
-            return this.RunQuery(globalQuery);
+            
+            return this.RunQuery(globalQuery,param.PageSize,param.PageNumber,param.SortByField,param.SortDirection);
         }
 
         internal virtual KeyValuePair<int, List<SitecoreItem>> GetItems(DateRangeSearchParam param)
