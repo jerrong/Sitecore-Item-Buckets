@@ -260,3 +260,5 @@ Website/sitecore/shell/Applications/Modules/
 Website/test.aspx
 Website/test.aspx.cs
 Website/test.aspx.designer.cs
+Website/App_Config/Include/Sitecore.ItemBuckets.config
+Website/Sitecore.ItemBucket.UI.csproj
