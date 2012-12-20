@@ -102,7 +102,7 @@ namespace ItemBuckets.Services
                         if (innerItem != null)
                         {
                             sitecoreItem.TemplateName = innerItem.TemplateName;
-                            sitecoreItem.Name = innerItem.Name;
+                            sitecoreItem.Name = innerItem.DisplayName;
                             var parentBucketItemOrParent = innerItem.GetParentBucketItemOrParent();
                             if (parentBucketItemOrParent.IsNotNull())
                             {
