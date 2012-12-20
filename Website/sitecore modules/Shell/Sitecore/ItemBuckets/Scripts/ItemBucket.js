@@ -673,7 +673,9 @@ function retrieveFiltersWithDoubleClickToEdit() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "location"];
     $.each(filterArray, function (index, filter) {
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar==";") || (previousChar==" ")) ) {
             var d = a.find(".addition").val().split(":")[1];
             var e = a.find(".addition").val().replace(filter + ":" + d, "");
             a.find(".addition").val(e);
@@ -703,8 +705,9 @@ function retrieveFilters() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "start", "end", "recent", "location"];
     $.each(filterArray, function (index, filter) {
-
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar == ";") || (previousChar == " "))) {  
             var p = a.find(".addition").val().split(":")[1];
             var q = a.find(".addition").val().replace(filter + ":" + p, "");
             a.find(".addition").val(q);
@@ -732,8 +735,9 @@ function retrieveFiltersGalleryView() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "start", "end", "recent", "location"];
     $.each(filterArray, function (index, filter) {
-
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar == ";") || (previousChar == " "))) {
             var p = a.find(".addition").val().split(":")[1];
             var q = a.find(".addition").val().replace(filter + ":" + p, "");
             a.find(".addition").val(q);
