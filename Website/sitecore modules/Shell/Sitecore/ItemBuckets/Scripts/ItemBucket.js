@@ -7,6 +7,39 @@ var FacetOn = false;
 var PinFacets = false;
 defaultView();
 disableInception();
+function onVariantClick(thisElement) {
+    if ((thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
+
+    } else {
+
+        var listOfSearches = ResolveSearches(thisElement.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
+
+        $(".addition").val("");
+        if (listOfSearches.length == 1) {
+            $(".addition").val(listOfSearches[0]);
+            $(".addition").focus();
+            $(".addition").val($(".addition").val() + ":");
+            var press = jQuery.Event("keyup");
+            press.shiftKey = true;
+            press.which = 58;
+            $(".addition").trigger(press);
+        } else {
+            for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
+                if (listOfSearches[iii + 1] != "") {
+                    var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + thisElement.outerText.split(':')[0]);
+                    if (childCheck.text().indexOf(thisElement.outerText.split(':')[1].replace(';', '')) < 0) {
+                        $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span onclick="removeFromSearch($(this)[0])"class="token-input-delete-token-facebook remove">×</span></li>');
+                    }
+                }
+            }
+        }
+    }
+}
+
+function removeFromSearch(thisElement) {
+    $(thisElement).parents("li:first").remove();
+    $(".addition").focus();
+}
 //swapTabs();
 function swapTabs() {
     jQuery("#BContent", parent.document.body).after(jQuery("#BContent", parent.document.body).prev());
@@ -1560,15 +1593,15 @@ function i() { }
     }
 
 
-$(function () {
+    $(function () {
 
 
-    
 
 
-    var a = $("#ui_element");
-    a.find(".addition").focus();
-    a.find(".addition").bind("focus",
+
+        var a = $("#ui_element");
+        a.find(".addition").focus();
+        a.find(".addition").bind("focus",
         function () {
             if ((a.find(".addition").val().length > 0) || ($('.boxme').children('li').length > 1) || (a.find(".addition").text().length > 0)) {
                 if ($(".addition").val().indexOf("Search for an Item") > -1) {
@@ -1584,9 +1617,9 @@ $(function () {
             $('.content').css({
                 'opacity': 1.0
             });
-    });
+        });
 
-    a.find(".addition").bind("blur",
+        a.find(".addition").bind("blur",
         function () {
             if ((a.find(".addition").val().length <= 0) && $('.boxme').children('li').length <= 1 && (a.find(".addition").text().length <= 0)) {
                 $(".addition").val("Search for an Item").css("font-style", "italic").css("opacity", "0.3");
@@ -1595,112 +1628,112 @@ $(function () {
             }
 
             a.find(".boxme").removeClass("myInputbox");
-    });
-
-    $(".msg_body5, .msg_body1, .msg_body2, .msg_body2, .msg_body3, .msg_body4").hide();
-
-    $(".msg_head5").click(
-        function () {
-            $(this).next(".msg_body5").slideToggle(100);
-    });
-
-    $(".msg_head1").click(
-        function () {
-            $(this).next(".msg_body1").slideToggle(100);
-    });
-
-    function ConvertSearchQuery() {
-
-        retrieveFilters();
-    }
-
-    function ParseSearchForQuery() {
-
-        var u = buildQuery();
-        var returnString = "";
-        $.each(u, function () {
-            returnString = returnString + this.type + ":" + this.value + ";";
         });
 
-        return returnString;
-    }
+        $(".msg_body5, .msg_body1, .msg_body2, .msg_body2, .msg_body3, .msg_body4").hide();
 
-    $(".SearchOperation").live("click", function () {
-        scForm.getParentForm().postRequest('', '', '', 'bucket:' + this.id + '(url="' + ParseSearchForQuery() + '")');
-        return false;
-    });
+        $(".msg_head5").click(
+        function () {
+            $(this).next(".msg_body5").slideToggle(100);
+        });
 
-    a.find(".addition").live("keydown", function (b) {
-        var d = b.keyCode || b.which;
-        if (d == 13) {
-            FacetOn = false;
-            CurrentFacetFilter = [];
-            if (CurrentView != "") {
-                $("." + CurrentView).click();
+        $(".msg_head1").click(
+        function () {
+            $(this).next(".msg_body1").slideToggle(100);
+        });
 
-            } else {
+        function ConvertSearchQuery() {
 
-                if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-                    if (!($.browser.msie)) {
+            retrieveFilters();
+        }
 
-                        $('.boxme').stop().css("background-color", "#EE0000").animate({
-                            backgroundColor: "#FFFFFF"
-                        }, 3000);
-                    }
-                    // $('.addition').removeAttr('disabled');
+        function ParseSearchForQuery() {
+
+            var u = buildQuery();
+            var returnString = "";
+            $.each(u, function () {
+                returnString = returnString + this.type + ":" + this.value + ";";
+            });
+
+            return returnString;
+        }
+
+        $(".SearchOperation").live("click", function () {
+            scForm.getParentForm().postRequest('', '', '', 'bucket:' + this.id + '(url="' + ParseSearchForQuery() + '")');
+            return false;
+        });
+
+        a.find(".addition").live("keydown", function (b) {
+            var d = b.keyCode || b.which;
+            if (d == 13) {
+                FacetOn = false;
+                CurrentFacetFilter = [];
+                if (CurrentView != "") {
+                    $("." + CurrentView).click();
+
                 } else {
-                    b.preventDefault();
-                    $(".sb_dropdown").hide();
-                    pageNumber = 0;
-                    $("#ajaxBusy").css({
-                        display: "block"
-                    });
 
-                    retrieveFilters();
-                    var u = buildQuery();
-                    runQuery(u, pageNumber, c, g);
-                    runFacet(u, pageNumber, meme, g);
+                    if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
+                        if (!($.browser.msie)) {
 
-                    $(".navAlpha").html("");
-                    $(".slide-out-div").html("");
-                    $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-                    $("#ajaxBusyFacet").css({
-                        margin: "0px auto",
-                        width: "44px"
-                    });
+                            $('.boxme').stop().css("background-color", "#EE0000").animate({
+                                backgroundColor: "#FFFFFF"
+                            }, 3000);
+                        }
+                        // $('.addition').removeAttr('disabled');
+                    } else {
+                        b.preventDefault();
+                        $(".sb_dropdown").hide();
+                        pageNumber = 0;
+                        $("#ajaxBusy").css({
+                            display: "block"
+                        });
+
+                        retrieveFilters();
+                        var u = buildQuery();
+                        runQuery(u, pageNumber, c, g);
+                        runFacet(u, pageNumber, meme, g);
+
+                        $(".navAlpha").html("");
+                        $(".slide-out-div").html("");
+                        $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                        $("#ajaxBusyFacet").css({
+                            margin: "0px auto",
+                            width: "44px"
+                        });
+                    }
                 }
             }
+        });
+        if (!PinFacets) {
+            $(".slide-out-div").hide();
         }
-    });
-    if (!PinFacets) {
-    $(".slide-out-div").hide();
-    }
-    $(".sb_search_container").click(function () {
-        a.find(".addition").focus();
-    });
+        $(".sb_search_container").click(function () {
+            a.find(".addition").focus();
+        });
 
-    function toggleDropDown() {
+        function toggleDropDown() {
 
-        a.find(".sb_down").addClass("sb_up").removeClass("sb_down");
-        jQuery.ajax({
-            type: "POST",
-            url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/RunLookup",
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (b) {
-                var c = b.d;
-                var e = "";
-                $.each(c, function () {
-                    var showMe = this.Name.replace(" ", "");
-                    showMe = showMe.replace(" ", "");
-                    if ($.browser.msie) {
-                        e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
-                    } else {
-                        e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;background: url(\'~/icon/' + this.Icon + '\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x:3px;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
-                    }
-                    $("." + showMe).die("click");
-                    $("." + showMe).live('click',
+            a.find(".sb_down").addClass("sb_up").removeClass("sb_down");
+            jQuery.ajax({
+                type: "POST",
+                url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/RunLookup",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (b) {
+                    var c = b.d;
+                    var e = "";
+                    $.each(c, function () {
+                        var showMe = this.Name.replace(" ", "");
+                        showMe = showMe.replace(" ", "");
+                        if ($.browser.msie) {
+                            e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
+                        } else {
+                            e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;background: url(\'~/icon/' + this.Icon + '\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x:3px;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
+                        }
+                        $("." + showMe).die("click");
+                        $("." + showMe).live('click',
                         function () {
                             var toggled = $("." + showMe).next("." + showMe + "body").is(":visible");
                             if (!toggled) {
@@ -1727,7 +1760,7 @@ $(function () {
 
                                                         e = e + "<li><a href=\"#\" onclick=\"javascript:launchMultipleTabs('" + splitMe + "')\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
 
-                                                } else {
+                                                    } else {
 
                                                         var splitMe = this.split("|");
                                                         e = e + "<li><a href=\"#\" onclick=\"scForm.getParentForm().postRequest('','','','" + "contenteditor:launchtab" + "(url=" + splitMe[1] + ")'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
@@ -1735,18 +1768,18 @@ $(function () {
                                                 } else if (scope.data.indexOf("SearchOperations") > 0) {
                                                     if ($.browser.msie) {
                                                         e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
-                                                } else {
-                                                    e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="background: url(\'~/icon/' + this.split("|")[1] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
+                                                    } else {
+                                                        e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="background: url(\'~/icon/' + this.split("|")[1] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
                                                     }
                                                 } else if (scope.data.indexOf("MyRecentSearches") > 0) {
 
-                                                    e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
+                                                    e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])"  title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
 
                                                 } else {
                                                     if ($.browser.msie) {
-                                                        e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])"  title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     } else {
-                                                    e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'~/icon/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'~/icon/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     }
                                                 }
                                             }
@@ -1764,85 +1797,99 @@ $(function () {
                             }
                         });
 
-                    $(".command, .topsearch").live("click",
-                        function () {
+                      
+                    });
 
-                            if ((this.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (this.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (this.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
+                    $(".sb_dropdown").html("");
+                    $(".sb_dropdown").append(e);
+                    $(".sb_dropdown").show();
+                    a.find(".sb_down").addClass("sb_up").removeClass("sb_down");
+                    $(".sb_dropdown").children().first(".sb_filter.recent").attr("id", "keySelect");
 
-                            } else {
 
-                                var listOfSearches = ResolveSearches(this.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
+                }
+            });
 
-                                $(".addition").val("");
-                                if (listOfSearches.length == 1) {
-                                    $(".addition").val(listOfSearches[0]);
-                                    $(".addition").focus();
-                                    $(".addition").val($(".addition").val() + ":");
-                                    var press = jQuery.Event("keyup");
-                                    press.shiftKey = true;
-                                    press.which = 58;
-                                    $(".addition").trigger(press);
-                                } else {
-                                    for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
-                                        if (listOfSearches[iii + 1] != "") {
-                                            var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + this.text.split(':')[0]);
-                                            if (childCheck.text().indexOf(this.text.split(':')[1].replace(';', '')) < 0) {
-                                                $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-                                                $(".remove").live("click",
-                                                    function () {
-                                                        $(this).parents("li:first").remove();
-                                                        $(".addition").focus();
-                                                    });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+        }
+
+        function toggleDropDownUp() {
+            $(".sb_dropdown").hide();
+            a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
+
+        };
+
+
+        //    $(".sb_down, .sb_up").live('click', function () {
+        //        if ($('.sb_up').hasClass("toggled")) {
+        //            toggleDropDownUp();
+        //            $('.sb_down').addClass("toggled");
+        //            $('.sb_up').removeClass("toggled");
+        //        } else {
+        //            toggleDropDown();
+        //            $('.sb_up').addClass("toggled");
+        //            $('.sb_down').removeClass("toggled");
+        //        };
+        //    });
+
+
+        $(".sb_down, .sb_up").toggle(toggleDropDown, toggleDropDownUp);
+
+        $(".sb_search").click(function () {
+            FacetOn = false;
+            CurrentFacetFilter = [];
+            if (CurrentView != "") {
+                $("." + CurrentView).click();
+
+            } else {
+
+                if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
+                    if (!($.browser.msie)) {
+
+                        $('.boxme').stop().css("background-color", "#EE0000").animate({
+                            backgroundColor: "#FFFFFF"
+                        }, 3000);
+                    }
+                    // $('.addition').removeAttr('disabled');
+                } else {
+                    if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
+                        $('.sb_clear').css({
+                            display: 'inline'
                         });
-                });
+                    }
 
-                $(".sb_dropdown").html("");
-                $(".sb_dropdown").append(e);
-                $(".sb_dropdown").show();
-                a.find(".sb_down").addClass("sb_up").removeClass("sb_down");
-                $(".sb_dropdown").children().first(".sb_filter.recent").attr("id", "keySelect");
+                    pageNumber = 0;
+                    $('.content').css({
+                        'opacity': 1.0
+                    });
 
+                    $(".grid").removeClass("active");
+                    $(".list").addClass("active");
+                    $("#ajaxBusy").css({
+                        display: "block"
+                    });
 
+                    var n = buildQuery();
+                    retrieveFilters();
+                    runQuery(n, pageNumber, c, g);
+                    runFacet(n, pageNumber, meme, g);
+
+                    a.find(".sb_dropdown").hide();
+                    $(".navAlpha").html("");
+                    $(".slide-out-div").html("");
+                    $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                    $("#ajaxBusyFacet").css({
+                        margin: "0px auto",
+                        width: "44px"
+                    });
+                }
             }
         });
 
-    }
 
-    function toggleDropDownUp() {
-        $(".sb_dropdown").hide();
-        a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
-
-    };
-
-
-    //    $(".sb_down, .sb_up").live('click', function () {
-    //        if ($('.sb_up').hasClass("toggled")) {
-    //            toggleDropDownUp();
-    //            $('.sb_down').addClass("toggled");
-    //            $('.sb_up').removeClass("toggled");
-    //        } else {
-    //            toggleDropDown();
-    //            $('.sb_up').addClass("toggled");
-    //            $('.sb_down').removeClass("toggled");
-    //        };
-    //    });
-
-
-    $(".sb_down, .sb_up").toggle(toggleDropDown, toggleDropDownUp);
-
-    $(".sb_search").click(function () {
-        FacetOn = false;
-        CurrentFacetFilter = [];
-        if (CurrentView != "") {
-            $("." + CurrentView).click();
-
-        } else {
-
+        $(".list").click(function () {
+            FacetOn = false;
+            CurrentView = "list";
+            CurrentFacetFilter = [];
             if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
                 if (!($.browser.msie)) {
 
@@ -1883,591 +1930,543 @@ $(function () {
                     width: "44px"
                 });
             }
-        }
-    });
+        });
+
+        $(".pageLink").live("click", function () {
 
 
-    $(".list").click(function () {
-        FacetOn = false;
-        CurrentView = "list";
-        CurrentFacetFilter = [];
-        if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-            if (!($.browser.msie)) {
 
-                $('.boxme').stop().css("background-color", "#EE0000").animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
+            $(this).addClass("pageClickLoad");
+            if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
+                // $('.addition').removeAttr('disabled');
+                if (!($.browser.msie)) {
+
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({
+                        backgroundColor: "#FFFFFF"
+                    }, 3000);
+                }
+
+                $(this).removeClass("pageClickLoad");
+            } else {
+                a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
+                $('.content').css({
+                    'opacity': 1.0
+                });
+
+                $("#ajaxBusy").css({
+                    display: "block"
+                });
+
+                var p = buildQuery();
+                retrieveFilters();
+                if (FacetOn) {
+                    p = CurrentFacetFilter;
+                }
+
+                if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
+                    pageNumber = $(this).attr("data-page");
+                    runQuery(p, pageNumber, h, g);
+                } else if (CurrentView == "grid") {
+                    pageNumber = $(this).attr("data-page");
+                    runQuery(p, pageNumber, h, i);
+                    runFacet(p, pageNumber, meme, g);
+
+                    $(".navAlpha").html("");
+                    $(".slide-out-div").html("");
+                    $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                    $("#ajaxBusyFacet").css({
+                        margin: "0px auto",
+                        width: "44px"
+                    });
+
+                } else {
+                    pageNumber = $(this).attr("data-page");
+                    runQuery(p, pageNumber, c, g);
+                }
             }
-            // $('.addition').removeAttr('disabled');
-        } else {
+
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'slow');
+
+
+
+        });
+
+        $(".grid").click(function () {
+            FacetOn = false;
+            CurrentView = "grid";
+            CurrentFacetFilter = [];
+            if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
+                if (!($.browser.msie)) {
+
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({
+                        backgroundColor: "#FFFFFF"
+                    }, 3000);
+                }
+                // $('.addition').removeAttr('disabled');
+            } else {
+                a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
+                pageNumber = 0;
+                $(".list").removeClass("active");
+                $(".grid").addClass("active");
+                $('.content').css({
+                    'opacity': 1.0
+                });
+
+                $("#ajaxBusy").css({
+                    display: "block"
+                });
+
+                var n = buildQuery();
+                retrieveFilters();
+                runQuery(n, pageNumber, h, i);
+                runFacet(n, pageNumber, meme, g);
+
+                $(".navAlpha").html("");
+                $(".slide-out-div").html("");
+                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                $("#ajaxBusyFacet").css({
+                    display: "none",
+                    margin: "0px auto",
+                    width: "44px"
+                });
+            }
+        });
+
+        establishViews();
+
+
+        //Event Bindings
+
+        a.find(".addition").bind("focus", function () {
             if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
                 $('.sb_clear').css({
                     display: 'inline'
                 });
             }
 
-            pageNumber = 0;
-            $('.content').css({
-                'opacity': 1.0
-            });
+            $(".sb_dropdown").hide();
+            a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
+        });
 
-            $(".grid").removeClass("active");
-            $(".list").addClass("active");
-            $("#ajaxBusy").css({
-                display: "block"
-            });
+        a.find(".addition").live("keydown", function (b) {
+            var c = b.keyCode || b.which;
+            if (a.find(".addition").val().indexOf("tag:") > -1) {
+                if (this.value.replace("tag:", "").length >= 2) {
+                    jQuery.ajax({
+                        type: "POST",
+                        url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetTag",
+                        data: "{'tagChars' : '" + this.value.replace("tag:", "").substring(0, this.value.replace("tag:", "").length) + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (a) {
+                            var b = a.d;
+                            var c = new Array;
+                            $.each(b, function () {
+                                c.push("tag:" + this.DisplayText + "|tagid=" + this.DisplayValue);
+                            });
 
-            var n = buildQuery();
-            retrieveFilters();
-            runQuery(n, pageNumber, c, g);
-            runFacet(n, pageNumber, meme, g);
+                            $(".ui-corner-all").live("click", function () {
+                                ConvertSearchQuery();
+                            });
 
-            a.find(".sb_dropdown").hide();
-            $(".navAlpha").html("");
-            $(".slide-out-div").html("");
-            $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-            $("#ajaxBusyFacet").css({
-                margin: "0px auto",
-                width: "44px"
-            });
-        }
-    });
-
-    $(".pageLink").live("click", function () {
-
-
-
-        $(this).addClass("pageClickLoad");
-        if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-            // $('.addition').removeAttr('disabled');
-            if (!($.browser.msie)) {
-
-                $('.boxme').stop().css("background-color", "#EE0000").animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
-            }
-
-            $(this).removeClass("pageClickLoad");
-        } else {
-            a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
-            $('.content').css({
-                'opacity': 1.0
-            });
-
-            $("#ajaxBusy").css({
-                display: "block"
-            });
-
-            var p = buildQuery();
-            retrieveFilters();
-            if (FacetOn) {
-                p = CurrentFacetFilter;
-            }
-
-            if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
-                pageNumber = $(this).attr("data-page");
-                runQuery(p, pageNumber, h, g);
-            } else if (CurrentView == "grid") {
-                pageNumber = $(this).attr("data-page");
-                runQuery(p, pageNumber, h, i);
-                runFacet(p, pageNumber, meme, g);
-
-                $(".navAlpha").html("");
-                $(".slide-out-div").html("");
-                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-                $("#ajaxBusyFacet").css({
-                    margin: "0px auto",
-                    width: "44px"
-                });
-
-            } else {
-                pageNumber = $(this).attr("data-page");
-                runQuery(p, pageNumber, c, g);
-            }
-        }
-
-        $('html, body').animate({
-            scrollTop: 0
-        }, 'slow');
-
-
-
-    });
-
-    $(".grid").click(function () {
-        FacetOn = false;
-        CurrentView = "grid";
-        CurrentFacetFilter = [];
-        if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-            if (!($.browser.msie)) {
-
-                $('.boxme').stop().css("background-color", "#EE0000").animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
-            }
-            // $('.addition').removeAttr('disabled');
-        } else {
-            a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
-            pageNumber = 0;
-            $(".list").removeClass("active");
-            $(".grid").addClass("active");
-            $('.content').css({
-                'opacity': 1.0
-            });
-
-            $("#ajaxBusy").css({
-                display: "block"
-            });
-
-            var n = buildQuery();
-            retrieveFilters();
-            runQuery(n, pageNumber, h, i);
-            runFacet(n, pageNumber, meme, g);
-
-            $(".navAlpha").html("");
-            $(".slide-out-div").html("");
-            $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-            $("#ajaxBusyFacet").css({
-                display: "none",
-                margin: "0px auto",
-                width: "44px"
-            });
-        }
-    });
-
-    establishViews();
-
-
-    //Event Bindings
-
-    a.find(".addition").bind("focus", function () {
-        if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
-            $('.sb_clear').css({
-                display: 'inline'
-            });
-        }
-
-        $(".sb_dropdown").hide();
-        a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
-    });
-
-    a.find(".addition").live("keydown", function (b) {
-        var c = b.keyCode || b.which;
-        if (a.find(".addition").val().indexOf("tag:") > -1) {
-            if (this.value.replace("tag:", "").length >= 2) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetTag",
-                    data: "{'tagChars' : '" + this.value.replace("tag:", "").substring(0, this.value.replace("tag:", "").length) + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (a) {
-                        var b = a.d;
-                        var c = new Array;
-                        $.each(b, function () {
-                            c.push("tag:" + this.DisplayText + "|tagid=" + this.DisplayValue);
-                        });
-
-                        $(".ui-corner-all").live("click", function () {
-                            ConvertSearchQuery();
-                        });
-
-                        $(".addition").autocomplete({
-                            source: c,
-                            autoFocus: true
-                        });
-                    }
-                });
-            }
-        }
-
-        autoSuggestWithWait(this, "author", "GetAuthors", "{'tagChars' : '" + this.value.replace("author:", "").substring(0, this.value.replace("author:", "").length) + "'}", 1);
-        autoSuggestWithWait(this, "custom", "GetFields", "{'tagChars' : '" + this.value.replace("custom:", "").substring(0, this.value.replace("custom:", "").length) + "'}", 1);
-        autoSuggestWithWait(this, "extension", "GetFileType", "{'tagChars' : '" + this.value.replace("filetype:", "").substring(0, this.value.replace("filetype:", "").length) + "'}", 1);
-
-        if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
-            $('.sb_clear').css({
-                display: 'inline'
-            });
-        }
-        if (c == 88 && b.ctrlKey) {
-            $('.sb_clear').css({
-                display: 'none'
-            });
-
-            $(".addition").val("");
-            $(".addition").text("");
-            $(".boxme").children(".token-input-token-facebook").remove();
-        }
-
-        if (c == 9) {
-            retrieveFilters();
-            b.preventDefault();
-        }
-
-        clearTimeout(typingTimer);
-
-
-
-    });
-
-    var typingTimer;                //timer identifier
-    var doneTypingInterval = 3000;  //time in ms, 3 second for example
-    function doneTyping() {
-        autoSuggestText($(".addition"), "", "{'tagChars' : '" + $(".addition").val() + "'}", 3);
-    }
-    $("body").live("keyup", function (b) {
-
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-       
-
-
-        //Spacebar and Ctrl pressed.
-        if (b.which == 32 && b.ctrlKey) {
-            event.preventDefault();
-            toggleDropDown();
-        }
-        //Escape pressed.
-        if (b.which == 27) {
-
-            toggleDropDownUp();
-            if ($(".handle2").hasClass("toggled")) {
-                $(".handle2").click();
-            }
-            if ($(".handle").hasClass("toggled")) {
-                $(".handle").click();
-            }
-        }
-
-        //"b" and Ctrl pressed.
-        if (b.which == 66 && b.ctrlKey) {
-            $(".addition").focus();
-        }
-
-        if (!$(".addition").is(":focus")) {
-            if (b.which == 56 || b.which == 57 || b.which == 49 || b.which == 50 || b.which == 51 || b.which == 52 || b.which == 53 || b.which == 54 || b.which == 55) {
-
-                if (b.shiftKey) {
-                    switch (b.which) {
-                        case 49:
-                            CurrentView = $("#views").children().first().attr("id");
-                            $("." + CurrentView).click();
-                            break;
-                        case 50:
-                            CurrentView = $("#views").children().first().next().attr("id");
-                            $("." + CurrentView).click();
-                            break;
-                        case 51:
-                            CurrentView = $("#views").children().first().next().next().attr("id");
-                            $("." + CurrentView).click();
-                            break;
-                        case 52:
-                            CurrentView = $("#views").children().first().next().next().next().attr("id");
-                            $("." + CurrentView).click();
-                            break;
-                        case 53:
-                            CurrentView = $("#views").children().first().next().next().next().next().attr("id");
-                            $("." + CurrentView).click();
-                            break;
-
-                        default:
-                            CurrentView = $("#views").children().first().next().attr("id");
-                            $("." + CurrentView).click();
-                    }
-
-
-
-                } else {
-                    switch (b.which) {
-                        case 49:
-                            MoveToPage(1);
-                            break;
-                        case 50:
-                            MoveToPage(2);
-                            break;
-                        case 51:
-                            MoveToPage(3);
-                            break;
-                        case 52:
-                            MoveToPage(4);
-                            break;
-                        case 53:
-                            MoveToPage(5);
-                            break;
-                        case 54:
-                            MoveToPage(6);
-                            break;
-                        case 55:
-                            MoveToPage(7);
-                            break;
-                        case 56:
-                            MoveToPage(8);
-                            break;
-                        case 57:
-                            MoveToPage(9);
-                            break;
-                        default:
-                    }
+                            $(".addition").autocomplete({
+                                source: c,
+                                autoFocus: true
+                            });
+                        }
+                    });
                 }
             }
-        }
 
-    });
+            autoSuggestWithWait(this, "author", "GetAuthors", "{'tagChars' : '" + this.value.replace("author:", "").substring(0, this.value.replace("author:", "").length) + "'}", 1);
+            autoSuggestWithWait(this, "custom", "GetFields", "{'tagChars' : '" + this.value.replace("custom:", "").substring(0, this.value.replace("custom:", "").length) + "'}", 1);
+            autoSuggestWithWait(this, "extension", "GetFileType", "{'tagChars' : '" + this.value.replace("filetype:", "").substring(0, this.value.replace("filetype:", "").length) + "'}", 1);
 
+            if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
+                $('.sb_clear').css({
+                    display: 'inline'
+                });
+            }
+            if (c == 88 && b.ctrlKey) {
+                $('.sb_clear').css({
+                    display: 'none'
+                });
 
-    a.find(".addition").live("keyup", function (b) {
-        if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
-            $('.sb_clear').css({
-                display: 'inline'
-            });
-        } else {
-            $('.sb_clear').css({
-                display: 'none'
-            });
-        }
-
-        if (b.which == 88 && b.ctrlKey) {
-            $('.sb_clear').css({
-                display: 'none'
-            });
-
-            $(".addition").val("");
-            $(".addition").text("");
-            $(".boxme").children(".token-input-token-facebook").remove();
-        }
-
-
-
-
-        //Spacebar and Ctrl pressed.
-        if (b.which == 32 && b.ctrlKey) {
-            if ($(".addition").val() == " ") {
                 $(".addition").val("");
+                $(".addition").text("");
+                $(".boxme").children(".token-input-token-facebook").remove();
             }
-            Expanded = false;
-            toggleDropDown();
 
-        }
-        //Escape pressed.
-        if (b.which == 27) {
-
-            toggleDropDownUp();
-        }
-
-        //"b" and Ctrl pressed.
-        if (b.which == 66 && b.ctrlKey) {
-            $(".addition").focus();
-        }
-
-
-        var $old = $('#keySelect');
-        var $new;
-
-        //"left" and Ctrl pressed.
-        if (b.which == 37 && b.ctrlKey) {
-            Expanded = false;
-            $old.click();
-            $new = $old.next("a");
-            $old.removeAttr("id", 'keySelect');
-            $new.attr("id", 'keySelect');
-        }
-        //"up" and Ctrl pressed.
-        if (b.which == 38 && b.ctrlKey) {
-            if (Expanded) {
-                $new = $old.parent().prev("li").children("a")
-            } else {
-                $new = $old.prev().prev();
+            if (c == 9) {
+                retrieveFilters();
+                b.preventDefault();
             }
-            $(".sb_filter.recent").prev().focus();
-            $old.removeAttr("id", 'keySelect');
-            $new.attr("id", 'keySelect');
+
+            clearTimeout(typingTimer);
+
+
+
+        });
+
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 3000;  //time in ms, 3 second for example
+        function doneTyping() {
+            autoSuggestText($(".addition"), "", "{'tagChars' : '" + $(".addition").val() + "'}", 3);
         }
-        //"right" and Ctrl pressed.
-        if (b.which == 39 && b.ctrlKey) {
-            Expanded = true;
-            $old.click();
-            $new = $old.next("a");
-            $old.removeAttr("id", 'keySelect');
-            $new.attr("id", 'keySelect');
-        }
-        //"down" and Ctrl pressed.
-        if (b.which == 40 && b.ctrlKey) {
-            if (Expanded) {
-                $new = $old.parent().next("li").children("a")
-            } else {
-                $new = $old.next().next();
+        $("body").live("keyup", function (b) {
+
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+
+
+
+            //Spacebar and Ctrl pressed.
+            if (b.which == 32 && b.ctrlKey) {
+                event.preventDefault();
+                toggleDropDown();
             }
-            $old.removeAttr("id", 'keySelect');
-            $new.attr("id", 'keySelect');
+            //Escape pressed.
+            if (b.which == 27) {
 
-        }
-
-        //"down" and Ctrl pressed.
-        if (b.which == 13 && b.ctrlKey) {
-            $old.click();
-        }
-
-
-
-        if (b.which == 39 || b.which == 9 || b.keycode == 9) {
-
-            //This allows for the NOT Search.
-            if (a.find(".addition").val().indexOf("text:") > -1) {
-                var d = a.find(".addition").val().split(":")[1];
-                var e = a.find(".addition").val().replace("text:" + d, "");
-                a.find(".addition").val(e);
-                strike = d.replace(d.split(" NOT ")[1], '<span class="highlight" style="color:red;text-decoration:line-through">' + d.split(" NOT ")[1] + "</span>");
-
-                if (d.indexOf("NOT") > -1) {
-                    strike = d.replace(d.split(" NOT ")[1], '<span class="highlight" style="color:red;text-decoration:line-through">' + d.split(" NOT ")[1] + "</span>");
-                    a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + strike + '"><span style="background: url(\'images/text.gif\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="text">' + strike + '</p><span class="token-input-delete-token-facebook remove">×</span></li>')
-                } else {
-                    a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + d + '"><span style="background: url(\'images/text.gif\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="text">' + d + '</p><span class="token-input-delete-token-facebook remove">×</span></li>')
+                toggleDropDownUp();
+                if ($(".handle2").hasClass("toggled")) {
+                    $(".handle2").click();
                 }
-                $(".remove").live("click", function () {
-                    $(this).parents("li:first").remove();
-                    a.find(".addition").focus();
+                if ($(".handle").hasClass("toggled")) {
+                    $(".handle").click();
+                }
+            }
+
+            //"b" and Ctrl pressed.
+            if (b.which == 66 && b.ctrlKey) {
+                $(".addition").focus();
+            }
+
+            if (!$(".addition").is(":focus")) {
+                if (b.which == 56 || b.which == 57 || b.which == 49 || b.which == 50 || b.which == 51 || b.which == 52 || b.which == 53 || b.which == 54 || b.which == 55) {
+
+                    if (b.shiftKey) {
+                        switch (b.which) {
+                            case 49:
+                                CurrentView = $("#views").children().first().attr("id");
+                                $("." + CurrentView).click();
+                                break;
+                            case 50:
+                                CurrentView = $("#views").children().first().next().attr("id");
+                                $("." + CurrentView).click();
+                                break;
+                            case 51:
+                                CurrentView = $("#views").children().first().next().next().attr("id");
+                                $("." + CurrentView).click();
+                                break;
+                            case 52:
+                                CurrentView = $("#views").children().first().next().next().next().attr("id");
+                                $("." + CurrentView).click();
+                                break;
+                            case 53:
+                                CurrentView = $("#views").children().first().next().next().next().next().attr("id");
+                                $("." + CurrentView).click();
+                                break;
+
+                            default:
+                                CurrentView = $("#views").children().first().next().attr("id");
+                                $("." + CurrentView).click();
+                        }
+
+
+
+                    } else {
+                        switch (b.which) {
+                            case 49:
+                                MoveToPage(1);
+                                break;
+                            case 50:
+                                MoveToPage(2);
+                                break;
+                            case 51:
+                                MoveToPage(3);
+                                break;
+                            case 52:
+                                MoveToPage(4);
+                                break;
+                            case 53:
+                                MoveToPage(5);
+                                break;
+                            case 54:
+                                MoveToPage(6);
+                                break;
+                            case 55:
+                                MoveToPage(7);
+                                break;
+                            case 56:
+                                MoveToPage(8);
+                                break;
+                            case 57:
+                                MoveToPage(9);
+                                break;
+                            default:
+                        }
+                    }
+                }
+            }
+
+        });
+
+
+        a.find(".addition").live("keyup", function (b) {
+            if ((a.find(".addition").val().length > 0) || $('.boxme').children('li').length > 1) {
+                $('.sb_clear').css({
+                    display: 'inline'
                 });
-            }
-
-            retrieveFilters();
-        }
-
-        if (b.which == 59 || b.which == 186 || b.keyCode == 186 || b.which == 58) {
-
-            autoSuggestDate("start");
-            autoSuggest("field", "GetFields", "");
-            autoSuggest("location", "GetBuckets", "");
-            autoSuggest("sort", "GetFields", "");
-            autoSuggest("recent", "GetRecent", "");
-            autoSuggest("language", "GetLanguages", "");
-            autoSuggest("site", "GetSites", "");
-            autoSuggest("template", "GetTemp", "");
-            autoSuggestDate("end");
-        }
-    });
-
-    function MoveToPage(a) {
-        $(this).addClass("pageClickLoad");
-        if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
-            // $('.addition').removeAttr('disabled');
-            if (!($.browser.msie)) {
-
-                $('.boxme').stop().css("background-color", "#EE0000").animate({
-                    backgroundColor: "#FFFFFF"
-                }, 3000);
-            }
-
-            $(this).removeClass("pageClickLoad");
-        } else {
-            $(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
-            $('.content').css({
-                'opacity': 1.0
-            });
-
-            $("#ajaxBusy").css({
-                display: "block"
-            });
-
-            var p = buildQuery();
-            retrieveFilters();
-
-//            if (CurrentView != "list" && CurrentView != "grid") {
-//                pageNumber = a;
-//                runQuery(p, pageNumber, h, g);
-//            }
-//            else if ($(".grid").hasClass("active")) {
-//                pageNumber = a;
-//                runQuery(p, pageNumber, h, i);
-//                runFacet(p, pageNumber, meme, g);
-
-//                $(".navAlpha").html("");
-//                $(".slide-out-div").html("");
-//                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-//                $("#ajaxBusyFacet").css({
-//                    margin: "0px auto",
-//                    width: "44px"
-//                });
-
-//            } else {
-//                pageNumber = a;
-//                runQuery(p, pageNumber, c, g);
-//            }
-            
-            if (FacetOn) {
-                p = CurrentFacetFilter;
-            }
-
-             if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
-                pageNumber = a;
-                runQuery(p, pageNumber, h, g);
-            } else if (CurrentView == "grid") {
-                pageNumber = a;
-                runQuery(p, pageNumber, h, i);
-                runFacet(p, pageNumber, meme, g);
-
-                $(".navAlpha").html("");
-                $(".slide-out-div").html("");
-                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-                $("#ajaxBusyFacet").css({
-                    margin: "0px auto",
-                    width: "44px"
-                });
-
             } else {
-                pageNumber = a;
-                runQuery(p, pageNumber, c, g);
+                $('.sb_clear').css({
+                    display: 'none'
+                });
+            }
+
+            if (b.which == 88 && b.ctrlKey) {
+                $('.sb_clear').css({
+                    display: 'none'
+                });
+
+                $(".addition").val("");
+                $(".addition").text("");
+                $(".boxme").children(".token-input-token-facebook").remove();
             }
 
 
 
 
+            //Spacebar and Ctrl pressed.
+            if (b.which == 32 && b.ctrlKey) {
+                if ($(".addition").val() == " ") {
+                    $(".addition").val("");
+                }
+                Expanded = false;
+                toggleDropDown();
+
+            }
+            //Escape pressed.
+            if (b.which == 27) {
+
+                toggleDropDownUp();
+            }
+
+            //"b" and Ctrl pressed.
+            if (b.which == 66 && b.ctrlKey) {
+                $(".addition").focus();
+            }
+
+
+            var $old = $('#keySelect');
+            var $new;
+
+            //"left" and Ctrl pressed.
+            if (b.which == 37 && b.ctrlKey) {
+                Expanded = false;
+                $old.click();
+                $new = $old.next("a");
+                $old.removeAttr("id", 'keySelect');
+                $new.attr("id", 'keySelect');
+            }
+            //"up" and Ctrl pressed.
+            if (b.which == 38 && b.ctrlKey) {
+                if (Expanded) {
+                    $new = $old.parent().prev("li").children("a")
+                } else {
+                    $new = $old.prev().prev();
+                }
+                $(".sb_filter.recent").prev().focus();
+                $old.removeAttr("id", 'keySelect');
+                $new.attr("id", 'keySelect');
+            }
+            //"right" and Ctrl pressed.
+            if (b.which == 39 && b.ctrlKey) {
+                Expanded = true;
+                $old.click();
+                $new = $old.next("a");
+                $old.removeAttr("id", 'keySelect');
+                $new.attr("id", 'keySelect');
+            }
+            //"down" and Ctrl pressed.
+            if (b.which == 40 && b.ctrlKey) {
+                if (Expanded) {
+                    $new = $old.parent().next("li").children("a")
+                } else {
+                    $new = $old.next().next();
+                }
+                $old.removeAttr("id", 'keySelect');
+                $new.attr("id", 'keySelect');
+
+            }
+
+            //"down" and Ctrl pressed.
+            if (b.which == 13 && b.ctrlKey) {
+                $old.click();
+            }
+
+
+
+            if (b.which == 39 || b.which == 9 || b.keycode == 9) {
+
+                //This allows for the NOT Search.
+                if (a.find(".addition").val().indexOf("text:") > -1) {
+                    var d = a.find(".addition").val().split(":")[1];
+                    var e = a.find(".addition").val().replace("text:" + d, "");
+                    a.find(".addition").val(e);
+                    strike = d.replace(d.split(" NOT ")[1], '<span class="highlight" style="color:red;text-decoration:line-through">' + d.split(" NOT ")[1] + "</span>");
+
+                    if (d.indexOf("NOT") > -1) {
+                        strike = d.replace(d.split(" NOT ")[1], '<span class="highlight" style="color:red;text-decoration:line-through">' + d.split(" NOT ")[1] + "</span>");
+                        a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + strike + '"><span style="background: url(\'images/text.gif\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="text">' + strike + '</p><span class="token-input-delete-token-facebook remove">×</span></li>')
+                    } else {
+                        a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + d + '"><span style="background: url(\'images/text.gif\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="text">' + d + '</p><span class="token-input-delete-token-facebook remove">×</span></li>')
+                    }
+                    $(".remove").live("click", function () {
+                        $(this).parents("li:first").remove();
+                        a.find(".addition").focus();
+                    });
+                }
+
+                retrieveFilters();
+            }
+
+            if (b.which == 59 || b.which == 186 || b.keyCode == 186 || b.which == 58) {
+
+                autoSuggestDate("start");
+                autoSuggest("field", "GetFields", "");
+                autoSuggest("location", "GetBuckets", "");
+                autoSuggest("sort", "GetFields", "");
+                autoSuggest("recent", "GetRecent", "");
+                autoSuggest("language", "GetLanguages", "");
+                autoSuggest("site", "GetSites", "");
+                autoSuggest("template", "GetTemp", "");
+                autoSuggestDate("end");
+            }
+        });
+
+        function MoveToPage(a) {
+            $(this).addClass("pageClickLoad");
+            if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
+                // $('.addition').removeAttr('disabled');
+                if (!($.browser.msie)) {
+
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({
+                        backgroundColor: "#FFFFFF"
+                    }, 3000);
+                }
+
+                $(this).removeClass("pageClickLoad");
+            } else {
+                $(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
+                $('.content').css({
+                    'opacity': 1.0
+                });
+
+                $("#ajaxBusy").css({
+                    display: "block"
+                });
+
+                var p = buildQuery();
+                retrieveFilters();
+
+                //            if (CurrentView != "list" && CurrentView != "grid") {
+                //                pageNumber = a;
+                //                runQuery(p, pageNumber, h, g);
+                //            }
+                //            else if ($(".grid").hasClass("active")) {
+                //                pageNumber = a;
+                //                runQuery(p, pageNumber, h, i);
+                //                runFacet(p, pageNumber, meme, g);
+
+                //                $(".navAlpha").html("");
+                //                $(".slide-out-div").html("");
+                //                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                //                $("#ajaxBusyFacet").css({
+                //                    margin: "0px auto",
+                //                    width: "44px"
+                //                });
+
+                //            } else {
+                //                pageNumber = a;
+                //                runQuery(p, pageNumber, c, g);
+                //            }
+
+                if (FacetOn) {
+                    p = CurrentFacetFilter;
+                }
+
+                if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
+                    pageNumber = a;
+                    runQuery(p, pageNumber, h, g);
+                } else if (CurrentView == "grid") {
+                    pageNumber = a;
+                    runQuery(p, pageNumber, h, i);
+                    runFacet(p, pageNumber, meme, g);
+
+                    $(".navAlpha").html("");
+                    $(".slide-out-div").html("");
+                    $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                    $("#ajaxBusyFacet").css({
+                        margin: "0px auto",
+                        width: "44px"
+                    });
+
+                } else {
+                    pageNumber = a;
+                    runQuery(p, pageNumber, c, g);
+                }
+
+
+
+
+            }
+
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'slow');
         }
 
-        $('html, body').animate({
-            scrollTop: 0
-        }, 'slow');
-    }
-
-    /* This will fade the dropdown menu away once you lose focus on it (blur) */
-    $(".sb_dropdown").bind("mouseleave",
+        /* This will fade the dropdown menu away once you lose focus on it (blur) */
+        $(".sb_dropdown").bind("mouseleave",
         function () {
             $(".sb_dropdown").fadeOut(2500,
                 function () {
                     a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
 
-            $('.sb_down').click();
+                    $('.sb_down').click();
+                });
         });
-    });
 
 
 
-    /* This will stop the fading away of the drop down menu once you have lost focus on it */
-    $(".sb_dropdown").live("mouseenter",
+        /* This will stop the fading away of the drop down menu once you have lost focus on it */
+        $(".sb_dropdown").live("mouseenter",
         function () {
             if ($(".sb_dropdown").is(':animated')) {
                 $(".sb_dropdown").stop(true, true);
             }
             $(".sb_dropdown").show();
-    });
+        });
 
-    a.find(".sb_dropdown").find('label[for="all"]').prev().bind("click",
+        a.find(".sb_dropdown").find('label[for="all"]').prev().bind("click",
         function () {
             $(this).parent().siblings().find(":checkbox").attr("checked", this.checked).attr("disabled", this.checked);
-    });
+        });
 
-    /* This will hide the loading bar once an item has been loaded */
-    $("#loadingSection").prepend('<div id="ajaxBusy"><p><img src="images/loading.gif"></p></div>');
-    $("#ajaxBusy").css({
+        /* This will hide the loading bar once an item has been loaded */
+        $("#loadingSection").prepend('<div id="ajaxBusy"><p><img src="images/loading.gif"></p></div>');
+        $("#ajaxBusy").css({
             padding: "0px 122px 0px 0px",
             display: "none",
             margin: "0px auto",
             width: "24px"
-    });
+        });
 
-    /* This will change the image and the sort direction of the sort filter */
-    $('.sortDirection').live("click", function () {
-        $(this).toggle(
+        /* This will change the image and the sort direction of the sort filter */
+        $('.sortDirection').live("click", function () {
+            $(this).toggle(
             function () {
                 $(this).css("background-image", "url(../ItemBuckets/images/sortdesc.gif)");
                 $(this).addClass("desc");
@@ -2477,52 +2476,52 @@ $(function () {
                 $(this).css("background-image", "url(../ItemBuckets/images/sort.gif)");
                 $(this).addClass("asc");
                 $(this).removeClass("desc");
+            });
         });
-    });
 
-    $(".boxme").watch('width,height', function () {
+        $(".boxme").watch('width,height', function () {
 
-        if ($.browser.msie) {
-            $(".sb_clear").css("padding-bottom", parseFloat($(this).height() - 10));
-            $(".sb_down").css("padding-bottom", parseFloat($(this).height() - 8));
-            $(".sb_up").css("padding-bottom", parseFloat($(this).height() - 8));
-            $(".sb_search").css("padding-bottom", parseFloat($(this).height() - 10));
-        } else {
-            if (parseFloat($(this).height()) >= 150) {
+            if ($.browser.msie) {
+                $(".sb_clear").css("padding-bottom", parseFloat($(this).height() - 10));
+                $(".sb_down").css("padding-bottom", parseFloat($(this).height() - 8));
+                $(".sb_up").css("padding-bottom", parseFloat($(this).height() - 8));
+                $(".sb_search").css("padding-bottom", parseFloat($(this).height() - 10));
+            } else {
+                if (parseFloat($(this).height()) >= 150) {
 
 
-                $(".token-input-token-facebook").each(function () {
-                    var $this = $(this);
-                    $.data(this, 'css', {
-                        width: $this.css('width')
+                    $(".token-input-token-facebook").each(function () {
+                        var $this = $(this);
+                        $.data(this, 'css', {
+                            width: $this.css('width')
+                        });
                     });
-                });
 
 
-                $(".token-input-token-facebook").animate({
-                    width: "28px"
-                });
-                $(".token-input-token-facebook").live("click", function () {
-                    $(this).toggle(
+                    $(".token-input-token-facebook").animate({
+                        width: "28px"
+                    });
+                    $(".token-input-token-facebook").live("click", function () {
+                        $(this).toggle(
                         function () {
                             var orig = $.data(this, 'css');
-                        $(this).animate({
-                            width: orig.width
-                        });
+                            $(this).animate({
+                                width: orig.width
+                            });
                         },
                         function () {
-                        $(this).animate({
-                            width: "28px"
+                            $(this).animate({
+                                width: "28px"
+                            });
                         });
-                        });
-                });
+                    });
+                }
             }
-        }
-    });
+        });
 
-    /* This will change the image and the Boolean Operation of the text filter from SHOULD to NOT */
-    $(".booleanOperation").live("click", function () {
-        $(this).toggle(
+        /* This will change the image and the Boolean Operation of the text filter from SHOULD to NOT */
+        $(".booleanOperation").live("click", function () {
+            $(this).toggle(
             function () {
                 $(this).css("background-image", "url(../ItemBuckets/images/not" + $(this).next()[0].className + ".gif)");
                 $(this).next("p").text("-" + $(this).next("p").text());
@@ -2534,306 +2533,306 @@ $(function () {
                 $(this).next("p").text($(this).next("p").text().replace("-", ""));
                 $(this).addClass("must");
                 $(this).removeClass("not");
-        });
-    });
-
-    AddFilter();
-
-
-
-    function getQueryVariable(variable, qs) {
-
-    var vars = qs.split("&");
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
-            return unescape(pair[1]);
-        }
-    }
-
-}
-    
-    function resolveKnownDates(dateToParse) {
-        switch (dateToParse) {
-            case "Yesterday":
-               
-                        return Date.today().add(-1).days().toString("MM/dd/yyyy")
-             
-            case "LastWeek":
-               
-                       return Date.today().add(-7).days().toString("MM/dd/yyyy")
-                
-
-            case "LastMonth":
-             
-                        return Date.today().add(-1).months().toString("MM/dd/yyyy")
-              
-
-            case "LastYear":
-              
-                        return Date.today().add(-1).years().toString("MM/dd/yyyy")
-              
-
-               
-
-            default:
-                return dateToParse;
-        }
-    }
-    
-
-
-function AddFilter() {
-
-    var cleanFilter = filterForSearch;
-    var o = new Array;
-
-    var locationsFilter = getQueryVariable("location", cleanFilter);
-    if (locationsFilter != undefined) {
-        if (locationsFilter.length > 0) {
-            o.push({
-                type: "location",
-                value: locationsFilter
-            })
-
-        }
-    }
-    
-      var idFilter = getQueryVariable("id", cleanFilter);
-    if (idFilter != undefined) {
-        if (idFilter.length > 0) {
-            o.push({
-                type: "id",
-                value: idFilter
             });
-
-        }
-    }
-    
-       var siteFilter = getQueryVariable("site", cleanFilter);
-    if (siteFilter != undefined) {
-        if (siteFilter.length > 0) {
-            o.push({
-                type: "site",
-                value: siteFilter
-            });
-
-        }
-    }
-    
-
-         var authorFilter = getQueryVariable("author", cleanFilter);
-    if (authorFilter != undefined) {
-        if (authorFilter.length > 0) {
-            o.push({
-                type: "author",
-                value: authorFilter
-            });
-
-        }
-    }
-    
-
-             var languageFilter = getQueryVariable("language", cleanFilter);
-    if (languageFilter != undefined) {
-        if (languageFilter.length > 0) {
-            o.push({
-                type: "language",
-                value: languageFilter
-            });
-
-        }
-    }
-    
-                 var tagFilter = getQueryVariable("tag", cleanFilter);
-    if (tagFilter != undefined) {
-        if (tagFilter.length > 0) {
-            o.push({
-                type: "tag",
-                value: tagFilter
-            });
-
-        }
-    }
-                        var startFilter = getQueryVariable("start", cleanFilter);
-    if (startFilter != undefined) {
-        if (startFilter.length > 0) {
-            o.push({
-                type: "start",
-                value: resolveKnownDates(startFilter)
-            });
-
-        }
-    }
-
-                             var endFilter = getQueryVariable("end", cleanFilter);
-    if (endFilter != undefined) {
-        if (endFilter.length > 0) {
-            o.push({
-                type: "end",
-                value: resolveKnownDates(endFilter)
-            });
-
-        }
-    }
-
-
-                                 var sortFilter = getQueryVariable("sort", cleanFilter);
-    if (sortFilter != undefined) {
-        if (sortFilter.length > 0) {
-            o.push({
-                type: "sort",
-                value: sortFilter.split('|')[0]
-            });
-
-     
-        o.push({
-            type: "orderby",
-            value: sortFilter.split('|')[1]
         });
 
+        AddFilter();
 
-        }
-    }
 
-    var textFilter = getQueryVariable("text", cleanFilter);
-    if (textFilter != undefined) {
-        if (textFilter.length > 0) {
-            o.push({
-                type: "text",
-                value: textFilter
-            })
 
-        }
-    }
+        function getQueryVariable(variable, qs) {
 
-    var templateFilter = getQueryVariable("template", cleanFilter);
-    if (templateFilter != undefined) {
-        if (templateFilter.length > 0) {
-            o.push({
-                type: "template",
-                value: templateFilter
-            })
-
-        }
-    }
-
-    var customFilter = getQueryVariable("custom", cleanFilter);
-    if (customFilter != undefined) {
-        if (customFilter.length > 0) {
-            o.push({
-                type: "custom",
-                value: customFilter
-            })
-
-        }
-    }
-
-    if (o.length > 0) {
-      //  runQuery(o, 1, c, g);
-        //runFacet(o, 1, meme, g);
-        
-
-        if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
-       
-                runQuery(o, 1, h, g);
-        runFacet(o, 1, meme, g);
-            } else if (CurrentView == "grid") {
-          
-                        runQuery(o, 1, h, i);
-        runFacet(o, 1, meme, g);
-
-                $(".navAlpha").html("");
-                $(".slide-out-div").html("");
-                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-                $("#ajaxBusyFacet").css({
-                    margin: "0px auto",
-                    width: "44px"
-                });
-
-            } else {
-               
-                    runQuery(o, 1, c, g);
-        runFacet(o, 1, meme, g);
+            var vars = qs.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return unescape(pair[1]);
+                }
             }
 
+        }
+
+        function resolveKnownDates(dateToParse) {
+            switch (dateToParse) {
+                case "Yesterday":
+
+                    return Date.today().add(-1).days().toString("MM/dd/yyyy")
+
+                case "LastWeek":
+
+                    return Date.today().add(-7).days().toString("MM/dd/yyyy")
+
+
+                case "LastMonth":
+
+                    return Date.today().add(-1).months().toString("MM/dd/yyyy")
+
+
+                case "LastYear":
+
+                    return Date.today().add(-1).years().toString("MM/dd/yyyy")
 
 
 
 
-
-        filterForSearch = ''; 
-    }
-}
-
-
+                default:
+                    return dateToParse;
+            }
+        }
 
 
-    function establishViews() {
-        var a = $("#ui_element");
-        var views; //= ["gallery"];
-        var defaultViews = ["list", "grid"];
 
-        jQuery.ajax({
-            type: "POST",
-            url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetViews",
-            data: "",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (b) {
-                views = b.d;
-                $.each(views, function (index, filter) {
-                    $("#views").append("<a id=\"" + filter.ViewName + "\" class=\"" + filter.ViewName + "\" title=\"" + upperFirstLetter(filter.ViewName) + "\"></a>");
-                });
+        function AddFilter() {
 
-                $.each(views, function (index, filter) {
+            var cleanFilter = filterForSearch;
+            var o = new Array;
 
-                    $("." + filter.ViewName).click(function () {
-                        CurrentView = filter.ViewName;
+            var locationsFilter = getQueryVariable("location", cleanFilter);
+            if (locationsFilter != undefined) {
+                if (locationsFilter.length > 0) {
+                    o.push({
+                        type: "location",
+                        value: locationsFilter
+                    })
 
-                        if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
-                            if (!($.browser.msie)) {
+                }
+            }
 
-                                $('.boxme').stop().css("background-color", "#EE0000").animate({
-                                    backgroundColor: "#FFFFFF"
-                                }, 3000);
-                            }
-                            // $('.addition').removeAttr('disabled');
-                        } else {
-                            a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
-                            pageNumber = 0;
-
-                            $.each(defaultViews, function (subIndex, subfilter) {
-                                $("." + subfilter).removeClass("active");
-                            });
-                            $("." + filter.ViewName).addClass("active");
-                            $('.content').css({
-                                'opacity': 1.0
-                            });
-
-                            $("#ajaxBusy").css({
-                                display: "block"
-                            });
-                            var n = buildQuery();
-                            retrieveFilters();
-                            runQuery(n, pageNumber, h, i);
-                            runFacet(n, pageNumber, meme, g);
-
-                            $(".navAlpha").html("");
-                            $(".slide-out-div").html("");
-                            $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-                            $("#ajaxBusyFacet").css({
-                                display: "none",
-                                margin: "0px auto",
-                                width: "44px"
-                            });
-                        }
+            var idFilter = getQueryVariable("id", cleanFilter);
+            if (idFilter != undefined) {
+                if (idFilter.length > 0) {
+                    o.push({
+                        type: "id",
+                        value: idFilter
                     });
-                });
+
+                }
             }
-        });
-    }
-});
+
+            var siteFilter = getQueryVariable("site", cleanFilter);
+            if (siteFilter != undefined) {
+                if (siteFilter.length > 0) {
+                    o.push({
+                        type: "site",
+                        value: siteFilter
+                    });
+
+                }
+            }
+
+
+            var authorFilter = getQueryVariable("author", cleanFilter);
+            if (authorFilter != undefined) {
+                if (authorFilter.length > 0) {
+                    o.push({
+                        type: "author",
+                        value: authorFilter
+                    });
+
+                }
+            }
+
+
+            var languageFilter = getQueryVariable("language", cleanFilter);
+            if (languageFilter != undefined) {
+                if (languageFilter.length > 0) {
+                    o.push({
+                        type: "language",
+                        value: languageFilter
+                    });
+
+                }
+            }
+
+            var tagFilter = getQueryVariable("tag", cleanFilter);
+            if (tagFilter != undefined) {
+                if (tagFilter.length > 0) {
+                    o.push({
+                        type: "tag",
+                        value: tagFilter
+                    });
+
+                }
+            }
+            var startFilter = getQueryVariable("start", cleanFilter);
+            if (startFilter != undefined) {
+                if (startFilter.length > 0) {
+                    o.push({
+                        type: "start",
+                        value: resolveKnownDates(startFilter)
+                    });
+
+                }
+            }
+
+            var endFilter = getQueryVariable("end", cleanFilter);
+            if (endFilter != undefined) {
+                if (endFilter.length > 0) {
+                    o.push({
+                        type: "end",
+                        value: resolveKnownDates(endFilter)
+                    });
+
+                }
+            }
+
+
+            var sortFilter = getQueryVariable("sort", cleanFilter);
+            if (sortFilter != undefined) {
+                if (sortFilter.length > 0) {
+                    o.push({
+                        type: "sort",
+                        value: sortFilter.split('|')[0]
+                    });
+
+
+                    o.push({
+                        type: "orderby",
+                        value: sortFilter.split('|')[1]
+                    });
+
+
+                }
+            }
+
+            var textFilter = getQueryVariable("text", cleanFilter);
+            if (textFilter != undefined) {
+                if (textFilter.length > 0) {
+                    o.push({
+                        type: "text",
+                        value: textFilter
+                    })
+
+                }
+            }
+
+            var templateFilter = getQueryVariable("template", cleanFilter);
+            if (templateFilter != undefined) {
+                if (templateFilter.length > 0) {
+                    o.push({
+                        type: "template",
+                        value: templateFilter
+                    })
+
+                }
+            }
+
+            var customFilter = getQueryVariable("custom", cleanFilter);
+            if (customFilter != undefined) {
+                if (customFilter.length > 0) {
+                    o.push({
+                        type: "custom",
+                        value: customFilter
+                    })
+
+                }
+            }
+
+            if (o.length > 0) {
+                //  runQuery(o, 1, c, g);
+                //runFacet(o, 1, meme, g);
+
+
+                if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
+
+                    runQuery(o, 1, h, g);
+                    runFacet(o, 1, meme, g);
+                } else if (CurrentView == "grid") {
+
+                    runQuery(o, 1, h, i);
+                    runFacet(o, 1, meme, g);
+
+                    $(".navAlpha").html("");
+                    $(".slide-out-div").html("");
+                    $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                    $("#ajaxBusyFacet").css({
+                        margin: "0px auto",
+                        width: "44px"
+                    });
+
+                } else {
+
+                    runQuery(o, 1, c, g);
+                    runFacet(o, 1, meme, g);
+                }
+
+
+
+
+
+
+                filterForSearch = '';
+            }
+        }
+
+
+
+
+        function establishViews() {
+            var a = $("#ui_element");
+            var views; //= ["gallery"];
+            var defaultViews = ["list", "grid"];
+
+            jQuery.ajax({
+                type: "POST",
+                url: "/sitecore%20modules/Shell/Sitecore/ItemBuckets/ItemBucket.asmx/GetViews",
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (b) {
+                    views = b.d;
+                    $.each(views, function (index, filter) {
+                        $("#views").append("<a id=\"" + filter.ViewName + "\" class=\"" + filter.ViewName + "\" title=\"" + upperFirstLetter(filter.ViewName) + "\"></a>");
+                    });
+
+                    $.each(views, function (index, filter) {
+
+                        $("." + filter.ViewName).click(function () {
+                            CurrentView = filter.ViewName;
+
+                            if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
+                                if (!($.browser.msie)) {
+
+                                    $('.boxme').stop().css("background-color", "#EE0000").animate({
+                                        backgroundColor: "#FFFFFF"
+                                    }, 3000);
+                                }
+                                // $('.addition').removeAttr('disabled');
+                            } else {
+                                a.find(".sb_down").addClass("sb_up").removeClass("sb_down").andSelf().find(".sb_dropdown").hide();
+                                pageNumber = 0;
+
+                                $.each(defaultViews, function (subIndex, subfilter) {
+                                    $("." + subfilter).removeClass("active");
+                                });
+                                $("." + filter.ViewName).addClass("active");
+                                $('.content').css({
+                                    'opacity': 1.0
+                                });
+
+                                $("#ajaxBusy").css({
+                                    display: "block"
+                                });
+                                var n = buildQuery();
+                                retrieveFilters();
+                                runQuery(n, pageNumber, h, i);
+                                runFacet(n, pageNumber, meme, g);
+
+                                $(".navAlpha").html("");
+                                $(".slide-out-div").html("");
+                                $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
+                                $("#ajaxBusyFacet").css({
+                                    display: "none",
+                                    margin: "0px auto",
+                                    width: "44px"
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
 
 $.fn.watch = function (props, callback, timeout) {
     if (!timeout) timeout = 10;
