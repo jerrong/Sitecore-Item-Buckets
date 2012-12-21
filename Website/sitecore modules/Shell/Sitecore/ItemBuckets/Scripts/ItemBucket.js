@@ -7,6 +7,39 @@ var FacetOn = false;
 var PinFacets = false;
 defaultView();
 disableInception();
+function onVariantClick(thisElement) {
+    if ((thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
+
+    } else {
+
+        var listOfSearches = ResolveSearches(thisElement.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
+
+        $(".addition").val("");
+        if (listOfSearches.length == 1) {
+            $(".addition").val(listOfSearches[0]);
+            $(".addition").focus();
+            $(".addition").val($(".addition").val() + ":");
+            var press = jQuery.Event("keyup");
+            press.shiftKey = true;
+            press.which = 58;
+            $(".addition").trigger(press);
+        } else {
+            for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
+                if (listOfSearches[iii + 1] != "") {
+                    var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + thisElement.outerText.split(':')[0]);
+                    if (childCheck.text().indexOf(thisElement.outerText.split(':')[1].replace(';', '')) < 0) {
+                        $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span onclick="removeFromSearch($(this)[0])"class="token-input-delete-token-facebook remove">×</span></li>');
+                    }
+                }
+            }
+        }
+    }
+}
+
+function removeFromSearch(thisElement) {
+    $(thisElement).parents("li:first").remove();
+    $(".addition").focus();
+}
 //swapTabs();
 function swapTabs() {
     jQuery("#BContent", parent.document.body).after(jQuery("#BContent", parent.document.body).prev());
@@ -1740,13 +1773,13 @@ $(function () {
                                                     }
                                                 } else if (scope.data.indexOf("MyRecentSearches") > 0) {
 
-                                                    e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
+                                                    e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
 
                                                 } else {
                                                     if ($.browser.msie) {
-                                                        e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     } else {
-                                                    e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'~/icon/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'~/icon/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     }
                                                 }
                                             }
@@ -1761,42 +1794,6 @@ $(function () {
                                 });
                             } else {
                                 $("." + showMe).next("." + showMe + "body").toggle('slow');
-                            }
-                        });
-
-                    $(".command, .topsearch").live("click",
-                        function () {
-
-                            if ((this.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (this.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (this.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
-
-                            } else {
-
-                                var listOfSearches = ResolveSearches(this.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
-
-                                $(".addition").val("");
-                                if (listOfSearches.length == 1) {
-                                    $(".addition").val(listOfSearches[0]);
-                                    $(".addition").focus();
-                                    $(".addition").val($(".addition").val() + ":");
-                                    var press = jQuery.Event("keyup");
-                                    press.shiftKey = true;
-                                    press.which = 58;
-                                    $(".addition").trigger(press);
-                                } else {
-                                    for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
-                                        if (listOfSearches[iii + 1] != "") {
-                                            var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + this.text.split(':')[0]);
-                                            if (childCheck.text().indexOf(this.text.split(':')[1].replace(';', '')) < 0) {
-                                                $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-                                                $(".remove").live("click",
-                                                    function () {
-                                                        $(this).parents("li:first").remove();
-                                                        $(".addition").focus();
-                                                    });
-                                            }
-                                        }
-                                    }
-                                }
                             }
                         });
                 });
