@@ -102,7 +102,7 @@ namespace ItemBuckets.Services
                         if (innerItem != null)
                         {
                             sitecoreItem.TemplateName = innerItem.TemplateName;
-                            sitecoreItem.Name = innerItem.Name;
+                            sitecoreItem.Name = innerItem.DisplayName;
                             var parentBucketItemOrParent = innerItem.GetParentBucketItemOrParent();
                             if (parentBucketItemOrParent.IsNotNull())
                             {
@@ -386,11 +386,18 @@ namespace ItemBuckets.Services
                 {
                     if (searchQuery.Keys[i] != "_")
                     {
-                        this._searchQuery.Add(new SearchStringModel
-                                             {
-                                                 Type = searchQuery[searchQuery.Keys[i]],
-                                                 Value = searchQuery[searchQuery.Keys[i + 1]]
-                                             });
+                        string type = searchQuery[searchQuery.Keys[i]];
+                        string value = searchQuery[searchQuery.Keys[i + 1]];
+
+                        // It is better to NOT do a '*' match then to simply not add the clause!
+                        if (!(type == "text" && value == "*"))
+                        {
+                            this._searchQuery.Add(new SearchStringModel
+                                                 {
+                                                     Type = type,
+                                                     Value = value
+                                                 });
+                        }
                     }
                 }
             //}
@@ -412,7 +419,17 @@ namespace ItemBuckets.Services
             {
                 if (facet.Fields["Enabled"].Value == "1")
                 {
-                    dynamic type = Activator.CreateInstance(Type.GetType(facet.Fields["Type"].Value));
+                    // pull the type off of the Sitecore item
+                    string typeName = facet.Fields["Type"].Value;
+                    object type = Sitecore.Reflection.ReflectionUtil.CreateObject(typeName);
+
+                    // pull any parameters out of the Sitecore item
+                    string typeParameters = facet.Fields["Parameters"].Value;
+                    if (!string.IsNullOrEmpty(typeParameters))
+                    {
+                        Sitecore.Reflection.ReflectionUtil.SetProperties(type, typeParameters);
+                    }
+                        
                     if ((type as IFacet).IsNotNull())
                     {
                         var locationOverride = GetLocationOverride();

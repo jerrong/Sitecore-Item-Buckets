@@ -476,7 +476,7 @@ function meme(a) {
 
                 if (typeof (this[0]) == 'undefined') { }
                 else {
-                    var b = '<div class="side">' + '<div class="sb_filter">' + (typeof (this[0]) == 'undefined' ? "No Results Found" : this[0].Type + "") + "</div>" + "<div><ul>";
+                    var b = '<div class="side">' + '<div class="sb_filter">' + (typeof (this[0]) == 'undefined' ? "No Results Found" : this[0].Title + "") + "</div>" + "<div><ul>";
                     $.each
                     (this,
                         function () {
@@ -495,6 +495,9 @@ function meme(a) {
                             else if (this.Type == "author") {
                                 var replaceKeyName = this.KeyName.replace("\\", "|");
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + replaceKeyName + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
+                            }
+                            else if (this.Type == "custom") {
+                                b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + " (" + this.Value + ")" + "</a></li>"
                             }
                             else {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
@@ -985,6 +988,16 @@ function IsClone(a, b, c) {
         ({
             type: b,
             value: a.replace('|', '\\')
+        });
+    }
+
+    // Custom facets take the type = 'custom'
+    // the value should be [lucene field name]|[value to match]
+    if (b == "custom") {
+        o.push
+        ({
+            type: b,
+            value: c
         });
     }
 
