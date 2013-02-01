@@ -194,7 +194,9 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     {
                         Log.Info("Bucket Facet Debug Query: " + genreQueryFilter, this);
                     }
-
+                    PreparedQuery preparedQuery = context.PrepareQueryForFacetsUse(query);
+                    var searchHits = context.Searcher.Search(preparedQuery.Query, genreQueryFilter);
+                    int numberOfResults = searchHits.Length();
                     BitArray genreBitArray = genreQueryFilter.Bits(context.Searcher.GetIndexReader());
                     if (tempSearchArray.Length == genreBitArray.Length)
                     {
@@ -215,7 +217,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                             {
                                 if (!runningCOunt.ContainsKey(terms))
                                 {
-                                    runningCOunt.Add(terms, cardinality);
+                                    runningCOunt.Add(terms, numberOfResults);
                                 }
                             }
                         }
