@@ -15,6 +15,9 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search
             if (index.IsNotNull())
             Initialize(index, true);
         }
+        public PreparedQuery PrepareQueryForFacetsUse(Query query){
+            return base.Prepare(query, SearchContext.Empty);
+        }
         public SortableIndexSearchContext(ILuceneIndex index, bool autoWarm) : this (index)
         {
            //TODO: Implement AutoWarm

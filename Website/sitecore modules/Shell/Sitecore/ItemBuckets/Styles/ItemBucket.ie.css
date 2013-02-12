@@ -5,6 +5,17 @@
 
 .sb_dropdown {
     z-index: 1;
+    border: 1px solid #fff;
+    background: #f2f2f2;    
+    font-size: 24px;
+    font-family: "Myriad Pro" , "Trebuchet MS" , sans-serif;
+    outline: none;
+    padding: 3px 5px;
+    float: left;
+    margin: 3px 0px;
+    list-style: none;
+    cursor: pointer;
+    width:432px;
 }
 
 .sb_search_container, .sb_dropdown, .sb_dropdown .sb_filter, .side, .side .sb_filter, .side .tip

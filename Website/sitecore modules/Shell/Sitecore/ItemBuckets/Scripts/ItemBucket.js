@@ -2,8 +2,44 @@
 var QueryServer = "";
 var Expanded = false;
 var CurrentView = "";
+var CurrentFacetFilter;
+var FacetOn = false;
+var PinFacets = false;
 defaultView();
 disableInception();
+function onVariantClick(thisElement) {
+    if ((thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (thisElement.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
+
+    } else {
+
+        var listOfSearches = ResolveSearches(thisElement.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
+
+        $(".addition").val("");
+        if (listOfSearches.length == 1) {
+            $(".addition").val(listOfSearches[0]);
+            $(".addition").focus();
+            $(".addition").val($(".addition").val() + ":");
+            var press = jQuery.Event("keyup");
+            press.shiftKey = true;
+            press.which = 58;
+            $(".addition").trigger(press);
+        } else {
+            for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
+                if (listOfSearches[iii + 1] != "") {
+                    var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + thisElement.outerText.split(':')[0]);
+                    if (childCheck.text().indexOf(thisElement.outerText.split(':')[1].replace(';', '')) < 0) {
+                        $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span onclick="removeFromSearch($(this)[0])"class="token-input-delete-token-facebook remove">×</span></li>');
+                    }
+                }
+            }
+        }
+    }
+}
+
+function removeFromSearch(thisElement) {
+    $(thisElement).parents("li:first").remove();
+    $(".addition").focus();
+}
 //swapTabs();
 function swapTabs() {
     jQuery("#BContent", parent.document.body).after(jQuery("#BContent", parent.document.body).prev());
@@ -228,28 +264,9 @@ function autoSuggestText(element, filterName, data, characterCount) {
 
     
     if (
-        (textBoxValue.indexOf("template:") > -1) ||
-        (textBoxValue.indexOf("location:") > -1) ||
-        (textBoxValue.indexOf("extension:") > -1) ||
-        (textBoxValue.indexOf("version:") > -1) ||
-        (textBoxValue.indexOf("debug:") > -1) ||
-        (textBoxValue.indexOf("id:") > -1) ||
-        (textBoxValue.indexOf("ref:") > -1) ||
-        (textBoxValue.indexOf("custom:") > -1) ||
-        (textBoxValue.indexOf("sort:") > -1) ||
-        (textBoxValue.indexOf("site:") > -1) ||
-        (textBoxValue.indexOf("author:") > -1) ||
-        (textBoxValue.indexOf("language:") > -1) ||
-        (textBoxValue.indexOf("text:") > -1) ||
-        (textBoxValue.indexOf("tag:") > -1) ||
-        (textBoxValue.indexOf("start:") > -1) ||
-        (textBoxValue.indexOf("end:") > -1) ||
-        (textBoxValue.indexOf("recent:") > -1)
-       ) 
-    {
+    (textBoxValue.indexOf("template:") > -1) || (textBoxValue.indexOf("location:") > -1) || (textBoxValue.indexOf("extension:") > -1) || (textBoxValue.indexOf("version:") > -1) || (textBoxValue.indexOf("debug:") > -1) || (textBoxValue.indexOf("id:") > -1) || (textBoxValue.indexOf("ref:") > -1) || (textBoxValue.indexOf("custom:") > -1) || (textBoxValue.indexOf("sort:") > -1) || (textBoxValue.indexOf("site:") > -1) || (textBoxValue.indexOf("author:") > -1) || (textBoxValue.indexOf("language:") > -1) || (textBoxValue.indexOf("text:") > -1) || (textBoxValue.indexOf("tag:") > -1) || (textBoxValue.indexOf("start:") > -1) || (textBoxValue.indexOf("end:") > -1) || (textBoxValue.indexOf("recent:") > -1)) {
         
-    }
-    else {
+    } else {
 
 
         if (a.find(".addition").val().indexOf(filterName) > -1) {
@@ -305,8 +322,7 @@ function buildTipsMenu(a) {
     $(".slide-out-div2").show();
     $(".slide-out-div2").html("");
     $(".slide-out-div2").append('<a class="handle2" href="#"></a>');
-    $(".slide-out-div2").tabSlideOut
-        ({
+    $(".slide-out-div2").tabSlideOut({
             tabHandle: ".handle2",
             pathToTabImage: "images/thin-arrow-left.png",
             imageHeight: $(window).height() - 30 + "px",
@@ -320,15 +336,18 @@ function buildTipsMenu(a) {
         });
     if ($.browser.msie) {
         $(".handle2").css("left", "-82px");
-    }
-    else {
+    } else {
         $(".handle2").css("left", "-32px");
     }
     $('.handle, .handle2').css("background-position", "50% 50%");
     if (a.tips.length == 0) {
-        var b = '<div class="side">' + '<div class="sb_filter">' + "Tips Not Enabled" + "</div>" + "<div><ul>";
-        b = b + "</ul></div>" + "</div>";
-        $("#navBeta").append(b);
+    // #377251: do not display right toolbar, when there is no tips.
+        $("#navBeta").css({
+            display: "none"
+        });
+//        var b = '<div class="side">' + '<div class="sb_filter">' + "Tips Not Enabled" + "</div>" + "<div><ul>";
+//        b = b + "</ul></div>" + "</div>";
+//        $("#navBeta").append(b);
     };
 
     $.each(a.tips, function () {
@@ -443,21 +462,32 @@ function upperFirstLetter(str) {
     return string;
 }
 
+function togglePin(element) {
+
+
+    if ($("#pinResult").attr('src') == '/sitecore%20modules/shell/Sitecore/ItemBuckets/images/pinup.png') {
+        $(element).attr('src', '/sitecore%20modules/shell/Sitecore/ItemBuckets/images/pin.png');
+        PinFacets = true;
+    } else {
+        $(element).attr('src', '/sitecore%20modules/shell/Sitecore/ItemBuckets/images/pinup.png');
+        PinFacets = false;
+
+    }
+}
+
 function meme(a) {
     $(".navAlpha").html("");
     $(".slide-out-div").show();
     $(".slide-out-div").html("");
     $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-    $("#ajaxBusyFacet").css
-        ({
+    $("#ajaxBusyFacet").css({
 
             margin: "0px auto",
             width: "44px"
         });
 
     $(".slide-out-div").append('<a class="handle" href="#"></a>');
-    $(".slide-out-div").tabSlideOut
-        ({
+    $(".slide-out-div").tabSlideOut({
             tabHandle: ".handle",
             pathToTabImage: "images/thin-arrow-right.png",
             imageHeight: $(window).height() - 30 + "px",
@@ -465,42 +495,48 @@ function meme(a) {
             tabLocation: "left",
             speed: 300,
             action: "click",
-            topPos: "17px",
+        //to make left toolbar with facets not overlay search word.
+        topPos: "65px",
             rightPos: "20px",
             fixedPosition: false
         });
     $('.handle, .handle2').css("background-position", "50% 50%");
-    $.each
-        (a.facets,
+    //to make toolbars appear above the content
+    $('.handle, .handle2, .navAlpha').css("background-color", "#f2f2f2");
+    $('.handle, .handle2, .navAlpha').css("border", "1px solid #f2f2f2");
+    $('.navAlpha').css("height", $(window).height() - 30 + "px");
+    $('.handle').css("top", "-1px");
+    if (PinFacets) {
+        $(".slide-out-div").append('<div id="tools"><img id="pinResult" onclick="togglePin(this)" src="/sitecore%20modules/shell/Sitecore/ItemBuckets/images/pin.gif"></div>');
+    } else {
+        $(".slide-out-div").append('<div id="tools"><img id="pinResult" onclick="togglePin(this)" src="/sitecore%20modules/shell/Sitecore/ItemBuckets/images/pinup.png"></div>');
+    }
+
+
+    $.each(a.facets,
+
             function () {
 
-                if (typeof (this[0]) == 'undefined') { }
-                else {
+        if (typeof (this[0]) == 'undefined') { } else {
                     var b = '<div class="side">' + '<div class="sb_filter">' + (typeof (this[0]) == 'undefined' ? "No Results Found" : this[0].Type + "") + "</div>" + "<div><ul>";
-                    $.each
-                    (this,
+            $.each(this,
+
                         function () {
                             if (this.Type == "field") {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + '|' + this.Template + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
-                            }
-                            else if (this.Type == "location") {
+                } else if (this.Type == "location") {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + '|' + this.ID + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
-                            }
-                            else if (this.Type == "date range") {
+                } else if (this.Type == "date range") {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + '|' + this.ID + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
-                            }
-                            else if (this.Type == "template") {
+                } else if (this.Type == "template") {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + '|' + this.ID + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
-                            }
-                            else if (this.Type == "author") {
+                } else if (this.Type == "author") {
                                 var replaceKeyName = this.KeyName.replace("\\", "|");
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + replaceKeyName + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
-                            }
-                            else {
+                } else {
                                 b = b + '<li class="filter"><a href="#" title="' + this.KeyName + '" class="facetClick" onclick="javascript:IsClone(\'' + this.KeyName + "', '" + this.Type + "','" + this.ID + "');\">" + (this.KeyName.length > 16 ? (this.KeyName.substring(0, 16) + "...") : this.KeyName) + (this.Template != null ? " (" + (this.Template.length > 4 ? (this.Template.substring(0, 4) + "...") : this.Template) + ")" : "") + " (" + this.Value + ")" + "</a></li>"
                             }
-                        }
-                    );
+            });
 
                     b = b + "</ul></div>" + "</div>";
                     $(".navAlpha").append(b);
@@ -511,31 +547,31 @@ function meme(a) {
                     $(this).css("background-color", "#A8DBF3").css("height", "18px").css("-moz-border-radius", "7px 7px 7px 7px").css("-webkit-border-radius", "7px 7px 7px 7px").css("border-radius", "7px 7px 7px 7px").css("padding", "3px 1px");
                 });
 
+    });
+    if (PinFacets) {
+        $(".handle").click();
             }
-        );
+
 
     $(".pagination").remove();
     var c = a.PageNumbers;
     var e = Page(a.CurrentPage, c);
     $(".pageSection").append(e);
-    $(".side .sb_filter").bind
-        ('click',
+    $(".side .sb_filter").bind('click',
+
             function () {
                 if ($(this).hasClass('on')) {
                     $(this).removeClass('on').addClass('off');
                     //$(this).css("background-image", "url('/ItemBuckets/images/down.png')"); //Add the .. back into the link
-                }
-                else if ($(this).hasClass('off')) {
+        } else if ($(this).hasClass('off')) {
                     $(this).removeClass('off');
                     //$(this).css("background-image", "url('/ItemBuckets/images/up.png')"); //Add the .. back into the link
-                }
-                else {
+        } else {
                     $(this).addClass('on');
                 }
 
                 $(this).next("div").slideToggle(100);
-            }
-        );
+    });
 
     $(this).removeClass("pageClickLoad");
 
@@ -545,19 +581,27 @@ function meme(a) {
         $(".navAlpha").append(b);
     };
 
-    $("#ajaxBusyFacet").css
-        ({
+    $("#ajaxBusyFacet").css({
             display: "none",
             margin: "0px auto",
             width: "24px"
         });
 
-    $('.handle').toggle
-        (
+    $('.handle').toggle(
+
             function () {
                 $('.handle').css("background-image", "url(images/thin-arrow-left.png)");
                 $('.handle').css("background-position", "50% 50%");
                 $('.handle').addClass("toggled");
+        //make left-side panel not to overlap content. Left-side panel width is about 230px       
+        /*var space_around = ($('.content').parent().innerWidth() - $('.content').outerWidth()) / 2;
+        var real_margin = "230px";
+        if (space_around > 230) {
+            real_margin = "auto";
+        } else {
+            real_margin = "230px";
+        }
+        $('.content').css("margin-left", real_margin);*/
                 return false;
             },
 
@@ -565,12 +609,12 @@ function meme(a) {
                 $('.handle').css("background-image", "url(images/thin-arrow-right.png)");
                 $('.handle').css("background-position", "50% 50%");
                 $('.handle').removeClass("toggled");
+        //$('.content').css("margin", "0 auto;");
                 return false;
-            }
-        );
+    });
 
-    $('.handle2').toggle
-        (
+    $('.handle2').toggle(
+
             function () {
 
                 $('.handle2').addClass("toggled");
@@ -581,8 +625,7 @@ function meme(a) {
 
                 $('.handle2').removeClass("toggled");
                 return false;
-            }
-        );
+    });
 
     // $('.addition').removeAttr('disabled');
 }
@@ -622,15 +665,13 @@ function autoSuggestWithWait(element, filterName, serviceName, data, characterCo
 
 function runFacet(o, pageNumber, onSuccessFunction, onErrorFunction) {
 
-    $.ajax
-        ({
+    $.ajax({
             type: "GET",
             url: QueryServer + "/sitecore%20modules/Shell/Sitecore/ItemBuckets/Services/Search.ashx?callback=?",
             contentType: "application/json; charset=utf-8",
             dataType: "jsonp",
             cache: false,
-            data:
-            {
+        data: {
                 selections: o.concat(AddFilterGlobal()),
                 pageNumber: pageNumber,
                 type: "facet"
@@ -665,7 +706,9 @@ function retrieveFiltersWithDoubleClickToEdit() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "location"];
     $.each(filterArray, function (index, filter) {
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar==";") || (previousChar==" ")) ) {
             var d = a.find(".addition").val().split(":")[1];
             var e = a.find(".addition").val().replace(filter + ":" + d, "");
             a.find(".addition").val(e);
@@ -695,22 +738,19 @@ function retrieveFilters() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "start", "end", "recent", "location"];
     $.each(filterArray, function (index, filter) {
-
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar == ";") || (previousChar == " "))) {  
             var p = a.find(".addition").val().split(":")[1];
             var q = a.find(".addition").val().replace(filter + ":" + p, "");
             a.find(".addition").val(q);
             if (filter == "start" || filter == "end") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="' + filter + 'hidden">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-            }
-            else if (filter == "sort") {
+            } else if (filter == "sort") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="sortDirection"></span><p class="' + filter + '">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-            }
-            else if (filter == "text") {
+            } else if (filter == "text") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="' + filter + '">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-            }
-
-            else {
+            } else {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;"></span><p class="' + filter + '">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
             }
             $(".remove").live("click", function () {
@@ -728,19 +768,18 @@ function retrieveFiltersGalleryView() {
     var a = $("#ui_element");
     var filterArray = ["extension", "version", "debug", "id", "ref", "custom", "sort", "site", "author", "language", "text", "template", "tag", "start", "end", "recent", "location"];
     $.each(filterArray, function (index, filter) {
-
-        if (a.find(".addition").val().indexOf(filter + ":") > -1) {
+        var termIndex = a.find(".addition").val().indexOf(filter + ":");
+        var previousChar = a.find(".addition").val()[termIndex - 1];
+        if ((termIndex > -1) && ((typeof previousChar == "undefined") || (previousChar == ";") || (previousChar == " "))) {
             var p = a.find(".addition").val().split(":")[1];
             var q = a.find(".addition").val().replace(filter + ":" + p, "");
             a.find(".addition").val(q);
             if (filter == "start" || filter == "end") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="' + filter + 'hidden">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-            }
-            else if (filter == "sort") {
+            } else if (filter == "sort") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="sortDirection"></span><p class="' + filter + '">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
 
-            }
-            else if (filter == "text") {
+            } else if (filter == "text") {
                 a.find(".boxme").prepend('<li class="token-input-token-facebook" title="' + p + '"><span style="background: url(\'images/' + filter + '.png\') no-repeat center center;padding: 0px 11px;" class="booleanOperation"></span><p class="' + filter + '">' + p + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
 
             } else {
@@ -810,21 +849,20 @@ function buildQuery() {
 
 $('.content').live("click",
     function () {
-        $('.content').animate({ opacity: '1.0' }, 5000);
-    }
- );
+    $('.content').animate({
+        opacity: '1.0'
+    }, 5000);
+});
 
 $('.sb_clear').live("click", function () {
 
-    $('.sb_clear').toggle
-    ({
+    $('.sb_clear').toggle({
         display: 'inline'
     });
 
     if ($.browser.msie) {
         document.getElementById("token-input-demo-input-local").value = "";
-    }
-    else {
+    } else {
 
         $(".addition").text("");
     }
@@ -833,11 +871,33 @@ $('.sb_clear').live("click", function () {
     //$('.addition').removeAttr('disabled');
 });
 
+function findAndRemove(array, property, value) {
+    $.each(array, function (index, result) {
+        if (result[property] == value) {
+            //Remove from array
+            array.splice(index, 1);
+        }
+    });
+
+    return array;
+}
+
+function findAndAlert(array, property, value) {
+    var done = false;
+    $.each(array, function (index, result) {
+        if (result[property] == value) {
+            done = true;
+           
+        }
+    });
+    return done;
+}
+
 function IsClone(a, b, c) {
     var d = $("#ui_element");
     //$(".grid").removeClass("active");
     //$(".list").addClass("active");
-    
+    FacetOn = true;
 
     var e = d.find(".boxme li .extension");
     var tt = d.find(".boxme li .id");
@@ -858,8 +918,7 @@ function IsClone(a, b, c) {
     var p = d.find(".addition").val();
 
     $("#loadingSection").prepend('<div id="ajaxBusy"><p><img src="images/loading.gif"></p></div>');
-    $("#ajaxBusy").css
-    ({
+    $("#ajaxBusy").css({
         padding: "0px 122px 0px 0px",
         margin: "0px auto",
         width: "24px"
@@ -877,8 +936,7 @@ function IsClone(a, b, c) {
     }
 
     if (b == "field") {
-        o.push
-        ({
+        o.push({
             type: "field",
             value: a.split('|')[0]
         });
@@ -895,8 +953,7 @@ function IsClone(a, b, c) {
 
         switch (a.split('|')[0]) {
             case "Within a Day":
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: Date.today().add(-1).days().toString("MM/dd/yyyy")
                     });
@@ -904,14 +961,12 @@ function IsClone(a, b, c) {
                 break;
 
             case "Within a Week":
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: Date.today().add(-7).days().toString("MM/dd/yyyy")
                     });
 
-                o.push
-                    ({
+                o.push({
                         type: "end",
                         value: Date.today().add(-1).days().toString("MM/dd/yyyy")
                     });
@@ -919,14 +974,12 @@ function IsClone(a, b, c) {
                 break;
 
             case "Within a Month":
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: Date.today().add(-1).months().toString("MM/dd/yyyy")
                     });
 
-                o.push
-                    ({
+                o.push({
                         type: "end",
                         value: Date.today().add(-7).days().toString("MM/dd/yyyy")
                     });
@@ -934,14 +987,12 @@ function IsClone(a, b, c) {
                 break;
 
             case "Within a Year":
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: Date.today().add(-1).years().toString("MM/dd/yyyy")
                     });
 
-                o.push
-                    ({
+                o.push({
                         type: "end",
                         value: Date.today().add(-1).months().toString("MM/dd/yyyy")
                     });
@@ -949,14 +1000,12 @@ function IsClone(a, b, c) {
                 break;
 
             case "Older":
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: Date.today().add(-3).years().toString("MM/dd/yyyy")
                     });
 
-                o.push
-                    ({
+                o.push({
                         type: "end",
                         value: Date.today().add(-1).years().toString("MM/dd/yyyy")
                     });
@@ -964,8 +1013,7 @@ function IsClone(a, b, c) {
                 break;
 
             default:
-                o.push
-                    ({
+                o.push({
                         type: "start",
                         value: month + "/" + (((day - 1) <= 0) ? 1 : (day - 1)) + "/" + year
                     });
@@ -973,24 +1021,21 @@ function IsClone(a, b, c) {
     } //If
 
     if (b == "template") {
-        o.push
-        ({
+        o.push({
             type: b,
             value: a.split('|')[1]
         });
     }
 
     if (b == "author") {
-        o.push
-        ({
+        o.push({
             type: b,
             value: a.replace('|', '\\')
         });
     }
 
     if (p != null && p != "" && p != "Search for an Item") {
-        o.push
-        ({
+        o.push({
             type: "text",
             value: p
         });
@@ -998,14 +1043,12 @@ function IsClone(a, b, c) {
 
     $.each(customSort,
     function () {
-        o.push
-        ({
+        o.push({
             type: "sort",
             value: $(this).text()
         });
 
-        o.push
-        ({
+        o.push({
             type: "orderby",
             value: $(this).prev().hasClass('desc') ? "desc" : "asc"
         });
@@ -1013,8 +1056,7 @@ function IsClone(a, b, c) {
 
     $.each(f,
     function () {
-        o.push
-        ({
+        o.push({
             type: "text",
             value: $(this).text()
         });
@@ -1022,8 +1064,7 @@ function IsClone(a, b, c) {
 
     $.each(e,
     function () {
-        o.push
-        ({
+        o.push({
             type: "extension",
             value: $(this).text()
         });
@@ -1031,8 +1072,7 @@ function IsClone(a, b, c) {
 
     $.each(tt,
     function () {
-        o.push
-        ({
+        o.push({
             type: "id",
             value: $(this).text()
         });
@@ -1040,8 +1080,7 @@ function IsClone(a, b, c) {
 
     $.each(ref,
     function () {
-        o.push
-        ({
+        o.push({
             type: "ref",
             value: $(this).text()
         });
@@ -1049,8 +1088,7 @@ function IsClone(a, b, c) {
 
     $.each(zz,
     function () {
-        o.push
-        ({
+        o.push({
             type: "custom",
             value: $(this).text()
         });
@@ -1058,8 +1096,7 @@ function IsClone(a, b, c) {
 
     $.each(g,
     function () {
-        o.push
-        ({
+        o.push({
             type: "template",
             value: $(this).text()
         });
@@ -1075,8 +1112,7 @@ function IsClone(a, b, c) {
 
     $.each(ii,
     function () {
-        o.push
-        ({
+        o.push({
             type: "start",
             value: $(this).text()
         });
@@ -1084,8 +1120,7 @@ function IsClone(a, b, c) {
 
     $.each(n,
     function () {
-        o.push
-        ({
+        o.push({
             type: "language",
             value: $(this).text()
         });
@@ -1093,8 +1128,7 @@ function IsClone(a, b, c) {
 
     $.each(j,
     function () {
-        o.push
-        ({
+        o.push({
             type: "end",
             value: $(this).text()
         });
@@ -1102,8 +1136,7 @@ function IsClone(a, b, c) {
 
     $.each(k,
     function () {
-        o.push
-        ({
+        o.push({
             type: "author",
             value: $(this).text()
         });
@@ -1111,8 +1144,7 @@ function IsClone(a, b, c) {
 
     $.each(l,
     function () {
-        o.push
-        ({
+        o.push({
             type: "version",
             value: $(this).text()
         });
@@ -1120,8 +1152,7 @@ function IsClone(a, b, c) {
 
     $.each(debugMode,
     function () {
-        o.push
-        ({
+        o.push({
             type: "debug",
             value: $(this).text()
         });
@@ -1129,8 +1160,7 @@ function IsClone(a, b, c) {
 
     $.each(m,
     function () {
-        o.push
-        ({
+        o.push({
             type: "site",
             value: $(this).text()
         });
@@ -1139,14 +1169,22 @@ function IsClone(a, b, c) {
     retrieveFilters();
 //    runQuery(o, 0, OnComplete, OnFail);
 //    runFacet(o, 0, meme, g);
+    if (CurrentFacetFilter.length == 0) {
+        CurrentFacetFilter = o;
+    } else {
+
     
+
+        o = o.concat(CurrentFacetFilter);
+       
+
+        CurrentFacetFilter = o;
+    }
     if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
        
                 runQuery(o, 0, h, g);
         runFacet(o, 0, meme, g);
-            }
-
-            else if (CurrentView == "grid") {
+    } else if (CurrentView == "grid") {
           
                         runQuery(o, 0, h, i);
         runFacet(o, 0, meme, g);
@@ -1166,15 +1204,15 @@ function IsClone(a, b, c) {
             }
 
 
-
-
+    if (PinFacets) {
+        $(".handle").click();
+    }
 
 
     $(".navAlpha").html("");
     $(".slide-out-div").html("");
     $(".slide-out-div").prepend('<div id="ajaxBusyFacet"><p><img src="images/loading.gif"></p><p>Loading Facets...</p></div>');
-    $("#ajaxBusyFacet").css
-    ({
+    $("#ajaxBusyFacet").css({
         margin: "0px auto",
         width: "44px"
     });
@@ -1191,8 +1229,7 @@ function OnFail(a) {
 }
 
 function OnComplete(a) {
-    $("#ajaxBusy").css
-    ({
+    $("#ajaxBusy").css({
         display: "none",
         margin: "0px auto",
         width: "24px"
@@ -1204,21 +1241,19 @@ function OnComplete(a) {
         $("#results").append('<div style="padding-bottom: 20px;text-align: center;padding-right: 156px;">Your search has returned <strong>' + a.SearchCount + "</strong> result/s in <strong>" + a.SearchTime + "</strong> seconds under the <strong class='bucketLocation'>" + a.Location + "</strong> item</div>");
         if (ContinueSearch) {
             //  $("#results").append('<div style="padding-bottom: 20px;text-align: center;padding-right: 156px;" class="continue"><a href="#" onclick="javascript:IsClone(\'' + 'location' + '|' + '{11111111-1111-1111-1111-111111111111}' + "', '" + "location" + "','" + '{11111111-1111-1111-1111-111111111111}\')\";>Continue Searching All Other Bucket Locations....</a></div>');
-        }
-        else {
+        } else {
             $(".bucketLocation")[0].innerText = 'Sitecore Start Node';
         }
 
         ContinueSearch = true;
         b = b + '<div class="mainmargin" id="grid-content" style="position: relative; width: auto;overflow-x: hidden; overflow-y: hidden;">';
-        $.each
-        (a.items,
+        $.each(a.items,
+
             function () {
                 if (a.items != 0) {
-                    b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
+                    b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';this.width=\'80\';this.height=\'80\';" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template: </strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p> <strong>Version: </strong>" + this.Version + " <strong>Created:</strong> " + this.Cre + " <strong>By:</strong> " + this.CreBy + "<br />" + " </div>" + " </div>"
                 }
-            }
-        );
+        });
 
         b = b + "</div>";
         $("#results").append(b);
@@ -1226,57 +1261,52 @@ function OnComplete(a) {
         var c = a.PageNumbers;
         var e = Page(a.CurrentPage, c);
         $(".pageSection").append(e);
-        $("#results").fadeIn
-        ("slow",
-            function () {
-            }
-        );
+        $("#results").fadeIn("slow",
+
+        function () { });
 
         buildTipsMenu(a);
 
         $("#ajaxBusy").hide();
-    }
-    else {
+    } else {
         $("#results").html("");
         $(".pagination").remove();
         $("#results").append('<div style="padding-bottom: 20px;text-align: center;padding-right: 156px;">Your search has returned <strong>' + a.SearchCount + "</strong> result/s in <strong>" + a.SearchTime + "</strong> seconds under the <strong class='bucketLocation'>" + a.Location + "</strong> item</div>");
         if (ContinueSearch) {
             // $("#results").append('<div style="padding-bottom: 20px;text-align: center;padding-right: 156px;" class="continue"><a href="#" onclick="javascript:IsClone(\'' + 'location' + '|' + '{11111111-1111-1111-1111-111111111111}' + "', '" + "location" + "','" + '{11111111-1111-1111-1111-111111111111}\')\";>Continue Searching All Other Bucket Locations....</a></div>');
-        }
-        else {
+        } else {
             $(".bucketLocation")[0].innerText = 'Sitecore Start Node';
         }
 
         ContinueSearch = true;
         $("#results").append('<div id="resultAppendDiv" style="overflow: auto; height: auto;"><ul>');
-        $.each
-        (a.items,
+        $.each(a.items,
+
             function () {
                 if (a.items != 0) {
+                //to make better looking standard Sitecore icons
+               // this.ImagePath = this.ImagePath.replace("16x16", "48x48");
                     if (this.Name != null) {
                         var mediaCommand = "";
                         if (this.TemplateName == "Mp3" || this.TemplateName == "Movie") {
-                            mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
-                        }
-                        else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
-                                   mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
+                        mediaCommand = "<span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
+                    } else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
+                        mediaCommand = "<span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
                   
                         }
 
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>"
+                    $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';this.width=\'80\';this.height=\'80\';" src="' + this.ImagePath + '?w=48&h=48&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + ' - <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>"
                             
-                          + "<div class=\"quickactions\" onclick=\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>" +
+                    + "<div class=\"quickactions\" onclick=\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>" +
                             
                             mediaCommand
                             
                             + "</div>"  + "</li>" );
-                    }
-                    else {
-                        $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + ' style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
-                    }
+                } else {
+                    $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + ' style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img src="' + "./images/defaultblur.jpg" + '?w=48&h=48&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
                 }
             }
-        );
+        });
 
         $("#results").append("</ul></div>");
         $(".pagination").remove();
@@ -1314,8 +1344,7 @@ function Page(a, b) {
 function Meta(a) {
     if (a.IsClone == true) {
         return "opacity:0.4;";
-    }
-    else {
+    } else {
         return "";
     }
 }
@@ -1341,10 +1370,9 @@ $.fn.outerHTML = function (a) {
 
 function InnerItem(a) {
     if (a.IsClone == true) {
-        return "105px;opacity:0.4;";
-    }
-    else {
-        return "70px;";
+        return "35px;opacity:0.4;";
+    } else {
+        return "0px;";
     }
 }
 
@@ -1355,8 +1383,7 @@ $.fn.outerHTML = function (a) {
 var pageNumber = 0;
 var maxPageCount = 10;
 
-function i() {
-    }
+function i() { }
 
     function h(a) {
 
@@ -1404,7 +1431,7 @@ function i() {
 
   
                var yourVideoURL =contentFiller.split("</strong>")[1].split("</p>")[0];
-                contentFiller = yourVideoURL.replace(" ","");
+                            contentFiller = yourVideoURL.replace(" ", "");
 
 
 
@@ -1412,8 +1439,7 @@ function i() {
                                 var templateText = modeObject.ItemTemplate;
                                 b = b + templateText.replace(/TemplatePlaceholder/g, templateFiller).replace(/NamePlaceholder/g, nameFiller).replace(/MetaPlaceholder/g, metaFiller).replace(/LaunchTypePlaceholder/g, launchTypeFiller).replace(/ItemIdPlaceholder/g, itemIdFiller).replace(/ImagePathPlaceholder/g, imagePathFiller).replace(/NamePlaceholder/g, nameFiller).replace(/BucketPlaceholder/g, bucketFiller).replace(/ContentPlaceholder/g, contentFiller).replace(/VersionPlaceholder/g, versionFiller).replace(/CreatedPlaceholder/g, createdFiller).replace(/CreatedByPlaceholder/g, createdbyFiller);
                             }
-                        }
-                    );
+                });
 
                     b = b + modeObject.FooterTemplate;
                 } else {
@@ -1422,10 +1448,9 @@ function i() {
                     $.each(a.items,
                         function () {
                             if (a.items != 0) {
-                                b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="142" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="100" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
+                                b = b + '<div class="post-1 post type-post status-publish format-standard hentry category-inspiration category-landscapes category-portraits category-typography category-web-design category-weddings tag-image tag-lightbox tag-sample post_float rounded" id="post-1" onclick="' + "scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '" style="' + Meta(this) + '">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img  onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';this.width=\'80\';this.height=\'80\';" src="' + this.ImagePath + '?w=142&h=100&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + " <h2> " + " <a class=\"ceebox\" title=\"Lightbox Example\" href=\"\" onclick=\"scForm.getParentForm().postRequest('','','','" + a.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "  </a></h2> " + ' <div class="post_tags"> ' + '<strong>Template:</strong>' + this.TemplateName + ' <strong>Location: </strong>' + this.Bucket + "<br/><p>" + (this.Content.length > 40 ? (this.Content.substring(0, 40) + "...") : this.Content) + "</p><strong>Version:</strong> " + this.Version + " <strong>Created:</strong>  " + this.Cre + " <strong>By: </strong> " + this.CreBy + "<br />" + " </div>" + " </div>";
                             }
-                        }
-                    );
+                });
 
                     b = b + "</div>";
                 }
@@ -1435,9 +1460,8 @@ function i() {
                 var e = Page(a.CurrentPage, c);
                 $(".pageSection").append(e);
                 $("#results").fadeIn("slow",
-                    function () {
-                    }
-                );
+
+            function () { });
 
                 buildTipsMenu(a);
 
@@ -1501,20 +1525,20 @@ function i() {
         $.each(resultCallBack.items,
             function () {
                 if (resultCallBack.items != 0) {
+            //to make better looking standard Sitecore icons
+            //this.ImagePath = this.ImagePath.replace("16x16", "48x48");
                     if (this.Name != null) {
                         
                         var mediaCommand = "";
                         if (this.TemplateName == "Mp3" || this.TemplateName == "Movie") {
-                            mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
-                        }
-                        else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
-                                   mediaCommand = "<span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
+                    mediaCommand = "<span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:play(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Play</a></span>";
+                } else if (this.TemplateName == "Doc" || this.TemplateName == "Pdf") {
+                    mediaCommand = "<span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','media:view(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Open</a></span>";
                   
                         }
-                        $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '"style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img width="80" onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';" height="60" src="' + this.ImagePath + '?w=80&h=60&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "<div class=\"quickactions\" onclick\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'/temp/iconCache/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>"
-                       + mediaCommand + "</div>" + "</li>" );
+                $("#results").append('<li class="BlogPostArea" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '"style="margin-left:' + InnerItem(this) + '">' + '<div class="BlogPostViews">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"\"  onclick=\"scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + ' <img onerror="this.onerror=null;this.src=\'../ItemBuckets/images/default.jpg\';this.width=\'80\';this.height=\'80\';" src="' + this.ImagePath + '?w=48&h=48&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" /></a>' + "</div>" + '<h5 class="BlogPostHeader">' + '   <a href="#" onclick="' + "scForm.getParentForm().postRequest('','','','" + resultCallBack.launchType + "(url=" + this.ItemId + ", la=" + this.Language + ")'); return false;" + '">' + this.Name + "</a></h5>" + '<div class="BlogPostContent"><strong>Template: </strong>' + this.TemplateName + '- <strong>Location: </strong>' + this.Bucket + "</div>" + '<div class="BlogPostFooter">' + this.Content + "   <div>" + " <strong>Version: </strong>" + this.Version + '      <strong>Created: </strong>' + this.Cre + "        <strong> by</strong>" + '    ' + this.CreBy + " </div>" + "<div>" + "</div>" + "<div class=\"quickactions\" onclick\"event.stopPropagation();\"><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:publish(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Publish</a></span><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','item:preview(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Preview</a></span><span style=\"font-weight:bold;background: url(\'~/icon/Software/16x16/breakpoint.png\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x: 6px;background-position-y: 5px;\"><a href=\"\" onclick=\"event.stopPropagation();scForm.getParentForm().postRequest('','','','system:webedit(id=" + this.ItemId + ", language=" + this.Language + ", version=" + this.Version + ")'); return false;\">Page Editor</a></span>" + mediaCommand + "</div>" + "</li>");
                     } else {
-                        $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"#\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img width="80" height="60" src="' + "./images/defaultblur.jpg" + '?w=80&h=50&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
+                $("#results").append('<li class="BlogPostArea" style="margin-left:' + InnerItem(this) + ';color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + '<div class="BlogPostViews style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + "<a class=\"ceebox imgcontainer\" title=\"Lightbox Example\" href=\"#\" style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\"" + '">' + ' <img src="' + "./images/defaultblur.jpg" + '?w=48&h=48&db=master " class="attachment-post-thumbnail wp-post-image" ' + '  alt="' + this.Name + '" title="' + this.Name + '" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;"/></a>' + "</div>" + '<h5 style="color: transparent;text-shadow: 0px 0px 10px #3D393D;" class="BlogPostHeader">' + '   <a href="#"" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;>' + this.Name + "</a></h5>" + '<div class="BlogPostContent" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">Template:' + this.TemplateName + ' - Location:' + this.Bucket + "</div>" + '<div class="BlogPostFooter" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Content + "   <div style=\"color: transparent;text-shadow: 0px 0px 10px #3D393D;\">" + " Version:" + this.Version + '      Created: <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.Cre + "        </a> by" + '    <a href="#" style="color: transparent;text-shadow: 0px 0px 10px #3D393D;">' + this.CreBy + " </a></div>" + "<div>" + "</div>" + "</li>")
                     }
                     
 
@@ -1593,8 +1617,7 @@ $(function () {
             $('.content').css({
                 'opacity': 1.0
             });
-        }
-    );
+    });
 
     a.find(".addition").bind("blur",
         function () {
@@ -1605,22 +1628,19 @@ $(function () {
             }
 
             a.find(".boxme").removeClass("myInputbox");
-        }
-    );
+    });
 
     $(".msg_body5, .msg_body1, .msg_body2, .msg_body2, .msg_body3, .msg_body4").hide();
 
     $(".msg_head5").click(
         function () {
             $(this).next(".msg_body5").slideToggle(100);
-        }
-    );
+    });
 
     $(".msg_head1").click(
         function () {
             $(this).next(".msg_body1").slideToggle(100);
-        }
-    );
+    });
 
     function ConvertSearchQuery() {
 
@@ -1646,18 +1666,19 @@ $(function () {
     a.find(".addition").live("keydown", function (b) {
         var d = b.keyCode || b.which;
         if (d == 13) {
-
-
+            FacetOn = false;
+            CurrentFacetFilter = [];
             if (CurrentView != "") {
                 $("." + CurrentView).click();
 
-            }
-            else {
+            } else {
 
                 if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
                     if (!($.browser.msie)) {
 
-                        $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                        $('.boxme').stop().css("background-color", "#EE0000").animate({
+                            backgroundColor: "#FFFFFF"
+                        }, 3000);
                     }
                     // $('.addition').removeAttr('disabled');
                 } else {
@@ -1684,8 +1705,9 @@ $(function () {
             }
         }
     });
-
+    if (!PinFacets) {
     $(".slide-out-div").hide();
+    }
     $(".sb_search_container").click(function () {
         a.find(".addition").focus();
     });
@@ -1707,9 +1729,8 @@ $(function () {
                     showMe = showMe.replace(" ", "");
                     if ($.browser.msie) {
                         e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
-                    }
-                    else {
-                        e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;background: url(\'/temp/iconCache/' + this.Icon + '\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x:3px;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
+                    } else {
+                        e = e + '<div title="Click to load/reload the data" class=\"sb_filter recent ' + showMe + '\" style=\"font-weight:bold;background: url(\'~/icon/' + this.Icon + '\') no-repeat left center;padding-left:25px;background-size:16px 16px;background-position-x:3px;\">' + this.Name + " - <span style=\"font-size:8px;\">" + this.DisplayText + '</span></div><div class="' + showMe + "body" + '" style="display:none"></div>';
                     }
                     $("." + showMe).die("click");
                     $("." + showMe).live('click',
@@ -1739,8 +1760,7 @@ $(function () {
 
                                                         e = e + "<li><a href=\"#\" onclick=\"javascript:launchMultipleTabs('" + splitMe + "')\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
 
-                                                    }
-                                                    else {
+                                                } else {
 
                                                         var splitMe = this.split("|");
                                                         e = e + "<li><a href=\"#\" onclick=\"scForm.getParentForm().postRequest('','','','" + "contenteditor:launchtab" + "(url=" + splitMe[1] + ")'); return false;\" title='Click this to launch a search based on the '" + this + '" class=\"command\" id="' + splitMe[1] + "' style=\"background: url(\'images/pin.png\') no-repeat left center;padding: 0px 18px;\">" + (splitMe[0].length > 20 ? (splitMe[0].substring(0, 20) + "...") : splitMe[0]) + "</a></li>"
@@ -1748,19 +1768,18 @@ $(function () {
                                                 } else if (scope.data.indexOf("SearchOperations") > 0) {
                                                     if ($.browser.msie) {
                                                         e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
-                                                    }
-                                                    else {
-                                                        e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="background: url(\'/temp/iconCache/' + this.split("|")[1] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
+                                                } else {
+                                                    e = e + '<li><a href="#" id="' + this.split("|")[0].toString().replace(/\s/g, '') + '" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="SearchOperation ' + this.split("|")[0].toString().replace(/\s/g, '') + '" style="background: url(\'~/icon/' + this.split("|")[1] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[0].length > 20 ? (this.split("|")[0].substring(0, 20) + "...") : this.split("|")[0]) + "</a></li>"
                                                     }
                                                 } else if (scope.data.indexOf("MyRecentSearches") > 0) {
 
-                                                    e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
+                                                    e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this + '" class="command">' + (this.length > 30 ? (this.substring(0, 30) + "...") : this) + "</a></li>";
 
                                                 } else {
                                                     if ($.browser.msie) {
-                                                        e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="no-repeat left center;padding: 0px 18px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     } else {
-                                                        e = e + '<li><a href="#" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'/temp/iconCache/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
+                                                        e = e + '<li><a href="#" onclick="onVariantClick($(this)[0])" title="Click this to launch a search based on the ' + this.split("|")[0] + '" class="command" style="background: url(\'~/icon/' + this.split("|")[2] + '\') no-repeat left center;padding: 0px 18px;background-size:16px 16px;">' + (this.split("|")[1].length > 30 ? (this.split("|")[1].substring(0, 30) + "...") : this.split("|")[1]) + "</a></li>";
                                                     }
                                                 }
                                             }
@@ -1777,48 +1796,12 @@ $(function () {
                                 $("." + showMe).next("." + showMe + "body").toggle('slow');
                             }
                         });
-
-                    $(".command, .topsearch").live("click",
-                        function () {
-
-                            if ((this.parentElement.parentElement.className.replace("body", "") == "RecentlyModified") || (this.parentElement.parentElement.className.replace("body", "") == "RecentlyCreated") || (this.parentElement.parentElement.className.replace("body", "") == "RecentTabs")) {
-
-                            } else {
-
-                                var listOfSearches = ResolveSearches(this.title.replace("Click this to launch a search based on the ", "").replace(new RegExp(",", 'g'), ""));
-
-                                $(".addition").val("");
-                                if (listOfSearches.length == 1) {
-                                    $(".addition").val(listOfSearches[0]);
-                                    $(".addition").focus();
-                                    $(".addition").val($(".addition").val() + ":");
-                                    var press = jQuery.Event("keyup");
-                                    press.shiftKey = true;
-                                    press.which = 58;
-                                    $(".addition").trigger(press);
-                                } else {
-                                    for (var iii = 0; iii < listOfSearches.length; iii = iii + 2) {
-                                        if (listOfSearches[iii + 1] != "") {
-                                            var childCheck = $(".boxme").children(".token-input-token-facebook").children('.' + this.text.split(':')[0]);
-                                            if (childCheck.text().indexOf(this.text.split(':')[1].replace(';', '')) < 0) {
-                                                $(".boxme").prepend('<li class="token-input-token-facebook" title="' + listOfSearches[iii + 1] + '"><span style="background: url(\'images/' + listOfSearches[iii] + '.gif\') no-repeat center center;padding: 0px 11px;"></span><p class="' + listOfSearches[iii] + '">' + listOfSearches[iii + 1] + '</p><span class="token-input-delete-token-facebook remove">×</span></li>');
-                                                $(".remove").live("click",
-                                                    function () {
-                                                        $(this).parents("li:first").remove();
-                                                        $(".addition").focus();
-                                                    });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
                 });
 
                 $(".sb_dropdown").html("");
                 $(".sb_dropdown").append(e);
                 $(".sb_dropdown").show();
-
+                a.find(".sb_down").addClass("sb_up").removeClass("sb_down");
                 $(".sb_dropdown").children().first(".sb_filter.recent").attr("id", "keySelect");
 
 
@@ -1830,27 +1813,39 @@ $(function () {
     function toggleDropDownUp() {
         $(".sb_dropdown").hide();
         a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
+
     };
 
 
+    //    $(".sb_down, .sb_up").live('click', function () {
+    //        if ($('.sb_up').hasClass("toggled")) {
+    //            toggleDropDownUp();
+    //            $('.sb_down').addClass("toggled");
+    //            $('.sb_up').removeClass("toggled");
+    //        } else {
+    //            toggleDropDown();
+    //            $('.sb_up').addClass("toggled");
+    //            $('.sb_down').removeClass("toggled");
+    //        };
+    //    });
 
 
-
-    $(".sb_down, .sb_up").toggle(toggleDropDown,
-        toggleDropDownUp);
+    $(".sb_down, .sb_up").toggle(toggleDropDown, toggleDropDownUp);
 
     $(".sb_search").click(function () {
-
+        FacetOn = false;
+        CurrentFacetFilter = [];
         if (CurrentView != "") {
             $("." + CurrentView).click();
 
-        }
-        else {
+        } else {
 
             if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
                 if (!($.browser.msie)) {
 
-                    $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                    $('.boxme').stop().css("background-color", "#EE0000").animate({
+                        backgroundColor: "#FFFFFF"
+                    }, 3000);
                 }
                 // $('.addition').removeAttr('disabled');
             } else {
@@ -1890,11 +1885,15 @@ $(function () {
 
 
     $(".list").click(function () {
+        FacetOn = false;
         CurrentView = "list";
+        CurrentFacetFilter = [];
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") {
             if (!($.browser.msie)) {
 
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                $('.boxme').stop().css("background-color", "#EE0000").animate({
+                    backgroundColor: "#FFFFFF"
+                }, 3000);
             }
             // $('.addition').removeAttr('disabled');
         } else {
@@ -1940,7 +1939,9 @@ $(function () {
             // $('.addition').removeAttr('disabled');
             if (!($.browser.msie)) {
 
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                $('.boxme').stop().css("background-color", "#EE0000").animate({
+                    backgroundColor: "#FFFFFF"
+                }, 3000);
             }
 
             $(this).removeClass("pageClickLoad");
@@ -1956,13 +1957,14 @@ $(function () {
 
             var p = buildQuery();
             retrieveFilters();
+            if (FacetOn) {
+                p = CurrentFacetFilter;
+            }
 
             if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, g);
-            }
-
-            else if (CurrentView == "grid") {
+            } else if (CurrentView == "grid") {
                 pageNumber = $(this).attr("data-page");
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -1981,18 +1983,24 @@ $(function () {
             }
         }
 
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        $('html, body').animate({
+            scrollTop: 0
+        }, 'slow');
 
 
 
     });
 
     $(".grid").click(function () {
+        FacetOn = false;
         CurrentView = "grid";
+        CurrentFacetFilter = [];
         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
             if (!($.browser.msie)) {
 
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                $('.boxme').stop().css("background-color", "#EE0000").animate({
+                    backgroundColor: "#FFFFFF"
+                }, 3000);
             }
             // $('.addition').removeAttr('disabled');
         } else {
@@ -2264,8 +2272,7 @@ $(function () {
         if (b.which == 38 && b.ctrlKey) {
             if (Expanded) {
                 $new = $old.parent().prev("li").children("a")
-            }
-            else {
+            } else {
                 $new = $old.prev().prev();
             }
             $(".sb_filter.recent").prev().focus();
@@ -2284,8 +2291,7 @@ $(function () {
         if (b.which == 40 && b.ctrlKey) {
             if (Expanded) {
                 $new = $old.parent().next("li").children("a")
-            }
-            else {
+            } else {
                 $new = $old.next().next();
             }
             $old.removeAttr("id", 'keySelect');
@@ -2344,7 +2350,9 @@ $(function () {
             // $('.addition').removeAttr('disabled');
             if (!($.browser.msie)) {
 
-                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                $('.boxme').stop().css("background-color", "#EE0000").animate({
+                    backgroundColor: "#FFFFFF"
+                }, 3000);
             }
 
             $(this).removeClass("pageClickLoad");
@@ -2383,14 +2391,14 @@ $(function () {
 //                runQuery(p, pageNumber, c, g);
 //            }
             
-
+            if (FacetOn) {
+                p = CurrentFacetFilter;
+            }
 
              if (CurrentView != "list" && CurrentView != "grid" && CurrentView != "") {
                 pageNumber = a;
                 runQuery(p, pageNumber, h, g);
-            }
-
-            else if (CurrentView == "grid") {
+            } else if (CurrentView == "grid") {
                 pageNumber = a;
                 runQuery(p, pageNumber, h, i);
                 runFacet(p, pageNumber, meme, g);
@@ -2413,8 +2421,9 @@ $(function () {
 
         }
 
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-
+        $('html, body').animate({
+            scrollTop: 0
+        }, 'slow');
     }
 
     /* This will fade the dropdown menu away once you lose focus on it (blur) */
@@ -2423,10 +2432,12 @@ $(function () {
             $(".sb_dropdown").fadeOut(2500,
                 function () {
                     a.find(".sb_up").addClass("sb_down").removeClass("sb_up");
-                }
-            );
-        }
-    );
+
+            $('.sb_down').click();
+        });
+    });
+
+
 
     /* This will stop the fading away of the drop down menu once you have lost focus on it */
     $(".sb_dropdown").live("mouseenter",
@@ -2435,25 +2446,21 @@ $(function () {
                 $(".sb_dropdown").stop(true, true);
             }
             $(".sb_dropdown").show();
-        }
-    );
+    });
 
     a.find(".sb_dropdown").find('label[for="all"]').prev().bind("click",
         function () {
             $(this).parent().siblings().find(":checkbox").attr("checked", this.checked).attr("disabled", this.checked);
-        }
-    );
+    });
 
     /* This will hide the loading bar once an item has been loaded */
     $("#loadingSection").prepend('<div id="ajaxBusy"><p><img src="images/loading.gif"></p></div>');
-    $("#ajaxBusy").css(
-        {
+    $("#ajaxBusy").css({
             padding: "0px 122px 0px 0px",
             display: "none",
             margin: "0px auto",
             width: "24px"
-        }
-    );
+    });
 
     /* This will change the image and the sort direction of the sort filter */
     $('.sortDirection').live("click", function () {
@@ -2467,8 +2474,7 @@ $(function () {
                 $(this).css("background-image", "url(../ItemBuckets/images/sort.gif)");
                 $(this).addClass("asc");
                 $(this).removeClass("desc");
-            }
-        );
+        });
     });
 
     $(".boxme").watch('width,height', function () {
@@ -2478,8 +2484,7 @@ $(function () {
             $(".sb_down").css("padding-bottom", parseFloat($(this).height() - 8));
             $(".sb_up").css("padding-bottom", parseFloat($(this).height() - 8));
             $(".sb_search").css("padding-bottom", parseFloat($(this).height() - 10));
-        }
-        else {
+        } else {
             if (parseFloat($(this).height()) >= 150) {
 
 
@@ -2491,15 +2496,21 @@ $(function () {
                 });
 
 
-                $(".token-input-token-facebook").animate({ width: "28px" });
+                $(".token-input-token-facebook").animate({
+                    width: "28px"
+                });
                 $(".token-input-token-facebook").live("click", function () {
                     $(this).toggle(
                         function () {
                             var orig = $.data(this, 'css');
-                            $(this).animate({ width: orig.width });
+                        $(this).animate({
+                            width: orig.width
+                        });
                         },
                         function () {
-                            $(this).animate({ width: "28px" });
+                        $(this).animate({
+                            width: "28px"
+                        });
                         });
                 });
             }
@@ -2520,8 +2531,7 @@ $(function () {
                 $(this).next("p").text($(this).next("p").text().replace("-", ""));
                 $(this).addClass("must");
                 $(this).removeClass("not");
-            }
-        );
+        });
     });
 
     AddFilter();
@@ -2725,9 +2735,7 @@ function AddFilter() {
        
                 runQuery(o, 1, h, g);
         runFacet(o, 1, meme, g);
-            }
-
-            else if (CurrentView == "grid") {
+            } else if (CurrentView == "grid") {
           
                         runQuery(o, 1, h, i);
         runFacet(o, 1, meme, g);
@@ -2783,7 +2791,9 @@ function AddFilter() {
                         if ((!$('.addition').val().replace(/\s/g, '').length && $('.boxme').children('li').length <= 1) || (($('.boxme').children('li').length == 2) && $('.boxme').children('li')[0].innerHTML.indexOf('p class="end type"') > 0) || $('.addition').val() == "Search for an Item") { //Add check for "Search for an Item"
                             if (!($.browser.msie)) {
 
-                                $('.boxme').stop().css("background-color", "#EE0000").animate({ backgroundColor: "#FFFFFF" }, 3000);
+                                $('.boxme').stop().css("background-color", "#EE0000").animate({
+                                    backgroundColor: "#FFFFFF"
+                                }, 3000);
                             }
                             // $('.addition').removeAttr('disabled');
                         } else {
@@ -2823,16 +2833,20 @@ function AddFilter() {
 });
 
 $.fn.watch = function (props, callback, timeout) {
-    if (!timeout)
-        timeout = 10;
+    if (!timeout) timeout = 10;
     return this.each(function () {
         var el = $(this),
-            func = function () { __check.call(this, el) },
-            data = { props: props.split(","),
+            func = function () {
+                __check.call(this, el)
+            },
+            data = {
+                props: props.split(","),
                 func: callback,
                 vals: []
             };
-        $.each(data.props, function (i) { data.vals[i] = el.css(data.props[i]); });
+        $.each(data.props, function (i) {
+            data.vals[i] = el.css(data.props[i]);
+        });
         el.data(data);
         if (typeof (this.onpropertychange) == "object") {
             el.bind("propertychange", callback);

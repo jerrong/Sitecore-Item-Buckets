@@ -97,6 +97,12 @@ background-color: rgba(165, 165, 165, 0.1);
     font-size: 150%;
     padding: 0;
     margin-top: -60px;
+    padding: 20px 0px 10px 0px;
+}
+
+.BlogPostHeader a
+{
+     font-size: 150%;
 }
 
 .BlogRating
@@ -210,8 +216,9 @@ UL.BlogLinkCategoryLinkList li a
     margin-top: 7px;
     margin-left: -91px;
     text-align: center;
-    padding: 10px 0px 10px 3px;
-/*    background-color: #505050;
+    padding:10px 0px 0px 0px;
+    /*padding: 10px 0px 10px 3px;
+   background-color: #505050;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;

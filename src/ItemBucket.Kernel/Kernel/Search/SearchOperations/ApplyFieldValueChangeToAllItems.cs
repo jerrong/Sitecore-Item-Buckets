@@ -11,6 +11,9 @@
     using Sitecore.Text;
     using Sitecore.Web.Configuration;
     using Sitecore.Web.UI.Sheer;
+    using Sitecore.Shell.Framework;
+    using Sitecore.Shell.Data;
+    using Sitecore.Data.Items;
 
     internal class ApplyFieldValueChangeToAllItems : WebEditCommand
     {
@@ -39,23 +42,31 @@
         public override void Execute(CommandContext context)
         {
             Assert.ArgumentNotNull(context, "context");
-            var str = new UrlString(ItemBucket.Kernel.Util.Constants.ContentEditorRawUrlAddress);
+
             var searchStringModel = this.ExtractSearchQuery(context.Parameters.GetValues("url")[0].Replace("\"", string.Empty));
             int hitsCount;
             var listOfItems = context.Items[0].Search(searchStringModel, out hitsCount).ToList();
-            Assert.IsNotNull(context.Items[0], "item");
-            foreach (var item1 in listOfItems.Select(sitecoreItem => sitecoreItem.GetItem()))
-            {
-                item1.Editing.BeginEdit();
-                item1.Editing.EndEdit();
-            }
+            Assert.IsNotNull(listOfItems.First(), "item");
 
-            str[ItemBucket.Kernel.Util.Constants.OpenItemEditorQueryStringKeyName] = listOfItems.First().GetItem().ID.ToString();
-            str[ItemBucket.Kernel.Util.Constants.ModeQueryStringKeyName] = "preview";
-            var features = GetFeatures();
-            SheerResponse.Eval(string.Concat(new object[] { "window.open('", str, "', 'SitecoreWebEditEditor', '", features, "')" }));
+            Item item = listOfItems.First().GetItem();
+            Open(item.ID.ToString(), Sitecore.Context.Language.Name, item.Versions.GetLatestVersion().Version.Number.ToString());
         }
+        protected void Open(string id, string language, string version)
+        {
+            Assert.ArgumentNotNull(id, "id");
+            Assert.ArgumentNotNull(language, "language");
+            Assert.ArgumentNotNull(version, "version");
+            string sectionID = RootSections.GetSectionID(id);
+            UrlString str2 = new UrlString(ItemBucket.Kernel.Util.Constants.ContentEditorRawUrlAddress);
+            str2.Append("ro", sectionID);
+            str2.Append("fo", id);
+            str2.Append("id", id);
+            str2.Append("la", language);
+            str2.Append("vs", version);
+            str2.Append("mo", "popup");
 
+            SheerResponse.ShowModalDialog(str2.ToString(), "960", "600", string.Empty, false);           
+        }
         private static string GetFeatures()
         {
             var str = "location=0,menubar=0,status=0,toolbar=0,resizable=1";

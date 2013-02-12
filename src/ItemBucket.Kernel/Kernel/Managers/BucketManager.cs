@@ -259,8 +259,8 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <param name="numberOfItemsToReturn">0-XXXXXX (The bigger this number is the less performant it will be)</param>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", templates: "TemplateGUID")</example>
         /// <example>BucketManager.Search(Sitecore.Context.Item, text: "Tim", relatedIds: "ItemGUID", sortField: "_name")</example>
-        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20)
-        {
+        public static IEnumerable<SitecoreItem> Search(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1)
+        {           
             using (var searcher = new IndexSearcher(indexName))
             {
                 var culture = CultureInfo.CreateSpecificCulture("en-US");
@@ -299,7 +299,8 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                               Refinements = refinements,
                                               ID = id,
                                               SortByField = sortField,
-                                              PageSize = numberOfItemsToReturn
+                                              PageSize = numberOfItemsToReturn,
+                                              PageNumber = pageNumber
                                           };
 
                 if (startFlag || endFlag)
@@ -335,27 +336,21 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         /// <example>BucketManager.Search(Sitecore.Context.Item, SearchModel)</example>
         public static IEnumerable<SitecoreItem> Search(Item startLocationItem, out int hitCount, List<SearchStringModel> currentSearchString, string indexName = "itembuckets_buckets", string sortField = "", string sortDirection = "")
         {
-            var refinements = new SafeDictionary<string>();
-            var searchStringModels = SearchHelper.GetTags(currentSearchString);
-
-            if (searchStringModels.Count > 0)
+            var locationIdFromItem = startLocationItem != null ? startLocationItem.ID.ToString() : string.Empty;
+            var rangeSearch = SearchHelper.GetSearchSettings(currentSearchString, locationIdFromItem);
+            if (!sortField.IsNullOrEmpty())
             {
-                foreach (var ss in searchStringModels)
-                {
-                    var query = ss.Value;
-                    if (query.Contains("tagid="))
-                    {
-                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
-                    }
-                    var db = Context.ContentDatabase ?? Context.Database;
-                    refinements.Add("_tags", db.GetItem(query).ID.ToString());
-                }
+                rangeSearch.SortByField = sortField;
+            }
+            if (!sortDirection.IsNullOrEmpty())
+            {
+                rangeSearch.SortDirection = sortDirection;
             }
             using (var searcher = new IndexSearcher(indexName))
             {
-                var keyValuePair = searcher.GetItems(new DateRangeSearchParam { FullTextQuery = SearchHelper.GetText(currentSearchString), RelatedIds = string.Empty, SortDirection = sortDirection, TemplateIds = SearchHelper.GetTemplates(currentSearchString), LocationIds = startLocationItem.ID.ToString(), SortByField = sortField, Refinements = refinements});
-                hitCount = keyValuePair.Key;
-                return keyValuePair.Value;
+                var returnResult = searcher.GetItems(rangeSearch);
+                hitCount = returnResult.Key;
+                return returnResult.Value;
             }
         }
 

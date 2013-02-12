@@ -61,7 +61,7 @@ namespace Sitecore.ItemBucket.Kernel.Common.Providers
                         {
                             continue;
                         }
-                        else if(sec.Paths.FullPath.ToLowerInvariant() == Sitecore.Context.Site.StartPath)
+                        else if (sec.Paths.FullPath.ToLowerInvariant() == Sitecore.Context.Site.StartPath.ToLowerInvariant())
                         {
                             continue;
                         }

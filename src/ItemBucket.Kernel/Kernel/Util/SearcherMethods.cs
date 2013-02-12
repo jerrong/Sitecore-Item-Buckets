@@ -275,7 +275,7 @@
                 return;
             }
 
-            query.Add(new FieldQuery(BuiltinFields.Name, Name), QueryOccurance.Should);
+            query.Add(new FieldQuery(BuiltinFields.Name, Name), QueryOccurance.Must);
         }
 
       

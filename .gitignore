@@ -58,3 +58,207 @@ packages/
 
 # visual studio database projects
 *.dbmdl
+
+#unnecessary for ItemBuckets Sitecore folders
+Data/
+Databases/
+Website/App_Browsers/
+Website/App_Config/Commands.config
+Website/App_Config/ConnectionStrings.config
+Website/App_Config/ConnectionStringsOracle.config
+Website/App_Config/FieldTypes.config
+Website/App_Config/Icons.config
+Website/App_Config/Include/DataFolder.config.example
+Website/App_Config/Include/EventHandler.config.example
+Website/App_Config/Include/ForwardingSecurityEvents.config.example
+Website/App_Config/Include/LiveMode.config.example
+Website/App_Config/Include/ScalabilitySettings.config.example
+Website/App_Config/Include/SiteDefinition.config.example
+Website/App_Config/Include/Sitecore.WebDAV.config
+Website/App_Config/Include/SitecoreSettings.config.example
+Website/App_Config/Include/WebDeploy.config.example
+Website/App_Config/Include/XslExtension.config.example
+Website/App_Config/Include/ja-JP.config.example
+Website/App_Config/LanguageDefinitions.config
+Website/App_Config/MimeTypes.config
+Website/App_Config/Portraits.config
+Website/App_Config/Prefetch/
+Website/App_Config/Prototypes.config
+Website/App_Config/Security/
+Website/App_Config/XamlSharp.config
+Website/Default.aspx
+Website/Design.config
+Website/Global.asax
+Website/Web.config
+Website/Web.config.Oracle
+Website/default.css
+Website/default.htm.sitedown
+Website/default.js
+Website/layouts/
+Website/sitecore/Copyrights/
+Website/sitecore/admin/
+Website/sitecore/blocked.aspx
+Website/sitecore/default.aspx
+Website/sitecore/images/
+Website/sitecore/login/
+Website/sitecore/no.css
+Website/sitecore/portal/
+Website/sitecore/service/
+Website/sitecore/shell/Applications/Analytics/
+Website/sitecore/shell/Applications/Archives/RecycleBin/RecycleBin.xaml.xml
+Website/sitecore/shell/Applications/Carousel/
+Website/sitecore/shell/Applications/ClientUsesOSWindows.aspx
+Website/sitecore/shell/Applications/Content Manager/Dialogs/
+Website/sitecore/shell/Applications/Content Manager/Editors/
+Website/sitecore/shell/Applications/Content Manager/Execute.aspx
+Website/sitecore/shell/Applications/Content Manager/FieldEditor.aspx
+Website/sitecore/shell/Applications/Content Manager/Galleries/
+Website/sitecore/shell/Applications/Content Manager/Skins/
+Website/sitecore/shell/Applications/Content Manager/Validator.aspx
+Website/sitecore/shell/Applications/Content Manager/WordOCX/
+Website/sitecore/shell/Applications/ContentNavigator/
+Website/sitecore/shell/Applications/ControlPanel/
+Website/sitecore/shell/Applications/Databases/
+Website/sitecore/shell/Applications/Dialogs/
+Website/sitecore/shell/Applications/DucatShell.xml
+Website/sitecore/shell/Applications/ExternalApplication.xml
+Website/sitecore/shell/Applications/Feeds/
+Website/sitecore/shell/Applications/Files/
+Website/sitecore/shell/Applications/FlashUpload/
+Website/sitecore/shell/Applications/Floatie/
+Website/sitecore/shell/Applications/Globalization/
+Website/sitecore/shell/Applications/Install/
+Website/sitecore/shell/Applications/ItemBrowser/
+Website/sitecore/shell/Applications/Layouts/
+Website/sitecore/shell/Applications/Licenses/
+Website/sitecore/shell/Applications/Links/
+Website/sitecore/shell/Applications/Login/
+Website/sitecore/shell/Applications/MarketingAutomation/
+Website/sitecore/shell/Applications/Masters/
+Website/sitecore/shell/Applications/Media/
+Website/sitecore/shell/Applications/Page Modes/
+Website/sitecore/shell/Applications/Portlets/
+Website/sitecore/shell/Applications/Preview.aspx
+Website/sitecore/shell/Applications/Preview/
+Website/sitecore/shell/Applications/Reports/
+Website/sitecore/shell/Applications/Rules/
+Website/sitecore/shell/Applications/Scheduled Tasks/
+Website/sitecore/shell/Applications/Search/
+Website/sitecore/shell/Applications/Security/
+Website/sitecore/shell/Applications/Shell.xml
+Website/sitecore/shell/Applications/SitecoreApps/
+Website/sitecore/shell/Applications/Startbar/
+Website/sitecore/shell/Applications/Templates/
+Website/sitecore/shell/Applications/Tools/
+Website/sitecore/shell/Applications/WebDAV/
+Website/sitecore/shell/Applications/WebEdit.aspx
+Website/sitecore/shell/Applications/WebEdit/Debug.js
+Website/sitecore/shell/Applications/WebEdit/Delete.aspx
+Website/sitecore/shell/Applications/WebEdit/Dialogs/
+Website/sitecore/shell/Applications/WebEdit/Galleries/
+Website/sitecore/shell/Applications/WebEdit/PageDesignerError.aspx
+Website/sitecore/shell/Applications/WebEdit/Palette.aspx
+Website/sitecore/shell/Applications/WebEdit/Portlets/
+Website/sitecore/shell/Applications/WebEdit/TestCombinations.ashx
+Website/sitecore/shell/Applications/WebEdit/WebEdit Menu Page.xml
+Website/sitecore/shell/Applications/WebEdit/WebEdit Menu.xml
+Website/sitecore/shell/Applications/WebEdit/WebEdit.js
+Website/sitecore/shell/Applications/WebEdit/WebEditDialog.css
+Website/sitecore/shell/Applications/WebEdit/WebEditRibbon.aspx
+Website/sitecore/shell/Applications/WebEdit/WebEditRibbon.css
+Website/sitecore/shell/Applications/Workbox/
+Website/sitecore/shell/Applications/Xaml/
+Website/sitecore/shell/Applications/blank.html
+Website/sitecore/shell/ClientBin/
+Website/sitecore/shell/Configuration/
+Website/sitecore/shell/Controls/Applications/
+Website/sitecore/shell/Controls/Carousel/
+Website/sitecore/shell/Controls/CollapsiblePanel/
+Website/sitecore/shell/Controls/CommandPortal/
+Website/sitecore/shell/Controls/Commandbars/
+Website/sitecore/shell/Controls/ComponentArtGrid.js
+Website/sitecore/shell/Controls/Data/
+Website/sitecore/shell/Controls/Dialogs/
+Website/sitecore/shell/Controls/Error.htm
+Website/sitecore/shell/Controls/Gecko.js
+Website/sitecore/shell/Controls/InformationBar/
+Website/sitecore/shell/Controls/InternetExplorer.js
+Website/sitecore/shell/Controls/Lib/
+Website/sitecore/shell/Controls/Listviews/
+Website/sitecore/shell/Controls/MDI/
+Website/sitecore/shell/Controls/Misc/
+Website/sitecore/shell/Controls/MultiRootTreeview/
+Website/sitecore/shell/Controls/Panes/
+Website/sitecore/shell/Controls/Portal/
+Website/sitecore/shell/Controls/Reload.htm
+Website/sitecore/shell/Controls/Rich Text Editor/Default.aspx
+Website/sitecore/shell/Controls/Rich Text Editor/Dictionaries/
+Website/sitecore/shell/Controls/Rich Text Editor/EditorContentArea_RTL.css
+Website/sitecore/shell/Controls/Rich Text Editor/EditorPage.aspx
+Website/sitecore/shell/Controls/Rich Text Editor/EditorPage.js
+Website/sitecore/shell/Controls/Rich Text Editor/EditorWindow.aspx
+Website/sitecore/shell/Controls/Rich Text Editor/InsertImage/
+Website/sitecore/shell/Controls/Rich Text Editor/InsertLink/
+Website/sitecore/shell/Controls/Rich Text Editor/Localization/
+Website/sitecore/shell/Controls/Rich Text Editor/Preview.aspx
+Website/sitecore/shell/Controls/Rich Text Editor/RichText.js
+Website/sitecore/shell/Controls/Rich Text Editor/ToolsFile.xml
+Website/sitecore/shell/Controls/Sidebar/
+Website/sitecore/shell/Controls/Sitecore.Runtime.js
+Website/sitecore/shell/Controls/Sitecore.js
+Website/sitecore/shell/Controls/SitecoreHSplitter.js
+Website/sitecore/shell/Controls/SitecoreHtmlEditor.js
+Website/sitecore/shell/Controls/SitecoreKeyboard.js
+Website/sitecore/shell/Controls/SitecoreLightbox.js
+Website/sitecore/shell/Controls/SitecoreModalWindow.js
+Website/sitecore/shell/Controls/SitecoreModelessWindow.js
+Website/sitecore/shell/Controls/SitecoreModifiedHandling.js
+Website/sitecore/shell/Controls/SitecoreObjects.js
+Website/sitecore/shell/Controls/SitecoreOutOfFrameGallery.js
+Website/sitecore/shell/Controls/SitecoreSidebar.js
+Website/sitecore/shell/Controls/SitecoreTreeview.js
+Website/sitecore/shell/Controls/SitecoreVSplitter.js
+Website/sitecore/shell/Controls/SitecoreWindow.js
+Website/sitecore/shell/Controls/SitecoreWindowManager.js
+Website/sitecore/shell/Controls/SitecoreWizard.js
+Website/sitecore/shell/Controls/Splitters/
+Website/sitecore/shell/Controls/Standard/
+Website/sitecore/shell/Controls/Tasks/
+Website/sitecore/shell/Controls/Testing/
+Website/sitecore/shell/Controls/Text.htm
+Website/sitecore/shell/Controls/Toolbars/
+Website/sitecore/shell/Controls/TreeviewEx/
+Website/sitecore/shell/Controls/WebFramework/
+Website/sitecore/shell/Controls/Windows/
+Website/sitecore/shell/Css Editor/
+Website/sitecore/shell/Feeds/
+Website/sitecore/shell/Invoke.aspx
+Website/sitecore/shell/RadControls/
+Website/sitecore/shell/Schemas/
+Website/sitecore/shell/Templates/
+Website/sitecore/shell/Themes/
+Website/sitecore/shell/WebService/
+Website/sitecore/shell/blank.html
+Website/sitecore/shell/default.aspx
+Website/sitecore/shell/download.aspx
+Website/sitecore/shell/prompt.html
+Website/sitecore/shell/sitecore.version.xml
+Website/sitecore_files/
+*.status
+Website/temp/
+Website/upload/
+Website/web.config.Net3_5.MVC
+Website/web.config.Net4.MVC
+Website/webedit.css
+Website/xsl/
+Website/App_Config/Include/Captcha.config
+Website/App_Config/Include/forms.config
+Website/bin_x64/
+Website/sitecore modules/Shell/Web Forms for Marketers/
+Website/sitecore modules/Web/
+Website/sitecore/shell/Applications/Modules/
+Website/test.aspx
+Website/test.aspx.cs
+Website/test.aspx.designer.cs
+Website/App_Config/Include/Sitecore.ItemBuckets.config
+Website/Sitecore.ItemBucket.UI.csproj

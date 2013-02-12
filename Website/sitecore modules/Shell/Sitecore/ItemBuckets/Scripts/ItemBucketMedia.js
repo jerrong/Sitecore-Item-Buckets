@@ -28,6 +28,7 @@ function GetItemPathFromMediaLibrary(id) {
 
 function BindItemResult(a) {
 
+    a = a.replace(imageFullPath, "");
     $('#Filename', parent.document.body).val(a);
     $('#ItemName', parent.document.body).val(a);
     
@@ -79,7 +80,7 @@ var ContinueSearch = true;
 var QueryServer = "";
 var Expanded = false;
 var CurrentView = "";
-
+var CurrentSourcePath = "";
 
 //This will check if you have designate a URL for all quieries to be run from and switch to that. Default is empty. (Local)
 retrieveScalabilitySettings();
