@@ -131,6 +131,11 @@ namespace Sitecore.ItemBucket.Kernel.Util
             return searchParams.Where(i => i.Type == "text").Aggregate(string.Empty, (current, temp) => current + temp.Value + " ").Trim();
         }
 
+        public static string GetItemName(List<SearchStringModel> searchParams)
+        {
+            return searchParams.Where(i => i.Type == "itemName").Aggregate(string.Empty, (current, temp) => current + temp.Value + " ").Trim();
+        }
+
         public static string GetVersion(List<SearchStringModel> searchParams)
         {
             return searchParams.Where(i => i.Type == "version").Aggregate(string.Empty, (current, temp) => current + temp.Value + " ").Trim();
@@ -148,121 +153,8 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
         public static DateRangeSearchParam GetBaseQuery(List<SearchStringModel> _searchQuery, string locationFilter)
         {
-            var startDate = DateTime.Now;
-            var endDate = DateTime.Now.AddDays(1);
-            var locationSearch = locationFilter;
-            var refinements = new SafeDictionary<string>();
-            var searchStringModels = GetTags(_searchQuery);
-
-            if (searchStringModels.Count > 0)
-            {
-                foreach (var ss in searchStringModels)
-                {
-                    var query = ss.Value;
-                    if (query.Contains("tagid="))
-                    {
-                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
-                    }
-                    var db = Context.ContentDatabase ?? Context.Database;
-                    refinements.Add("_tags", db.GetItem(query).ID.ToString());
-                }
-            }
-
-            var author = GetAuthor(_searchQuery);
-            var languages = GetLanguages(_searchQuery);
-            if (languages.Length > 0)
-            {
-                refinements.Add("_language", languages);
-            }
-
-            var references = GetReferences(_searchQuery);
-
-            var custom = GetCustom(_searchQuery);
-            if (custom.Length > 0)
-            {
-                var customSearch = custom.Split('|');
-                if (customSearch.Length > 0)
-                {
-                    try
-                    {
-                        refinements.Add(customSearch[0], customSearch[1]);
-                    }
-                    catch (Exception exc)
-                    {
-                        Log.Error("Could not parse the custom search query", exc);
-                    }
-                }
-            }
-
-            var search = GetField(_searchQuery);
-            if (search.Length > 0)
-            {
-                var customSearch = search;
-                refinements.Add(customSearch, GetText(_searchQuery));
-            }
-
-            var fileTypes = GetFileTypes(_searchQuery);
-            if (fileTypes.Length > 0)
-            {
-                refinements.Add("extension", GetFileTypes(_searchQuery));
-            }
-
-            var s = GetSite(_searchQuery);
-            if (s.Length > 0)
-            {
-                var siteContext = SiteContextFactory.GetSiteContext(SiteManager.GetSite(s).Name);
-                var db = Context.ContentDatabase ?? Context.Database;
-                var startItemId = db.GetItem(siteContext.StartPath);
-                locationSearch = startItemId.ID.ToString();
-            }
-
-            var culture = CultureInfo.CreateSpecificCulture("en-US");
-            var startFlag = true;
-            var endFlag = true;
-            if (GetStartDate(_searchQuery).Any())
-            {
-                if (!DateTime.TryParse(GetStartDate(_searchQuery), culture, DateTimeStyles.None, out startDate))
-                {
-                    startDate = DateTime.Now;  
-                } 
-
-                startFlag = false;
-            }
-
-            if (GetEndDate(_searchQuery).Any())
-            {
-                if (!DateTime.TryParse(GetEndDate(_searchQuery), culture, DateTimeStyles.None, out endDate))
-                {
-                    endDate = DateTime.Now.AddDays(1);
-                }
-
-                endFlag = false;
-            }
-
-            var returnResult = new DateRangeSearchParam
-            {
-                ID = GetID(_searchQuery),
-                ShowAllVersions = false,
-                FullTextQuery = GetText(_searchQuery),
-                Refinements = refinements,
-                RelatedIds = references.Any() ? references : string.Empty,
-                TemplateIds = GetTemplates(_searchQuery),
-                LocationIds = GetLocation(_searchQuery, locationFilter),
-                Language = languages,
-                IsFacet = true,
-                Author = author == string.Empty ? string.Empty : author,
-            };
-            if (!startFlag || !endFlag)
-            {
-                returnResult.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                             {
-                                                 new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDate, endDate)
-                                                 { 
-                                                     InclusiveStart = true,
-                                                     InclusiveEnd = true 
-                                                 }
-                                             };
-            }
+            var returnResult = GetSearchSettings(_searchQuery,locationFilter);
+            returnResult.IsFacet = true;
 
             return returnResult;
         }
@@ -580,6 +472,173 @@ namespace Sitecore.ItemBucket.Kernel.Util
         {
             var array = (uint[])bitArray.GetType().GetField("m_array", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(bitArray);
             return array.Sum(t => BitsSetArray256[t & 0xFF] + BitsSetArray256[(t >> 8) & 0xFF] + BitsSetArray256[(t >> 16) & 0xFF] + BitsSetArray256[(t >> 24) & 0xFF]);
+        }
+
+        public static SafeDictionary<string> GetTagRefinements(List<SearchStringModel> currentSearchString)
+        {
+            var refinements = new SafeDictionary<string>();
+            var tagsList = new List<string>();
+            var searchStringModels = SearchHelper.GetTags(currentSearchString);
+
+            if (searchStringModels.Count > 0)
+            {
+                foreach (var ss in searchStringModels)
+                {
+                    var query = ss.Value;
+                    if (query.Contains("tagid="))
+                    {
+                        query = query.Split('|')[1].Replace("tagid=", string.Empty);
+                    }
+                    string result = "";
+                    var db = Context.ContentDatabase ?? Context.Database;
+                    if (ID.IsID(query))
+                    {
+                        Item tagItem = db.GetItem(query);
+                        if (tagItem != null)
+                        {
+                            result = db.GetItem(query).ID.ToShortID().ToString();
+                        }
+                    }
+                    else
+                    {
+                        Item tagParentItem = ((ReferenceField)ItemBucket.Kernel.Util.Constants.SettingsItem.Fields["Tag Parent"]).TargetItem;
+                        if (tagParentItem != null)
+                        {
+                            Item tagItem = tagParentItem.Axes.GetChild(query);
+                            if (tagItem != null)
+                            {
+                                result = tagItem.ID.ToShortID().ToString();
+                            }
+                        }
+                    }
+                    if (!String.IsNullOrEmpty(result))
+                    {
+                        tagsList.Add(result);
+                    }
+                }
+                if (tagsList.Count > 0)
+                {
+                    string refinementValue = "(" + tagsList[0];
+                    tagsList.RemoveAt(0);
+                    foreach (string part in tagsList)
+                    {
+                        refinementValue += " AND " + part;
+                    }
+                    refinementValue += ")";
+                    string tagFieldName = ItemBucket.Kernel.Util.Constants.SettingsItem.Fields["Tag FieldName"].Value;
+                    refinements.Add(tagFieldName, refinementValue);
+                }
+            }
+            return refinements;
+        }
+        public static List<DateRangeSearchParam.DateRangeField> GetDateRefinements(string startDate, string endDate)
+        {
+            var culture = CultureInfo.CreateSpecificCulture("en-US");
+            var startDateOut = DateTime.MinValue;
+            var endDateOut = DateTime.Now.AddDays(1);  
+            var dateIsSet = false;
+            if (startDate != null && startDate.Any())
+            {
+                dateIsSet = true;
+                if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
+                {
+                    startDateOut = DateTime.Now;                    
+                }
+            }
+            if (endDate != null && endDate.Any())
+            {
+                dateIsSet = true;
+                if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
+                {
+                    endDateOut = DateTime.Now.AddDays(1);                    
+                }                
+            }
+            if (dateIsSet)
+            {
+                return new List<DateRangeSearchParam.DateRangeField>
+                                                 {
+                                                     new DateRangeSearchParam.DateRangeField(SearchFieldIDs.CreatedDate, startDateOut, endDateOut)
+                                                         {
+                                                             InclusiveStart = true, InclusiveEnd = true
+                                                         }
+                                                 };
+            }
+            return null;
+        }
+        public static DateRangeSearchParam GetSearchSettings(List<SearchStringModel> currentSearchString, string locationFilter)
+        {            
+            var locationSearch = locationFilter;
+            var refinements = new SafeDictionary<string>();
+            refinements = GetTagRefinements(currentSearchString);
+
+            var author = SearchHelper.GetAuthor(currentSearchString);
+
+
+            var languages = SearchHelper.GetLanguages(currentSearchString);
+            if (languages.Length > 0)
+            {
+                refinements.Add("_language", languages);
+            }
+
+            var references = SearchHelper.GetReferences(currentSearchString);
+
+            var custom = SearchHelper.GetCustom(currentSearchString);
+            if (custom.Length > 0)
+            {
+                var customSearch = custom.Split('|');
+                if (customSearch.Length > 0)
+                {
+                    try
+                    {
+                        refinements.Add(customSearch[0], customSearch[1]);
+                    }
+                    catch (Exception exc)
+                    {
+                        Log.Error("Could not parse the custom search query", exc);
+                    }
+                }
+            }
+
+            var search = SearchHelper.GetField(currentSearchString);
+            if (search.Length > 0)
+            {
+                var customSearch = search;
+                refinements.Add(customSearch, SearchHelper.GetText(currentSearchString));
+            }
+
+            var fileTypes = SearchHelper.GetFileTypes(currentSearchString);
+            if (fileTypes.Length > 0)
+            {
+                refinements.Add("extension", SearchHelper.GetFileTypes(currentSearchString));
+            }
+
+            var s = SearchHelper.GetSite(currentSearchString);
+            if (s.Length > 0)
+            {
+                SiteContext siteContext = SiteContextFactory.GetSiteContext(SiteManager.GetSite(s).Name);
+                var db = Context.ContentDatabase ?? Context.Database;
+                var startItemId = db.GetItem(siteContext.StartPath);
+                locationSearch = startItemId.ID.ToString();
+            }
+           
+            var location = SearchHelper.GetLocation(currentSearchString, locationSearch);
+            
+            var rangeSearch = new DateRangeSearchParam
+            {
+                ID = SearchHelper.GetID(currentSearchString).IsEmpty() ? SearchHelper.GetRecent(currentSearchString) : SearchHelper.GetID(currentSearchString),
+                ShowAllVersions = false,
+                FullTextQuery = SearchHelper.GetText(currentSearchString),
+                Refinements = refinements,
+                RelatedIds = references.Any() ? references : string.Empty,
+                TemplateIds = SearchHelper.GetTemplates(currentSearchString),
+                LocationIds = location,
+                Language = languages,
+                Author = author == string.Empty ? string.Empty : author,
+                ItemName = SearchHelper.GetItemName(currentSearchString),
+                Ranges = GetDateRefinements(SearchHelper.GetStartDate(currentSearchString),SearchHelper.GetEndDate(currentSearchString))
+            };
+           
+            return rangeSearch;
         }
     }
 }

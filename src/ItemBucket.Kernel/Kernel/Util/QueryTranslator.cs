@@ -24,8 +24,10 @@
 
         protected void Initialize(ILuceneIndex index, bool close)
         {
-            Assert.ArgumentNotNull(index, "index");
-            this._analyzer = index.Analyzer;
+            Assert.ArgumentNotNull(index, "index");            
+            PerFieldAnalyzerWrapper aw = new PerFieldAnalyzerWrapper(index.Analyzer);
+            aw.AddAnalyzer("_language", new KeywordAnalyzer());
+            this._analyzer = aw;
             Assert.IsNotNull(this._analyzer, "Failed to request analyzer from the index");
         }
 

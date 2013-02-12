@@ -29,7 +29,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
         /// <remarks>You will need to override this if you are running without HttpContext e.g. Unit Tests</remarks>
         protected virtual void SetLocation(Item item)
         {
-            if (Context.ClientPage.IsNotNull())
+            if ((Context.GetSiteName() == "shell") && Context.ClientPage.IsNotNull())
             {
                 var urlString = new UrlString(Constants.ContentEditorRawUrlAddress);
                 urlString.Add(Constants.OpenItemEditorQueryStringKeyName, item.ID.ToString());
