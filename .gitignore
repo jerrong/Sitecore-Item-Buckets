@@ -59,6 +59,7 @@ packages/
 # visual studio database projects
 *.dbmdl
 
+<<<<<<< HEAD
 #unnecessary for ItemBuckets Sitecore folders
 Data/
 Databases/
@@ -260,5 +261,7 @@ Website/sitecore/shell/Applications/Modules/
 Website/test.aspx
 Website/test.aspx.cs
 Website/test.aspx.designer.cs
-Website/App_Config/Include/Sitecore.ItemBuckets.config
-Website/Sitecore.ItemBucket.UI.csproj
+#Website/Sitecore.ItemBucket.UI.csproj
+IconCache
+T4RenderCache
+BuiltFiles_*.txt
