@@ -836,7 +836,15 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
             var database = topParent.Database;
             var dateFolder = childItemCreationDateTime.ToString(Config.BucketFolderPath);
-            var destinationFolderPath = topParent.Paths.FullPath + Constants.ContentPathSeperator + dateFolder;
+            DateTimeFormatInfo dateTimeInfo = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat;
+            
+            if (dateTimeInfo.DateSeparator != Constants.ContentPathSeperator)
+            {
+                Log.Info("ItemBuckets. DateTimeFormat inconsistency. Current date separator is " + dateTimeInfo.DateSeparator + " and time separator is " + dateTimeInfo.TimeSeparator + ". Relative path to folder is " + dateFolder, new object());
+                dateFolder = dateFolder.Replace(dateTimeInfo.DateSeparator, Constants.ContentPathSeperator).Replace(dateTimeInfo.TimeSeparator,Constants.ContentPathSeperator);                
+            }
+            
+            var destinationFolderPath = topParent.Paths.FullPath + Constants.ContentPathSeperator + dateFolder;            
             Item destinationFolderItem;
             
             // TODO: Use the Path Cache to determine if the path exists instead of looking it up on the item everytime I create an item (will be noticed if programmatically adding items)
