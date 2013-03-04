@@ -9,6 +9,7 @@
     using Sitecore.ItemBucket.Kernel.Kernel.Util;
     using Sitecore.ItemBucket.Kernel.Util;
     using Sitecore.Web.UI.Sheer;
+    using Sitecore.Collections;
 
     /// <summary>
     /// Auto Bucket Command
@@ -43,42 +44,21 @@
         /// </param>
         public void Execute(object sender, EventArgs args)
         {
-            if (Context.ClientPage.IsNotNull())
-            {
-                var item = Event.ExtractParameter(args, 0) as Item;
-                Error.AssertItem(item, "Item");
+            Item item = Event.ExtractParameter(args, 0) as Item;
 
-                if (Web.WebUtil.GetQueryString("mode").IsNullOrEmpty() &&
-                    Web.WebUtil.GetQueryString("sc_pagesite").IsNullOrEmpty())
+            if (item != null)
+            {
+                var parameters = new NameValueCollection();
+                parameters["id"] = item.ID.ToString();
+                if (((item.Parent.GetChildren(ChildListOptions.SkipSorting).Count >= BucketTriggerCount) &&
+                    (item.Parent.Paths.FullPath.ToLowerInvariant() != Context.Site.StartPath.ToLowerInvariant())) &&
+                    ((item.TemplateID != Config.BucketTemplateId) && (item.Parent.TemplateID != Config.BucketTemplateId)))
                 {
-                    if (item.IsNotNull())
-                    {
-                        if (item.Parent.Children.Count >= BucketTriggerCount && item.Parent.Paths.FullPath.ToLower() != Context.Site.StartPath.ToLower())
-                        {
-                            if (item.TemplateID != Config.BucketTemplateId
-                                && item.Parent.TemplateID != Config.BucketTemplateId)
-                            {
-                                var cpa = new ClientPipelineArgs();
-                                if (!cpa.IsPostBack)
-                                {
-                                    var parameters = new NameValueCollection();
-                                    parameters["id"] = item.ID.ToString();
-                                    Context.ClientPage.Start(this, "Run", parameters);
-                                }
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                    }
+                    Context.ClientPage.Start(this, "Run", parameters);
                 }
             }
-            else
-            {
-                return;
-            }
         }
+
 
         /// <summary>
         /// Run Command

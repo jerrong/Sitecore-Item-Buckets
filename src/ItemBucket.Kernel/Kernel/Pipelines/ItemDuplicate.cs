@@ -40,7 +40,7 @@ namespace Sitecore.ItemBucket.Kernel.Pipelines
                 {
                     Log.Audit(this, "Duplicate item: {0}", new[] { AuditFormatter.FormatItem(item) });
 
-                    var parentBucketOfItem = item.GetParentBucketItemOrSiteRoot();
+                    var parentBucketOfItem = item.GetNearestParentBucketItemOrSiteRoot();
                     if (BucketManager.IsBucket(parentBucketOfItem))
                     {
                        

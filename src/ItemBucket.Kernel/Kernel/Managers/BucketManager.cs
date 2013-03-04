@@ -98,6 +98,11 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             return item.Axes.GetAncestors().Where(items => items.GetEditors().Items.Contains(Constants.SearchEditor)).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).Last();
         }
 
+        public static Item GetNearestParentBucketItemOrSiteRoot(this Item item)
+        {
+            return item.Axes.GetAncestors().AsParallel().Where(BucketManager.IsBucket).DefaultIfEmpty(Context.ContentDatabase.GetItem(Context.Site.RootPath)).Last();
+        }
+
         /// <summary>
         /// Given an Item, this will return the name of the Index that it will use to search on
         /// </summary>
