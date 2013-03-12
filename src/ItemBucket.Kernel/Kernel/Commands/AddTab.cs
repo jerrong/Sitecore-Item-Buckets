@@ -53,6 +53,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
                     urlString.Add(Util.Constants.RibbonQueryStringKeyName, "{D3A2D76F-02E6-49DE-BE90-D23C9771DC8D}");
                     var language = context.Parameters["la"].IsNull() ? Sitecore.Context.Language.CultureInfo.TwoLetterISOLanguageName : context.Parameters["la"];
                     urlString.Add("la", language);
+                    urlString.Add("isbucket", "1");
                     AddLatestVersionToUrlString(urlString, itemId, language);
                     SheerResponse.Eval(new ShowEditorTab { Command = "contenteditor:launchtab", Header = Translate.Text(Context.ContentDatabase.GetItem(itemId).Name), Icon = Images.GetThemedImageSource("Applications/16x16/text_view.png"), Url = urlString.ToString(), Id = itemId, Closeable = true, Activate = Util.Constants.SettingsItem.Fields[Util.Constants.OpenSearchResult].Value == "New Tab Not Selected" ? false : true }.ToString());
                 }

@@ -1949,6 +1949,18 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Forms
             CommandContext context = new CommandContext(folder);
             context.Parameters["ShowEditor"] = showEditor ? "1" : "0";
             context.Parameters["Ribbon.RenderTabs"] = "true";
+            string isBucket = WebUtil.GetQueryString("isbucket");
+            if (!String.IsNullOrEmpty(isBucket))
+            {
+                if (isBucket == "1")
+                {
+                    Item ribbonItem = Client.CoreDatabase.GetItem(Settings.GetSetting("ItemBucketsRibbon", "/sitecore/content/Applications/Content Editor/Ribbons/Ribbons/ItemBucketDefault"));
+                    if (ribbonItem != null)
+                    {
+                        context.RibbonSourceUri = ribbonItem.Uri;
+                    }
+                }
+            }
             Ribbon ctl = this.Ribbon;
             if (ctl != null)
             {
