@@ -22,7 +22,24 @@ namespace Sitecore.ItemBucket.Kernel.Commands
     /// </summary>
     public class AddFromTemplateCommand : Data.Engines.DataCommands.AddFromTemplateCommand
     {
+         /// <summary>
+        /// Refresh the content tree with the new item opened
+        /// </summary>
+        /// <param name="item">Item that is being added</param>
+        /// <remarks>You will need to override this if you are running without HttpContext e.g. Unit Tests</remarks>
+        protected virtual void SetLocation(Item item)
+        {
+            if ((Context.GetSiteName() == "shell") && Context.ClientPage.IsNotNull() && !Sitecore.Client.Site.Notifications.Disabled)
+            {
+                var urlString = new UrlString(Constants.ContentEditorRawUrlAddress);
+                urlString.Add(Constants.OpenItemEditorQueryStringKeyName, item.ID.ToString());
+                item.Uri.AddToUrlString(urlString);
+                UIUtil.AddContentDatabaseParameter(urlString);
+                SheerResponse.SetLocation(urlString.ToString());
+            }
+        }
         #region Protected Overrides
+
         /// <summary>
         /// Determine the Destination Folder of the item if it is to be automatically categorised
         /// </summary>
@@ -38,9 +55,9 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
                     var item = Nexus.DataApi.AddFromTemplate(TemplateId, newDestination, ItemName, NewId);
 
-                    if (newDestination.IsNotNull() && (Context.GetSiteName() == "shell") && Context.ClientPage.IsNotNull() && !Sitecore.Client.Site.Notifications.Disabled)
-                    {                        
-                        Context.ClientPage.SendMessage(this, String.Format("item:refreshchildren(id={0})",newDestination.ID.ToString()));                    
+                    if (item.IsNotNull())
+                    {
+                        SetLocation(item);
                     }
 
                     Event.RaiseEvent("item:bucketing:added", new object[] { item }, this);
