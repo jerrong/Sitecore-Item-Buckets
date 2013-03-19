@@ -38,9 +38,9 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
                     var item = Nexus.DataApi.AddFromTemplate(TemplateId, newDestination, ItemName, NewId);
 
-                    if (newDestination.IsNotNull())
-                    {
-                        Context.ClientPage.SendMessage(this, String.Format("item:refreshchildren(id={0})",newDestination.ID.ToString()));
+                    if (newDestination.IsNotNull() && (Context.GetSiteName() == "shell") && Context.ClientPage.IsNotNull() && !Sitecore.Client.Site.Notifications.Disabled)
+                    {                        
+                        Context.ClientPage.SendMessage(this, String.Format("item:refreshchildren(id={0})",newDestination.ID.ToString()));                    
                     }
 
                     Event.RaiseEvent("item:bucketing:added", new object[] { item }, this);
