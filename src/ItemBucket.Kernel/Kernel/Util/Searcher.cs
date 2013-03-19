@@ -454,7 +454,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     }
                     if (!param.Refinements.ContainsKey("__workflow state")) //Hack!!!!!
                     {
-                        SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
+                        SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, param.Occurance);
                     }
                     SearcherMethods.ApplyLatestVersion(globalQuery);
 
@@ -535,7 +535,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 SearcherMethods.ApplyTemplateNotFilter(globalQuery);
                 SearcherMethods.ApplyIDFilter(globalQuery, param.ID);
                 SearcherMethods.ApplyLocationFilter(globalQuery, param.LocationIds);
-                SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, QueryOccurance.Should);
+                SearcherMethods.ApplyRefinements(globalQuery, param.Refinements,param.Occurance);
                 SearcherMethods.ApplyLatestVersion(globalQuery);
 
                 if (Config.ExcludeContextItemFromResult)
