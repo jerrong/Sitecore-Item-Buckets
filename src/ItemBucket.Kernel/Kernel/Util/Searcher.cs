@@ -29,11 +29,13 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
     public class IndexSearcher : IDisposable
     {
+        string searcherIndexName;
         #region ctor
 
         public IndexSearcher(string indexId)
         {
-            Index = SearchManager.GetIndex(BucketManager.GetContextIndex(Sitecore.Context.Item));
+            searcherIndexName = indexId;
+            Index = SearchManager.GetIndex(BucketManager.GetContextIndex(Sitecore.Context.Item));            
         }
 
         #endregion ctor
@@ -403,14 +405,17 @@ namespace Sitecore.ItemBucket.Kernel.Util
             var db = Context.ContentDatabase ?? Sitecore.Context.Database;
             if (db != null)
             {
-                var indexName = Util.Constants.Index.Name;
-                var item = db.GetItem(param.LocationIds);
-                indexName = BucketManager.GetContextIndex(item.IsNotNull() ? item : db.GetItem(Sitecore.ItemIDs.RootID));
-
-                if (indexName.EndsWith("_remote"))
+                var indexName = searcherIndexName;
+                if (String.IsNullOrEmpty(searcherIndexName))
                 {
-                    Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
+                    indexName = Util.Constants.Index.Name;
+                    var item = db.GetItem(param.LocationIds);
+                    indexName = BucketManager.GetContextIndex(item.IsNotNull() ? item : db.GetItem(Sitecore.ItemIDs.RootID));
                 }
+                if (indexName.EndsWith("_remote"))
+                    {
+                        Index = RemoteSearchManager.GetIndex(indexName) as RemoteIndex;
+                    }
                 else if (indexName.EndsWith("_inmemory"))
                 {
                     Index = InMemorySearchManager.GetIndex(indexName) as InMemoryIndex;
@@ -419,7 +424,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                 {
                     Index = SearchManager.GetIndex(indexName) as Index;
                 }
-
+                
                 if (Index.IsNotNull())
                 {
                     var globalQuery = new CombinedQuery();
@@ -430,7 +435,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                         {
                             if (param.FullTextQuery != "*All*" && param.FullTextQuery != "*" && param.FullTextQuery != "**")
                             {
-                                SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery, indexName);
+                                SearcherMethods.ApplyFullTextClause(globalQuery, param.FullTextQuery);
                             }
                         }
                     }
