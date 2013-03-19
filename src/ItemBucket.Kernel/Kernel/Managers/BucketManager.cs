@@ -184,47 +184,76 @@ namespace Sitecore.ItemBucket.Kernel.Managers
 
             using (var searcher = new IndexSearcher(indexName))
             {
-                var culture = CultureInfo.CreateSpecificCulture("en-US");
-                var startDateOut = DateTime.Now;
-                var endDateOut = DateTime.Now.AddDays(1);
-                var startFlag = true;
-                var endFlag = true;
-                if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
-                {
-                    startDateOut = DateTime.Now;
-                    startFlag = false;
-                }
+                DateRangeSearchParam dateSearchParam = GetFullParameters(startLocationItem, new SafeDictionary<string>(), relatedIds, indexName = "itembuckets_buckets", text, templates, location, language, id, sortField, sortDirection, itemName, startDate, endDate, numberOfItemsToReturn, pageNumber, QueryOccurance.Must);
+               if (dateSearchParam.IsNull()){
+                   hitCount = 0;
+                   return new List<SitecoreItem>();
+               }
+                return GetItemsFromSearcher(searcher, dateSearchParam, out hitCount);                
+            }
+        }
 
-                if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
-                {
-                    endDateOut = DateTime.Now.AddDays(1);
-                    endFlag = false;
-                }
+        public static IEnumerable<SitecoreItem> SearchWithParameterOccurance(Item startLocationItem, SafeDictionary<string> refinements, out int hitCount, string relatedIds = "", string indexName = "itembuckets_buckets", string text = "", string templates = "", string location = "", string language = "en", string id = "", string sortField = "", string sortDirection = "", string itemName = "", string startDate = "", string endDate = "", int numberOfItemsToReturn = 20, int pageNumber = 1, QueryOccurance customParametersOccurance = QueryOccurance.Must)
+        {
+            Contract.Requires(startLocationItem.IsNotNull());
 
-                if (startLocationItem.IsNull())
+            using (var searcher = new IndexSearcher(indexName))
+            {
+                DateRangeSearchParam dateSearchParam = GetFullParameters(startLocationItem, refinements, relatedIds, indexName = "itembuckets_buckets", text, templates, location, language, id, sortField, sortDirection, itemName, startDate, endDate, numberOfItemsToReturn, pageNumber, customParametersOccurance);
+                if (dateSearchParam.IsNull())
                 {
-                    Log.Warn("You are trying to run an Search on an item that has a start location of null", null);
-                    hitCount = 0;
-                    return new List<SitecoreItem>();
-                }
+                   hitCount = 0;
+                   return new List<SitecoreItem>();
+               }
+                return GetItemsFromSearcher(searcher, dateSearchParam, out hitCount);                
+            }
+        }
 
-                var dateSearchParam = new DateRangeSearchParam
-                                          {
-                                              ItemName = itemName,
-                                              FullTextQuery = text,
-                                              RelatedIds = relatedIds,
-                                              TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
-                                              Language = language,
-                                              ID = id,
-                                              SortDirection = sortDirection,
-                                              SortByField = sortField,
-                                              PageSize = numberOfItemsToReturn,
-                                              PageNumber = pageNumber
-                                          };
-                if (startFlag || endFlag)
-                {
-                    dateSearchParam.Ranges = new List<DateRangeSearchParam.DateRangeField>
+        private static DateRangeSearchParam GetFullParameters(Item startLocationItem, SafeDictionary<string> refinements, string relatedIds, string p, string text, string templates, string location, string language, string id, string sortField, string sortDirection, string itemName, string startDate, string endDate, int numberOfItemsToReturn, int pageNumber, QueryOccurance customParametersOccurance)
+        {
+            var culture = CultureInfo.CreateSpecificCulture("en-US");
+            var startDateOut = DateTime.Now;
+            var endDateOut = DateTime.Now.AddDays(1);
+            var startFlag = true;
+            var endFlag = true;
+            if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
+            {
+                startDateOut = DateTime.Now;
+                startFlag = false;
+            }
+
+            if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
+            {
+                endDateOut = DateTime.Now.AddDays(1);
+                endFlag = false;
+            }
+
+            if (startLocationItem.IsNull())
+            {
+                Log.Warn("You are trying to run an Search on an item that has a start location of null", null);
+                return null;
+            }
+
+            var dateSearchParam = new DateRangeSearchParam
+            {
+                ItemName = itemName,
+                FullTextQuery = text,
+                RelatedIds = relatedIds,
+                TemplateIds = templates,
+                LocationIds = startLocationItem.ID.ToString(),
+                Language = language,
+                ID = id,
+                SortDirection = sortDirection,
+                SortByField = sortField,
+                PageSize = numberOfItemsToReturn,
+                PageNumber = pageNumber,
+                Refinements = refinements,
+                Occurance = customParametersOccurance
+            };
+           
+            if (startFlag || endFlag)
+            {
+                dateSearchParam.Ranges = new List<DateRangeSearchParam.DateRangeField>
                                                  {
                                                      new DateRangeSearchParam.DateRangeField(
                                                          SearchFieldIDs.CreatedDate,
@@ -234,12 +263,15 @@ namespace Sitecore.ItemBucket.Kernel.Managers
                                                              InclusiveStart = true, InclusiveEnd = true
                                                          }
                                                  };
-                }
-
-                var keyValuePair = searcher.GetItems(dateSearchParam);
-                hitCount = keyValuePair.Key;
-                return keyValuePair.Value;
             }
+            return dateSearchParam;
+        }
+
+        private static IEnumerable<SitecoreItem> GetItemsFromSearcher(IndexSearcher searcher, DateRangeSearchParam dateSearchParam, out int hitCount)
+        {
+            var keyValuePair = searcher.GetItems(dateSearchParam);
+            hitCount = keyValuePair.Key;
+            return keyValuePair.Value;
         }
 
         /// <summary>
@@ -268,63 +300,13 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         {           
             using (var searcher = new IndexSearcher(indexName))
             {
-                var culture = CultureInfo.CreateSpecificCulture("en-US");
-                var startDateOut = DateTime.Now;
-                var endDateOut = DateTime.Now.AddDays(1);
-                var startFlag = true;
-                var endFlag = true;
-                if (!DateTime.TryParse(startDate, culture, DateTimeStyles.None, out startDateOut))
+                DateRangeSearchParam dateSearchParam = GetFullParameters(startLocationItem, refinements, relatedIds, indexName = "itembuckets_buckets", text, templates, location, language, id, sortField, sortDirection, itemName, startDate, endDate, numberOfItemsToReturn, pageNumber, QueryOccurance.Must);
+                if (dateSearchParam.IsNull())
                 {
-                    startDateOut = DateTime.Now;
-                    startFlag = false;
-                }
-
-                if (!DateTime.TryParse(endDate, culture, DateTimeStyles.None, out endDateOut))
-                {
-                    endDateOut = DateTime.Now.AddDays(1);
-                    endFlag = false;
-                }
-
-                if (startLocationItem.IsNull())
-                {
-                    Log.Warn("You are trying to run an Search on an item that has a start location of null", null);
                     hitCount = 0;
                     return new List<SitecoreItem>();
                 }
-
-                var dateSearchParam = new DateRangeSearchParam
-                                          {
-                                              ItemName = itemName,
-                                              FullTextQuery = text,
-                                              RelatedIds = relatedIds,
-                                              TemplateIds = templates,
-                                              LocationIds = startLocationItem.ID.ToString(),
-                                              Language = language,
-                                              SortDirection = sortDirection,
-                                              Refinements = refinements,
-                                              ID = id,
-                                              SortByField = sortField,
-                                              PageSize = numberOfItemsToReturn,
-                                              PageNumber = pageNumber
-                                          };
-
-                if (startFlag || endFlag)
-                {
-                    dateSearchParam.Ranges = new List<DateRangeSearchParam.DateRangeField>
-                                                 {
-                                                     new DateRangeSearchParam.DateRangeField(
-                                                         SearchFieldIDs.CreatedDate,
-                                                         startDateOut,
-                                                         endDateOut)
-                                                         {
-                                                             InclusiveStart = true, InclusiveEnd = true
-                                                         }
-                                                 };
-                }
-
-                var keyValuePair = searcher.GetItems(dateSearchParam);
-                hitCount = keyValuePair.Key;
-                return keyValuePair.Value;
+                return GetItemsFromSearcher(searcher, dateSearchParam, out hitCount);   
             }
         }
 
