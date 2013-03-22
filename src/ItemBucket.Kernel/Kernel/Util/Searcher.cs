@@ -77,7 +77,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
                     BooleanQuery.SetMaxClauseCount(Config.LuceneMaxClauseCount);
                     var sortingDir = sortDirection == "asc" ? false : true;
                     var searchHits = string.IsNullOrWhiteSpace(sortField)
-                                         ? context.Search(query)
+                                         ? context.NoPreparedSearch(query)
                                          : context.Search(query, new Sort(sortField, sortingDir));
                     if (searchHits.IsNull())
                     {

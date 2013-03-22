@@ -32,6 +32,11 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search
             return new SearchHits(Searcher.Search(query, sort));
         }
 
+        public SearchHits NoPreparedSearch(Query query)
+        {
+            return new SearchHits(Searcher.Search(query));
+        }
+
         public SearchHits Search(PreparedQuery query, Sort sort)
         {
             return new SearchHits(Searcher.Search(query.Query, sort));
