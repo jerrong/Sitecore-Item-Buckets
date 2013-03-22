@@ -24,7 +24,12 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search
         }
         public SearchHits Search(Query query, Sort sort)
         {
-            return Search(query, SearchContext.Empty, sort);
+            //Fix for #384289. Previous code line returned PreparedQuery. PreparedQuery made FullText queries from all queries,
+            //for example _name:test query became _name:test*. It produced wrong search results, so I decided to remove
+            //PreparedQuery part. If something wrong noticed during usage, PreparedQuery should be return
+            //and other logic should be created for this part.            
+            //return Search(query, SearchContext.Empty, sort); - this returned PreparedQuery.
+            return new SearchHits(Searcher.Search(query, sort));
         }
 
         public SearchHits Search(PreparedQuery query, Sort sort)

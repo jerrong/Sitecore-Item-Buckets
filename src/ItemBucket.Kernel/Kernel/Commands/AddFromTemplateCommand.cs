@@ -57,7 +57,10 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
                     if (item.IsNotNull())
                     {
-                        SetLocation(item);
+                        item.Editing.BeginEdit();
+                        item["__BucketParentRef"] = Destination.ID.ToString();
+                        item.Editing.EndEdit();
+                        this.SetLocation(item);
                     }
 
                     Event.RaiseEvent("item:bucketing:added", new object[] { item }, this);
