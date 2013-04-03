@@ -133,21 +133,33 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Crawlers
         {
             if (!formatting.Equals(string.Empty))
             {
+                string fieldValue = "";
+                string splittedFieldValue = "";
                 try
                 {
                     if (!ID.IsNullOrEmpty(this.FieldId))
                     {
-                        return XmlConvert.ToDateTime(item[ID.Parse(this.FieldId)].Split(':')[0], "yyyyMMddTHHmmss").ToString(formatting);
+                        fieldValue = item[ID.Parse(this.FieldId)];
+                        if (!String.IsNullOrEmpty(fieldValue))
+                        {
+                            splittedFieldValue = fieldValue.Split(':')[0];                            
+                            return XmlConvert.ToDateTime(splittedFieldValue, "yyyyMMddTHHmmss").ToString(formatting);
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(this.FieldName))
                     {
-                        return XmlConvert.ToDateTime(item[this.FieldName].Split(':')[0], "yyyyMMddTHHmmss").ToString(formatting);
+                        fieldValue = item[this.FieldName];
+                        if (!String.IsNullOrEmpty(fieldValue))
+                        {
+                            splittedFieldValue = fieldValue.Split(':')[0];                            
+                            return XmlConvert.ToDateTime(splittedFieldValue, "yyyyMMddTHHmmss").ToString(formatting);
+                        }
                     }
                 }
                 catch (Exception exc)
                 {
-                    Log.Error("Failed to Get Field Value", exc, this);
+                    Log.Info("Failed to Get Field Value. Formatting is: "+formatting+", Field Value is "+fieldValue+", Splitted Field Value is "+ splittedFieldValue, this);
                     return string.Empty;
                 }
             }
