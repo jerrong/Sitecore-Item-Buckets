@@ -316,3 +316,7 @@ Roadmap
 * Saved Searches e.g. "Items created today"
 * Redesign of Index Rebuilding Wizard
 * Bucket Treelist Field Type
+
+Support
+-------------------
+This is no longer directly supported by Sitecore due to its presence in Sitecore 7 now. This repository will still stay online.
