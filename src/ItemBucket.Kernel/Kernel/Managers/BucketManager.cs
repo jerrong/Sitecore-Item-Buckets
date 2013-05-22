@@ -472,8 +472,14 @@ namespace Sitecore.ItemBucket.Kernel.Managers
             Assert.ArgumentNotNull(database, "database");
 #endif
 
-            var template = database.GetTemplate(templateId).IsNull() ? database.GetItem(templateId).Template : database.GetTemplate(templateId);
-            return template.IsBucketTemplateCheck();
+            var template = database.GetTemplate(templateId);
+            if (template == null)
+            {
+                var item = database.GetItem(templateId);
+                if (item != null)
+                    template = item.Template;
+            }
+            return template == null ? false : template.IsBucketTemplateCheck();
         }
 
         /// <summary>

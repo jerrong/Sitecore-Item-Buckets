@@ -31,7 +31,7 @@ namespace Sitecore.ItemBucket.Kernel.Installer
 
         private IEnumerable<KeyValuePair<string, Index>> GetSearchIndexes()
         {
-            var configuration = Factory.CreateObject("search/configuration", true) as SearchConfiguration;
+            var configuration = Factory.CreateObject("search/configuration", false) as SearchConfiguration ?? new SearchConfiguration();
             if (configuration != null) return configuration.Indexes;
             return new List<KeyValuePair<string, Index>>();
         }

@@ -135,15 +135,17 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Crawlers
             {
                 try
                 {
-                    if (!ID.IsNullOrEmpty(this.FieldId))
+                    if (!ID.IsNullOrEmpty(this.FieldId) && !string.IsNullOrEmpty(item[ID.Parse(this.FieldId)]))
                     {
                         return XmlConvert.ToDateTime(item[ID.Parse(this.FieldId)].Split(':')[0], "yyyyMMddTHHmmss").ToString(formatting);
                     }
 
-                    if (!string.IsNullOrEmpty(this.FieldName))
+                    if (!string.IsNullOrEmpty(this.FieldName) && !string.IsNullOrEmpty(item[this.FieldName]))
                     {
                         return XmlConvert.ToDateTime(item[this.FieldName].Split(':')[0], "yyyyMMddTHHmmss").ToString(formatting);
                     }
+
+                    return DateTime.Now.ToString(formatting);
                 }
                 catch (Exception exc)
                 {

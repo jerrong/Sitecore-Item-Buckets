@@ -64,7 +64,8 @@ public static class InMemorySearchManager
         {
             if (_configuration == null)
             {
-                _configuration = Factory.CreateObject("search/inmemoryconfiguration", true) as SearchConfiguration;
+                var configNode = Factory.GetConfigNode("search/inmemoryconfiguration", false);
+                _configuration = configNode != null ? Factory.CreateObject<SearchConfiguration>(configNode) : new SearchConfiguration();
             }
             return _configuration;
         }

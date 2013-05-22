@@ -164,7 +164,7 @@
 
             if (field.TypeKey == "integer" || field.TypeKey == "number")
             {
-                value = value.PadLeft(8, '0');
+                value = value.PadLeft(16, '0');
             }
 
             value = IdHelper.ProcessGUIDs(value);

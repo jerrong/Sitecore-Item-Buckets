@@ -61,7 +61,8 @@ public static class RemoteSearchManager
         {
             if (_configuration == null)
             {
-                _configuration = Factory.CreateObject("search/remoteconfiguration", true) as RemoteIndexSearchConfiguration;
+                var configNode = Factory.GetConfigNode("search/remoteconfiguration", false);
+                _configuration = configNode != null ? Factory.CreateObject<RemoteIndexSearchConfiguration>(configNode) : new RemoteIndexSearchConfiguration();
             }
             return _configuration;
         }
