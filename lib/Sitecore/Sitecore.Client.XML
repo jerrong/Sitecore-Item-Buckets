@@ -9,6 +9,26 @@
             Defines the texts class.
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.Dashboard.Texts.MonthYearDateFormat">
+            <summary>
+            The moth year format string for a date 
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Dashboard.Texts.DaysIn">
+            <summary>
+            The DaysIn key
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Dashboard.Texts.MonthsIn">
+            <summary>
+            The MonthsIn key
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Dashboard.Texts.QuartersIn">
+            <summary>
+            The QuartersIn key
+            </summary>
+        </member>
         <member name="F:Sitecore.Shell.Dashboard.Texts.OverallTrend">
             <summary>
             The OverallTrend key
@@ -37,6 +57,11 @@
         <member name="F:Sitecore.Shell.Dashboard.Texts.NoTrafficOverviewDataFound">
             <summary>
             The NoTrafficOverviewDataFound key
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Dashboard.Texts.NoCampaignDataFound">
+            <summary>
+            The NoCampaignDataFound key
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Dashboard.Texts.ThereWasAnEerrorLoadingDataPleaseTryAgain">
@@ -159,7 +184,7 @@
             The PotentialValueGain key
             </summary>
         </member>
-        <member name="F:Sitecore.Shell.Dashboard.Texts.ValuePerVisits">
+        <member name="F:Sitecore.Shell.Dashboard.Texts.ValuePerVisit">
             <summary>
             The ValuePerVisits key
             </summary>
@@ -344,6 +369,11 @@
             Defines the texts class.
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.MarketingAutomation.Texts.Options">
+            <summary>
+            The Options key.
+            </summary>
+        </member>
         <member name="F:Sitecore.Shell.MarketingAutomation.Texts.Data">
             <summary>
             The Data Key.
@@ -419,6 +449,11 @@
             The PredefinedItemsNotFound key
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.MarketingAutomation.Texts.ErrorLoadingPageEvents">
+            <summary>
+            The ErrorLoadingPageEvents key
+            </summary>
+        </member>
         <member name="F:Sitecore.Shell.MarketingAutomation.Texts.ErrorLoadingEngagementPlan">
             <summary>
             The ErrorLoadingEngagementPlan key
@@ -427,6 +462,11 @@
         <member name="F:Sitecore.Shell.MarketingAutomation.Texts.ErrorSavingEngagementPlan">
             <summary>
             The ErrorSavingEngagementPlan key
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.MarketingAutomation.Texts.ErrorSavingExportingPlan">
+            <summary>
+            The ErrorSavingExportingPlan key
             </summary>
         </member>
         <member name="F:Sitecore.Shell.MarketingAutomation.Texts.ErrorEditingFieldsValues">
@@ -904,9 +944,9 @@
             The DoYouConfirmToDeleteAllSelectedItems key
             </summary>
         </member>
-        <member name="F:Sitecore.Shell.MarketingAutomation.Texts.YouAreDeleteingAStateContainingVisitor">
+        <member name="F:Sitecore.Shell.MarketingAutomation.Texts.YouAreDeletingAStateContainingVisitor">
             <summary>
-            The YouAreDeleteingAStateContainingVisitor key
+            The YouAreDeletingAStateContainingVisitor key
             </summary>
         </member>
         <member name="F:Sitecore.Shell.MarketingAutomation.Texts.DoYouConfirmToDeleteAllActions">
@@ -1292,16 +1332,6 @@
         <member name="F:Sitecore.Shell.Applications.Analytics.Simulate.SimulatePage.isCampaign">
             <summary>
             Campaign flag.
-            </summary>
-        </member>
-        <member name="F:Sitecore.Shell.Applications.Analytics.Simulate.SimulatePage.isLoggedIn">
-            <summary>
-            Determines if the user is logged in.
-            </summary>
-        </member>
-        <member name="F:Sitecore.Shell.Applications.Analytics.Simulate.SimulatePage.isRegistered">
-            <summary>
-            Determines if the user is logged in.
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Analytics.Simulate.SimulatePage.requests">
@@ -2541,6 +2571,17 @@
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.Web.UI.WebControls.LoginCancelEventArgs"/> instance containing the event data.</param>
         </member>
+        <member name="M:Sitecore.Login.PasswordRecoveryPage.Localize">
+            <summary>Performs some localization stuff that cannot be done from aspx.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Login.PasswordRecoveryPage.OnPreRender(System.EventArgs)">
+            <summary>asd asd 
+            </summary>
+            <param name="e">
+            The e.
+            </param>
+        </member>
         <member name="F:Sitecore.Login.PasswordRecoveryPage.LoginForm">
             <summary>
             LoginForm control.
@@ -2646,19 +2687,12 @@
             An <see cref="T:System.EventArgs"></see> object that contains the event data.
             </param>
         </member>
-        <member name="M:Sitecore.sitecore.login.LoginPage.FormatDouble(System.Double)">
+        <member name="M:Sitecore.sitecore.login.LoginPage.AddLanguageAttributes">
             <summary>
-            Formats a double.
+            Adds the language attributes to the form tag on the page.
+            Adds CSS class: lang_ + context language code.
+            Adds lang="context language code" attribute to the form.
             </summary>
-            <param name="value">
-            The value.
-            </param>
-            <returns>
-            The double.
-            </returns>
-            <exception cref="T:System.FormatException">
-            Format exception.
-            </exception>
         </member>
         <member name="M:Sitecore.sitecore.login.LoginPage.IsAdvanced">
             <summary>
@@ -2714,6 +2748,10 @@
         <member name="M:Sitecore.sitecore.login.LoginPage.HandleDomain">
             <summary>
             Handles the domain.
+            </summary>
+        </member>
+        <member name="M:Sitecore.sitecore.login.LoginPage.Localize">
+            <summary>Performs some localization stuff that cannot be done from aspx.
             </summary>
         </member>
         <member name="M:Sitecore.sitecore.login.LoginPage.Login_LoggedIn(System.Object,System.EventArgs)">
@@ -3039,6 +3077,18 @@
             Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Sitecore.Login.ChangePasswordPage.ChangePassword_ChangePasswordError(System.Object,System.EventArgs)">
+            <summary>
+            Handles the ChangePasswordError event of the ChangePassword control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Sitecore.Login.ChangePasswordPage.Localize">
+            <summary>
+            Performs some localization stuff that cannot be done from aspx.
+            </summary>
         </member>
         <member name="M:Sitecore.Login.ChangePasswordPage.ChangePassword_ChangingPassword(System.Object,System.Web.UI.WebControls.LoginCancelEventArgs)">
             <summary>
@@ -3490,6 +3540,28 @@
             Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Personalization.BaseSelectPresetDialog.GetUrlHandleSecure">
+            <summary>
+            Gets the URL handle.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Sitecore.Exceptions.AccessDeniedException">Application access denied</exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Personalization.BaseSelectPresetDialog.CheckAccess(Sitecore.Data.Items.Item)">
+            <summary>
+            Checks the access.
+            </summary>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Personalization.BaseSelectPresetDialog.UrlHandleNonEmptyValue(Sitecore.Web.UrlHandle,System.String)">
+            <summary>
+            Gets non-empty value from UrlHandle.
+            </summary>
+            <param name="handle">The handle.</param>
+            <param name="key">The key.</param>
+            <returns></returns>
+            <remarks>Throws AccessDeniedException if value is empty.</remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.Analytics.Personalization.BaseSelectPresetDialog.GetCommandContext">
             <summary>
@@ -4895,6 +4967,7 @@
             <param name="e">
             The <see cref="T:System.EventArgs"></see> object that contains the event data.
             </param>
+            <exception cref="T:Sitecore.Exceptions.AccessDeniedException">Application access denied</exception>
         </member>
         <member name="M:Sitecore.Shell.Applications.Analytics.Personalization.ProfileCardsForm.GetItem(System.String)">
             <summary>
@@ -6286,6 +6359,102 @@
             </summary>
             <value>The conditions.</value>
         </member>
+        <member name="T:Sitecore.Shell.Applications.Analytics.Reports.Summary.Update">
+            <summary>
+            Defines the run Update Reports class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.Update.Execute(Sitecore.Shell.Framework.Commands.CommandContext)">
+            <summary>
+            Executes the command in the specified context.
+            </summary>
+            <param name="context">
+            The context.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.Update.QueryState(Sitecore.Shell.Framework.Commands.CommandContext)">
+            <summary>
+            Queries the state of the command.
+            </summary>
+            <param name="context">
+            The context.
+            </param>
+            <returns>
+            The state of the command.
+            </returns>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm">
+            <summary>
+            Defines the Update Reports form class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.ActivePageChanged(System.String,System.String)">
+            <summary>
+            Called when the active page has been changed.
+            </summary>
+            <param name="page">
+            The page that has been entered.
+            </param>
+            <param name="oldPage">
+            The page that was left.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.ActivePageChanging(System.String,System.String@)">
+            <summary>
+            Called when the active page is changing.
+            </summary>
+            <param name="page">
+            The page that is being left.
+            </param>
+            <param name="newPage">
+            The new page that is being entered.
+            </param>
+            <returns>
+            True, if the change is allowed, otherwise false.
+            </returns>
+            <remarks>
+            Set the <c>newpage</c> parameter to another page ID to control the
+            path through the wizard pages.
+            </remarks>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.CheckStatus">
+            <summary>
+            Checks the status.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.StartRunning">
+            <summary>
+            Starts the rebuilding.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.ActionText">
+            <summary>
+            Gets or sets the action text.
+            </summary>
+            <value>The action text.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.ErrorText">
+            <summary>
+            Gets or sets the error text.
+            </summary>
+            <value>The error text.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.ResultText">
+            <summary>
+            Gets or sets the result text.
+            </summary>
+            <value>The result text.</value>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.UpdateReportsRunner">
+            <summary>
+            Defines the update report summary runner class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.Reports.Summary.UpdateForm.UpdateReportsRunner.Run">
+            <summary>
+            Exports this instance.
+            </summary>
+        </member>
         <member name="T:Sitecore.Shell.Applications.Carousel.CarouselForm">
             <summary>
             Represents the Carousel form.
@@ -6877,6 +7046,12 @@
             	<c>true</c> if the specified id is editing; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.RefreshTreeNode(Sitecore.Web.UI.Sheer.Message)">
+            <summary>
+            Refreshes the tree node in sidebar.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.RenderButtons">
             <summary>
             Builds the buttons.
@@ -7109,6 +7284,13 @@
             Handles the Tree search option name_ click event.
             </summary>
         </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.FormatMenuName(System.String)">
+            <summary>
+            Formats the name of the menu.
+            </summary>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.GetFieldValues">
             <summary>
             Gets the field values.
@@ -7168,6 +7350,14 @@
             Gets or sets the translating language.
             </summary>
             <value>The translating language.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.UsesBrowserWindows">
+            <summary>
+            Gets or sets a value indicating whether Content Editor is running in Windows mode.
+            </summary>
+            <value>
+              <c>true</c> if Content Editor is running in Windows mode; otherwise, <c>false</c>.
+            </value>
         </member>
         <member name="P:Sitecore.Shell.Applications.ContentManager.ContentEditorForm.CurrentRoot">
             <summary>
@@ -8166,6 +8356,11 @@
         <member name="F:Sitecore.Shell.Applications.ContentManager.Dialogs.ResetFields.ResetFieldsForm.Fields">
             <summary></summary>
         </member>
+        <member name="F:Sitecore.Shell.Applications.ContentManager.Dialogs.ResetFields.ResetFieldsForm.Dialog">
+            <summary>
+            The dialog.
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.Dialogs.ResetFields.ResetFieldsForm.OnLoad(System.EventArgs)">
             <summary>
             Raises the load event.
@@ -8281,6 +8476,14 @@
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.Dialogs.SetIcon.SetIconForm.RenderRecentIcons">
             <summary>Renders the recent icons.</summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.Dialogs.SetIcon.SetIconForm.WriteImageTag(System.String,System.String,System.Web.UI.HtmlTextWriter)">
+            <summary>
+            Writes the image tag.
+            </summary>
+            <param name="img">The img.</param>
+            <param name="prefix">The prefix.</param>
+            <param name="output">The output.</param>
         </member>
         <member name="P:Sitecore.Shell.Applications.ContentManager.Dialogs.SetIcon.SetIconForm.ApplicationsList">
             <summary>
@@ -8935,6 +9138,573 @@
             </summary>
             <value>The date.</value>
         </member>
+        <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList">
+            <summary>
+            The list of items grouped into the section
+            with search and domain filter
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.Added">
+            <summary>
+            Hidden field that contains items to add.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.Removed">
+            <summary>
+            Hidden field that contains items to remove.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AddRoleToAdded">
+            <summary>
+            AddRoleToAdded image
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.RemoveRoleFromAdded">
+            <summary>
+            RemoveRoleFromAdded image
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AddRoleToRemove">
+            <summary>
+            AddRoleToRemove image
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.RemoveRoleFromRemove">
+            <summary>
+            RemoveRoleFromRemove image
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AddRolesText">
+            <summary>
+            Literal for add roles listbox.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AllRolesText">
+            <summary>
+            Literal for all roles listbox.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.RemoveRolesText">
+            <summary>
+            Literal for Remove roles listbox.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.DomainSelectorText">
+            <summary>
+            Domain selector label.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.SearchText">
+            <summary>
+            Search label
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.OnLoad(System.EventArgs)">
+            <summary>
+            Fires when page loads.
+            </summary>
+            <param name="e">event arguments</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.GetSources">
+            <summary>
+            Populate sources of client script.
+            </summary>
+            <returns>String like "addedSource:['r1','r2'],removedSource:['r3','r4'],source:['r5'],domains:['d1']"</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.RegisterScripts">
+            <summary>
+            Register jQuery and custom scripts.
+            Override to change script references.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.Localize">
+            <summary>
+            Localizes literal texts.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.ArrayToJson(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Converts array to comma separated string and adds it to target
+            </summary>
+            <param name="array">Array to process</param>
+            <param name="key">client property name</param>
+            <returns>Json formatted string</returns>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AddedList">
+            <summary>
+            Gets or sets List of options to display in add select
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.RemovedList">
+            <summary>
+            Gets or sets List of options to display in remove select
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.AllOptions">
+            <summary>
+            Gets or sets All options that user can select
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Controls.SelectList.Domains">
+            <summary>
+            Gets or sets All domains for domain filter
+            domain "All" will be added automatically
+            </summary>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.DesktopLink">
+            <summary>
+            The desktop link class
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLink.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLink.Parse(System.String)">
+            <summary>
+            Parses the specified link data.
+            </summary>
+            <param name="linkData">The link data.</param>
+            <returns></returns>
+            <exception cref="T:System.FormatException">Input string has incorrect format.</exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLink.ParseLanguagesAndHeaders(System.String)">
+            <summary>
+            Parses the languages and headers.
+            </summary>
+            <param name="languagesAndHeaders">The languages and headers.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.DatabaseName">
+            <summary>
+            Gets or sets the name of the database.
+            </summary>
+            <value>
+            The name of the database.
+            </value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.Icon">
+            <summary>
+            Gets or sets the icon.
+            </summary>
+            <value>
+            The icon.
+            </value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.Path">
+            <summary>
+            Gets or sets the path.
+            </summary>
+            <value>
+            The path.
+            </value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.LanguagesAndHeaders">
+            <summary>
+            Gets or sets the languages and headers.
+            </summary>
+            <value>
+            The languages and headers.
+            </value>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.DesktopLink.LanguageAndHeaderContainer">
+            <summary>
+            The language and header container
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.LanguageAndHeaderContainer.Language">
+            <summary>
+            Gets or sets the language.
+            </summary>
+            <value>
+            The language.
+            </value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLink.LanguageAndHeaderContainer.Header">
+            <summary>
+            Gets or sets the header.
+            </summary>
+            <value>
+            The header.
+            </value>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.DesktopLinkCollection">
+            <summary>
+            The collection of DesktopLink objects
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.Shell.Applications.DesktopLinkCollection"/> class.
+            </summary>
+            <param name="linksData">The links data.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.Add(Sitecore.Shell.Applications.DesktopLink)">
+            <summary>
+            Adds the specified desktop link to collection.
+            </summary>
+            <param name="link">The link.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+              </exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.Contains(Sitecore.Shell.Applications.DesktopLink)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            <returns>
+            true if <paramref name="item"/> is found in the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.CopyTo(Sitecore.Shell.Applications.DesktopLink[],System.Int32)">
+            <summary>
+            Copies to.
+            </summary>
+            <param name="array">The array.</param>
+            <param name="arrayIndex">Index of the array.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.Remove(Sitecore.Shell.Applications.DesktopLink)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <param name="item">The object to remove from the <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
+            <returns>
+            true if <paramref name="item"/> was successfully removed from the <see cref="T:System.Collections.Generic.ICollection`1"/>; otherwise, false. This method also returns false if <paramref name="item"/> is not found in the original <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+              </exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.IndexOf(Sitecore.Shell.Applications.DesktopLink)">
+            <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+            <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
+            <returns>
+            The index of <paramref name="item"/> if found in the list; otherwise, -1.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.Insert(System.Int32,Sitecore.Shell.Applications.DesktopLink)">
+            <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            </summary>
+            <param name="index">The zero-based index at which <paramref name="item"/> should be inserted.</param>
+            <param name="item">The object to insert into the <see cref="T:System.Collections.Generic.IList`1"/>.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.
+              </exception>
+              
+            <exception cref="T:System.NotSupportedException">
+            The <see cref="T:System.Collections.Generic.IList`1"/> is read-only.
+              </exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.DesktopLinkCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes DesktopLink  object at specified index.
+            </summary>
+            <param name="index">The index.</param>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLinkCollection.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+            <returns>
+            The number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+              </returns>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLinkCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+            <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+              </returns>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.DesktopLinkCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+            <returns>
+            The element at the specified index.
+              </returns>
+              
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="index"/> is not a valid index in the <see cref="T:System.Collections.Generic.IList`1"/>.
+              </exception>
+              
+            <exception cref="T:System.NotSupportedException">
+            The property is set and the <see cref="T:System.Collections.Generic.IList`1"/> is read-only.
+              </exception>
+        </member>
+        <member name="T:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider">
+            <summary>
+            Represents a DBContentProvider.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.#ctor(System.Web.HttpContext,System.String[],System.String[],System.String[],System.String[],System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="searchPatterns">The search patterns.</param>
+            <param name="viewPaths">The view paths.</param>
+            <param name="uploadPaths">The upload paths.</param>
+            <param name="deletePaths">The delete paths.</param>
+            <param name="selectedUrl">The selected URL.</param>
+            <param name="selectedItemTag">The selected item tag.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CheckReadPermissions(System.String)">
+            <summary>
+            Check read permissions.
+            This is Telerik override. Security is checked in Sitecore while retrieving items, so this method should
+            always return true.
+            </summary>
+            <param name="folderPath">
+            The folder path.
+            </param>
+            <returns>
+            <c>true</c> for any path.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CreateDirectory(System.String,System.String)">
+            <summary>
+            Creates the directory.
+            </summary>
+            <param name="path">
+            The path.
+            </param>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The create directory.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.DeleteDirectory(System.String)">
+            <summary>
+            Deletes the directory.
+            </summary>
+            <param name="path">
+            The path.
+            </param>
+            <returns>
+            The delete directory.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.DeleteFile(System.String)">
+            <summary>
+            Deletes the file.
+            </summary>
+            <param name="path">
+            The path.
+            </param>
+            <returns>
+            The delete file.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetFile(System.String)">
+            <summary>
+            Gets the file.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns>
+            Stream for accessing the contents of the file item with the given URL.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetFileName(System.String)">
+            <summary>
+            Gets the name of the file.
+            </summary>
+            <param name="url">
+            The URL.
+            </param>
+            <returns>
+            The get file name.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPath(System.String)">
+            <summary>
+            Gets the path.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns>The get path.</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.ResolveDirectory(System.String)">
+            <summary>
+            Resolves the directory.
+            </summary>
+            <param name="path">
+            The path.
+            </param>
+            <returns>DirectoryItem object.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.ResolveRootDirectoryAsTree(System.String)">
+            <summary>
+            Loads a root directory with given path, where all subdirectories 
+            contained in the SelectedUrl property are loaded
+            </summary>
+            <remarks>
+            The ImagesPaths, DocumentsPaths, etc properties of RadEditor
+            allow multiple root items to be specified, separated by comma, e.g.
+            Photos,Paintings,Diagrams. The FileBrowser class calls the 
+            ResolveRootDirectoryAsTree method for each of them.
+            </remarks>
+            <param name="path">
+            the root directory path, passed by the FileBrowser
+            </param>
+            <returns>
+            The root DirectoryItem or null if such does not exist
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreBitmap(System.Drawing.Bitmap,System.String,System.Drawing.Imaging.ImageFormat)">
+            <summary>
+            Stores the bitmap.
+            </summary>
+            <param name="bitmap">The bitmap.</param>
+            <param name="url">The URL.</param>
+            <param name="format">The format.</param>
+            <returns>The store bitmap.</returns>
+            <exception cref="T:System.NotImplementedException">
+            StoreBitmap is not implemented.
+            </exception>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreFile(System.Web.HttpPostedFile,System.String,System.String,System.String[])">
+            <summary>
+            Stores the file.
+            </summary>
+            <param name="file">
+            The file.
+            </param>
+            <param name="path">
+            The path.
+            </param>
+            <param name="name">
+            The name.
+            </param>
+            <param name="arguments">
+            The arguments.
+            </param>
+            <returns>
+            The store file.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreFile(Telerik.Web.UI.UploadedFile,System.String,System.String,System.String[])">
+            <summary>
+            Creates a file item from a Telerik.Web.UI.UploadedFile in the given path with the given name.
+            </summary>
+            <param name="file">The UploadedFile instance to store.</param>
+            <param name="path">The virtual path where the file item should be created.</param>
+            <param name="name">The name of the file item.</param>
+            <param name="arguments">Additional values to be stored such as Description, DisplayName, etc.</param>
+            <returns>
+            String containing the full virtual path (including the file name) of the file item.
+            </returns>
+            <remarks>
+            The default FileUploader control does not include the arguments parameter. If you need additional arguments
+            you should create your own FileUploader control.
+            </remarks>
+            <exception cref="T:System.NotImplementedException">
+            StoreFile is not implemented
+            </exception>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetChildDirectories(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the child directories.
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <returns>Child directories for an Item.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetChildFiles(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the child files.
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <returns>Array of child items.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetItem(System.String)">
+            <summary>
+            Gets the item.
+            </summary>
+            <param name="path">
+            The path.
+            </param>
+            <returns>An item for the path.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPath(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the parent path.
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <returns>
+            The get path.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPermissions(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the permissions.
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <returns>PathPermissions object.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetLocation(Sitecore.Data.Items.Item)">
+            <summary>
+            The get location.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>The location of item.</returns>
+        </member>
+        <member name="P:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CanCreateDirectory">
+            <summary>
+            Gets a value indicating whether this instance can create directory.
+            </summary>
+            <value>
+            <c>true</c> if this instance can create directory; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Controls.GroupedList">
             <summary>
             The list of items grouped into the section
@@ -9547,6 +10317,12 @@
             Literal for instruction text.
             </summary>
         </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddPoints.OnLoad(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddPoints.ConfigureSaveParameters">
             <summary>
             Saves the values.
@@ -9556,6 +10332,27 @@
             <summary>
             Localizes literal texts.
             </summary>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddRemoveVisitorFromRoles">
+            <summary>
+            Add valut to Visit Profile
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddRemoveVisitorFromRoles.Main">
+            <summary>
+            Select list control that does all the job
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddRemoveVisitorFromRoles.OnLoad(System.EventArgs)">
+            <summary>
+            Page load event
+            </summary>
+            <param name="e">Passed arguemnts</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.AddRemoveVisitorFromRoles.ConfigureSaveParameters">
+            <summary>
+            Saves the values.
+            </summary>    
         </member>
         <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.CopyVisitorToAnotherPlan">
             <summary>
@@ -9790,6 +10587,116 @@
             Set list of engagement plans and states which must be excluded from the grouped list
             </summary>
         </member>
+        <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile">
+            <summary>
+            Add valut to Visit Profile
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.OverwriteProfile">
+            <summary>
+            Whether or not profile value should be overwritten
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.FieldTitle">
+            <summary>
+            Field column text
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.ValueTitle">
+            <summary>
+            Value column text
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Storage">
+            <summary>
+            Hidden field for transferring data
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.profilesRootItem">
+            <summary>
+            Constant to identify profile root item
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.ConfigureSaveParameters">
+            <summary>
+            Saves the values.
+            </summary>    
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.OnLoad(System.EventArgs)">
+            <summary>
+            Fires on page load
+            </summary>
+            <param name="e">event args</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.OnPreRender(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Web.UI.Control.PreRender"/> event.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Localize">
+            <summary>
+            Localizes literal texts.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.DeserializeValuesSecure(System.String)">
+            <summary>
+            Deserialize Values from jsonData. Security is applied to restored values.
+            </summary>
+            <param name="jsonData">json formatted string</param>
+            <returns>List of restored data</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.FillProfiles">
+            <summary>
+            Creates a json formatted string that contains all profile items
+            </summary>
+            <returns>json formatted profile items</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.AddLanguageAttributes">
+            <summary>
+            Adds the language attributes to the form tag on the page.
+            Adds CSS class: lang_ + context language code.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.HasAccess(Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Data)">
+            <summary>
+            Helper method that validates security on Data
+            </summary>
+            <param name="data">Data to check if context user has access to profile</param>
+            <returns>True if user has access</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.RegisterScripts">
+            <summary>
+            Register jQuery and custom scripts
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.DeserializeValues(System.String)">
+            <summary>
+            Deserialize Values from jsonData.
+            </summary>
+            <param name="jsonData">json formatted string</param>
+            <returns>List of restored data</returns>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Data">
+            <summary>
+            Class for storing deserialized data
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Data.FieldName">
+            <summary>
+            Gets or sets Profile Field 
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Data.Profile">
+            <summary>
+            Gets or sets Profile item Id
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.UpdateValueOnVisitorUserProfile.Data.Value">
+            <summary>
+            Gets or sets Value to set
+            </summary>
+        </member>
         <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.PageEventSubscriptionForm">
             <summary>Defines the ForceTriggerForm class.</summary>
         </member>
@@ -9833,6 +10740,14 @@
             </summary>
             <value>The selected page events.</value>
             <remarks></remarks>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.PageEventSubscriptionForm.PageEventFilter">
+            <summary>
+            Gets or sets the page event filter.
+            </summary>
+            <value>
+            The page event filter input.
+            </value>
         </member>
         <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.MoveVisitorToAnotherState">
             <summary>
@@ -9917,15 +10832,6 @@
             Saves the values.
             </summary>
         </member>
-        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.SendEmailMessage.PingUrl(System.String)">
-            <summary>
-            Pings the URL.
-            </summary>
-            <param name="url">The URL for ping.</param>
-            <returns>
-            Return the result of the url ping.
-            </returns>
-        </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.SendEmailMessage.InitValues">
             <summary>
             Initialize control values with the corresponding values in the parameters
@@ -9947,11 +10853,11 @@
         </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.SendEmailMessage.ValidateUrl(System.String)">
             <summary>
-            Validates the URL.
+            Validates the URL. Ping the URL.
             </summary>
-            <param name="url">The URL parameter.</param>
+            <param name="url">The URL parameter for ping.</param>
             <returns>
-            Returns the result of the validation.
+            Returns the result of the url ping.
             </returns>
         </member>
         <member name="T:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ActionEditors.SendEmailMessage.SendToTypesEnum">
@@ -10230,6 +11136,9 @@
             <param name="key">The key.</param>
             <param name="script">The script.</param>
             <param name="ignoreEvent">if set to <c>true</c> the script will not be added when event occurs (Context.ClientPage.IsEvent equals true).</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.WebEditCommand.Reload">
+            <summary>Reloads current page URL.</summary>    
         </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.WebEditCommand.Reload(Sitecore.Text.UrlString)">
             <summary>Reloads the specified URL.</summary>
@@ -10528,6 +11437,12 @@
             <summary>
             The close.
             </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Galleries.GalleryForm.ChangeDocumentType(System.String)">
+            <summary>
+            Changes the type of the document.
+            </summary>
+            <param name="docType">Type of the doc.</param>
         </member>
         <member name="T:Sitecore.Shell.Applications.Dialogs.SelectCreateItem.SelectCreateItemForm">
             <summary>The select create item form.</summary>
@@ -10971,7 +11886,9 @@
             <summary>The id.</summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.Dialogs.Testing.SetTestDetailsForm.VariableValueItemStub.#ctor(Sitecore.Data.ID,System.String)">
-            <summary>Initializes a new instance of the <see cref="T:Sitecore.Shell.Applications.Dialogs.Testing.SetTestDetailsForm.VariableValueItemStub"/> class. Initializes a new instance of the <see cref="T:Sitecore.Shell.Applications.Dialogs.Testing.SetTestDetailsForm.VariableValueItemStub"/> struct.</summary>
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.Shell.Applications.Dialogs.Testing.SetTestDetailsForm.VariableValueItemStub"/> class.
+            </summary>
             <param name="id">The id.</param>
             <param name="name">The name.</param>
         </member>
@@ -11216,6 +12133,14 @@
             Auto-generated field.
             To modify move field declaration from designer file to code-behind file.
             </remarks>
+        </member>
+        <member name="P:Sitecore.Shell.MarketingAutomation.Web.Previewer.MarketingAutomationPreviewer.ContentLanguage">
+            <summary>
+            Gets or sets the content language.
+            </summary>
+            <value>
+            The content language.
+            </value>
         </member>
         <member name="P:Sitecore.Shell.MarketingAutomation.Web.Previewer.MarketingAutomationPreviewer.FlowId">
             <summary>
@@ -12090,6 +13015,11 @@
             The edit option
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.EditPlaceholderKey">
+            <summary>
+            The edit placeholder key
+            </summary>
+        </member>
         <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.EditSection">
             <summary>
             Edit Section
@@ -12153,6 +13083,16 @@
         <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.Warnings">
             <summary>
             The warnings
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.PlaceholderKey">
+            <summary>
+            The placeholder
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.NewSettingsPlaceholderKey">
+            <summary>
+            The new setting placeholder key
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.templateForCreation">
@@ -12233,6 +13173,11 @@
             <param name="control">The control.</param>
             <returns>The allowed contros.</returns>
         </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.ResgisterStartupScripts">
+            <summary>
+            Resgisters the startup scripts.
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.ChangeMode(System.String)">
             <summary>
             Changes the mode.
@@ -12274,6 +13219,34 @@
         </member>
         <member name="P:Sitecore.Shell.Applications.WebEdit.Dialogs.PlaceholderSettingsForm.TemplateForCreation">
             <summary>Gets or sets TemplateForCreation.</summary>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.WebEdit.Galleries.ItemChildren">
+            <summary>
+            The item children.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Galleries.ItemChildren.Children">
+            <summary>
+            The children.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Galleries.ItemChildren.NoChildrenTextContainer">
+            <summary>
+            The no children text
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Galleries.ItemChildren.OnLoad(System.EventArgs)">
+            <summary>
+            The on load.
+            </summary>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Galleries.ItemChildren.ShowNoChildrenNotification">
+            <summary>
+            Called when the show is no children.
+            </summary>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Galleries.Testing.GalleryComponents">
             <summary>
@@ -13322,6 +14295,24 @@
             Handles the message.
             </summary>
             <param name="message">The message.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.Galleries.Links.GalleryLinksForm.GetReferences(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the references.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>
+            The references.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.Galleries.Links.GalleryLinksForm.GetRefererers(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the refererers.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>
+            The refererers.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.Galleries.Links.GalleryLinksForm.OnLoad(System.EventArgs)">
             <summary>
@@ -14563,6 +15554,12 @@
             </summary>
             <param name="selected">The selected.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.Sidebars.Tree.RefreshItem(Sitecore.Data.Items.Item)">
+            <summary>
+            Refreshes the item in tree.
+            </summary>
+            <param name="item">The item.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.Sidebars.Tree.RenderChildNodes(Sitecore.Data.ID)">
             <summary>
             Renders the child nodes.
@@ -15149,6 +16146,12 @@
             The Section Header
             </summary>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
+            <summary>
+            Handles the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.ChangeMode(System.String)">
             <summary>
             Changes the mode.
@@ -15203,8 +16206,19 @@
             <summary>The set controls for selection.</summary>
             <param name="item">The item.</param>
         </member>
-        <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.SetDataContexts">
-            <summary>The set data contexts.</summary>
+        <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.SetDataContexts(System.Collections.Generic.IEnumerable{Sitecore.Data.Items.Item})">
+            <summary>
+            The set data contexts.
+            </summary>
+            <param name="roots">The roots.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.CopyDataContext(Sitecore.Web.UI.HtmlControls.DataContext,System.String)">
+            <summary>
+            Copies the data context.
+            </summary>
+            <param name="dataContext">The data context.</param>
+            <param name="id">The id.</param>
+            <returns>The data context.</returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Dialogs.SelectRenderingDatasource.SelectRenderingDatasourceForm.SetSectionHeader">
             <summary>
@@ -16795,6 +17809,11 @@
             An <see cref="T:System.EventArgs"></see> object that contains the event data. 
             </param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Login.Users.Kick.LocalizePage">
+            <summary>
+            Localizes the page.
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Login.Users.Kick.BuildUsers">
             <summary>
             Builds the users.
@@ -16836,9 +17855,36 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.Kick.ltrChooseUser">
+            <summary>
+            ltrChooseUser control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
         <member name="F:Sitecore.Shell.Applications.Login.Users.Kick.Grid">
             <summary>
             Grid control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.Kick.loginTemplate">
+            <summary>
+            loginTemplate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.Kick.lastRequestTemplate">
+            <summary>
+            lastRequestTemplate control.
             </summary>
             <remarks>
             Auto-generated field.
@@ -16865,12 +17911,6 @@
         </member>
         <member name="T:Sitecore.Shell.Applications.Login.Users.UsersPage">
             <summary>
-            UsersPage class.
-            </summary>
-            <remarks>
-            Auto-generated class.
-            </remarks>
-            <summary>
             The Users page.
             </summary>
         </member>
@@ -16892,6 +17932,78 @@
             To modify move field declaration from designer file to code-behind file.
             </remarks>
         </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.LblFullTitle">
+            <summary>
+            LblFullTitle control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.LblFullText">
+            <summary>
+            LblFullText control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnExitHeader">
+            <summary>
+            BtnExitHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnExitText">
+            <summary>
+            BtnExitText control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnBoostHeader">
+            <summary>
+            BtnBoostHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnBoostText">
+            <summary>
+            BtnBoostText control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnKickHeader">
+            <summary>
+            BtnKickHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Login.Users.UsersPage.BtnKickText">
+            <summary>
+            BtnKickText control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Login.Users.UsersPage.OnPreRender(System.EventArgs)">
             <summary>
             Raises the <see cref="E:System.Web.UI.Control.PreRender"/> event.
@@ -16899,6 +18011,11 @@
             <param name="arguments">
             An <see cref="T:System.EventArgs"/> object that contains the event data.
             </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Login.Users.UsersPage.Localize">
+            <summary>
+            Localizes this instance.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.Login.Users.UsersPage.ParseUrlParameters(System.String,System.Char)">
             <summary>
@@ -17622,6 +18739,12 @@
             <param name="sender">The sender.</param>
             <param name="formEventArgs">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ForceTriggerForm.OnLoad(System.EventArgs)">
+            <summary>
+            Raises the load event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ForceTriggerForm.SelectTrigger(Sitecore.Web.UI.Sheer.ClientPipelineArgs)">
             <summary>Selects the trigger.</summary>
             <param name="args">The arguments.</param>
@@ -17667,10 +18790,13 @@
             <param name="rawRules">The raw rules.</param>
             <returns>The rules HTML.</returns>
         </member>
-        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ForceTriggerForm.ProcessAutomationState(Sitecore.Analytics.Data.DataAccess.DataSets.VisitorDataSet.AutomationStatesRow,System.String)">
-            <summary>Processes the campaign event.</summary>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ForceTriggerForm.ProcessAutomationState(Sitecore.Analytics.Data.DataAccess.DataSets.VisitorDataSet.AutomationStatesRow,System.String,Sitecore.Analytics.Data.Items.PageEventItem)">
+            <summary>
+            Processes the campaign event.
+            </summary>
             <param name="automationStatesRow">The campaign event.</param>
             <param name="pageEventName">Name of the page event.</param>
+            <param name="pageEvent">The page event.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ForceTriggerForm.ProcessCommand(Sitecore.Data.Items.Item,Sitecore.Analytics.Rules.Workflows.WorkflowRuleContext)">
             <summary>Processes the command.</summary>
@@ -17960,6 +19086,11 @@
             <param name="defProperty">The def property.</param>
             <returns>The new row.</returns>
         </member>
+        <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ImportVisitorsForm.CleanupTempFile">
+            <summary>
+            Cleans up temp file.
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ImportVisitorsForm.FormatDefaultText(System.String)">
             <summary>Formats the default text of a combobox.</summary>
             <param name="text">The text to format.</param>
@@ -18015,6 +19146,11 @@
             Gets the list of properties.
             </summary>
             <value>The list of properties.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ImportVisitorsForm.RealFilename">
+            <summary>
+            Gets the real filename.
+            </summary>
         </member>
         <member name="P:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.ImportVisitorsForm.StateId">
             <summary>
@@ -18154,6 +19290,7 @@
             Raises the <see cref="E:System.Web.UI.Control.Load"/> event.
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+            <exception cref="T:Sitecore.Exceptions.AccessDeniedException">Access denied</exception>
         </member>
         <member name="F:Sitecore.Shell.Applications.MarketingAutomation.Dialogs.UploadFile.Head1">
             <summary>
@@ -18601,10 +19738,22 @@
             </param>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.UploadManager.UploadManagerPage.Upload">
-            <summary></summary>
+            <summary>
+            Upload control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.UploadManager.UploadManagerPage.Result">
-            <summary></summary>
+            <summary>
+            Result control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
         </member>
         <member name="T:Sitecore.Shell.Applications.ContentEditor.Editors.Preview.PreviewPage">
             <summary>Represents a GridDesignerPage.</summary>
@@ -19814,6 +20963,13 @@
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Security.UserManager.UserManager.UsersItemContentCreated(System.Object,ComponentArt.Web.UI.GridItemContentCreatedEventArgs)">
+            <summary>
+            Handles the ItemContentCreated event of the Users control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:ComponentArt.Web.UI.GridItemContentCreatedEventArgs"/> instance containing the event data.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Security.UserManager.UserManager.Current_OnExecute(System.Object,Sitecore.Web.UI.XamlSharp.Ajax.AjaxCommandEventArgs)">
             <summary>
             Handles the OnExecute event of the Current control.
@@ -19851,6 +21007,24 @@
         <member name="F:Sitecore.Shell.Applications.Security.UserManager.UserManager.Users">
             <summary>
             Users control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Security.UserManager.UserManager.CommentTemplate">
+            <summary>
+            CommentTemplate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Security.UserManager.UserManager.FullNameTemplate">
+            <summary>
+            FullNameTemplate control.
             </summary>
             <remarks>
             Auto-generated field.
@@ -20004,10 +21178,29 @@
             <summary>
             Handles a click on the OK button.
             </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
             <remarks>When the user clicks OK, the dialog is closed by calling
             the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Templates.SetBaseTemplates.SetBaseTemplatesForm.Confirmation(Sitecore.Web.UI.Sheer.ClientPipelineArgs)">
+            <summary>
+            Presents a confirmation box to the user.
+            </summary>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Templates.SetBaseTemplates.SetBaseTemplatesForm.GetItem">
+            <summary>
+            Gets the item.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Templates.SetBaseTemplates.SetBaseTemplatesForm.IsBaseTemplateRemoved(System.String)">
+            <summary>
+            Checks if the one or more base templates were removed.
+            </summary>
+            <param name="newValue">The new value.</param>
+            <returns></returns>
         </member>
         <member name="T:Sitecore.Shell.Applications.Templates.TemplateBuilder.TemplateDefinition">
             <summary>
@@ -20775,12 +21968,12 @@
             <param name="icon">The default icon.</param>
             <returns>The icon.</returns>
         </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.ChangeLanguage.GetLanguageName(System.Globalization.CultureInfo)">
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.ChangeLanguage.RemoveRegionInfoInBraces(System.String)">
             <summary>
-            Gets the name of the language.
+            Removes the text in braces.
             </summary>
-            <param name="info">The info.</param>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <param name="languageDisplayName">The language display name.</param>
+            <returns></returns>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.Logout">
             <summary>
@@ -20853,6 +22046,19 @@
             <summary>Queries the state of the command.</summary>
             <param name="context">The context.</param>
             <returns>The state of the command.</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Open.UsePopupContentEditor(Sitecore.Shell.Framework.Commands.CommandContext)">
+            <summary>
+            Uses the popup content editor.
+            </summary>
+            <param name="context">The context.</param>
+            <returns>The popup content editor.</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Open.ShowPopupContentEditor(Sitecore.Shell.Framework.Commands.CommandContext)">
+            <summary>
+            Shows the popup content editor.
+            </summary>
+            <param name="context">The context.</param>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.OtherViews">
             <summary>
@@ -20951,44 +22157,116 @@
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.Save">
             <summary>
-            Represents a Save.
+            The Save command.
             </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.Execute(Sitecore.Shell.Framework.Commands.CommandContext)">
             <summary>
             Executes the command in the specified context.
             </summary>
-            <param name="context">The context.</param>
+            <param name="context">
+            The context.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.QueryState(Sitecore.Shell.Framework.Commands.CommandContext)">
             <summary>
             Queries the state of the command.
             </summary>
-            <param name="context">The context.</param>
-            <returns>The state of the command.</returns>
+            <param name="context">
+            The context.
+            </param>
+            <returns>
+            The state of the command.
+            </returns>
         </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.AddField(Sitecore.Xml.Packet,Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField,System.Boolean)">
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.GetFieldValidationErrorMessage(Sitecore.Data.Fields.Field,System.String)">
+            <summary>
+            Gets the field validation error message.
+            </summary>
+            <param name="field">
+            The field.
+            </param>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The field validation error message.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.AddField(Sitecore.Xml.Packet,Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField)">
             <summary>
             Adds the field.
             </summary>
-            <param name="packet">The packet.</param>
-            <param name="pageEditorField">The field.</param>
-            <param name="overwrite">if set to <c>true</c> this instance is overwrite.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.ProcessForm(System.Web.UI.Page,Sitecore.Xml.Packet)">
-            <summary>
-            Processes the form.
-            </summary>
-            <param name="page">The page.</param>
-            <param name="packet">The packet.</param>
+            <param name="packet">
+            The packet.
+            </param>
+            <param name="pageEditorField">
+            The field.
+            </param>
+            <returns>
+            The field descriptor.
+            </returns>
+            <exception cref="T:Sitecore.Shell.Applications.WebEdit.Commands.Save.FieldValidationException">
+            <c>FieldRegexValidionException</c>.
+            </exception>
         </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.AddLayoutField(System.Web.UI.Page,Sitecore.Xml.Packet,Sitecore.Data.Items.Item)">
             <summary>
             Adds the layout field.
             </summary>
-            <param name="page">The page.</param>
-            <param name="packet">The packet.</param>
-            <param name="item">The item.</param>
+            <param name="page">
+            The page.
+            </param>
+            <param name="packet">
+            The packet.
+            </param>
+            <param name="item">
+            The item.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.CreatePacket(System.Collections.Generic.IEnumerable{Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField},Sitecore.Collections.SafeDictionary{Sitecore.Data.FieldDescriptor,System.String}@)">
+            <summary>
+            Creates the packet.
+            </summary>
+            <param name="fields">
+            The fields.
+            </param>
+            <param name="controlsToValidate">
+            The controls To Validate.
+            </param>
+            <returns>
+            The packet.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.GetValidators(Sitecore.Data.Items.Item,Sitecore.Collections.SafeDictionary{Sitecore.Data.FieldDescriptor,System.String},Sitecore.Data.Validators.ValidatorsMode@)">
+            <summary>
+            Gets the validators.
+            </summary>
+            <param name="item">
+            The item.
+            </param>
+            <param name="controlsToValidate">
+            The controls to validate.
+            </param>
+            <param name="mode">
+            The mode.
+            </param>
+            <returns>
+            The validators.
+            </returns>
+        </member>
+        <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.Save.FieldValidationException">
+            <summary>
+            Defines the field validation exception class.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.Save.FieldValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sitecore.Shell.Applications.WebEdit.Commands.Save.FieldValidationException"/> class.
+            </summary>
+            <param name="validationError">
+            The validation error.
+            </param>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.SaveProfile">
             <summary>
@@ -21062,24 +22340,22 @@
             The command context.
             </param>
         </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.SetLanguage.ChangeEmbeddedLanguage(Sitecore.Text.UrlString,System.String)">
+        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.SetLanguage.GetNewUrl(System.String,Sitecore.Text.UrlString,Sitecore.Data.Items.Item)">
             <summary>
-            Changes the embedded language.
+            Gets the new URL.
             </summary>
-            <param name="url">
-            The URL.
-            </param>
             <param name="languageName">
             Name of the language.
             </param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.Commands.SetLanguage.RemoveEmbeddedLanguage(Sitecore.Text.UrlString)">
-            <summary>
-            Removes the embedded language.
-            </summary>
             <param name="url">
             The URL.
             </param>
+            <param name="item">
+            The item.
+            </param>
+            <returns>
+            The new URL.
+            </returns>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.StopDebug">
             <summary>
@@ -23787,6 +25063,14 @@
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Search.RebuildSearchIndex.RebuildSearchIndexForm.GetIndexes">
+            <summary>
+            Gets the indexes.
+            </summary>
+            <returns>
+            returns a collection of available indexes names
+            </returns>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Search.RebuildSearchIndex.RebuildSearchIndexForm.StartRebuilding">
             <summary>
             Starts the rebuilding.
@@ -24234,6 +25518,11 @@
             The treeview.
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.Applications.Files.FileBrowser.FileBrowserForm.UploadButton">
+            <summary>
+            The upload button
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Files.FileBrowser.FileBrowserForm.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Handles the message.
@@ -24270,9 +25559,7 @@
             <summary>
             Raises the load event.
             </summary>
-            <param name="e">
-            The <see cref="T:System.EventArgs"/> instance containing the event data.
-            </param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Files.FileBrowser.FileBrowserForm.OnOK(System.Object,System.EventArgs)">
             <summary>
@@ -28779,6 +30066,7 @@
             Starts the client.
             </summary>
             <param name="user">The user.</param>
+            <exception cref="T:Sitecore.Exceptions.SecurityException">Only local URLs are allowed.</exception>
         </member>
         <member name="M:Sitecore.Shell.Applications.Login.Users.UsersForm.ParseUrlParameters(System.String,System.Char)">
             <summary>
@@ -29503,7 +30791,7 @@
             The message.
             </param>
             <contract>
-            	<requires name="message" condition="not null"/>
+              <requires name="message" condition="not null"/>
             </contract>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm.DoCancel(Sitecore.Web.UI.Sheer.ClientPipelineArgs)">
@@ -29551,7 +30839,7 @@
             The <see cref="T:System.EventArgs"/> instance containing the event data.
             </param>
             <contract>
-            	<requires name="e" condition="not null"/>
+              <requires name="e" condition="not null"/>
             </contract>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm.OnStart">
@@ -29570,8 +30858,8 @@
             The item to render.
             </param>
             <contract>
-            	<requires name="output" condition="not null"/>
-            	<requires name="item" condition="not null"/>
+              <requires name="output" condition="not null"/>
+              <requires name="item" condition="not null"/>
             </contract>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm.GetVisibleChildCount(Sitecore.Data.Items.Item)">
@@ -29601,10 +30889,10 @@
         </member>
         <member name="P:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm.UploadingStarted">
             <summary>
-            Gets or sets a value indicating whether the <see cref="T:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm"/> uploadings the started.
+            Gets or sets a value indicating whether the <see cref="T:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm"/> uploading the started.
             </summary>
             <value>
-             <c>true</c> if the <see cref="T:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm"/> uploadings the started; otherwise, <c>false</c>.
+             <c>true</c> if the <see cref="T:Sitecore.Shell.Applications.Media.MediaFolder.MediaFolderForm"/> uploading the started; otherwise, <c>false</c>.
             </value>
         </member>
         <member name="T:Sitecore.Shell.Applications.Today.Portlets.PortalConfiguratorPortletXmlControl">
@@ -30410,6 +31698,16 @@
               <ensures condition="not null" />
             </contract>
         </member>
+        <member name="M:Sitecore.Shell.Applications.ShellForm.GetLinkHeader(Sitecore.Shell.Applications.DesktopLink,System.Boolean@)">
+            <summary>
+            Gets the link header.
+            </summary>
+            <param name="link">The desktop link.</param>
+            <param name="containsHeaderInCurrentLanguage">if set to <c>true</c> link contains header in current language.</param>
+            <returns>
+            The link header.
+            </returns>
+        </member>
         <member name="T:Sitecore.Shell.Applications.Templates.ChangeTemplate.ChangeTemplateForm">
             <summary>
             Represents a ChangeTemplateForm.
@@ -30771,12 +32069,10 @@
             <summary>
             Raises the load event.
             </summary>
-            <param name="e">
-            The <see cref="T:System.EventArgs"/> instance containing the event data.
-            </param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
             <contract>
               <requires name="e" condition="not null"/>
-            </contract>
+              </contract>
         </member>
         <member name="T:Sitecore.Shell.Applications.Reports.LogViewer.LogViewerForm">
             <summary>
@@ -30792,6 +32088,12 @@
             <summary>
             Has the file.
             </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Reports.LogViewer.LogViewerForm.OnLoad(System.EventArgs)">
+            <summary>
+            Raises the load event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Reports.LogViewer.LogViewerForm.Delete(Sitecore.Web.UI.Sheer.ClientPipelineArgs)">
             <summary>
@@ -30905,6 +32207,30 @@
             Represents a Web Edit Ribbon page.
             </summary>
         </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.isRibbonVisible">
+            <summary>
+            The is ribbon visible.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.GetButtonsRootItem(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the buttons root item.
+            </summary>
+            <param name="ribbon">
+            The ribbon.
+            </param>
+            <returns>
+            The buttons root item.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.GetRibbonItem">
+            <summary>
+            Gets the ribbon item.
+            </summary>
+            <returns>
+            The ribbon item.
+            </returns>
+        </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.OnPreRender(System.EventArgs)">
             <summary>
             Raises the <see cref="E:System.Web.UI.Control.PreRender"></see> event.
@@ -30913,20 +32239,49 @@
             An <see cref="T:System.EventArgs"></see> object that contains the event data.
             </param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.SetDoctype">
+            <summary>
+            Sets the doctype.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.GetCommandContext">
+            <summary>
+            Gets the command context.
+            </summary>
+            <returns>
+            The command context.
+            </returns>
+        </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.RegisterScripts(System.Boolean)">
             <summary>
             Registers scripts on a page
             </summary>
+            <param name="hasRibbon">
+            The has Ribbon.
+            </param>
         </member>
-        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.RenderButtons(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item,Sitecore.Shell.Framework.Commands.CommandContext,System.String,System.Boolean)">
+        <member name="M:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.RenderButtons(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item,System.Boolean)">
             <summary>
             Renders the buttons.
             </summary>
-            <param name="output">The output.</param>
-            <param name="item">The current item.</param>
-            <param name="commandContext">The command context.</param>
-            <param name="id">The item id.</param>
-            <param name="hasRibbon">if set to <c>true</c> [has ribbon].</param>   
+            <param name="output">
+            The output.
+            </param>
+            <param name="item">
+            The buttons toot item.
+            </param>
+            <param name="hasRibbon">
+            if set to <c>true</c> [has ribbon].
+            </param>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.docType">
+            <summary>
+            docType control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
         </member>
         <member name="F:Sitecore.Shell.Applications.WebEdit.WebEditRibbon.Stylesheets">
             <summary>
@@ -31077,42 +32432,109 @@
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Workbox.WorkboxForm.Pager">
-            <summary></summary>
+            <summary>
+            The pager.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Workbox.WorkboxForm.RibbonPanel">
-            <summary></summary>
+            <summary>
+            The ribbon panel.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Workbox.WorkboxForm.States">
-            <summary></summary>
+            <summary>
+            The states.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Workbox.WorkboxForm.ViewMenu">
-            <summary></summary>
+            <summary>
+            The view menu.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.Workbox.WorkboxForm.stateNames">
+            <summary>
+            The _state names.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Comment(Sitecore.Web.UI.Sheer.ClientPipelineArgs)">
             <summary>
             Comments the specified args.
             </summary>
-            <param name="args">The arguments.</param>
+            <param name="args">
+            The arguments.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Handles the message.
             </summary>
-            <param name="message">The message.</param>
+            <param name="message">
+            The message.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Diff(System.String,System.String,System.String)">
             <summary>
             Diffs the specified id.
             </summary>
-            <param name="id">The id.</param>
-            <param name="language">The language.</param>
-            <param name="version">The version.</param>
+            <param name="id">
+            The id.
+            </param>
+            <param name="language">
+            The language.
+            </param>
+            <param name="version">
+            The version.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayState(Sitecore.Workflows.IWorkflow,Sitecore.Workflows.WorkflowState,Sitecore.Data.DataUri[],System.Web.UI.Control,System.Int32,System.Int32)">
+            <summary>
+            Displays the state.
+            </summary>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="state">
+            The state.
+            </param>
+            <param name="items">
+            The items.
+            </param>
+            <param name="control">
+            The control.
+            </param>
+            <param name="offset">
+            The offset.
+            </param>
+            <param name="pageSize">
+            Size of the page.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayStates(Sitecore.Workflows.IWorkflow,Sitecore.Web.UI.XmlControls.XmlControl)">
+            <summary>
+            Displays the states.
+            </summary>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="placeholder">
+            The placeholder.
+            </param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayWorkflow(Sitecore.Workflows.IWorkflow)">
+            <summary>
+            Displays the workflow.
+            </summary>
+            <param name="workflow">
+            The workflow.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.OnLoad(System.EventArgs)">
             <summary>
             Raises the load event.
             </summary>
-            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+            <param name="e">
+            The <see cref="T:System.EventArgs"/> instance containing the event data.
+            </param>
             <remarks>
             This method notifies the server control that it should perform actions common to each HTTP
             request for the page it is associated with, such as setting up a database query. At this
@@ -31131,9 +32553,15 @@
             <summary>
             Opens the specified item.
             </summary>
-            <param name="id">The id.</param>
-            <param name="language">The language.</param>
-            <param name="version">The version.</param>
+            <param name="id">
+            The id.
+            </param>
+            <param name="language">
+            The language.
+            </param>
+            <param name="version">
+            The version.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.PageSize_Change">
             <summary>
@@ -31144,133 +32572,175 @@
             <summary>
             Toggles the pane.
             </summary>
-            <param name="id">The id.</param>
+            <param name="id">
+            The id.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Preview(System.String,System.String,System.String)">
             <summary>
             Previews the specified item.
             </summary>
-            <param name="id">The id.</param>
-            <param name="language">The language.</param>
-            <param name="version">The version.</param>
+            <param name="id">
+            The id.
+            </param>
+            <param name="language">
+            The language.
+            </param>
+            <param name="version">
+            The version.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Refresh">
             <summary>
             Refreshes the page.
             </summary>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.ShowHistory(Sitecore.Web.UI.Sheer.Message,System.String)">
+            <summary>
+            Shows the history.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="control">
+            The control.
+            </param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.CreateCommand(Sitecore.Workflows.IWorkflow,Sitecore.Workflows.WorkflowCommand,Sitecore.Data.Items.Item,Sitecore.Web.UI.XmlControls.XmlControl)">
             <summary>
             Creates the command.
             </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="command">The command.</param>
-            <param name="item">The item.</param>
-            <param name="workboxItem">The workbox item.</param>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="command">
+            The command.
+            </param>
+            <param name="item">
+            The item.
+            </param>
+            <param name="workboxItem">
+            The workbox item.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.CreateItem(Sitecore.Workflows.IWorkflow,Sitecore.Data.Items.Item,System.Web.UI.Control)">
             <summary>
             Creates the item.
             </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="item">The item.</param>
-            <param name="control">The control.</param>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="item">
+            The item.
+            </param>
+            <param name="control">
+            The control.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.CreateNavigator(Sitecore.Web.UI.HtmlControls.Section,System.String,System.Int32)">
             <summary>
             Creates the navigator.
             </summary>
-            <param name="section">The section.</param>
-            <param name="id">The id.</param>
-            <param name="count">The count.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayState(Sitecore.Workflows.IWorkflow,Sitecore.Workflows.WorkflowState,Sitecore.Data.DataUri[],System.Web.UI.Control,System.Int32,System.Int32)">
-            <summary>
-            Displays the state.
-            </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="state">The state.</param>
-            <param name="items">The items.</param>
-            <param name="control">The control.</param>
-            <param name="offset">The offset.</param>
-            <param name="pageSize">Size of the page.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayStates(Sitecore.Workflows.IWorkflow,Sitecore.Web.UI.XmlControls.XmlControl)">
-            <summary>
-            Displays the states.
-            </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="placeholder">The placeholder.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.DisplayWorkflow(Sitecore.Workflows.IWorkflow)">
-            <summary>
-            Displays the workflow.
-            </summary>
-            <param name="workflow">The workflow.</param>
+            <param name="section">
+            The section.
+            </param>
+            <param name="id">
+            The id.
+            </param>
+            <param name="count">
+            The count.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.GetHistory(Sitecore.Workflows.IWorkflow,Sitecore.Data.Items.Item)">
             <summary>
             Gets the history.
             </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="item">The item.</param>
-            <returns></returns>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="item">
+            The item.
+            </param>
+            <returns>
+            The get history.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.GetItems(Sitecore.Workflows.WorkflowState,Sitecore.Workflows.IWorkflow)">
             <summary>
             Gets the items.
             </summary>
-            <param name="state">The state.</param>
-            <param name="workflow">The workflow.</param>
-            <returns></returns>
+            <param name="state">
+            The state.
+            </param>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <returns>
+            Array of item DataUri.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.GetPaneID(Sitecore.Workflows.IWorkflow)">
             <summary>
             Gets the pane ID.
             </summary>
-            <param name="workflow">The workflow.</param>
-            <returns></returns>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <returns>
+            The get pane id.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.GetStateName(Sitecore.Workflows.IWorkflow,System.String)">
             <summary>
             Gets the name of the state.
             </summary>
-            <param name="workflow">The workflow.</param>
-            <param name="stateID">The state ID.</param>
-            <returns></returns>
+            <param name="workflow">
+            The workflow.
+            </param>
+            <param name="stateID">
+            The state ID.
+            </param>
+            <returns>
+            The get state name.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Jump(System.Object,Sitecore.Web.UI.Sheer.Message,System.Int32)">
             <summary>
             Jumps the specified sender.
             </summary>
-            <param name="sender">The sender.</param>
-            <param name="message">The message.</param>
-            <param name="offset">The offset.</param>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="message">
+            The message.
+            </param>
+            <param name="offset">
+            The offset.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.Send(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Sends the specified message.
             </summary>
-            <param name="message">The message.</param>
+            <param name="message">
+            The message.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.SendAll(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Sends all.
             </summary>
-            <param name="message">The message.</param>
+            <param name="message">
+            The message.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.SendSelected(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Sends the selected.
             </summary>
-            <param name="message">The message.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.ShowHistory(Sitecore.Web.UI.Sheer.Message,System.String)">
-            <summary>
-            Shows the history.
-            </summary>
-            <param name="message">The message.</param>
-            <param name="control">The control.</param>
+            <param name="message">
+            The message.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Workbox.WorkboxForm.UpdateRibbon">
             <summary>
@@ -31281,13 +32751,21 @@
             <summary>
             Wires the up navigators.
             </summary>
-            <param name="control">The control.</param>
+            <param name="control">
+            The control.
+            </param>
         </member>
         <member name="P:Sitecore.Shell.Applications.Workbox.WorkboxForm.PageSize">
             <summary>
             Gets or sets the size of the page.
             </summary>
             <value>The size of the page.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Workbox.WorkboxForm.IsReload">
+            <summary>
+            Gets a value indicating whether page is reloads by reload button on the ribbon.
+            </summary>
+            <value><c>true</c> if this instance is reload; otherwise, <c>false</c>.</value>
         </member>
         <member name="T:Sitecore.Shell.Applications.Workbox.WorkboxHistoryXmlControl">
             <summary>
@@ -31336,10 +32814,18 @@
             <summary>
             Renders the panel.
             </summary>
-            <param name="output">The output.</param>
-            <param name="ribbon">The ribbon.</param>
-            <param name="button">The button.</param>
-            <param name="context">The context.</param>
+            <param name="output">
+            The output.
+            </param>
+            <param name="ribbon">
+            The ribbon.
+            </param>
+            <param name="button">
+            The button.
+            </param>
+            <param name="context">
+            The context.
+            </param>
         </member>
         <member name="T:Sitecore.Shell.Applications.Xaml.Test7">
             <summary>
@@ -32251,244 +33737,6 @@
             </summary>
             <returns>The portlet ID.</returns>
         </member>
-        <member name="T:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider">
-            <summary>
-            Represents a DBContentProvider.
-            </summary>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.#ctor(System.Web.HttpContext,System.String[],System.String[],System.String[],System.String[],System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider"/> class.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="searchPatterns">The search patterns.</param>
-            <param name="viewPaths">The view paths.</param>
-            <param name="uploadPaths">The upload paths.</param>
-            <param name="deletePaths">The delete paths.</param>
-            <param name="selectedUrl">The selected URL.</param>
-            <param name="selectedItemTag">The selected item tag.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CheckReadPermissions(System.String)">
-            <summary>
-            Check read permissions.
-            This is Telerik override. Security is checked in Sitecore while retriving items, so this method should
-            always return true.
-            </summary>
-            <param name="folderPath">
-            The folder path.
-            </param>
-            <returns>
-            <c>true</c> for any path.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CreateDirectory(System.String,System.String)">
-            <summary>
-            Creates the directory.
-            </summary>
-            <param name="path">
-            The parent directory path.
-            </param>
-            <param name="name">
-            The directory name.
-            </param>
-            <returns>
-            The create directory.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.DeleteDirectory(System.String)">
-            <summary>
-            Deletes the directory.
-            </summary>
-            <param name="path">
-            The directory path.
-            </param>
-            <returns>
-            The delete directory.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.DeleteFile(System.String)">
-            <summary>
-            Deletes the file.
-            </summary>
-            <param name="path">
-            The file path.
-            </param>
-            <returns>
-            The delete file.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetFile(System.String)">
-            <summary>
-            Gets the file.
-            </summary>
-            <param name="url">The media URL.</param>
-            <returns>
-            Stream for accessing the contents of the file item with the given url.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetFileName(System.String)">
-            <summary>
-            Gets the name of the file.
-            </summary>
-            <param name="url">
-            The media URL.
-            </param>
-            <returns>
-            The get file name.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPath(System.String)">
-            <summary>
-            Gets the path.
-            </summary>
-            <param name="url">The media URL.</param>
-            <returns>The get path.</returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.ResolveDirectory(System.String)">
-            <summary>
-            Resolves the directory.
-            </summary>
-            <param name="path">
-            The directory path.
-            </param>
-            <returns>DirectoryItem object.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.ResolveRootDirectoryAsTree(System.String)">
-            <summary>
-            Loads a root directory with given path, where all subdirectories 
-            contained in the SelectedUrl property are loaded
-            </summary>
-            <remarks>
-            The ImagesPaths, DocumentsPaths, etc properties of RadEditor
-            allow multiple root items to be specified, separated by comma, e.g.
-            Photos,Paintings,Diagrams. The FileBrowser class calls the 
-            ResolveRootDirectoryAsTree method for each of them.
-            </remarks>
-            <param name="path">
-            the root directory path, passed by the FileBrowser
-            </param>
-            <returns>
-            The root DirectoryItem or null if such does not exist
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreBitmap(System.Drawing.Bitmap,System.String,System.Drawing.Imaging.ImageFormat)">
-            <summary>
-            Stores the bitmap.
-            </summary>
-            <param name="bitmap">The bitmap.</param>
-            <param name="url">The media URL.</param>
-            <param name="format">The format.</param>
-            <returns>The store bitmap.</returns>
-            <exception cref="T:System.NotImplementedException">
-            StoreBitmap is not implemented.
-            </exception>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreFile(System.Web.HttpPostedFile,System.String,System.String,System.String[])">
-            <summary>
-            Stores the file.
-            </summary>
-            <param name="file">
-            The file content.
-            </param>
-            <param name="path">
-            The directory path.
-            </param>
-            <param name="name">
-            The file name.
-            </param>
-            <param name="arguments">
-            The arguments.
-            </param>
-            <returns>
-            The store file.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.StoreFile(Telerik.Web.UI.UploadedFile,System.String,System.String,System.String[])">
-            <summary>
-            Creates a file item from a Telerik.Web.UI.UploadedFile in the given path with the given name.
-            </summary>
-            <param name="file">The UploadedFile instance to store.</param>
-            <param name="path">The virtual path where the file item should be created.</param>
-            <param name="name">The name of the file item.</param>
-            <param name="arguments">Additional values to be stored such as Description, DisplayName, etc.</param>
-            <returns>
-            String containing the full virtual path (including the file name) of the file item.
-            </returns>
-            <remarks>
-            The default FileUploader control does not include the arguments parameter. If you need additional arguments
-            you should create your own FileUploader control.
-            </remarks>
-            <exception cref="T:System.NotImplementedException">
-            StoreFile is not implemented
-            </exception>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetChildDirectories(Sitecore.Data.Items.Item)">
-            <summary>
-            Gets the child directories.
-            </summary>
-            <param name="item">
-            The Sitecore item.
-            </param>
-            <returns>Child directories for an Item.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetChildFiles(Sitecore.Data.Items.Item)">
-            <summary>
-            Gets the child files.
-            </summary>
-            <param name="item">
-            The Sitecore item.
-            </param>
-            <returns>Array of child items.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetItem(System.String)">
-            <summary>
-            Gets the item.
-            </summary>
-            <param name="path">
-            The item path.
-            </param>
-            <returns>An item for the path.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPath(Sitecore.Data.Items.Item)">
-            <summary>
-            Gets the parent path.
-            </summary>
-            <param name="item">
-            The Sitecore item.
-            </param>
-            <returns>
-            The get path.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetPermissions(Sitecore.Data.Items.Item)">
-            <summary>
-            Gets the permissions.
-            </summary>
-            <param name="item">
-            The Sitecore item.
-            </param>
-            <returns>PathPermissions object.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.GetLocation(Sitecore.Data.Items.Item)">
-            <summary>
-            The get location.
-            </summary>
-            <param name="item">The Sitecore item.</param>
-            <returns>The location of item.</returns>
-        </member>
-        <member name="P:Sitecore.Shell.Controls.RichTextEditor.DBContentProvider.CanCreateDirectory">
-            <summary>
-            Gets a value indicating whether this instance can create directory.
-            </summary>
-            <value>
-            <c>true</c> if this instance can create directory; otherwise, <c>false</c>.
-            </value>
-        </member>
         <member name="T:Sitecore.Shell.Controls.RADEditor.RADEditor">
             <summary>
             Represents a RADEditor.
@@ -32546,22 +33794,34 @@
             </contract>
         </member>
         <member name="T:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm">
-            <summary>Represents a Insert Image Form.</summary>
+            <summary>
+            Represents a Insert Image Form.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.DataContext">
-            <summary>The data context.</summary>
+            <summary>
+            The data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.Filename">
-            <summary>The filename.</summary>
+            <summary>
+            The filename.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.Listview">
-            <summary>The listview.</summary>
+            <summary>
+            The list view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.Treeview">
-            <summary>The treeview.</summary>
+            <summary>
+            The tree view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.Upload">
-            <summary>The upload.</summary>
+            <summary>
+            The upload button.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>Handles the message.</summary>
@@ -32571,7 +33831,7 @@
             <summary>Edits this instance.</summary>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.Listview_Click(System.String)">
-            <summary>Handles the Listview click event.</summary>
+            <summary>Handles the list view click event.</summary>
             <param name="id">The id.</param>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.OnCancel(System.Object,System.EventArgs)">
@@ -32594,11 +33854,15 @@
             or if it is being loaded and accessed for the first time.</remarks>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.OnOK(System.Object,System.EventArgs)">
-            <summary>Handles a click on the OK button.</summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <summary>
+            Handles a click on the OK button.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.SelectTreeNode">
             <summary>Selects the tree node.</summary>
@@ -32608,7 +33872,7 @@
             <param name="output">The output.</param>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.RenderListviewItem(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
-            <summary>Renders the listview item.</summary>
+            <summary>Renders the list view item.</summary>
             <param name="output">The output.</param>
             <param name="item">The child.</param>
         </member>
@@ -32618,9 +33882,13 @@
             <param name="item">The item.</param>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.GetCurrentItem(Sitecore.Web.UI.Sheer.Message)">
-            <summary>Gets the current item.</summary>
+            <summary>
+            Gets the current item.
+            </summary>
             <param name="message">The message.</param>
-            <returns></returns>
+            <returns>
+            The current item.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertImage.InsertImageForm.LoadItem(Sitecore.Web.UI.Sheer.Message)">
             <summary>Loads the item.</summary>
@@ -32658,32 +33926,48 @@
             Gets or sets a value indicating whether [upload button disabled].
             </summary>
             <value>
-            	<c>true</c> if [upload button disabled]; otherwise, <c>false</c>.
+              <c>true</c> if [upload button disabled]; otherwise, <c>false</c>.
             </value>
         </member>
         <member name="T:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm">
-            <summary>Represents a InsertLinkForm.</summary>
+            <summary>
+            Represents a InsertLinkForm.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.InternalLinkDataContext">
-            <summary>The internal link data context.</summary>
+            <summary>
+            The internal link data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.InternalLinkTab">
-            <summary>The internal link tab.</summary>
+            <summary>
+            The internal link tab.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.InternalLinkTreeview">
-            <summary>The internal link treeview.</summary>
+            <summary>
+            The internal link tree view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.MediaDataContext">
-            <summary>The media data context.</summary>
+            <summary>
+            The media data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.MediaTab">
-            <summary>The media tab.</summary>
+            <summary>
+            The media tab.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.MediaTreeview">
-            <summary>The media treeview.</summary>
+            <summary>
+            The media tree view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.Tabs">
-            <summary>The tabs.</summary>
+            <summary>
+            The tabs.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>Handles the message.</summary>
@@ -32709,11 +33993,15 @@
             or if it is being loaded and accessed for the first time.</remarks>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.OnOK(System.Object,System.EventArgs)">
-            <summary>Handles a click on the OK button.</summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <summary>
+            Handles a click on the OK button.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.InsertLink.InsertLinkForm.GetMediaUrl(Sitecore.Data.Items.Item)">
             <summary>Gets the media URL.</summary>
@@ -33966,6 +35254,7 @@
             </summary>
             <param name="username">The username.</param>
             <param name="password">The password.</param>
+            <exception cref="T:Sitecore.Exceptions.SecurityException">Only local URLs are allowed.</exception>
         </member>
         <member name="M:Sitecore.Admin.Login.LoginClick(System.Object,System.EventArgs)">
             <summary>
@@ -34913,19 +36202,29 @@
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.DataContext">
-            <summary></summary>
+            <summary>
+            The data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Filename">
-            <summary></summary>
+            <summary>
+            The edit field for file name.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Listview">
-            <summary></summary>
+            <summary>
+            The scroll box for list view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Treeview">
-            <summary></summary>
+            <summary>
+            The tree view of content items.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Upload">
-            <summary></summary>
+            <summary>
+            The upload button.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>
@@ -34956,14 +36255,16 @@
             <summary>
             Handles a click on the OK button.
             </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Listview_Click(System.String)">
             <summary>
-            Handles the Listview click event.
+            Handles the list view click event.
             </summary>
             <param name="id">The id.</param>
         </member>
@@ -34971,19 +36272,6 @@
             <summary>
             Selects the tree node.
             </summary>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.GetCurrentItem(Sitecore.Web.UI.Sheer.Message)">
-            <summary>
-            Gets the current item.
-            </summary>
-            <param name="message">The message.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.LoadItem(Sitecore.Web.UI.Sheer.Message)">
-            <summary>
-            Loads the item.
-            </summary>
-            <param name="message">The message.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.RenderEmpty(System.Web.UI.HtmlTextWriter)">
             <summary>
@@ -34993,7 +36281,7 @@
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.RenderListviewItem(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
             <summary>
-            Renders the listview item.
+            Renders the list view item.
             </summary>
             <param name="output">The output.</param>
             <param name="item">The child.</param>
@@ -35005,12 +36293,27 @@
             <param name="output">The output.</param>
             <param name="item">The item.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.GetCurrentItem(Sitecore.Web.UI.Sheer.Message)">
+            <summary>
+            Gets the current item.
+            </summary>
+            <param name="message">The message.</param>
+            <returns>
+            The current item.
+            </returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.LoadItem(Sitecore.Web.UI.Sheer.Message)">
+            <summary>
+            Loads the item.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.ShortenPath(System.String)">
             <summary>
             Shortens the path.
             </summary>
             <param name="path">The path.</param>
-            <returns></returns>
+            <returns>The shorten path.</returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.SelectItem(Sitecore.Data.Items.Item)">
             <summary>
@@ -35022,7 +36325,9 @@
             <summary>
             Gets the dimensions.
             </summary>
-            <returns>The dimensions.</returns>
+            <param name="item">The item.</param>
+            <param name="options">The options.</param>
+            <param name="image">The image.</param>
         </member>
         <member name="P:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertImage.Mode">
             <summary>
@@ -35036,25 +36341,39 @@
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.Tabs">
-            <summary></summary>
+            <summary>
+            The tab strip.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.InternalLinkTab">
-            <summary></summary>
+            <summary>
+            The internal link tab.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.MediaTab">
-            <summary></summary>
+            <summary>
+            The media tab.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.InternalLinkTreeview">
-            <summary></summary>
+            <summary>
+            The internal link tree view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.InternalLinkDataContext">
-            <summary></summary>
+            <summary>
+            The internal link data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.MediaTreeview">
-            <summary></summary>
+            <summary>
+            The media tree view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.MediaDataContext">
-            <summary></summary>
+            <summary>
+            The media data context.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.HandleMessage(Sitecore.Web.UI.Sheer.Message)">
             <summary>
@@ -35080,10 +36399,23 @@
             <summary>
             Handles a click on the OK button.
             </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.GetMediaUrl(Sitecore.Data.Items.Item)">
+            <summary>
+            Gets the media URL.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>The media URL.</returns>
+            <contract>
+              <requires name="item" condition="not null" />
+              <ensures condition="not null" />
+            </contract>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.LoadItem(Sitecore.Web.UI.Sheer.Message)">
             <summary>
@@ -35097,17 +36429,6 @@
             </summary>
             <param name="message">The message.</param>
             <returns>The current item.</returns>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.GetMediaUrl(Sitecore.Data.Items.Item)">
-            <summary>
-            Gets the media URL.
-            </summary>
-            <param name="item">The item.</param>
-            <returns>The media URL.</returns>
-            <contract>
-              <requires name="item" condition="not null" />
-              <ensures condition="not null" />
-            </contract>
         </member>
         <member name="P:Sitecore.Shell.Applications.ContentManager.WordOCX.InsertLink.Mode">
             <summary>
@@ -35526,7 +36847,25 @@
         <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.OnLoad(System.EventArgs)">
             <summary>Raises the <see cref="E:System.Web.UI.Control.Load"/> event.</summary>
             <param name="e">The <see cref="T:System.EventArgs"/> object that contains the event data.</param>
+            <exception cref="T:Sitecore.Exceptions.AccessDeniedException"><c>AccessDeniedException</c></exception>
             <exception cref="T:System.InvalidOperationException"><c>InvalidOperationException</c>.</exception>
+            <exception cref="T:Sitecore.Exceptions.SecurityException">Quotes in URL</exception>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.Designer_GetPreviewDataSet(System.Object,Stimulsoft.Report.Web.StiWebDesigner.StiPreviewDataSetEventArgs)">
+            <summary>
+            Handles the GetPreviewDataSet event of the Designer control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.PreviewReportEndRender(System.Object,System.EventArgs,System.String,System.EventHandler)">
+            <summary>
+            Preview_s the report end render.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+            <param name="id">The id.</param>
+            <param name="handler">The handler.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.ReportViewer_Load(System.Object,System.EventArgs)">
             <summary>Event handler which disable navigation buttons and set page count in '1' value</summary>
@@ -35547,6 +36886,10 @@
             <summary>Clears start date and end date parameters from query</summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.GetReport(System.Collections.Generic.IEnumerable{Sitecore.Data.ID})">
+            <summary>Gets the report.</summary>
+            <returns>The report.</returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.FillReport(Stimulsoft.Report.StiReport,System.Collections.Generic.IEnumerable{Sitecore.Data.ID})">
             <summary>Gets the report.</summary>
             <returns>The report.</returns>
         </member>
@@ -35655,6 +36998,14 @@
             Gets or sets the report item id.
             </summary>
             <value>The report item id.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Analytics.ReportRunner.ReportPage.PreviewReportUniqueID">
+            <summary>
+            Gets or sets the preview report unique ID.
+            </summary>
+            <value>
+            The preview report unique ID.
+            </value>
         </member>
         <member name="T:Sitecore.Shell.Applications.Analytics.ReportRunner.OpenAnalyticsReports">
             <summary>
@@ -37096,28 +38447,6 @@
             </summary>
             <returns>
             A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.ContentManager.FieldEditorOptions.Decode(System.String)">
-            <summary>
-            Decodes the specified encoded URI.
-            </summary>
-            <param name="encodedUri">
-            The encoded uri.
-            </param>
-            <returns>
-            Returns the decoded string.
-            </returns>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.ContentManager.FieldEditorOptions.Encode(System.String)">
-            <summary>
-            Encodes the specified item URI.
-            </summary>
-            <param name="itemUri">
-            The item uri.
-            </param>
-            <returns>
-            Returns the encoded string.
             </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.ContentManager.FieldEditorOptions.Parse(Sitecore.Web.UrlHandle)">
@@ -38728,6 +40057,15 @@
             <param name="control">The control.</param>
             <param name="parameters">The field data.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.GetValue(System.String,System.Xml.Linq.XElement,System.String)">
+            <summary>
+            Gets the value.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="element">The element.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The value data.</returns>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.Move(System.String,System.String)">
             <summary>
             Moves the specified id.
@@ -38751,6 +40089,12 @@
             controls reflect client-side data. Use the IsPostBack property to determine
             whether the page is being loaded in response to a client <c>postback</c>, or if it is
             being loaded and accessed for the first time.</remarks>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.OnLoad(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.RemoveAction(System.String)">
             <summary>Removes the action.</summary>
@@ -38924,6 +40268,16 @@
             Gets or sets the actions.
             </summary>
             <value>The actions.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.ConditionFilter">
+            <summary>
+             Condition Filter
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.ActionFilter">
+            <summary>
+             Action Filter
+            </summary>
         </member>
         <member name="P:Sitecore.Shell.Applications.Rules.RulesEditor.RulesEditorPage.Conditions">
             <summary>
@@ -39578,11 +40932,41 @@
             A Sitecore field stored in the context of a page editor session, and that is possibly not yet saved to database.
             </summary>
         </member>
-        <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.ItemID">
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.fieldID">
             <summary>
-            Gets or sets the item ID.
+            The field id.
             </summary>
-            <value>The item ID.</value>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.itemID">
+            <summary>
+            The item id.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.language">
+            <summary>
+            The _language.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.revision">
+            <summary>
+            The _revision.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.value">
+            <summary>
+            The _value.
+            </summary>
+        </member>
+        <member name="F:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.version">
+            <summary>
+            The _version.
+            </summary>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.ControlId">
+            <summary>
+            Gets or sets the control id.
+            </summary>
+            <value>The control id.</value>
         </member>
         <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.FieldID">
             <summary>
@@ -39590,17 +40974,17 @@
             </summary>
             <value>The field ID.</value>
         </member>
+        <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.ItemID">
+            <summary>
+            Gets or sets the item ID.
+            </summary>
+            <value>The item ID.</value>
+        </member>
         <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.Language">
             <summary>
             Gets or sets the language.
             </summary>
             <value>The language.</value>
-        </member>
-        <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.Version">
-            <summary>
-            Gets or sets the version.
-            </summary>
-            <value>The version.</value>
         </member>
         <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.Revision">
             <summary>
@@ -39613,6 +40997,12 @@
             Gets or sets the value.
             </summary>
             <value>The value.</value>
+        </member>
+        <member name="P:Sitecore.Shell.Applications.WebEdit.Commands.PageEditorField.Version">
+            <summary>
+            Gets or sets the version.
+            </summary>
+            <value>The version.</value>
         </member>
         <member name="T:Sitecore.Shell.Applications.WebEdit.Commands.SelectLayoutPreset">
             <summary>
@@ -42260,10 +43650,14 @@
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.InputUploadID">
-            <summary></summary>
+            <summary>
+            The input upload id.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.UploadSessionID">
-            <summary></summary>
+            <summary>
+            The upload session id.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.Cancel">
             <summary>
@@ -42279,21 +43673,27 @@
             <summary>
             Handles a click on the OK button.
             </summary>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.OK_Click">
             <summary>
             Handles a click on the OK button.
             </summary>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.OnLoad(System.EventArgs)">
             <summary>
             Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
             </summary>
-            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
+            <param name="e">
+            The <see cref="T:System.EventArgs"></see> object that contains the event data.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.OnError">
             <summary>
@@ -42304,6 +43704,12 @@
             <summary>
             Called when this instance has queued.
             </summary>
+            <param name="filename">
+            The filename.
+            </param>
+            <param name="lengthString">
+            The length String.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Attach.AttachPage.OnUpload">
             <summary>
@@ -44296,6 +45702,9 @@
             </summary>
             <param name="message">The message.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Install.Designer.OnSaveFile(Sitecore.Web.UI.Sheer.Message)">
+            <exception cref="T:System.IO.InvalidDataException"><c>InvalidDataException</c>.</exception>
+        </member>
         <member name="T:Sitecore.Shell.Applications.Install.Dialogs.BrowseDialog">
             <summary></summary>
         </member>
@@ -45139,6 +46548,33 @@
             <summary>
             Files the change.
             </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Install.Dialogs.UploadPackageForm.GetInvalidFileNames">
+            <summary>
+            Gets the invalid file names.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Install.Dialogs.UploadPackageForm.GetFileList">
+            <summary>
+            Gets the file list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Install.Dialogs.UploadPackageForm.ShowInvalidFileMessage(System.String)">
+            <summary>
+            Shows the incorrect package.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Install.Dialogs.UploadPackageForm.ValidateZipFile(System.String)">
+            <summary>
+            Validates the zip file.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns>
+            Returns true if file has zip extension.
+            </returns>
         </member>
         <member name="M:Sitecore.Shell.Applications.Install.Dialogs.UploadPackageForm.BuildFileInput">
             <summary>
@@ -47334,16 +48770,24 @@
             <summary></summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.MediaDataContext">
-            <summary></summary>
+            <summary>
+            The media data context.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.Treeview">
-            <summary></summary>
+            <summary>
+            The tree view of content items.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.Filename">
-            <summary></summary>
+            <summary>
+            The edit field for file name.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.Listview">
-            <summary></summary>
+            <summary>
+            The scroll box for list view.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.OpenWebDAVViewButton">
             <summary>
@@ -47378,14 +48822,16 @@
             <summary>
             Handles a click on the OK button.
             </summary>
-            <param name="sender"></param>
-            <param name="args"></param>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <param name="sender">The sender.</param>
+            <param name="args">The arguments.</param>
             <contract>
               <requires name="sender" condition="not null"/>
               <requires name="args" condition="not null"/>
-            </contract>
+              </contract>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.SelectTreeNode">
             <summary>
@@ -47413,6 +48859,38 @@
             </summary>
             <param name="args">The arguments.</param>
         </member>
+        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.IsFolderItem(Sitecore.Data.Items.Item)">
+            <summary>
+            Determines whether the specified item is a folder item.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>
+              <c>true</c> if the specified item is a folder item; otherwise, <c>false</c>.
+            </returns>
+            <contract>
+              <requires name="item" condition="not null" />
+            </contract>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderEmpty(System.Web.UI.HtmlTextWriter)">
+            <summary>
+            Renders the empty.
+            </summary>
+            <param name="output">The output.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderListviewItem(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
+            <summary>
+            Renders the list view item.
+            </summary>
+            <param name="output">The output.</param>
+            <param name="item">The child.</param>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderPreview(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
+            <summary>
+            Renders the preview.
+            </summary>
+            <param name="output">The output.</param>
+            <param name="item">The item.</param>
+        </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.LoadItem(Sitecore.Web.UI.Sheer.Message)">
             <summary>
             Loads the item.
@@ -47427,55 +48905,25 @@
             Gets the current item.
             </summary>
             <param name="message">The message.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.IsFolderItem(Sitecore.Data.Items.Item)">
-            <summary>
-            Determines whether the specified item is a folder item.
-            </summary>
-            <param name="item">The item.</param>
             <returns>
-            	<c>true</c> if the specified item is a folder item; otherwise, <c>false</c>.
+            The current item.
             </returns>
-            <contract>
-              <requires name="item" condition="not null" />
-            </contract>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.ShortenPath(System.String)">
             <summary>
             Shortens the path.
             </summary>
             <param name="path">The path.</param>
-            <returns></returns>
+            <returns>The shorten path.</returns>
             <contract>
-              <requires name="path" condition="not null" />
-              <ensures condition="nullable" />
+              <requires name="path" condition="not null"/>
+              <ensures condition="nullable"/>
             </contract>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderEmpty(System.Web.UI.HtmlTextWriter)">
-            <summary>
-            Renders the empty.
-            </summary>
-            <param name="output">The output.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.UpdateSelection(Sitecore.Data.Items.Item)">
             <summary>
-            Updates the listview.
+            Updates the list view.
             </summary>
-            <param name="item">The item.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderListviewItem(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
-            <summary>
-            Renders the listview item.
-            </summary>
-            <param name="output">The output.</param>
-            <param name="item">The child.</param>
-        </member>
-        <member name="M:Sitecore.Shell.Applications.Media.MediaBrowser.MediaBrowserForm.RenderPreview(System.Web.UI.HtmlTextWriter,Sitecore.Data.Items.Item)">
-            <summary>
-            Renders the preview.
-            </summary>
-            <param name="output">The output.</param>
             <param name="item">The item.</param>
         </member>
         <member name="T:Sitecore.Shell.Applications.Media.ImageProperties.ImagePropertiesPage">
@@ -47618,10 +49066,14 @@
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.InputUploadID">
-            <summary></summary>
+            <summary>
+            The input upload id.
+            </summary>
         </member>
         <member name="F:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.UploadSessionID">
-            <summary></summary>
+            <summary>
+            The upload session id.
+            </summary>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.Cancel">
             <summary>
@@ -47632,27 +49084,35 @@
             <summary>
             Closes this dialog.
             </summary>
-            <param name="uploadedItemsRaw">The uploaded items raw.</param>
+            <param name="uploadedItemsRaw">
+            The uploaded items raw.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.Cancel_Click">
             <summary>
             Handles a click on the OK button.
             </summary>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.OK_Click">
             <summary>
             Handles a click on the OK button.
             </summary>
-            <remarks>When the user clicks OK, the dialog is closed by calling
-            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+            <remarks>
+            When the user clicks OK, the dialog is closed by calling
+            the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.
+            </remarks>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.OnLoad(System.EventArgs)">
             <summary>
             Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
             </summary>
-            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
+            <param name="e">
+            The <see cref="T:System.EventArgs"></see> object that contains the event data.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.OnError">
             <summary>
@@ -47663,8 +49123,12 @@
             <summary>
             Called when this instance has queued.
             </summary>
-            <param name="filename">The filename.</param>
-            <param name="lengthString">The length string.</param>
+            <param name="filename">
+            The filename.
+            </param>
+            <param name="lengthString">
+            The length string.
+            </param>
         </member>
         <member name="M:Sitecore.Shell.Applications.FlashUpload.Simple.SimpleUploadPage.OnUpload">
             <summary>
@@ -48127,6 +49591,12 @@
             <summary>Handles a click on the OK button.</summary>
             <remarks>When the user clicks OK, the dialog is closed by calling
             the <see cref="M:Sitecore.Web.UI.Sheer.ClientResponse.CloseWindow">CloseWindow</see> method.</remarks>
+        </member>
+        <member name="M:Sitecore.Shell.Applications.Security.DomainManager.NewDomainPage.OnLoad(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
+            </summary>
+            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
         </member>
         <member name="T:Sitecore.Shell.Applications.Security.EditManagedDomains.EditManagedDomainsPage">
             <summary>
@@ -49279,7 +50749,7 @@
             <summary>
             Raises the load event.
             </summary>
-            <param name="e"></param>
+            <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
         </member>
         <member name="M:Sitecore.Shell.Applications.WebEdit.Dialogs.DateSelector.DateSelectorPage.OnPreRender(System.EventArgs)">
             <summary>
@@ -49476,6 +50946,12 @@
             The <see cref="T:System.EventArgs"/> object that contains the event data.
             </param>
         </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.EditorPage.OnPreRenderComplete(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:System.Web.UI.Page.PreRenderComplete"/> event after the <see cref="M:System.Web.UI.Page.OnPreRenderComplete(System.EventArgs)"/> event and before the page is rendered.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.EditorPage.OnReject">
             <summary>
             Called when [reject].
@@ -49497,9 +50973,19 @@
             Populates the editor with HTML
             </summary>
         </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.EditorPage.RegisterMediaPrefixes">
+            <summary>
+            Registers the media prefixes.
+            </summary>
+        </member>
         <member name="M:Sitecore.Shell.Controls.RichTextEditor.EditorPage.RenderScriptConstants">
             <summary>
             Renders the script constants.
+            </summary>
+        </member>
+        <member name="M:Sitecore.Shell.Controls.RichTextEditor.EditorPage.SwitchToIE8Mode">
+            <summary>
+            Switches to IE 8 mode.
             </summary>
         </member>
         <member name="F:Sitecore.Shell.Controls.RichTextEditor.EditorPage.EditorStyles">
@@ -49984,6 +51470,39 @@
             <summary>
             Updates the placeholder settings.
             </summary>
+        </member>
+        <member name="T:Sitecore.sitecore.Upgrades.SCUpdate5">
+            <summary>
+            Post Step for Update package from Sitecore 6.5 rev.110602 to Sitecore 6.5 Update-5
+            </summary>
+        </member>
+        <member name="M:Sitecore.sitecore.Upgrades.SCUpdate5.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Runs this post step
+            </summary>
+            <param name="output">The output.</param>
+            <param name="metaData">The meta data.</param>
+        </member>
+        <member name="M:Sitecore.sitecore.Upgrades.SCUpdate5.RunAnalyticsEventsPackage(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Runs the analytics events package.
+            </summary>
+            <param name="output">The output.</param>
+            <param name="metaData">The meta data.</param>
+        </member>
+        <member name="M:Sitecore.sitecore.Upgrades.SCUpdate5.RunWorkflowScalabilityLogic(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Runs the workflow scalability logic.
+            </summary>
+            <param name="output">The output.</param>
+            <param name="metaData">The meta data.</param>
+        </member>
+        <member name="M:Sitecore.sitecore.Upgrades.SCUpdate5.ShowWarning(Sitecore.Install.Framework.ITaskOutput,System.String)">
+            <summary>
+            Shows the warning.
+            </summary>
+            <param name="output">The output.</param>
+            <param name="text">The text.</param>
         </member>
         <member name="T:Sitecore.Shell.Upgrades.SR0Update2">
             <summary>
@@ -50534,6 +52053,20 @@
             Gets the parameters.
             </summary>
             <value>The parameters.</value>
+        </member>
+        <member name="T:Sitecore.sitecore.Upgrades.WorkboxScalability">
+            <summary>
+            Upgrade for Workbox Scalability project (328243)
+            </summary>
+        </member>
+        <member name="M:Sitecore.sitecore.Upgrades.WorkboxScalability.Run(Sitecore.Install.Framework.ITaskOutput,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Run the post step
+            </summary>
+            <param name="output">The output.</param>
+            <param name="metaData">The meta data.</param>
+            <exception cref="T:System.NotImplementedException">
+            </exception>
         </member>
         <member name="T:Sitecore.UnitTest.TestRunner">
             <summary>
