@@ -33,30 +33,19 @@
   <ItemGroup>
     <Reference Include="Lucene.Net">
       <HintPath>..\lib\Sitecore\Lucene.Net.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\lib\Moq.4.0.10827\NET40\Moq.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.1.12208, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\lib\NUnit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ItemBucket.Kernel">
-      <HintPath>..\Website\bin\Sitecore.ItemBucket.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ItemBucket.UI">
-      <HintPath>..\Website\bin\Sitecore.ItemBucket.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ItemBuckets.BigData">
-      <HintPath>..\Website\bin\Sitecore.ItemBuckets.BigData.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Logging">
-      <HintPath>..\lib\Sitecore\Sitecore.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="sitecore.nexus">
-      <HintPath>..\lib\Sitecore\sitecore.nexus.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -167,6 +156,18 @@
     <None Include="App_Config\XamlSharp.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj">
+      <Project>{2f7b1362-a288-4fb8-a9a8-3366a89a4e6a}</Project>
+      <Name>Sitecore.ItemBucket.Kernel</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Website\Sitecore.ItemBucket.UI.csproj">
+      <Project>{5945a8da-fb0d-4aed-95d4-68bba5830954}</Project>
+      <Name>Sitecore.ItemBucket.UI</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
