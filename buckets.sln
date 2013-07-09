@@ -1,10 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.UI", "Website\Sitecore.ItemBucket.UI.csproj", "{5945A8DA-FB0D-4AED-95D4-68BBA5830954}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.Kernel", "src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj", "{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0297040E-A73A-482E-AF1B-75CF08F76F2C}"
 	ProjectSection(SolutionItems) = preProject
 		buckets.vsmdi = buckets.vsmdi
@@ -12,7 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBuckets.BigData", "Sitecore.ItemBuckets.BigData\Sitecore.ItemBuckets.BigData.csproj", "{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.UI", "Website\Sitecore.ItemBucket.UI.csproj", "{5945A8DA-FB0D-4AED-95D4-68BBA5830954}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.ItemBucket.Kernel", "src\ItemBucket.Kernel\Sitecore.ItemBucket.Kernel.csproj", "{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.BigData", "src\Sitecore.BigData\Sitecore.BigData.csproj", "{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}"
 EndProject
@@ -37,12 +35,6 @@ Global
 		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Local Debug|Any CPU.Build.0 = Local Debug|Any CPU
 		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F7B1362-A288-4FB8-A9A8-3366A89A4E6A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Local Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBF4DC70-E386-4FBA-97B6-420AB0CFC129}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78AC2EB0-0516-4556-AAA5-BF1D81BF2089}.Local Debug|Any CPU.ActiveCfg = Debug|Any CPU
