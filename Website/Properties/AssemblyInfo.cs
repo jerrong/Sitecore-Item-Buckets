@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sitecore.ItemBucket.Tests")]
-[assembly: AssemblyProduct("Sitecore.ItemBucket.Tests")]
+[assembly: AssemblyTitle("Sitecore.ItemBucket.UI")]
+[assembly: AssemblyProduct("Sitecore.ItemBucket.UI")]
 [assembly: AssemblyDescription("Sitecore Shared Source Module")]
 
 [assembly: AssemblyCompany("Sitecore Corporation")]
@@ -19,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("41588947-f03b-472d-b864-142b20a96218")]
+[assembly: Guid("51695d0e-49b2-463e-8c12-5a4c1b0d69e5")]
 
 // Version information for an assembly consists of the following four values:
 //

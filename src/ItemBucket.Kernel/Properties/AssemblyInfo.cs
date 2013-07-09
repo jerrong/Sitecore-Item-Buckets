@@ -5,13 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sitecore.ItemBucket.Kernel")]
-[assembly: AssemblyDescription("The assembly can be used to have Sitecore queries driven via lucene")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sitecore")]
 [assembly: AssemblyProduct("Sitecore.ItemBucket.Kernel")]
-[assembly: AssemblyCopyright("Sitecore")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyDescription("Sitecore Shared Source Module")]
+
+[assembly: AssemblyCompany("Sitecore Corporation")]
+[assembly: AssemblyCopyright("Copyright © 2013 Sitecore Corporation")]
+[assembly: AssemblyTrademark("Sitecore® is a registered trademark of Sitecore Corporation")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -32,3 +31,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyInformationalVersion("1.0.0 rev. YYMMDD")]

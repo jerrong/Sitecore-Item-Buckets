@@ -4759,6 +4759,7 @@
     <Folder Include="sitecore\shell\Override\debug\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\Rebuild.asmx.cs">
       <DependentUpon>Rebuild.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -4783,9 +4784,6 @@
     </Compile>
     <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\MediaBrowser.aspx.designer.cs">
       <DependentUpon>MediaBrowser.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="..\src\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="sitecore modules\Shell\Sitecore\ItemBuckets\IFrameField.aspx.cs">
       <DependentUpon>IFrameField.aspx</DependentUpon>

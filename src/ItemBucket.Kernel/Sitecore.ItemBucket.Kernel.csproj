@@ -96,9 +96,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Installer\PostSteps.cs" />
     <Compile Include="Kernel\Commands\AddBlankSearch.cs" />
     <Compile Include="Kernel\Commands\AddFromTemplateCommand.cs" />
