@@ -1036,15 +1036,18 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.RemoteCrawlers
       var database = SitecoreEventArgs.GetObject(e, 0) as Database;
       if ((database != null) && (database.Name == this.targetDatabase.Name))
       {
-        ID iD = SitecoreEventArgs.GetID(e, 1);
-        Assert.IsNotNull(iD, "ID is not passed to RemoveVersion handler");
+        ID id = SitecoreEventArgs.GetID(e, 1);
+        Assert.IsNotNull(id, "ID is not passed to RemoveVersion handler");
+        
         var language = SitecoreEventArgs.GetObject(e, 2) as Language;
         Assert.IsNotNull(language, "Language is not passed to RemoveVersion handler");
-        var version = SitecoreEventArgs.GetObject(e, 3) as System.Version;
+        
+        var version = SitecoreEventArgs.GetObject(e, 3) as Version;
         Assert.IsNotNull(version, "Version is not passed to RemoveVersion handler");
+        
         using (IndexDeleteContext context = this.remoteIndex.CreateDeleteContext())
         {
-          this.DeleteVersion(iD, language.ToString(), version.ToString(), context);
+          this.DeleteVersion(id, language.ToString(), version.ToString(), context);
           context.Commit();
         }
       }
