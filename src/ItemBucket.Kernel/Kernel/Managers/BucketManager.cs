@@ -771,10 +771,9 @@ namespace Sitecore.ItemBucket.Kernel.Managers
         {
             Parallel.ForEach(contextItem.Children, (item, state, i) =>
             {
-                foreach (var child in item.Children.ToList())
-                {
-                    ShowAllSubFolders(child);
-                }
+                
+                ShowAllSubFolders(item);
+               
                 if (Context.Job.IsNotNull())
                 {
                     Context.Job.Status.Messages.Add("Making " + item.Paths.FullPath + " visible");
