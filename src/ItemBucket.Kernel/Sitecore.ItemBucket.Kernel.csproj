@@ -279,7 +279,7 @@
     <Compile Include="Kernel\Util\EnumerableExtensions.cs" />
     <Compile Include="Kernel\Util\ObjectExtensions.cs" />
     <Compile Include="Kernel\Util\QueryTranslator.cs" />
-    <Compile Include="Kernel\Util\Searcher.cs" />
+    <Compile Include="Kernel\Util\IndexSearcher.cs" />
     <Compile Include="Kernel\Util\SearcherMethods.cs" />
     <Compile Include="Kernel\Util\SearchField.cs" />
     <Compile Include="Kernel\Util\SearchHelper.cs" />
