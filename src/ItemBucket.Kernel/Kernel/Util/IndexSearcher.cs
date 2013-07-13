@@ -192,7 +192,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
       return new KeyValuePair<int, List<SitecoreItem>>(hitCount, items);
     }
-    
+
     /// <summary>
     /// Runs the query.
     /// </summary>
@@ -315,7 +315,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
         foreach (string terms in termValue)
         {
           QueryFilter genreQueryFilter = this.GenreQueryFilter(query, faceted, lookupId, termName, terms);
-          
+
           if (Config.EnableBucketDebug || Constants.EnableTemporaryBucketDebug)
           {
             Log.Info("Bucket Facet Debug Query: " + genreQueryFilter, this);
@@ -486,11 +486,10 @@ namespace Sitecore.ItemBucket.Kernel.Util
     }
 
     /// <summary>
-    ///   Dispose the Index Searcher
+    /// Dispose the Index Searcher
     /// </summary>
     public virtual void Dispose()
     {
-      Index = null;
     }
 
     /// <summary>
@@ -654,7 +653,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
           }
 
           // Hack!!!!!
-          if (!param.Refinements.ContainsKey("__workflow state")) 
+          if (!param.Refinements.ContainsKey("__workflow state"))
           {
             SearcherMethods.ApplyRefinements(globalQuery, param.Refinements, param.Occurance);
           }
@@ -708,7 +707,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
 
       return new KeyValuePair<int, List<SitecoreItem>>();
     }
-    
+
     /// <summary>
     /// Gets the items.
     /// </summary>
@@ -748,7 +747,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
       SearcherMethods.AddFieldValueClause(globalQuery, fieldName, fieldValue, QueryOccurance.Must);
       return this.RunQuery(globalQuery).Value.Any();
     }
-    
+
     /// <summary>
     /// Gets the value.
     /// </summary>
