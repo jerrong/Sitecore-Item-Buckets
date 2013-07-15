@@ -213,8 +213,8 @@ namespace Sitecore.ItemBucket.Kernel.FieldTypes
       var treeViewThing = new TreeList { ID = "DropTreeForBucket" };
       treeViewThing.RenderControl(output);
       output.Write(
-        "<input type=\"text\" width=\"100%\" class=\"scIgnoreModified\" style=\"color:gray\" value=\"Type here to search\" id=\"filterBox"
-        + this.ClientID + "\" style=\"width:100%\" " + (Sitecore.Context.Item.Access.CanWrite() ? string.Empty : "disabled") + ">");
+        "<input type=\"text\" width=\"100%\" class=\"scIgnoreModified\" style=\"color:gray\" value=\"Type here to search\" id=\"filterBox" 
+        + this.ClientID + "\" style=\"width:100%\" " + (Sitecore.Context.ContentDatabase.GetItem(ItemID).Access.CanWrite() ? string.Empty : "disabled") + ">");
       output.Write(
         @"<span id='prev" + this.ClientID
         + @"' class='hovertext' style='cursor:pointer;' onMouseOver=""this.style.color='#666'"" onMouseOut=""this.style.color='#000'"">"
