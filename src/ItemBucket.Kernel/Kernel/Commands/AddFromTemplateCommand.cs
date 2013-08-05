@@ -9,6 +9,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
   using System;
 
   using Sitecore.Data.Items;
+  using Sitecore.Diagnostics;
   using Sitecore.Events;
   using Sitecore.ItemBucket.Kernel.Kernel.Util;
   using Sitecore.ItemBucket.Kernel.Managers;
@@ -47,13 +48,19 @@ namespace Sitecore.ItemBucket.Kernel.Commands
     /// <returns>The newly created Item.</returns>
     protected override Item DoExecute()
     {
-      if (this.CanAddToBucket())
+      if (this.CanAddToBucket() && this.TemplateId != Config.BucketTemplateId)
       {
         Item newDestination = BucketManager.CreateAndReturnDateFolderDestination(this.Destination, DateTime.Now);
-        if (newDestination.IsNotNull() && !newDestination.Uri.Equals(this.Destination.Uri))
+        newDestination = newDestination.Database.GetItem(newDestination.ID, this.Destination.Language);
+
+        if (newDestination != null && !newDestination.Uri.Equals(this.Destination.Uri))
         {
-          Event.RaiseEvent(
-            "item:bucketing:adding", new object[] { this.NewId, this.ItemName, this.TemplateId, newDestination }, this);
+          EventResult eventResult = Event.RaiseEvent("item:bucketing:adding", new object[] { this.NewId, this.ItemName, this.TemplateId, newDestination }, this);
+          if (eventResult.Cancel)
+          {
+            Log.Info(string.Format("Event {0} was cancelled", "item:bucketing:adding"), this);
+            return null;
+          }
 
           Item item = Nexus.DataApi.AddFromTemplate(this.TemplateId, newDestination, this.ItemName, this.NewId);
 
