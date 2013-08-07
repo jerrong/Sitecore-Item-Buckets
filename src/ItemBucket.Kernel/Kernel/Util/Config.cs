@@ -275,9 +275,9 @@ namespace Sitecore.ItemBucket.Kernel.Util
         return Settings.GetSetting("SecuredItems");
       }
     }
-    
-    #region Nested type: Reports
-    
+
+    #region Nested type: Scaling
+
     /// <summary>
     /// Defines the Scaling class.
     /// </summary>
