@@ -154,7 +154,7 @@ namespace Sitecore.ItemBucket.Kernel.Util
         Log.Info("Bucket Debug Query: " + query, this);
       }
 
-      if (Config.SOLREnabled == "true")
+      if (Config.SolrEnabled == "true")
       {
         GetValue(query, items);
         return new KeyValuePair<int, List<SitecoreItem>>(items.Count, items);

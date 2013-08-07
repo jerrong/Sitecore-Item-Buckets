@@ -21,37 +21,37 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Hooks
         /// </summary>
         public virtual void Initialize()
         {
-            if (Config.SOLREnabled == "true")
+            if (Config.SolrEnabled == "true")
             {
                 try
                 {
-                    Startup.Init<SOLRItem>(Config.SOLRServiceLocation);
+                    Startup.Init<SOLRItem>(Config.SolrServiceLocation);
                     
                     foreach (var index in SearchManager.Indexes)
                     {
                         if (index.Name == "itembuckets_templates")
                         {
-                            Startup.Init<SolrTemplateItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrTemplateItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                         if (index.Name == "itembuckets_buckets")
                         {
-                            Startup.Init<SolrBucketItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrBucketItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                         if (index.Name == "itembuckets_sitecore")
                         {
-                            Startup.Init<SolrSitecoreItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrSitecoreItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                         if (index.Name == "itembuckets_layoutsfolder")
                         {
-                            Startup.Init<SolrLayoutItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrLayoutItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                         if (index.Name == "itembuckets_systemfolder")
                         {
-                            Startup.Init<SolrSystemItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrSystemItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                         if (index.Name == "itembuckets_medialibrary")
                         {
-                            Startup.Init<SolrMediaItem>(Config.SOLRServiceLocation + "/" + index.Name);
+                            Startup.Init<SolrMediaItem>(Config.SolrServiceLocation + "/" + index.Name);
                         }
                     }
 

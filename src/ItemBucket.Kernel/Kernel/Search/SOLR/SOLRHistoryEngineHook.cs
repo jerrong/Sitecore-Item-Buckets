@@ -27,7 +27,7 @@ namespace Sitecore.ItemBucket.Kernel.Kernel.Search.SOLR
             this.m_database = database;
             if (ServiceLocator.Current.IsNotNull())
             {
-                Startup.Init<SOLRItem>(Config.SOLRServiceLocation);
+                Startup.Init<SOLRItem>(Config.SolrServiceLocation);
                 solr = ServiceLocator.Current.GetInstance<ISolrOperations<SOLRItem>>();
                 IndexingManager.Provider.OnRemoveItem += new EventHandler(Provider_OnRemoveItem);
                 IndexingManager.Provider.OnUpdateItem += new EventHandler(Provider_OnUpdateItem);
