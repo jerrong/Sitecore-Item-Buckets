@@ -404,7 +404,7 @@
     <None Include="App_Config\Include\Sitecore.ItemBuckets.Core.config.example">
       <SubType>Designer</SubType>
     </None>
-    <None Include="App_Config\Include\Sitecore.ItemBuckets.Scaling.config">
+    <None Include="App_Config\Include\Sitecore.ItemBuckets.Scaling.config.example">
       <SubType>Designer</SubType>
     </None>
     <None Include="App_Config\Include\Sitecore.ItemBuckets.config">

@@ -275,5 +275,29 @@ namespace Sitecore.ItemBucket.Kernel.Util
         return Settings.GetSetting("SecuredItems");
       }
     }
+    
+    #region Nested type: Reports
+    
+    /// <summary>
+    /// Defines the Scaling class.
+    /// </summary>
+    public static class Scaling
+    {
+      /// <summary>
+      /// Gets a value indicating whether scaling indexes are enabled.
+      /// </summary>
+      /// <value>
+      ///   <c>true</c> if scaling indexes are enabled; otherwise, <c>false</c>.
+      /// </value>
+      public static bool Enabled
+      {
+        get
+        {
+          return Settings.GetBoolSetting("Buckets.Scaling.Enabled", false);
+        }
+      }
+    }
+
+    #endregion
   }
 }

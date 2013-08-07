@@ -164,7 +164,7 @@ namespace Sitecore.ItemBucket.Kernel.Managers
     {
       Contract.Requires(item.IsNotNull());
 
-      if (item.IsNotNull())
+      if (item.IsNotNull() && Config.Scaling.Enabled)
       {
         RemoteSearchManager.Initialize();
         foreach (ILuceneIndex index in from index in RemoteSearchManager.Indexes

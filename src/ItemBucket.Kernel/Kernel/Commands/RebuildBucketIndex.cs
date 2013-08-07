@@ -15,6 +15,7 @@ namespace Sitecore.ItemBucket.Kernel.Commands
 
   using Sitecore.Diagnostics;
   using Sitecore.Globalization;
+  using Sitecore.ItemBucket.Kernel.Util;
   using Sitecore.ItemBuckets.BigData.RamDirectory;
   using Sitecore.ItemBuckets.BigData.RemoteIndex;
   using Sitecore.Jobs;
@@ -281,18 +282,21 @@ namespace Sitecore.ItemBucket.Kernel.Commands
         this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
       }
 
-      RemoteSearchManager.Initialize();
-      foreach (RemoteIndex str3 in RemoteSearchManager.Indexes)
-      {
-        this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
+      if (Config.Scaling.Enabled)
+      { 
+        RemoteSearchManager.Initialize();
+        foreach (RemoteIndex str3 in RemoteSearchManager.Indexes)
+        {
+          this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
+        }
+
+        InMemorySearchManager.Initialize();
+        foreach (InMemoryIndex str3 in InMemorySearchManager.Indexes)
+        {
+          this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
+        }
       }
 
-      InMemorySearchManager.Initialize();
-      foreach (InMemoryIndex str3 in InMemorySearchManager.Indexes)
-      {
-        this.BuildIndexCheckbox(str3.Name, str3.Name, selected, indexMap);
-      }
-      
       this.BuildIndexCheckbox("$system", "Quick search index", selected, indexMap);
       this.IndexMap = indexMap.ToString();
     }

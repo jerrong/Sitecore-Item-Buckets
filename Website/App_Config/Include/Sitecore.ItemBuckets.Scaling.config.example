@@ -73,6 +73,12 @@
       <event name="item:indexing:remotestarting"/>
     </events>
     <settings>
+      <!--  BUCKETS SCALING ENABLED
+            Determines if Item Buckets scaling indexes are enabled or not.
+            Default: false
+      -->
+      <setting name="Buckets.Scaling.Enabled" value="false" />
+      
       <!-- This allows the CM Server to have a dedicated Query Server
            Use: value="http://queryserver
       -->
